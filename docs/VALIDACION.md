@@ -96,4 +96,6 @@ Catálogo local y respuestas HTTP comprobados: 51 artículos, 140 variantes, 15 
 - Enlace «Explorar el look» de Maison Departure: abre el catálogo filtrado por Travel Maison y muestra sus cuatro artículos.
 - `npm run build`: compilación de producción correcta; `git diff --check`: sin errores de espacios.
 - Captura de la portada: [cuatro modelos](evidencias/maison-hero-modelos.png).
-- Vídeos pendientes: la cuenta conectada de Runway continúa en Free. No se ha comprobado reproducción de clips reales ni comportamiento en un móvil real.
+- Cuatro vídeos reales de Runway incorporados en MP4 H.264, sin audio, de cinco segundos y con carga al activarlos.
+- Safari de escritorio: activación individual de Emerald Evening, Studio Ivory, City Pages y Maison Departure; al cambiar de look, el anterior queda pausado.
+- Se mantiene pendiente la comprobación en un móvil real.

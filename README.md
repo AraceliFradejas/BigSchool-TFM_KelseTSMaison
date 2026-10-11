@@ -22,7 +22,7 @@ Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS 
 
 ### Qué puedes hacer
 
-- Explorar una portada editorial y quince colecciones propias.
+- Explorar una portada editorial con cuatro looks que se animan al pasar el cursor y quince colecciones propias.
 - Consultar 51 artículos con 140 variantes, incluidas 24 piezas de la selección de lujo.
 - Explorar 21 looks editoriales de eventos, entrevistas y TV, estilo de calle y día a día.
 - Consultar Moda, Accesorios y Belleza con búsqueda, filtros, orden por precio y paginación.

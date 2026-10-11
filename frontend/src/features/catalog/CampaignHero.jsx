@@ -9,7 +9,7 @@ const scenes = [
     name: 'Emerald Evening',
     collection: 'spotlight',
     image: '/media/hero-emerald.webp',
-    video: null,
+    video: '/media/hero-emerald.mp4',
     es: 'Gala en verde y plata',
     en: 'An evening in green and silver',
   },
@@ -18,7 +18,7 @@ const scenes = [
     name: 'Studio Ivory',
     collection: 'studio-ivory',
     image: '/media/hero-ivory.webp',
-    video: null,
+    video: '/media/hero-ivory.mp4',
     es: 'Sastrería para brillar',
     en: 'Tailoring in the spotlight',
   },
@@ -27,7 +27,7 @@ const scenes = [
     name: 'City Pages',
     collection: 'city-pages',
     image: '/media/hero-city.webp',
-    video: null,
+    video: '/media/hero-city.mp4',
     es: 'Tu historia en la ciudad',
     en: 'Your story in the city',
   },
@@ -36,7 +36,7 @@ const scenes = [
     name: 'Maison Departure',
     collection: 'travel-maison',
     image: '/media/hero-travel.webp',
-    video: null,
+    video: '/media/hero-travel.mp4',
     es: 'El lujo de ir a tu ritmo',
     en: 'The luxury of your own pace',
   },
@@ -46,6 +46,7 @@ function CampaignScene({ scene, index, active, setActive, language }) {
   const root = useRef(null);
   const video = useRef(null);
   const [playing, setPlaying] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
   const [reduced, setReduced] = useState(
     () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
@@ -67,14 +68,18 @@ function CampaignScene({ scene, index, active, setActive, language }) {
     const element = video.current;
     if (!element) return;
     if (active && !reduced && !failed) {
+      if (!loaded) {
+        setLoaded(true);
+        return;
+      }
       element.play().catch(() => setPlaying(false));
     } else {
       element.pause();
-      element.currentTime = 0;
+      if (element.readyState > 0) element.currentTime = 0;
       setPlaying(false);
     }
     return () => element.pause();
-  }, [active, reduced, failed]);
+  }, [active, reduced, failed, loaded]);
   useEffect(() => {
     const pauseHidden = () => {
       if (document.hidden) setActive(null);
@@ -111,7 +116,7 @@ function CampaignScene({ scene, index, active, setActive, language }) {
       {scene.video && (
         <video
           ref={video}
-          src={active ? scene.video : undefined}
+          src={loaded ? scene.video : undefined}
           poster={scene.image}
           muted
           loop
