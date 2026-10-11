@@ -5,6 +5,7 @@ export default function Home() {
   const { language, t } = useMaison();
   const products = useResource('/products');
   const collections = useResource('/collections');
+  const newEdit = useResource('/products?luxury=1');
   return (
     <>
       <section className="hero">
@@ -55,6 +56,22 @@ export default function Home() {
           )}
         </ResourceState>
       </section>
+      <section className="section container">
+        <div className="section-intro">
+          <div>
+            <p className="eyebrow">{t.newEdit}</p>
+            <h2>{t.newEditTitle}</h2>
+            <p>{t.newEditBody}</p>
+          </div>
+          <Link className="text-link" to="/looks">
+            {t.discoverLooks}
+            <Icon name="arrow" />
+          </Link>
+        </div>
+        <ResourceState resource={newEdit}>
+          {newEdit.data && <ProductGrid products={newEdit.data.items.slice(0, 4)} />}
+        </ResourceState>
+      </section>
       <section className="collections-section">
         <div className="container">
           <div className="section-intro">
@@ -76,7 +93,7 @@ export default function Home() {
                   key={collection.id}
                   style={{ '--collection-color': collection.color }}
                 >
-                  <span className="collection-number">0{i + 1}</span>
+                  <span className="collection-number">{String(i + 1).padStart(2, '0')}</span>
                   <span className="collection-name">{collection.name}</span>
                   <span className="collection-description">{collection.description[language]}</span>
                   <Icon name="arrow" />

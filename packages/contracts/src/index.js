@@ -57,9 +57,18 @@ export const productSchema = z
   );
 export const stylistSchema = z
   .object({
-    occasion: z.enum(['any', 'dinner', 'concert', 'weekend', 'everyday']),
+    occasion: z.enum([
+      'any',
+      'dinner',
+      'concert',
+      'weekend',
+      'everyday',
+      'event',
+      'television',
+      'street',
+    ]),
     budgetCents: z.number().int().min(100).max(1000000),
-    color: z.enum(['any', 'dark', 'red', 'natural', 'gold']),
+    color: z.enum(['any', 'dark', 'red', 'natural', 'gold', 'green', 'silver']),
     excludeBeauty: z.boolean().default(false),
   })
   .strict();

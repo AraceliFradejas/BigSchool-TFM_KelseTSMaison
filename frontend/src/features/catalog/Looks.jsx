@@ -7,6 +7,7 @@ export default function Looks() {
   const [result, setResult] = useState(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [mood, setMood] = useState('all');
   async function submit(event) {
     event.preventDefault();
     setBusy(true);
@@ -44,7 +45,16 @@ export default function Looks() {
           <label>
             {t.occasion}
             <select name="occasion">
-              {['any', 'dinner', 'concert', 'weekend', 'everyday'].map((value) => (
+              {[
+                'any',
+                'dinner',
+                'concert',
+                'weekend',
+                'everyday',
+                'event',
+                'television',
+                'street',
+              ].map((value) => (
                 <option key={value} value={value}>
                   {t[value]}
                 </option>
@@ -59,14 +69,14 @@ export default function Looks() {
               min="1"
               max="10000"
               step="0.01"
-              defaultValue="180"
+              defaultValue="1000"
               required
             />
           </label>
           <label>
             {t.color}
             <select name="color">
-              {['any', 'dark', 'red', 'natural', 'gold'].map((value) => (
+              {['any', 'dark', 'red', 'natural', 'gold', 'green', 'silver'].map((value) => (
                 <option key={value} value={value}>
                   {t[value]}
                 </option>
@@ -115,19 +125,33 @@ export default function Looks() {
         </section>
       )}
       <ResourceState resource={resource}>
-        {resource.data?.map((look) => (
-          <section className="look-section" key={look.id}>
-            <div className="section-intro">
-              <div>
-                <p className="eyebrow">{t.editorial}</p>
-                <h2>{look.name}</h2>
-                <p>{look.description[language]}</p>
+        <nav className="look-filters" aria-label={t.lookContexts}>
+          {['all', 'event', 'television', 'street', 'everyday'].map((value) => (
+            <button
+              key={value}
+              className={`button ${mood === value ? '' : 'secondary'}`}
+              aria-pressed={mood === value}
+              onClick={() => setMood(value)}
+            >
+              {value === 'all' ? t.allLooks : t[value]}
+            </button>
+          ))}
+        </nav>
+        {resource.data
+          ?.filter((look) => mood === 'all' || look.mood === mood)
+          .map((look) => (
+            <section className="look-section" key={look.id}>
+              <div className="section-intro">
+                <div>
+                  <p className="eyebrow">{look.mood ? t[look.mood] : t.editorial}</p>
+                  <h2>{look.name}</h2>
+                  <p>{look.description[language]}</p>
+                </div>
+                {!look.complete && <p>{t.lookIncomplete}</p>}
               </div>
-              {!look.complete && <p>{t.lookIncomplete}</p>}
-            </div>
-            <ProductGrid products={look.products} />
-          </section>
-        ))}
+              <ProductGrid products={look.products} />
+            </section>
+          ))}
       </ResourceState>
     </div>
   );

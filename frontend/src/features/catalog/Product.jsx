@@ -1,3 +1,4 @@
+import { catalogImageProps } from '../../shared/media';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useMaison, useResource } from '../../shared/state';
@@ -31,7 +32,13 @@ export default function Product() {
           <>
             <div className="product-detail">
               <div className="detail-picture">
-                <img src={product.image} alt={product.name[language]} width="600" height="750" />
+                <img
+                  {...catalogImageProps(product.image)}
+                  sizes="(max-width: 800px) 90vw, 50vw"
+                  alt={product.name[language]}
+                  width="600"
+                  height="750"
+                />
               </div>
               <div className="detail-copy">
                 <Link className="eyebrow" to={`/catalog?collection=${product.collectionId}`}>

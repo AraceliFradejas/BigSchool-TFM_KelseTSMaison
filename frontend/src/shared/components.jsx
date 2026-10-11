@@ -1,3 +1,4 @@
+import { catalogImageProps } from './media';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMaison } from './state';
 export function Icon({ name, ...props }) {
@@ -91,7 +92,13 @@ export function ProductCard({ product }) {
     <article className="product-card">
       <div className="product-picture">
         <Link to={`/products/${product.id}`} tabIndex={-1} aria-hidden="true">
-          <img src={product.image} alt="" width="600" height="750" loading="lazy" />
+          <img
+            {...catalogImageProps(product.image)}
+            alt=""
+            width="600"
+            height="750"
+            loading="lazy"
+          />
         </Link>
         <button
           className={`favorite-button ${saved ? 'is-saved' : ''}`}

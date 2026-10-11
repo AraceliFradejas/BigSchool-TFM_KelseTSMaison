@@ -57,9 +57,9 @@ export function catalogRouter(db) {
   );
   router.get('/products', (req, res) => {
     let items = allProducts(db);
-    const { q = '', category, collection, available, sort = 'editorial' } = req.query;
+    const { q = '', category, collection, available, luxury, sort = 'editorial' } = req.query;
     if (
-      [q, category, collection, available, sort].some(
+      [q, category, collection, available, luxury, sort].some(
         (value) => value !== undefined && typeof value !== 'string',
       )
     )
@@ -78,6 +78,7 @@ export function catalogRouter(db) {
       );
     if (category) items = items.filter((item) => item.category === category);
     if (collection) items = items.filter((item) => item.collectionId === collection);
+    if (luxury === '1') items = items.filter((item) => item.tags.includes('luxury'));
     if (available === '1')
       items = items.filter((item) => item.variants.some((variant) => variant.stock > 0));
     const price = (item) => Math.min(...item.variants.map((variant) => variant.priceCents));
@@ -116,8 +117,12 @@ export function catalogRouter(db) {
         );
         const fashion = products.find((item) => item.category === 'fashion');
         const fitsOccasion =
-          preferences.occasion === 'any' || fashion?.tags.includes(preferences.occasion);
-        const fitsColor = preferences.color === 'any' || fashion?.tags.includes(preferences.color);
+          preferences.occasion === 'any' ||
+          look.mood === preferences.occasion ||
+          fashion?.tags.includes(preferences.occasion);
+        const fitsColor =
+          preferences.color === 'any' ||
+          products.some((item) => item.tags.includes(preferences.color));
         return {
           ...look,
           pieces,

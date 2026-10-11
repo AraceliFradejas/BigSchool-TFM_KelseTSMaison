@@ -1,0 +1,125 @@
+{
+  "mode": "Built-in OpenAI image generation",
+  "assets": [
+    {
+      "id": "atelier-trench",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: warm beige luxurious double-breasted cotton gabardine trench coat with belt, original refined design, invisible mannequin. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/atelier-trench.webp"
+    },
+    {
+      "id": "cashmere-whisper",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: soft ivory cashmere fine-knit long sleeve crewneck sweater, realistic plush delicate fibers, invisible mannequin. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/cashmere-whisper.webp"
+    },
+    {
+      "id": "atelier-midi",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: warm camel silk satin high-waisted midi skirt with softly flared hem, invisible mannequin. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/atelier-midi.webp"
+    },
+    {
+      "id": "atelier-pumps",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: matching pair of taupe suede pointed-toe pumps with elegant medium stiletto heels. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/atelier-pumps.webp"
+    },
+    {
+      "id": "noir-tuxedo",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: black wool tuxedo blazer with black satin shawl lapels and one button, invisible mannequin. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/noir-tuxedo.webp"
+    },
+    {
+      "id": "noir-trousers",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: black wool high-waisted tailored wide-leg trousers, invisible mannequin. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/noir-trousers.webp"
+    },
+    {
+      "id": "pearl-paragraph",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: one elegant necklace of small cream freshwater pearls with subtle gold clasp, gently arranged in oval. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/pearl-paragraph.webp"
+    },
+    {
+      "id": "noir-pumps",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: matching pair of refined black leather pointed-toe pumps with medium slim heels. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/noir-pumps.webp"
+    },
+    {
+      "id": "rose-reverie",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: dusty blush rose floor-length tulle evening gown with softly pleated fitted bodice, delicate shoulder straps and flowing skirt, original design, invisible mannequin. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/rose-reverie.webp"
+    },
+    {
+      "id": "rose-clutch",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: small blush rose satin oval evening clutch with discreet gold clasp. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/rose-clutch.webp"
+    },
+    {
+      "id": "rose-sandals",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: matching pair of blush rose satin strappy sandals with medium slender heels. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/rose-sandals.webp"
+    },
+    {
+      "id": "rose-drops",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: exactly one pair of elegant gold drop earrings with single natural ivory pearl each. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/rose-drops.webp"
+    },
+    {
+      "id": "sapphire-top",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: midnight sapphire blue finely sequined fitted sleeveless cropped top, modest simple round neckline, original design, invisible mannequin. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/sapphire-top.webp"
+    },
+    {
+      "id": "sapphire-skirt",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: midnight sapphire blue finely sequined high-waisted floor-length straight skirt, original design, invisible mannequin. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/sapphire-skirt.webp"
+    },
+    {
+      "id": "sapphire-drops",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: exactly one pair of elegant deep blue faceted crystal drop earrings in fine silver settings. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/sapphire-drops.webp"
+    },
+    {
+      "id": "stage-boots",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: matching pair of silver metallic leather ankle boots with slim block heels, refined original design. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/stage-boots.webp"
+    },
+    {
+      "id": "travel-coat",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: camel double-faced wool long wrap coat with self tie belt, luxurious original understated design, invisible mannequin. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/travel-coat.webp"
+    },
+    {
+      "id": "travel-scarf",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: long camel cashmere scarf with fine fringes folded softly, plush fibers. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/travel-scarf.webp"
+    },
+    {
+      "id": "journey-tote",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: cognac grained leather generous rectangular tote bag with two long handles, original design and discreet brass fittings. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/journey-tote.webp"
+    },
+    {
+      "id": "journey-boots",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: matching pair of cognac suede ankle boots with refined medium block heels. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/journey-boots.webp"
+    },
+    {
+      "id": "velvet-romance",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: burgundy velvet midi dress with long sleeves, gentle square neckline and fitted waist, original romantic design, invisible mannequin. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/velvet-romance.webp"
+    },
+    {
+      "id": "velvet-bow",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: one luxurious burgundy velvet hair bow barrette, natural textile detail. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/velvet-bow.webp"
+    },
+    {
+      "id": "golden-chain",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: one refined polished gold chain bracelet with softly oval links and discrete clasp. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/golden-chain.webp"
+    },
+    {
+      "id": "wine-pumps",
+      "prompt": "Use case: product-mockup. Asset type: original fictional Maison luxury catalog product. Subject: matching pair of burgundy velvet pointed-toe pumps with medium elegant heels. Ultra photorealistic premium fashion catalog photography, tangible natural materials and meticulous seams. Warm ivory seamless studio background. Vertical 4:5 composition with entire product centered and fully visible, generous margin. Soft directional daylight, subtle natural contact shadows, elegant editorial restraint. No people, visible mannequin, text, logo, brand monograms, famous designer motifs, watermark, illustration or CGI appearance.",
+      "file": "frontend/public/media/wine-pumps.webp"
+    }
+  ]
+}

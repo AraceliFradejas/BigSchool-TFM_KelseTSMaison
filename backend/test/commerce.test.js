@@ -53,10 +53,17 @@ function draft(db, id = 'satin-story') {
 test('public catalogue exposes bilingual variants and filters with pagination', async (t) => {
   const { app } = setup(t);
   const first = await request(app).get('/api/v1/products');
-  assert.equal(first.body.data.total, 15);
+  assert.equal(first.body.data.total, 51);
   assert.equal(first.body.data.items.length, 12);
   const second = await request(app).get('/api/v1/products?page=2');
-  assert.equal(second.body.data.items.length, 3);
+  assert.equal(second.body.data.items.length, 12);
+  const third = await request(app).get('/api/v1/products?page=3');
+  assert.equal(third.body.data.items.length, 12);
+  const last = await request(app).get('/api/v1/products?page=5');
+  assert.equal(last.body.data.items.length, 3);
+  const luxury = await request(app).get('/api/v1/products?luxury=1');
+  assert.equal(luxury.body.data.total, 24);
+  assert.ok(luxury.body.data.items.every((product) => product.tags.includes('luxury')));
   const beauty = await request(app).get('/api/v1/products?category=beauty&q=labial');
   assert.deepEqual(
     beauty.body.data.items.map((product) => product.id),
@@ -350,6 +357,45 @@ test('the seed preserves edited products, consumed stock and existing users', (t
   db.prepare("UPDATE variants SET stock=2 WHERE id='satin-story-1'").run();
   assert.equal(seedDatabase(db), 0);
   assert.equal(getProduct(db, 'satin-story').variants[0].stock, 2);
+});
+test('new editorial looks reference existing products and support event and TV suggestions', async (t) => {
+  const { app, agent, db } = setup(t);
+  const response = await request(app).get('/api/v1/looks');
+  assert.equal(response.body.data.length, 21);
+  assert.ok(response.body.data.every((look) => look.complete && look.products.length >= 3));
+  const green = await post(agent, '/stylist', {
+    occasion: 'event',
+    color: 'green',
+    budgetCents: 27000,
+    excludeBeauty: true,
+  });
+  assert.deepEqual(
+    green.body.data.looks.map((look) => look.id),
+    ['look-emerald-evening'],
+  );
+  assert.equal(green.body.data.looks[0].totalCents, 26300);
+  db.prepare("UPDATE variants SET stock=0 WHERE product_id='silver-step'").run();
+  assert.equal(
+    (
+      await post(agent, '/stylist', {
+        occasion: 'event',
+        color: 'green',
+        budgetCents: 27000,
+        excludeBeauty: true,
+      })
+    ).body.data.looks.length,
+    0,
+  );
+  const television = await post(agent, '/stylist', {
+    occasion: 'television',
+    color: 'dark',
+    budgetCents: 23000,
+    excludeBeauty: false,
+  });
+  assert.deepEqual(
+    television.body.data.looks.map((look) => look.id),
+    ['look-city-interview'],
+  );
 });
 test('catalog image migration preserves custom images and stock and is idempotent', (t) => {
   const { db } = setup(t);

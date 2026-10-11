@@ -1,0 +1,65 @@
+{
+  "mode": "Built-in OpenAI image generation",
+  "assets": [
+    {
+      "id": "emerald-afterglow",
+      "prompt": "Use case: product-mockup. Asset type: fictional Maison fashion e-commerce catalog. Subject: emerald green sequined sleeveless floor-length evening gown with simple scoop neckline and narrow straps, original design, invisible mannequin. Photorealistic premium fashion studio photograph, warm ivory seamless backdrop matching a luxury boutique catalog. Vertical 4:5 framing, whole product centered with generous margin, soft directional daylight, natural shadows, physically plausible seams and textures. No people, visible mannequin, text, logos, watermark, famous designer signature motifs, illustration or CGI appearance.",
+      "file": "frontend/public/media/emerald-afterglow.webp"
+    },
+    {
+      "id": "silver-step",
+      "prompt": "Use case: product-mockup. Asset type: fictional Maison fashion e-commerce catalog. Subject: exactly one matching pair of silver strappy evening sandals with modest elegant block heels, three quarter view. Photorealistic premium fashion studio photograph, warm ivory seamless backdrop matching a luxury boutique catalog. Vertical 4:5 framing, whole product centered with generous margin, soft directional daylight, natural shadows, physically plausible seams and textures. No people, visible mannequin, text, logos, watermark, famous designer signature motifs, illustration or CGI appearance.",
+      "file": "frontend/public/media/silver-step.webp"
+    },
+    {
+      "id": "starlit-clutch",
+      "prompt": "Use case: product-mockup. Asset type: fictional Maison fashion e-commerce catalog. Subject: small silver beaded rectangular evening clutch with understated clasp, intricate fine beads. Photorealistic premium fashion studio photograph, warm ivory seamless backdrop matching a luxury boutique catalog. Vertical 4:5 framing, whole product centered with generous margin, soft directional daylight, natural shadows, physically plausible seams and textures. No people, visible mannequin, text, logos, watermark, famous designer signature motifs, illustration or CGI appearance.",
+      "file": "frontend/public/media/starlit-clutch.webp"
+    },
+    {
+      "id": "ivory-interview",
+      "prompt": "Use case: product-mockup. Asset type: fictional Maison fashion e-commerce catalog. Subject: ivory tailored single-breasted blazer, classic lapels, original understated design, invisible mannequin. Photorealistic premium fashion studio photograph, warm ivory seamless backdrop matching a luxury boutique catalog. Vertical 4:5 framing, whole product centered with generous margin, soft directional daylight, natural shadows, physically plausible seams and textures. No people, visible mannequin, text, logos, watermark, famous designer signature motifs, illustration or CGI appearance.",
+      "file": "frontend/public/media/ivory-interview.webp"
+    },
+    {
+      "id": "ivory-lines",
+      "prompt": "Use case: product-mockup. Asset type: fictional Maison fashion e-commerce catalog. Subject: ivory high-waisted straight wide-leg tailored trousers, invisible mannequin, entire trousers visible. Photorealistic premium fashion studio photograph, warm ivory seamless backdrop matching a luxury boutique catalog. Vertical 4:5 framing, whole product centered with generous margin, soft directional daylight, natural shadows, physically plausible seams and textures. No people, visible mannequin, text, logos, watermark, famous designer signature motifs, illustration or CGI appearance.",
+      "file": "frontend/public/media/ivory-lines.webp"
+    },
+    {
+      "id": "studio-satin",
+      "prompt": "Use case: product-mockup. Asset type: fictional Maison fashion e-commerce catalog. Subject: ivory satin sleeveless camisole with scoop neckline and broad straps, invisible mannequin. Photorealistic premium fashion studio photograph, warm ivory seamless backdrop matching a luxury boutique catalog. Vertical 4:5 framing, whole product centered with generous margin, soft directional daylight, natural shadows, physically plausible seams and textures. No people, visible mannequin, text, logos, watermark, famous designer signature motifs, illustration or CGI appearance.",
+      "file": "frontend/public/media/studio-satin.webp"
+    },
+    {
+      "id": "city-check",
+      "prompt": "Use case: product-mockup. Asset type: fictional Maison fashion e-commerce catalog. Subject: brown burgundy and ivory small checked pleated mini skirt, original plaid pattern, invisible mannequin. Photorealistic premium fashion studio photograph, warm ivory seamless backdrop matching a luxury boutique catalog. Vertical 4:5 framing, whole product centered with generous margin, soft directional daylight, natural shadows, physically plausible seams and textures. No people, visible mannequin, text, logos, watermark, famous designer signature motifs, illustration or CGI appearance.",
+      "file": "frontend/public/media/city-check.webp"
+    },
+    {
+      "id": "avenue-boots",
+      "prompt": "Use case: product-mockup. Asset type: fictional Maison fashion e-commerce catalog. Subject: exactly one matching pair of chocolate brown knee-high suede boots, moderate block heels, pointed soft almond toes, fully visible. Photorealistic premium fashion studio photograph, warm ivory seamless backdrop matching a luxury boutique catalog. Vertical 4:5 framing, whole product centered with generous margin, soft directional daylight, natural shadows, physically plausible seams and textures. No people, visible mannequin, text, logos, watermark, famous designer signature motifs, illustration or CGI appearance.",
+      "file": "frontend/public/media/avenue-boots.webp"
+    },
+    {
+      "id": "quiet-ink",
+      "prompt": "Use case: product-mockup. Asset type: fictional Maison fashion e-commerce catalog. Subject: black fine-knit fitted long sleeve turtleneck, invisible mannequin. Photorealistic premium fashion studio photograph, warm ivory seamless backdrop matching a luxury boutique catalog. Vertical 4:5 framing, whole product centered with generous margin, soft directional daylight, natural shadows, physically plausible seams and textures. No people, visible mannequin, text, logos, watermark, famous designer signature motifs, illustration or CGI appearance.",
+      "file": "frontend/public/media/quiet-ink.webp"
+    },
+    {
+      "id": "cabin-cardigan",
+      "prompt": "Use case: product-mockup. Asset type: fictional Maison fashion e-commerce catalog. Subject: cream cable-knit button-front cardigan with contrasting dark brown edging, original design without stars or logos, invisible mannequin. Photorealistic premium fashion studio photograph, warm ivory seamless backdrop matching a luxury boutique catalog. Vertical 4:5 framing, whole product centered with generous margin, soft directional daylight, natural shadows, physically plausible seams and textures. No people, visible mannequin, text, logos, watermark, famous designer signature motifs, illustration or CGI appearance.",
+      "file": "frontend/public/media/cabin-cardigan.webp"
+    },
+    {
+      "id": "weekend-denim",
+      "prompt": "Use case: product-mockup. Asset type: fictional Maison fashion e-commerce catalog. Subject: medium blue straight-leg high-waisted denim jeans, natural denim texture, invisible mannequin. Photorealistic premium fashion studio photograph, warm ivory seamless backdrop matching a luxury boutique catalog. Vertical 4:5 framing, whole product centered with generous margin, soft directional daylight, natural shadows, physically plausible seams and textures. No people, visible mannequin, text, logos, watermark, famous designer signature motifs, illustration or CGI appearance.",
+      "file": "frontend/public/media/weekend-denim.webp"
+    },
+    {
+      "id": "coffee-loafers",
+      "prompt": "Use case: product-mockup. Asset type: fictional Maison fashion e-commerce catalog. Subject: exactly one matching pair of burgundy leather penny loafers, low heel, realistic supple leather, three quarter view. Photorealistic premium fashion studio photograph, warm ivory seamless backdrop matching a luxury boutique catalog. Vertical 4:5 framing, whole product centered with generous margin, soft directional daylight, natural shadows, physically plausible seams and textures. No people, visible mannequin, text, logos, watermark, famous designer signature motifs, illustration or CGI appearance.",
+      "file": "frontend/public/media/coffee-loafers.webp"
+    }
+  ]
+}

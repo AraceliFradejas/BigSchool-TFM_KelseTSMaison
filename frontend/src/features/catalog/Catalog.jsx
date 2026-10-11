@@ -99,6 +99,14 @@ export default function Catalog() {
           />
           {t.availableOnly}
         </label>
+        <label className="checkbox-label">
+          <input
+            type="checkbox"
+            checked={params.get('luxury') === '1'}
+            onChange={(event) => change('luxury', event.target.checked ? '1' : '')}
+          />
+          {t.luxuryOnly}
+        </label>
         {params.size > 0 && (
           <button className="link-button" onClick={() => setParams({})}>
             {t.reset}
@@ -156,7 +164,7 @@ export function Collections() {
               key={collection.id}
               style={{ '--collection-color': collection.color }}
             >
-              <span className="collection-swatch">0{index + 1}</span>
+              <span className="collection-swatch">{String(index + 1).padStart(2, '0')}</span>
               <div>
                 <h2>{collection.name}</h2>
                 <p>{collection.description[language]}</p>

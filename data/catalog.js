@@ -1,3 +1,5 @@
+import { luxuryCollections, createLuxuryProducts, luxuryLooks } from './luxury-edit.js';
+import { newCollections, createNewProducts, newLooks } from './swiftie-edit.js';
 const translated = (es, en) => ({ es, en });
 export const collections = [
   {
@@ -36,6 +38,8 @@ export const collections = [
     color: '#998479',
     description: translated('Los pequeños planes también cuentan.', 'Small plans matter too.'),
   },
+  ...newCollections,
+  ...luxuryCollections,
 ];
 function product(id, es, en, category, collectionId, priceCents, labels, tags, description) {
   return {
@@ -308,10 +312,15 @@ export const products = [
     ],
   ),
 ];
-export const looks = collections.map((collection, i) => ({
-  id: `look-${collection.id}`,
-  collectionId: collection.id,
-  name: collection.name,
-  description: collection.description,
-  productIds: products.slice(i * 3, i * 3 + 3).map((item) => item.id),
-}));
+products.push(...createNewProducts(product), ...createLuxuryProducts(product));
+export const looks = [
+  ...collections.slice(0, 5).map((collection, i) => ({
+    id: `look-${collection.id}`,
+    collectionId: collection.id,
+    name: collection.name,
+    description: collection.description,
+    productIds: products.slice(i * 3, i * 3 + 3).map((item) => item.id),
+  })),
+  ...newLooks,
+  ...luxuryLooks,
+];

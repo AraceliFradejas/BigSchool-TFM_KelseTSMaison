@@ -18,7 +18,8 @@
     "test": "npm test -w backend && npm test -w packages/api-client",
     "seed": "npm run seed -w backend",
     "team:grant": "node --env-file-if-exists=backend/.env backend/scripts/grant-team.js",
-    "media:migrate": "node --env-file-if-exists=backend/.env backend/scripts/migrate-catalog-images.js"
+    "media:migrate": "node --env-file-if-exists=backend/.env backend/scripts/migrate-catalog-images.js",
+    "media:prepare": "node scripts/prepare-catalog-media.mjs"
   },
   "devDependencies": {
     "prettier": "^3.9.10"

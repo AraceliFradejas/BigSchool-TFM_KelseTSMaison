@@ -74,3 +74,9 @@ Las capturas están en [Evidencias](evidencias/README.md). Se revisaron visualme
 ## Actualización de imágenes de catálogo
 
 Se han revisado visualmente las quince representaciones de producto y las tres escenas editoriales. Perfume, sombra, colorete, labial y bálsamo incorporan la marca Maison. Los dieciocho WebP suman aproximadamente 1,5 MB. Portada comprobada en Safari. `npm run build` y las 25 pruebas de backend y transporte pasan. La migración local actualizó quince imágenes originales; su prueba verifica que conserva imágenes personalizadas y stock y que repetirla no produce cambios. Los SVG se mantienen para las referencias de pedidos anteriores.
+
+## Ampliación swiftie y selección de lujo
+
+Catálogo local y respuestas HTTP comprobados: 51 artículos, 140 variantes, 15 colecciones y 21 looks con referencias válidas. Se han revisado las 36 nuevas imágenes individualmente en hojas de revisión. Las 102 imágenes WebP de producto, completas y pequeñas, responden HTTP 200 con el tipo de contenido correcto. La selección de lujo filtra 24 artículos. Los filtros de contexto se han comprobado en Safari; [evidencia de looks de televisión](evidencias/maison-looks-tv.png).
+
+`npm run build` y las 26 pruebas pasan. La ampliación comprueba paginación, filtro de lujo y sugerencias de eventos y televisión con presupuesto y stock; mantiene las comprobaciones previas de permisos, pedidos y cancelaciones. Repetir el seed inserta cero registros y conserva el stock M del vestido Satin Story en 7 unidades tras el pedido local anterior. Las imágenes usan versiones de 600 píxeles y su tamaño completo mediante `srcset` y `sizes`. No se ha comprobado esta ampliación en un teléfono físico.

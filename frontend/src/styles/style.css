@@ -475,7 +475,7 @@ main:focus {
 }
 .collection-strip {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   border-top: 1px solid var(--line);
   border-left: 1px solid var(--line);
 }
@@ -801,7 +801,7 @@ main:focus {
 }
 .look-section .product-grid,
 .look-result .product-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
 }
 .look-result {
   margin-bottom: 60px;
@@ -1684,4 +1684,15 @@ main:focus {
   .header-top {
     height: 74px;
   }
+}
+
+.look-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-block: 35px;
+}
+.look-filters .button {
+  min-height: 44px;
+  padding: 10px 18px;
 }
