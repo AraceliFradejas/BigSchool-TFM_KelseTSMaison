@@ -75,3 +75,5 @@ La disponibilidad afecta a varias pantallas, aunque se decide en un único lugar
 Antes de cerrar el TFM habrá que revisar la dirección visual, elegir el alojamiento, repetir el recorrido en dispositivos reales y preparar las slides sobre lo realmente construido. Solo después de medir ese progreso se decidirá si cabe una ampliación con IA o una app sencilla.
 
 La ampliación swiftie añade vestidos de gala, sastrería, cuadros, botas, denim y punto. La selección de lujo incluye gabardinas, cachemir, lana, tul, terciopelo, piel, satén y joyería. Los looks se exploran por eventos, entrevistas y TV, estilo de calle o día a día. El buscador contempla verdes y plateados y mantiene la comprobación de presupuesto y existencias. Los precios y materiales describen artículos ficticios; no acreditan mercancía real.
+
+Los precios del catálogo se han contrastado con referencias oficiales de Saint Laurent, Gucci y Prada y ajustado por categoría. El criterio y los enlaces están en [Precios](docs/PRECIOS.md). Una migración explícita actualiza los precios originales de demostración, preserva los cambios de Team y mantiene los pedidos históricos con sus importes originales.

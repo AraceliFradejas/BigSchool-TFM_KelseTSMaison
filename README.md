@@ -134,6 +134,7 @@ La entrega del TFM reunirá código, README, acceso a la aplicación y slides. E
 - [Arquitectura y reglas de tienda](docs/ARQUITECTURA.md).
 - [Validación](docs/VALIDACION.md) y [evidencias](docs/evidencias/README.md).
 - [Recursos y reutilización](docs/RECURSOS.md).
+- [Criterio de precios de lujo y actualización](docs/PRECIOS.md).
 - [Despliegue](docs/DESPLIEGUE.md) y [seguimiento de entrega](docs/ENTREGA.md).
 
 ### Mis proyectos y redes
@@ -276,6 +277,7 @@ The final project will include code, README, application access and slides. [Del
 - [Architecture and shop rules](docs/ARQUITECTURA.md).
 - [Validation](docs/VALIDACION.md) and [evidence](docs/evidencias/README.md).
 - [Resources and reuse](docs/RECURSOS.md).
+- [Luxury pricing references and migration](docs/PRECIOS.md).
 - [Deployment](docs/DESPLIEGUE.md) and [delivery tracking](docs/ENTREGA.md).
 
 ### My projects and social profiles
@@ -289,3 +291,5 @@ The final project will include code, README, application access and slides. [Del
 KelseTS is a fictional brand by **Araceli Fradejas Muñoz**. Maison is an educational and portfolio project without commercial activity, affiliation, sponsorship or endorsement by celebrities, brands or sporting organisations. Its products, collections, prices and operations are fictional. Photorealistic catalogue images are generated representations of fictional products, not photographs of real merchandise. Font credits and licences are in [Resources](docs/RECURSOS.md).
 
 Para actualizar una base local anterior con los nuevos recursos de catálogo: `npm run media:migrate`. Solo sustituye las imágenes SVG originales; conserva stock, imágenes personalizadas y pedidos. Las instalaciones nuevas utilizan WebP desde el inicio.
+
+Para aplicar los precios de lujo a una base local anterior: `npm run prices:migrate`. Conserva precios personalizados por Team, stock y pedidos anteriores. Las instalaciones nuevas incorporan los precios actualizados.

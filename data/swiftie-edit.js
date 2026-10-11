@@ -48,7 +48,7 @@ export function createNewProducts(product) {
       'Emerald Afterglow gown',
       'fashion',
       'spotlight',
-      14900,
+      420000,
       sizes('Esmeralda', 'Emerald'),
       ['dinner', 'concert', 'green'],
       [
@@ -62,7 +62,7 @@ export function createNewProducts(product) {
       'Silver Step sandals',
       'accessories',
       'spotlight',
-      6900,
+      89000,
       shoes('Plata', 'Silver'),
       ['dinner', 'concert', 'silver'],
       [
@@ -76,7 +76,7 @@ export function createNewProducts(product) {
       'Starlit clutch',
       'accessories',
       'spotlight',
-      4500,
+      165000,
       [['Plata · Única', 'Silver · One size']],
       ['dinner', 'concert', 'silver'],
       [
@@ -90,7 +90,7 @@ export function createNewProducts(product) {
       'Ivory Interview blazer',
       'fashion',
       'studio-ivory',
-      9500,
+      225000,
       sizes('Marfil', 'Ivory'),
       ['dinner', 'everyday', 'natural'],
       [
@@ -104,7 +104,7 @@ export function createNewProducts(product) {
       'Ivory Lines trousers',
       'fashion',
       'studio-ivory',
-      6500,
+      95000,
       sizes('Marfil', 'Ivory'),
       ['dinner', 'everyday', 'natural'],
       [
@@ -118,7 +118,7 @@ export function createNewProducts(product) {
       'Studio Satin top',
       'fashion',
       'studio-ivory',
-      3500,
+      65000,
       sizes('Marfil', 'Ivory'),
       ['dinner', 'everyday', 'natural'],
       [
@@ -132,7 +132,7 @@ export function createNewProducts(product) {
       'City Check mini skirt',
       'fashion',
       'city-pages',
-      4900,
+      85000,
       sizes('Cuadros', 'Checks'),
       ['everyday', 'weekend', 'dark'],
       [
@@ -146,7 +146,7 @@ export function createNewProducts(product) {
       'Avenue boots',
       'accessories',
       'city-pages',
-      10900,
+      145000,
       shoes('Chocolate', 'Chocolate'),
       ['everyday', 'weekend', 'dark'],
       [
@@ -160,7 +160,7 @@ export function createNewProducts(product) {
       'Quiet Ink turtleneck',
       'fashion',
       'city-pages',
-      3900,
+      75000,
       sizes('Negro', 'Black'),
       ['everyday', 'weekend', 'dark'],
       [
@@ -174,7 +174,7 @@ export function createNewProducts(product) {
       'Cabin Letters cardigan',
       'fashion',
       'off-duty',
-      6900,
+      145000,
       sizes('Marfil', 'Ivory'),
       ['everyday', 'weekend', 'natural'],
       [
@@ -188,7 +188,7 @@ export function createNewProducts(product) {
       'Weekend Denim jeans',
       'fashion',
       'off-duty',
-      5900,
+      75000,
       sizes('Azul', 'Blue'),
       ['everyday', 'weekend', 'natural'],
       [
@@ -202,7 +202,7 @@ export function createNewProducts(product) {
       'Coffee Date loafers',
       'accessories',
       'off-duty',
-      7900,
+      99000,
       shoes('Burdeos', 'Burgundy'),
       ['everyday', 'weekend', 'red'],
       [

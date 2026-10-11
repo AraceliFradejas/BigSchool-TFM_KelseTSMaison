@@ -70,7 +70,7 @@ export function createLuxuryProducts(product) {
       'Atelier trench coat',
       'fashion',
       'atelier-days',
-      34900,
+      350000,
       labels('sizes', 'Arena', 'Sand'),
       ['everyday', 'natural', 'luxury'],
       [
@@ -84,7 +84,7 @@ export function createLuxuryProducts(product) {
       'Cashmere Whisper sweater',
       'fashion',
       'atelier-days',
-      18900,
+      185000,
       labels('sizes', 'Marfil', 'Ivory'),
       ['everyday', 'natural', 'luxury'],
       [
@@ -98,7 +98,7 @@ export function createLuxuryProducts(product) {
       'Atelier Midi skirt',
       'fashion',
       'atelier-days',
-      17900,
+      155000,
       labels('sizes', 'Camel', 'Camel'),
       ['everyday', 'natural', 'luxury'],
       [
@@ -112,7 +112,7 @@ export function createLuxuryProducts(product) {
       'Atelier pumps',
       'accessories',
       'atelier-days',
-      15900,
+      95000,
       labels('shoes', 'Topo', 'Taupe'),
       ['everyday', 'natural', 'luxury'],
       [
@@ -126,7 +126,7 @@ export function createLuxuryProducts(product) {
       'Noir Tuxedo blazer',
       'fashion',
       'noir-signature',
-      32900,
+      290000,
       labels('sizes', 'Negro', 'Black'),
       ['dinner', 'dark', 'luxury'],
       [
@@ -140,7 +140,7 @@ export function createLuxuryProducts(product) {
       'Noir Lines trousers',
       'fashion',
       'noir-signature',
-      18900,
+      115000,
       labels('sizes', 'Negro', 'Black'),
       ['dinner', 'dark', 'luxury'],
       [
@@ -154,7 +154,7 @@ export function createLuxuryProducts(product) {
       'Pearl Paragraph necklace',
       'accessories',
       'noir-signature',
-      14500,
+      85000,
       labels('one', 'Perla', 'Pearl'),
       ['dinner', 'natural', 'luxury'],
       [
@@ -168,7 +168,7 @@ export function createLuxuryProducts(product) {
       'Noir pumps',
       'accessories',
       'noir-signature',
-      17900,
+      99000,
       labels('shoes', 'Negro', 'Black'),
       ['dinner', 'dark', 'luxury'],
       [
@@ -182,7 +182,7 @@ export function createLuxuryProducts(product) {
       'Rose Reverie gown',
       'fashion',
       'rose-occasion',
-      42900,
+      490000,
       labels('sizes', 'Rosa', 'Blush'),
       ['dinner', 'natural', 'luxury'],
       [
@@ -196,7 +196,7 @@ export function createLuxuryProducts(product) {
       'Rose Notes clutch',
       'accessories',
       'rose-occasion',
-      13900,
+      145000,
       labels('one', 'Rosa', 'Blush'),
       ['dinner', 'natural', 'luxury'],
       [
@@ -210,7 +210,7 @@ export function createLuxuryProducts(product) {
       'Rose Step sandals',
       'accessories',
       'rose-occasion',
-      16900,
+      95000,
       labels('shoes', 'Rosa', 'Blush'),
       ['dinner', 'natural', 'luxury'],
       [
@@ -224,7 +224,7 @@ export function createLuxuryProducts(product) {
       'Rose Drops earrings',
       'accessories',
       'rose-occasion',
-      9500,
+      49000,
       labels('one', 'Dorado y perla', 'Gold and pearl'),
       ['dinner', 'gold', 'luxury'],
       [
@@ -238,7 +238,7 @@ export function createLuxuryProducts(product) {
       'Sapphire Light top',
       'fashion',
       'sapphire-stage',
-      15900,
+      165000,
       labels('sizes', 'Zafiro', 'Sapphire'),
       ['concert', 'dark', 'luxury'],
       [
@@ -252,7 +252,7 @@ export function createLuxuryProducts(product) {
       'Sapphire Night skirt',
       'fashion',
       'sapphire-stage',
-      24900,
+      265000,
       labels('sizes', 'Zafiro', 'Sapphire'),
       ['concert', 'dark', 'luxury'],
       [
@@ -266,7 +266,7 @@ export function createLuxuryProducts(product) {
       'Sapphire Drops earrings',
       'accessories',
       'sapphire-stage',
-      9900,
+      69000,
       labels('one', 'Azul y plata', 'Blue and silver'),
       ['concert', 'dark', 'luxury'],
       [
@@ -280,7 +280,7 @@ export function createLuxuryProducts(product) {
       'Stage Silver boots',
       'accessories',
       'sapphire-stage',
-      22900,
+      119000,
       labels('shoes', 'Plata', 'Silver'),
       ['concert', 'silver', 'luxury'],
       [
@@ -294,7 +294,7 @@ export function createLuxuryProducts(product) {
       'Travel Maison coat',
       'fashion',
       'travel-maison',
-      48900,
+      420000,
       labels('sizes', 'Camel', 'Camel'),
       ['everyday', 'natural', 'luxury'],
       [
@@ -308,7 +308,7 @@ export function createLuxuryProducts(product) {
       'Travel Soft scarf',
       'accessories',
       'travel-maison',
-      12900,
+      65000,
       labels('one', 'Camel', 'Camel'),
       ['everyday', 'natural', 'luxury'],
       [
@@ -322,7 +322,7 @@ export function createLuxuryProducts(product) {
       'Journey tote',
       'accessories',
       'travel-maison',
-      37900,
+      260000,
       labels('one', 'Coñac', 'Cognac'),
       ['everyday', 'natural', 'luxury'],
       [
@@ -336,7 +336,7 @@ export function createLuxuryProducts(product) {
       'Journey boots',
       'accessories',
       'travel-maison',
-      21900,
+      145000,
       labels('shoes', 'Coñac', 'Cognac'),
       ['everyday', 'natural', 'luxury'],
       [
@@ -350,7 +350,7 @@ export function createLuxuryProducts(product) {
       'Velvet Romance dress',
       'fashion',
       'velvet-romance',
-      28900,
+      295000,
       labels('sizes', 'Burdeos', 'Burgundy'),
       ['dinner', 'red', 'luxury'],
       [
@@ -364,7 +364,7 @@ export function createLuxuryProducts(product) {
       'Velvet Letters bow',
       'accessories',
       'velvet-romance',
-      4500,
+      22000,
       labels('one', 'Burdeos', 'Burgundy'),
       ['dinner', 'red', 'luxury'],
       [
@@ -378,7 +378,7 @@ export function createLuxuryProducts(product) {
       'Golden Chain bracelet',
       'accessories',
       'velvet-romance',
-      11900,
+      59000,
       labels('one', 'Dorado', 'Gold'),
       ['dinner', 'gold', 'luxury'],
       [
@@ -392,7 +392,7 @@ export function createLuxuryProducts(product) {
       'Wine Velvet pumps',
       'accessories',
       'velvet-romance',
-      18900,
+      109000,
       labels('shoes', 'Burdeos', 'Burgundy'),
       ['dinner', 'red', 'luxury'],
       [

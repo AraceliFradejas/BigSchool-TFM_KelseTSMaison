@@ -80,3 +80,11 @@ Se han revisado visualmente las quince representaciones de producto y las tres e
 Catálogo local y respuestas HTTP comprobados: 51 artículos, 140 variantes, 15 colecciones y 21 looks con referencias válidas. Se han revisado las 36 nuevas imágenes individualmente en hojas de revisión. Las 102 imágenes WebP de producto, completas y pequeñas, responden HTTP 200 con el tipo de contenido correcto. La selección de lujo filtra 24 artículos. Los filtros de contexto se han comprobado en Safari; [evidencia de looks de televisión](evidencias/maison-looks-tv.png).
 
 `npm run build` y las 26 pruebas pasan. La ampliación comprueba paginación, filtro de lujo y sugerencias de eventos y televisión con presupuesto y stock; mantiene las comprobaciones previas de permisos, pedidos y cancelaciones. Repetir el seed inserta cero registros y conserva el stock M del vestido Satin Story en 7 unidades tras el pedido local anterior. Las imágenes usan versiones de 600 píxeles y su tamaño completo mediante `srcset` y `sizes`. No se ha comprobado esta ampliación en un teléfono físico.
+
+## Ajuste de precios de lujo — 11 de octubre de 2026
+
+- `npm test`: 27 pruebas superadas (23 backend y 4 cliente API).
+- `npm run build`: compilación de producción correcta.
+- Migración aplicada a la base local: 51 productos y 140 variantes actualizados.
+- Comparación antes/después: conservados el pedido existente completo (líneas e importe) y las existencias de las 140 variantes. Segunda ejecución: cero cambios.
+- Prueba automatizada adicional: conserva precios personalizados por Team, stock consumido e importes históricos; incrementa la revisión y comprueba idempotencia.

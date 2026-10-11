@@ -69,7 +69,7 @@ export default function Looks() {
               min="1"
               max="10000"
               step="0.01"
-              defaultValue="1000"
+              defaultValue="6500"
               required
             />
           </label>

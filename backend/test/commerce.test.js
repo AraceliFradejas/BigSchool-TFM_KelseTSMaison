@@ -9,6 +9,7 @@ import sharp from 'sharp';
 import { openDatabase, seedDatabase } from '../src/db.js';
 import { createApp } from '../src/app.js';
 import { getProduct } from '../src/modules/catalog.js';
+import { migrateCatalogPrices } from '../scripts/migrate-catalog-prices.js';
 import { migrateCatalogImages } from '../scripts/migrate-catalog-images.js';
 
 function setup(t) {
@@ -140,7 +141,7 @@ test('order prices come from the server and snapshots survive product changes', 
   const response = await post(agent, '/orders', checkout('satin-story-1', 2));
   assert.equal(response.status, 201, JSON.stringify(response.body));
   const order = response.body.data;
-  assert.equal(order.totalCents, 15800);
+  assert.equal(order.totalCents, 370000);
   assert.equal(order.demo, true);
   assert.equal(getProduct(db, 'satin-story').variants[0].stock, 4);
   db.prepare("UPDATE users SET role='team' WHERE id=?").run(user.id);
@@ -153,7 +154,7 @@ test('order prices come from the server and snapshots survive product changes', 
     .send(update);
   assert.equal(edited.status, 200, JSON.stringify(edited.body));
   const saved = await agent.get(`/api/v1/orders/${order.id}`);
-  assert.equal(saved.body.data.lines[0].unitPriceCents, 7900);
+  assert.equal(saved.body.data.lines[0].unitPriceCents, 185000);
   assert.equal(saved.body.data.lines[0].name.es, 'Vestido Satin Story');
   assert.equal((await agent.get('/api/v1/messages')).body.data.length, 1);
 });
@@ -336,12 +337,12 @@ test('SQLite persists catalogue edits across close and reopen', (t) => {
 });
 test('editorial suggestions respect budget, exclusions and actual stock', async (t) => {
   const { db, agent } = setup(t);
-  const body = { occasion: 'dinner', color: 'dark', budgetCents: 14000, excludeBeauty: true };
+  const body = { occasion: 'dinner', color: 'dark', budgetCents: 410000, excludeBeauty: true };
   const response = await post(agent, '/stylist', body);
   assert.equal(response.body.data.mode, 'editorial');
   assert.equal(response.body.data.looks.length, 1);
   const look = response.body.data.looks[0];
-  assert.equal(look.totalCents, 13800);
+  assert.equal(look.totalCents, 410000);
   assert.ok(
     look.pieces.every((piece) => piece.product.category !== 'beauty' && piece.variant.stock > 0),
   );
@@ -366,21 +367,21 @@ test('new editorial looks reference existing products and support event and TV s
   const green = await post(agent, '/stylist', {
     occasion: 'event',
     color: 'green',
-    budgetCents: 27000,
+    budgetCents: 674000,
     excludeBeauty: true,
   });
   assert.deepEqual(
     green.body.data.looks.map((look) => look.id),
     ['look-emerald-evening'],
   );
-  assert.equal(green.body.data.looks[0].totalCents, 26300);
+  assert.equal(green.body.data.looks[0].totalCents, 674000);
   db.prepare("UPDATE variants SET stock=0 WHERE product_id='silver-step'").run();
   assert.equal(
     (
       await post(agent, '/stylist', {
         occasion: 'event',
         color: 'green',
-        budgetCents: 27000,
+        budgetCents: 674000,
         excludeBeauty: true,
       })
     ).body.data.looks.length,
@@ -389,7 +390,7 @@ test('new editorial looks reference existing products and support event and TV s
   const television = await post(agent, '/stylist', {
     occasion: 'television',
     color: 'dark',
-    budgetCents: 23000,
+    budgetCents: 310500,
     excludeBeauty: false,
   });
   assert.deepEqual(
@@ -445,4 +446,24 @@ test('image uploads reject SVG and forged headers, then normalize a valid raster
   assert.equal(response.status, 201, JSON.stringify(response.body));
   assert.match(response.body.data.image, /^\/uploads\/[a-f0-9-]+\.webp$/);
   assert.equal(readdirSync(dir).length, 1);
+});
+
+test('luxury price migration preserves stock, Team prices and historical orders', async (t) => {
+  const { db, agent } = setup(t);
+  await register(agent);
+  db.prepare("UPDATE variants SET price_cents=7900 WHERE product_id='satin-story'").run();
+  db.prepare("UPDATE variants SET price_cents=12345 WHERE id='satin-story-2'").run();
+  const order = await post(agent, '/orders', checkout());
+  assert.equal(order.status, 201);
+  const before = db.prepare('SELECT lines, total_cents FROM orders').get();
+  const revision = getProduct(db, 'satin-story').revision;
+  assert.deepEqual(migrateCatalogPrices(db), { products: 1, variants: 2 });
+  const product = getProduct(db, 'satin-story');
+  assert.equal(product.variants[0].priceCents, 185000);
+  assert.equal(product.variants[0].stock, 5);
+  assert.equal(product.variants[1].priceCents, 12345);
+  assert.equal(product.revision, revision + 1);
+  assert.deepEqual(db.prepare('SELECT lines, total_cents FROM orders').get(), before);
+  assert.equal(before.total_cents, 7900);
+  assert.deepEqual(migrateCatalogPrices(db), { products: 0, variants: 0 });
 });

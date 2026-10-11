@@ -54,7 +54,7 @@ function product(id, es, en, category, collectionId, priceCents, labels, tags, d
     variants: labels.map(([labelEs, labelEn], i) => ({
       id: `${id}-${i + 1}`,
       label: translated(labelEs, labelEn),
-      priceCents,
+      priceCents: Array.isArray(priceCents) ? priceCents[i] : priceCents,
       stock: i === 2 ? 0 : 6 + i * 2,
     })),
   };
@@ -66,7 +66,7 @@ export const products = [
     'Satin Story dress',
     'fashion',
     'golden-hour',
-    7900,
+    185000,
     [
       ['S · Champán', 'S · Champagne'],
       ['M · Champán', 'M · Champagne'],
@@ -84,7 +84,7 @@ export const products = [
     'Sunlit earrings',
     'accessories',
     'golden-hour',
-    2400,
+    45000,
     [['Dorado · Par', 'Gold · Pair']],
     ['dinner', 'gold'],
     [
@@ -98,7 +98,7 @@ export const products = [
     'Warm Notes fragrance',
     'beauty',
     'golden-hour',
-    3500,
+    [9500, 14500],
     [
       ['30 ml', '30 ml'],
       ['50 ml', '50 ml'],
@@ -115,7 +115,7 @@ export const products = [
     'Velvet Night blazer',
     'fashion',
     'midnight-velvet',
-    8900,
+    185000,
     [
       ['S · Azul noche', 'S · Midnight blue'],
       ['M · Azul noche', 'M · Midnight blue'],
@@ -133,7 +133,7 @@ export const products = [
     'After Hours bag',
     'accessories',
     'midnight-velvet',
-    4900,
+    225000,
     [
       ['Negro · Única', 'Black · One size'],
       ['Azul noche · Única', 'Midnight blue · One size'],
@@ -150,7 +150,7 @@ export const products = [
     'Moonlit eyeshadow',
     'beauty',
     'midnight-velvet',
-    1800,
+    6500,
     [
       ['Grafito · 4 g', 'Graphite · 4 g'],
       ['Azul noche · 4 g', 'Midnight blue · 4 g'],
@@ -167,7 +167,7 @@ export const products = [
     'Field Notes blouse',
     'fashion',
     'wildflower',
-    4500,
+    79000,
     [
       ['S · Salvia', 'S · Sage'],
       ['M · Salvia', 'M · Sage'],
@@ -185,7 +185,7 @@ export const products = [
     'Woven Days bag',
     'accessories',
     'wildflower',
-    3900,
+    125000,
     [['Arena · Única', 'Sand · One size']],
     ['everyday', 'weekend', 'natural'],
     [
@@ -199,7 +199,7 @@ export const products = [
     'Petal Touch blush',
     'beauty',
     'wildflower',
-    1900,
+    6800,
     [
       ['Rosa suave · 6 g', 'Soft pink · 6 g'],
       ['Melocotón · 6 g', 'Peach · 6 g'],
@@ -216,7 +216,7 @@ export const products = [
     'Red Letter shirt',
     'fashion',
     'crimson-letters',
-    5900,
+    95000,
     [
       ['S · Rojo', 'S · Red'],
       ['M · Rojo', 'M · Red'],
@@ -234,7 +234,7 @@ export const products = [
     'Little Letter scarf',
     'accessories',
     'crimson-letters',
-    2200,
+    39000,
     [['Rojo y marfil · 60 cm', 'Red and ivory · 60 cm']],
     ['concert', 'everyday', 'red'],
     [
@@ -248,7 +248,7 @@ export const products = [
     'Crimson Kiss lipstick',
     'beauty',
     'crimson-letters',
-    2100,
+    5500,
     [
       ['Rojo carta · 3 g', 'Letter red · 3 g'],
       ['Rojo vino · 3 g', 'Wine red · 3 g'],
@@ -265,7 +265,7 @@ export const products = [
     'Slow Sunday sweater',
     'fashion',
     'sunday-together',
-    5500,
+    89000,
     [
       ['S · Marfil', 'S · Ivory'],
       ['M · Marfil', 'M · Ivory'],
@@ -283,7 +283,7 @@ export const products = [
     'Weekend Club cap',
     'accessories',
     'sunday-together',
-    2500,
+    32000,
     [
       ['Burdeos · Ajustable', 'Burgundy · Adjustable'],
       ['Marfil · Ajustable', 'Ivory · Adjustable'],
@@ -300,7 +300,7 @@ export const products = [
     'Soft Morning balm',
     'beauty',
     'sunday-together',
-    1400,
+    4800,
     [
       ['Natural · 10 g', 'Natural · 10 g'],
       ['Rosa · 10 g', 'Pink · 10 g'],
