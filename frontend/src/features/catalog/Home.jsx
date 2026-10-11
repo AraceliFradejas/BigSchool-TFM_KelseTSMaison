@@ -1,3 +1,4 @@
+import CampaignHero from './CampaignHero';
 import { Link } from 'react-router-dom';
 import { useMaison, useResource } from '../../shared/state';
 import { Icon, ProductGrid, ResourceState } from '../../shared/components';
@@ -8,32 +9,7 @@ export default function Home() {
   const newEdit = useResource('/products?luxury=1');
   return (
     <>
-      <section className="hero">
-        <div className="hero-copy">
-          <p className="eyebrow">{t.heroEyebrow}</p>
-          <h1>{t.heroTitle}</h1>
-          <p className="hero-description">{t.heroBody}</p>
-          <Link className="button" to="/catalog">
-            {t.explore}
-            <Icon name="arrow" />
-          </Link>
-          <span className="hero-caption">EST. 2026 · ARACELI FRADEJAS MUÑOZ</span>
-        </div>
-        <div className="hero-art">
-          <img
-            src="/media/campaign.webp"
-            alt={
-              language === 'es'
-                ? 'Escena editorial fotorrealista de un vestido marfil y un pañuelo rojo en un espacio de boutique'
-                : 'Photorealistic editorial scene of an ivory dress and a red scarf in a boutique setting'
-            }
-            width="900"
-            height="1000"
-            fetchPriority="high"
-          />
-          <span className="art-caption">KelseTS Maison / 01</span>
-        </div>
-      </section>
+      <CampaignHero />
       <section className="section container">
         <div className="section-intro">
           <div>

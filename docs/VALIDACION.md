@@ -88,3 +88,12 @@ Catálogo local y respuestas HTTP comprobados: 51 artículos, 140 variantes, 15 
 - Migración aplicada a la base local: 51 productos y 140 variantes actualizados.
 - Comparación antes/después: conservados el pedido existente completo (líneas e importe) y las existencias de las 140 variantes. Segunda ejecución: cero cambios.
 - Prueba automatizada adicional: conserva precios personalizados por Team, stock consumido e importes históricos; incrementa la revisión y comprueba idempotencia.
+
+## Portada de cuatro looks — 11 de octubre de 2026
+
+- Cuatro fotografías originales de modelos adultas, optimizadas a 720 píxeles de ancho en WebP y revisadas visualmente.
+- Revisión en Safari de la portada en castellano e inglés: cuatro columnas en la ventana de escritorio, modelos completas y textos legibles.
+- Enlace «Explorar el look» de Maison Departure: abre el catálogo filtrado por Travel Maison y muestra sus cuatro artículos.
+- `npm run build`: compilación de producción correcta; `git diff --check`: sin errores de espacios.
+- Captura de la portada: [cuatro modelos](evidencias/maison-hero-modelos.png).
+- Vídeos pendientes: la cuenta conectada de Runway continúa en Free. No se ha comprobado reproducción de clips reales ni comportamiento en un móvil real.

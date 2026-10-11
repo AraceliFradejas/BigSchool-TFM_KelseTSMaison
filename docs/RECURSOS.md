@@ -58,3 +58,9 @@ La interpretación de estas referencias utiliza nombres, formas y combinaciones 
 [Ralph Lauren: punto trenzado y mocasines](https://www.ralphlauren.es/es/mujer/descubrir/verano/9030115/r/mocasines) y [falda de cuadros](https://www.ralphlauren.com/women-clothing-skirts/plaid-knit-jacquard-skirt/463555.html) orientan la sensibilidad preppy de Campus Pages y Country Weekend: capas, marfil, camel, burdeos y accesorios cotidianos.
 
 `npm run media:prepare` prepara versiones de 600 píxeles y el manifiesto de tamaños. Las tarjetas y fichas utilizan `srcset` y `sizes`; las imágenes personalizadas conservan su ruta original.
+
+## Campaña de portada con modelos
+
+Cuatro fotografías editoriales generadas con la herramienta integrada de imágenes de OpenAI, optimizadas a WebP con Sharp: `hero-emerald.webp`, `hero-ivory.webp`, `hero-city.webp` y `hero-travel.webp`. Representan modelos adultas ficticias de 28–37 años, con diversidad de apariencia y looks de las colecciones Spotlight, Studio Ivory, City Pages y Travel Maison. La dirección visual toma como referencia la portada de [Armani](https://www.armani.com/es-es/), sin reutilizar sus fotografías ni vídeos.
+
+La integración dispone de reproducción de vídeo al pasar el cursor o enfocar el enlace, botón para dispositivos táctiles, reproducción silenciosa, pausa al salir de pantalla y respeto a la preferencia de reducir movimiento. Por ahora no hay clips asociados: Runway ha confirmado que el espacio conectado está en Free y no permite generar vídeo. Las cuatro fotografías permanecen visibles y los enlaces a las colecciones funcionan. La generación y comprobación de los vídeos quedan pendientes de activar un plan compatible.
