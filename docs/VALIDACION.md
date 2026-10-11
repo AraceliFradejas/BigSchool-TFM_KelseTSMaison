@@ -70,3 +70,7 @@ Las capturas están en [Evidencias](evidencias/README.md). Se revisaron visualme
 - IA y app nativa: no están implementadas y no hay pruebas de funcionamiento de esas ampliaciones.
 
 `node:sqlite` emite el aviso experimental previsto en Node 22. Las pruebas HTTP requieren abrir puertos locales; en un entorno aislado que prohíba ese acceso deben ejecutarse con los permisos de red local correspondientes.
+
+## Actualización de imágenes de catálogo
+
+Se han revisado visualmente las quince representaciones de producto y las tres escenas editoriales. Perfume, sombra, colorete, labial y bálsamo incorporan la marca Maison. Los dieciocho WebP suman aproximadamente 1,5 MB. Portada comprobada en Safari. `npm run build` y las 25 pruebas de backend y transporte pasan. La migración local actualizó quince imágenes originales; su prueba verifica que conserva imágenes personalizadas y stock y que repetirla no produce cambios. Los SVG se mantienen para las referencias de pedidos anteriores.

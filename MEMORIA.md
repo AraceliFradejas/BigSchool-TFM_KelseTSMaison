@@ -38,7 +38,7 @@ El catálogo inicial contiene quince productos ficticios, repartidos entre Moda,
 
 La primera propuesta visual utiliza marfil, negro suave y el rojo KelseTS `#b3152b`. El logo mantiene el dibujo vectorial utilizado en Cars con el subtítulo Maison. La portada presenta una escena de boutique y las colecciones se diferencian con colores de apoyo. DM Sans se utiliza en la interfaz y Playfair Display en los títulos. Las fuentes se sirven desde la propia aplicación.
 
-Las imágenes actuales son ilustraciones vectoriales diseñadas para la demostración. Hay una imagen diferente por producto y escenas independientes para portada, historia y selección editorial. La fotografía de campaña y la revisión del sistema de marca siguen pendientes; no presento esta muestra como una sesión fotográfica ni como una identidad definitiva.
+El catálogo utiliza representaciones fotorrealistas generadas para los quince productos ficticios y tres escenas editoriales. Los envases de perfume y cosméticos incorporan el logo de Maison. La inspiración swiftie combina satén, rojo, romanticismo y punto para pasar de ocasiones especiales al día a día. No presento estas imágenes como una sesión fotográfica de mercancía real. Los SVG anteriores se conservan para respetar las imágenes guardadas en pedidos históricos.
 
 ## 5 Cuenta y selección personal
 

@@ -13,7 +13,7 @@ Maison tiene datos y recursos propios de demostración. La base técnica contin�
 
 No se han copiado vehículos, citas, talleres, fotografías, bases de datos, cuentas, `.env`, credenciales ni historial Git de Cars. Las sesiones y la persistencia de Maison son implementaciones propias para esta versión.
 
-## Datos e ilustraciones
+## Datos e imágenes
 
 `data/catalog.js` define quince productos ficticios, cinco colecciones y cinco looks manuales. Los precios son ejemplos y no representan ofertas reales. Las descripciones de belleza son creativas, sin diagnósticos ni promesas médicas.
 
@@ -34,4 +34,6 @@ Las fuentes se empaquetan y sirven desde la aplicación. La interfaz no solicita
 
 React y React Router componen la web; Vite genera el build. Express gestiona la API, Zod valida las entradas y Sharp decodifica y optimiza imágenes. Node proporciona SQLite, criptografía y el ejecutor de pruebas; Supertest comprueba las rutas HTTP. Las dependencias y sus versiones resueltas figuran en `package-lock.json` y conservan sus licencias en los paquetes instalados.
 
-Las evidencias visuales se han capturado en Safari con una cuenta ficticia local. No se han utilizado servicios externos de generación de imágenes, proveedores de IA ni correo en el funcionamiento de esta primera versión.
+Las evidencias visuales iniciales se capturaron en Safari con una cuenta ficticia local y muestran la versión anterior con ilustraciones. Las imágenes actuales se crearon y editaron con la herramienta integrada de generación de imágenes de OpenAI, usando el logo vectorial del proyecto como referencia para los envases. Sharp las convierte a WebP. La aplicación no llama a un proveedor de IA durante la navegación ni envía correo externo. Los encargos visuales están en `docs/recursos/catalogo-fotorrealista.json`.
+
+La dirección editorial swiftie toma como referencia el contraste entre glamour y estilo cotidiano de [Taylor Swift en Vogue](https://www.vogue.com/slideshow/taylor-swift-best-outfits-2024): prendas satinadas, rojo, detalles dorados y punto. Son propuestas propias de Maison; no se han copiado fotografías de marcas ni se presenta colaboración oficial.

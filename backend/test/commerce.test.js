@@ -9,6 +9,7 @@ import sharp from 'sharp';
 import { openDatabase, seedDatabase } from '../src/db.js';
 import { createApp } from '../src/app.js';
 import { getProduct } from '../src/modules/catalog.js';
+import { migrateCatalogImages } from '../scripts/migrate-catalog-images.js';
 
 function setup(t) {
   const db = openDatabase();
@@ -349,6 +350,26 @@ test('the seed preserves edited products, consumed stock and existing users', (t
   db.prepare("UPDATE variants SET stock=2 WHERE id='satin-story-1'").run();
   assert.equal(seedDatabase(db), 0);
   assert.equal(getProduct(db, 'satin-story').variants[0].stock, 2);
+});
+test('catalog image migration preserves custom images and stock and is idempotent', (t) => {
+  const { db } = setup(t);
+  const original = JSON.parse(
+    db.prepare("SELECT data FROM products WHERE id='satin-story'").get().data,
+  );
+  original.image = '/media/satin-story.svg';
+  db.prepare("UPDATE products SET data=? WHERE id='satin-story'").run(JSON.stringify(original));
+  const custom = JSON.parse(
+    db.prepare("SELECT data FROM products WHERE id='warm-notes'").get().data,
+  );
+  custom.image = '/uploads/custom.webp';
+  db.prepare("UPDATE products SET data=? WHERE id='warm-notes'").run(JSON.stringify(custom));
+  db.prepare("UPDATE variants SET stock=2 WHERE id='satin-story-1'").run();
+  assert.equal(migrateCatalogImages(db), 1);
+  assert.equal(getProduct(db, 'satin-story').image, '/media/satin-story.webp');
+  assert.equal(getProduct(db, 'satin-story').revision, 2);
+  assert.equal(getProduct(db, 'satin-story').variants[0].stock, 2);
+  assert.equal(getProduct(db, 'warm-notes').image, '/uploads/custom.webp');
+  assert.equal(migrateCatalogImages(db), 0);
 });
 test('image uploads reject SVG and forged headers, then normalize a valid raster', async (t) => {
   const { agent, db, dir } = setup(t);

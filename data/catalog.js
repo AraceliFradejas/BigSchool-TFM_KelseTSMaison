@@ -43,7 +43,7 @@ function product(id, es, en, category, collectionId, priceCents, labels, tags, d
     name: translated(es, en),
     category,
     collectionId,
-    image: `/media/${id}.svg`,
+    image: `/media/${id}.webp`,
     active: true,
     tags,
     description: translated(...description),

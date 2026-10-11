@@ -15,7 +15,7 @@ export const words = {
     heroEyebrow: 'UNIVERSO KelseTS · MAISON',
     heroTitle: 'Tu estilo cuenta\nuna historia.',
     heroBody:
-      'Piezas que se encuentran. Planes que se recuerdan. Una selección de moda, accesorios y belleza para hacerla tuya.',
+      'Un universo swiftie para vestir tus propias historias. Satén para una noche especial, rojo para un concierto y punto para los pequeños planes.',
     explore: 'Explorar la boutique',
     discoverLooks: 'Encuentra tu combinación',
     edit: 'LA SELECCIÓN MAISON',
@@ -54,7 +54,7 @@ export const words = {
     lookEyebrow: 'PIEZAS QUE CONVERSAN',
     lookTitle: 'Completa tu look.',
     lookBody:
-      'Moda, accesorios y belleza unidos por una misma idea. Combinaciones editoriales para empezar; la última palabra es tuya.',
+      'Del glamour de una noche especial a un café de domingo: combinaciones con espíritu swiftie, rojo, romanticismo y detalles dorados. La última palabra es tuya.',
     seePiece: 'Ver la pieza',
     lookIncomplete: 'Selección incompleta: algunas piezas ya no están disponibles.',
     stylist: 'Encuentra una combinación',
@@ -161,7 +161,7 @@ export const words = {
     legal:
       'KelseTS es una marca ficticia de Araceli Fradejas Muñoz. Proyecto educativo y de portfolio, sin ventas reales ni respaldo de celebridades, marcas o entidades deportivas.',
     creditsBody:
-      'El catálogo contiene productos y precios ficticios. Las ilustraciones vectoriales se han diseñado para esta demostración y no son fotografías de productos reales. La base del cliente HTTP y la organización por funcionalidades continúan el trabajo de KelseTS Cars.',
+      'El catálogo contiene productos y precios ficticios. Las imágenes fotorrealistas se han generado para esta demostración y no son fotografías de productos reales. La base del cliente HTTP y la organización por funcionalidades continúan el trabajo de KelseTS Cars.',
     footerLine: 'Moda. Historias. Un universo propio.',
     author: 'Araceli Fradejas Muñoz · TFM BigSchool',
     loading: 'Cargando…',
@@ -189,7 +189,7 @@ export const words = {
     heroEyebrow: 'KelseTS UNIVERSE · MAISON',
     heroTitle: 'Your style tells\na story.',
     heroBody:
-      'Pieces that belong together. Plans to remember. A selection of fashion, accessories and beauty to make your own.',
+      'A swiftie universe for your own stories. Satin for a special night, red for a concert and knitwear for everyday plans.',
     explore: 'Explore the boutique',
     discoverLooks: 'Find your combination',
     edit: 'THE MAISON EDIT',
@@ -228,7 +228,7 @@ export const words = {
     lookEyebrow: 'PIECES IN CONVERSATION',
     lookTitle: 'Complete your look.',
     lookBody:
-      'Fashion, accessories and beauty joined by a single idea. Editorial combinations to get started; the last word is yours.',
+      'From evening glamour to Sunday coffee: combinations with a swiftie spirit, red, romance and golden details. The last word is yours.',
     seePiece: 'View piece',
     lookIncomplete: 'Incomplete selection: some pieces are no longer available.',
     stylist: 'Find a combination',
@@ -335,7 +335,7 @@ export const words = {
     legal:
       'KelseTS is a fictional brand by Araceli Fradejas Muñoz. An educational and portfolio project, with no real sales or endorsement by celebrities, brands or sporting organisations.',
     creditsBody:
-      'The catalogue contains fictional products and prices. The vector illustrations were designed for this demonstration and are not photographs of real products. The HTTP client foundation and feature-based organisation continue the work of KelseTS Cars.',
+      'The catalogue contains fictional products and prices. The photorealistic images were generated for this demonstration and are not photographs of real products. The HTTP client foundation and feature-based organisation continue the work of KelseTS Cars.',
     footerLine: 'Fashion. Stories. A universe of our own.',
     author: 'Araceli Fradejas Muñoz · BigSchool final project',
     loading: 'Loading…',

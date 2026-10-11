@@ -9,7 +9,7 @@ export default function Story() {
       <PageHeading eyebrow="UNIVERSO KelseTS" title={t.aboutTitle} body={t.aboutIntro} />
       <div className="story-layout">
         <div className="story-art">
-          <img src="/media/story.svg" alt="" width="650" height="800" />
+          <img src="/media/story.webp" alt="" width="650" height="800" />
         </div>
         <div className="story-copy">
           <p>{t.aboutText}</p>

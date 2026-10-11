@@ -1,0 +1,113 @@
+{
+  "mode": "Built-in OpenAI image generation and reference-image editing",
+  "assets": [
+    {
+      "id": "satin-story",
+      "prompt": "Champagne satin midi dress, cowl neckline, invisible mannequin, warm ivory studio, photorealistic catalog.",
+      "branded": false,
+      "file": "frontend/public/media/satin-story.webp"
+    },
+    {
+      "id": "sunlit-hoops",
+      "prompt": "One photorealistic premium e-commerce product photograph: exactly one pair of small polished organic gold hoop earrings, fine metal reflections. Fictional boutique original product. Vertical 4:5 composition, entire object centered and fully visible with generous margins. Warm ivory seamless studio background, soft directional light, subtle natural shadow. Accurate physical materials, fine texture and manufacturing details, high-end fashion catalog photography. No text, logos, watermarks, illustration, CGI look or extra products.",
+      "branded": false,
+      "file": "frontend/public/media/sunlit-hoops.webp"
+    },
+    {
+      "id": "warm-notes",
+      "prompt": "Edit product photograph using the original KelseTS Maison logo reference; preserve product and lighting, apply complete logo as physical packaging print.",
+      "branded": true,
+      "file": "frontend/public/media/warm-notes.webp"
+    },
+    {
+      "id": "velvet-night",
+      "prompt": "One photorealistic premium e-commerce product photograph: midnight navy velvet tailored single-breasted blazer with lapels, invisible mannequin, no person. Fictional boutique original product. Vertical 4:5 composition, entire object centered and fully visible with generous margins. Warm ivory seamless studio background, soft directional light, subtle natural shadow. Accurate physical materials, fine texture and manufacturing details, high-end fashion catalog photography. No text, logos, watermarks, illustration, CGI look or extra products.",
+      "branded": false,
+      "file": "frontend/public/media/velvet-night.webp"
+    },
+    {
+      "id": "after-hours",
+      "prompt": "One photorealistic premium e-commerce product photograph: small curved black leather handbag with short top handle and understated gold clasp, natural leather grain. Fictional boutique original product. Vertical 4:5 composition, entire object centered and fully visible with generous margins. Warm ivory seamless studio background, soft directional light, subtle natural shadow. Accurate physical materials, fine texture and manufacturing details, high-end fashion catalog photography. No text, logos, watermarks, illustration, CGI look or extra products.",
+      "branded": false,
+      "file": "frontend/public/media/after-hours.webp"
+    },
+    {
+      "id": "moonlit-shade",
+      "prompt": "Edit product photograph using the original KelseTS Maison logo reference; preserve product and lighting, apply complete logo as physical packaging print.",
+      "branded": true,
+      "file": "frontend/public/media/moonlit-shade.webp"
+    },
+    {
+      "id": "field-notes",
+      "prompt": "One photorealistic premium e-commerce product photograph: sage green flowing blouse with wide sleeves and open collar, invisible mannequin. Fictional boutique original product. Vertical 4:5 composition, entire object centered and fully visible with generous margins. Warm ivory seamless studio background, soft directional light, subtle natural shadow. Accurate physical materials, fine texture and manufacturing details, high-end fashion catalog photography. No text, logos, watermarks, illustration, CGI look or extra products.",
+      "branded": false,
+      "file": "frontend/public/media/field-notes.webp"
+    },
+    {
+      "id": "woven-days",
+      "prompt": "One photorealistic premium e-commerce product photograph: sand natural raffia woven handbag with rounded handles, intricate realistic fibers. Fictional boutique original product. Vertical 4:5 composition, entire object centered and fully visible with generous margins. Warm ivory seamless studio background, soft directional light, subtle natural shadow. Accurate physical materials, fine texture and manufacturing details, high-end fashion catalog photography. No text, logos, watermarks, illustration, CGI look or extra products.",
+      "branded": false,
+      "file": "frontend/public/media/woven-days.webp"
+    },
+    {
+      "id": "petal-touch",
+      "prompt": "Edit product photograph using the original KelseTS Maison logo reference; preserve product and lighting, apply complete logo as physical packaging print.",
+      "branded": true,
+      "file": "frontend/public/media/petal-touch.webp"
+    },
+    {
+      "id": "red-letter",
+      "prompt": "One photorealistic premium e-commerce product photograph: deep burgundy red flowing silky blouse with wide cuffs, invisible mannequin. Fictional boutique original product. Vertical 4:5 composition, entire object centered and fully visible with generous margins. Warm ivory seamless studio background, soft directional light, subtle natural shadow. Accurate physical materials, fine texture and manufacturing details, high-end fashion catalog photography. No text, logos, watermarks, illustration, CGI look or extra products.",
+      "branded": false,
+      "file": "frontend/public/media/red-letter.webp"
+    },
+    {
+      "id": "little-letter",
+      "prompt": "One photorealistic premium e-commerce product photograph: red and ivory square silk scarf with original simple geometric pattern, partly folded. Fictional boutique original product. Vertical 4:5 composition, entire object centered and fully visible with generous margins. Warm ivory seamless studio background, soft directional light, subtle natural shadow. Accurate physical materials, fine texture and manufacturing details, high-end fashion catalog photography. No text, logos, watermarks, illustration, CGI look or extra products.",
+      "branded": false,
+      "file": "frontend/public/media/little-letter.webp"
+    },
+    {
+      "id": "crimson-kiss",
+      "prompt": "Edit product photograph using the original KelseTS Maison logo reference; preserve product and lighting, apply complete logo as physical packaging print.",
+      "branded": true,
+      "file": "frontend/public/media/crimson-kiss.webp"
+    },
+    {
+      "id": "slow-sunday",
+      "prompt": "One photorealistic premium e-commerce product photograph: ivory relaxed crewneck knitted sweater with long sleeves, invisible mannequin, fine visible knit. Fictional boutique original product. Vertical 4:5 composition, entire object centered and fully visible with generous margins. Warm ivory seamless studio background, soft directional light, subtle natural shadow. Accurate physical materials, fine texture and manufacturing details, high-end fashion catalog photography. No text, logos, watermarks, illustration, CGI look or extra products.",
+      "branded": false,
+      "file": "frontend/public/media/slow-sunday.webp"
+    },
+    {
+      "id": "weekend-cap",
+      "prompt": "One photorealistic premium e-commerce product photograph: burgundy cotton baseball cap with curved brim, plain unbranded, three quarter view. Fictional boutique original product. Vertical 4:5 composition, entire object centered and fully visible with generous margins. Warm ivory seamless studio background, soft directional light, subtle natural shadow. Accurate physical materials, fine texture and manufacturing details, high-end fashion catalog photography. No text, logos, watermarks, illustration, CGI look or extra products.",
+      "branded": false,
+      "file": "frontend/public/media/weekend-cap.webp"
+    },
+    {
+      "id": "soft-morning",
+      "prompt": "Edit product photograph using the original KelseTS Maison logo reference; preserve product and lighting, apply complete logo as physical packaging print.",
+      "branded": true,
+      "file": "frontend/public/media/soft-morning.webp"
+    },
+    {
+      "id": "campaign",
+      "prompt": "Vertical 4:5 editorial photograph of a champagne satin midi dress on a wooden hanger in a luxurious intimate ivory boutique, arched sunlit window, burgundy silk scarf nearby, realistic warm afternoon light, no people. Photorealistic premium fashion editorial for fictional KelseTS Maison. No text, logos, watermarks or illustration. Physical materials and believable shadows.",
+      "branded": false,
+      "file": "frontend/public/media/campaign.webp"
+    },
+    {
+      "id": "editorial",
+      "prompt": "Landscape 5:4 luxury fashion still life with original red and ivory geometric silk scarf, small black leather top-handle bag and red lipstick on warm ivory stone table, beautifully styled, realistic textures. Photorealistic premium fashion editorial for fictional KelseTS Maison. No text, logos, watermarks or illustration. Physical materials and believable shadows.",
+      "branded": false,
+      "file": "frontend/public/media/editorial.webp"
+    },
+    {
+      "id": "story",
+      "prompt": "Vertical 4:5 editorial photograph of fashion designer workspace: burgundy fabric swatches, ivory and red silk, notebook with blank pages, spool of thread and coffee on warm stone desk, natural window light, realistic intimate boutique craftsmanship. Photorealistic premium fashion editorial for fictional KelseTS Maison. No text, logos, watermarks or illustration. Physical materials and believable shadows.",
+      "branded": false,
+      "file": "frontend/public/media/story.webp"
+    }
+  ]
+}

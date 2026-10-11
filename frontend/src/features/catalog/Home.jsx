@@ -20,11 +20,11 @@ export default function Home() {
         </div>
         <div className="hero-art">
           <img
-            src="/media/campaign.svg"
+            src="/media/campaign.webp"
             alt={
               language === 'es'
-                ? 'Ilustración editorial de un vestido marfil y un pañuelo rojo en un espacio de boutique'
-                : 'Editorial illustration of an ivory dress and a red scarf in a boutique setting'
+                ? 'Escena editorial fotorrealista de un vestido marfil y un pañuelo rojo en un espacio de boutique'
+                : 'Photorealistic editorial scene of an ivory dress and a red scarf in a boutique setting'
             }
             width="900"
             height="1000"
@@ -88,7 +88,7 @@ export default function Home() {
       </section>
       <section className="look-teaser container">
         <div className="look-teaser-art" aria-hidden="true">
-          <img src="/media/editorial.svg" alt="" width="800" height="650" loading="lazy" />
+          <img src="/media/editorial.webp" alt="" width="800" height="650" loading="lazy" />
         </div>
         <div>
           <p className="eyebrow">{t.lookEyebrow}</p>

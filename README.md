@@ -48,13 +48,13 @@ frontend/
   src/features/      # Catálogo, cuenta, bolsa, Team y marca
   src/shared/        # Estado, idiomas, componentes y peticiones
   src/styles/        # Diseño y responsive
-  public/media/      # Ilustraciones SVG propias
+  public/media/      # Imágenes de catálogo WebP y SVG históricos
 packages/
   contracts/         # Esquemas y transiciones de pedidos
   api-client/        # Transporte HTTP y sus pruebas
 data/catalog.js      # Catálogo y looks ficticios reproducibles
 docs/                # Arquitectura, recursos, validación y entrega
-scripts/             # Arranque y generación de ilustraciones
+scripts/             # Arranque, recursos y migración de imágenes
 ```
 
 La base local permite probar Maison sin cuentas de servicios externos. Es independiente de Cars y no contiene sus usuarios, datos ni credenciales. En Node 22, `node:sqlite` muestra un aviso de funcionalidad experimental; el entorno comprobado está recogido en [Validación](docs/VALIDACION.md).
@@ -142,7 +142,7 @@ La entrega del TFM reunirá código, README, acceso a la aplicación y slides. E
 
 ### Aviso académico y autora
 
-KelseTS es una marca ficticia de **Araceli Fradejas Muñoz**. Maison es un proyecto educativo y de portfolio, sin actividad comercial, afiliación, patrocinio ni respaldo de celebridades, marcas o entidades deportivas. Sus productos, colecciones, precios y operaciones son ficticios. Las ilustraciones del catálogo son muestras visuales propias, no fotografías de mercancía real. Los créditos y licencias de las tipografías están en [Recursos](docs/RECURSOS.md).
+KelseTS es una marca ficticia de **Araceli Fradejas Muñoz**. Maison es un proyecto educativo y de portfolio, sin actividad comercial, afiliación, patrocinio ni respaldo de celebridades, marcas o entidades deportivas. Sus productos, colecciones, precios y operaciones son ficticios. Las imágenes fotorrealistas del catálogo son representaciones generadas de productos ficticios, no fotografías de mercancía real. Los créditos y licencias de las tipografías están en [Recursos](docs/RECURSOS.md).
 
 ## English version
 
@@ -188,13 +188,13 @@ frontend/
   src/features/      # Catalogue, account, bag, Team and brand
   src/shared/        # State, languages, components and requests
   src/styles/        # Design and responsive layout
-  public/media/      # Original SVG illustrations
+  public/media/      # WebP catalog images and historical SVGs
 packages/
   contracts/         # Schemas and order transitions
   api-client/        # HTTP transport and its tests
 data/catalog.js      # Reproducible fictional catalogue and looks
 docs/                # Architecture, resources, validation and delivery
-scripts/             # Startup and illustration generation
+scripts/             # Startup, assets and image migration
 ```
 
 The local database lets you try Maison without external service accounts. It is independent of Cars and contains none of its users, data or credentials. On Node 22, `node:sqlite` emits an experimental-feature warning; the checked environment is recorded in [Validation](docs/VALIDACION.md).
@@ -282,4 +282,6 @@ The final project will include code, README, application access and slides. [Del
 
 ### Academic notice and author
 
-KelseTS is a fictional brand by **Araceli Fradejas Muñoz**. Maison is an educational and portfolio project without commercial activity, affiliation, sponsorship or endorsement by celebrities, brands or sporting organisations. Its products, collections, prices and operations are fictional. Catalogue illustrations are original visual samples, not photographs of real merchandise. Font credits and licences are in [Resources](docs/RECURSOS.md).
+KelseTS is a fictional brand by **Araceli Fradejas Muñoz**. Maison is an educational and portfolio project without commercial activity, affiliation, sponsorship or endorsement by celebrities, brands or sporting organisations. Its products, collections, prices and operations are fictional. Photorealistic catalogue images are generated representations of fictional products, not photographs of real merchandise. Font credits and licences are in [Resources](docs/RECURSOS.md).
+
+Para actualizar una base local anterior con los nuevos recursos de catálogo: `npm run media:migrate`. Solo sustituye las imágenes SVG originales; conserva stock, imágenes personalizadas y pedidos. Las instalaciones nuevas utilizan WebP desde el inicio.
