@@ -1,0 +1,13 @@
+{
+  "name": "@maison/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js",
+    "./rules": "./src/rules.js"
+  },
+  "dependencies": {
+    "zod": "^4.1.11"
+  }
+}

@@ -1,0 +1,13 @@
+.git
+AGENTS.md
+docbase
+node_modules
+frontend/dist
+backend/runtime
+**/.env
+**/.env.*
+**/*.sqlite*
+outputs
+tmp
+docs/evidencias
+.DS_Store
