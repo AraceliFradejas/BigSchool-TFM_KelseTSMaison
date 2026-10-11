@@ -29,7 +29,8 @@ Las pruebas usan bases temporales y cuentas ficticias, sin conectar con servicio
 
 ## Build y datos
 
-- `npm run build`: completado sin errores. La última compilación genera un bundle JS de aproximadamente 322 kB, unos 101 kB comprimidos con gzip, más CSS y fuentes locales.
+- `npm run build`: completado sin errores. La última compilación genera un bundle JS de aproximadamente 321 kB, unos 101 kB comprimidos con gzip, más CSS y fuentes locales.
+- Instalación desde una copia limpia del commit: `npm ci --offline` y `npm run build` completados correctamente utilizando la caché npm. No acredita una descarga nueva desde el registro.
 - `npm run seed`: segunda ejecución con cero productos nuevos; no reinicia la base existente.
 - Catálogo inicial comprobado: quince productos, treinta y dos variantes e imagen existente para cada producto.
 - Diccionario de interfaz: las claves ES/EN coinciden. Esto no sustituye una revisión lingüística completa de todas las pantallas.
