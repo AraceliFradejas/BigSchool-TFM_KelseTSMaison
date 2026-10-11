@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMaison } from '../../shared/state';
 import { Icon } from '../../shared/components';
+import MaisonFilm from './MaisonFilm';
 
 const scenes = [
   {
@@ -161,33 +162,38 @@ export default function CampaignHero() {
   const { language, t } = useMaison();
   const [active, setActive] = useState(null);
   return (
-    <section className="campaign-hero" aria-labelledby="campaign-title">
-      <div className="campaign-heading container">
-        <div>
-          <p className="eyebrow">{t.heroEyebrow}</p>
-          <h1 id="campaign-title">{t.heroTitle}</h1>
+    <>
+      <MaisonFilm />
+      <section className="campaign-hero" aria-labelledby="campaign-title">
+        <div className="campaign-heading container">
+          <div>
+            <p className="eyebrow">{t.heroEyebrow}</p>
+            <h2 id="campaign-title">
+              {language === 'es' ? 'Encuentra tu era.' : 'Find your era.'}
+            </h2>
+          </div>
+          <div>
+            <p>{t.heroBody}</p>
+            <Link className="text-link" to="/catalog">
+              {t.explore}
+              <Icon name="arrow" />
+            </Link>
+          </div>
         </div>
-        <div>
-          <p>{t.heroBody}</p>
-          <Link className="text-link" to="/catalog">
-            {t.explore}
-            <Icon name="arrow" />
-          </Link>
+        <div className="campaign-grid">
+          {scenes.map((scene, index) => (
+            <CampaignScene
+              key={scene.id}
+              scene={scene}
+              index={index}
+              language={language}
+              active={active === scene.id}
+              setActive={setActive}
+            />
+          ))}
         </div>
-      </div>
-      <div className="campaign-grid">
-        {scenes.map((scene, index) => (
-          <CampaignScene
-            key={scene.id}
-            scene={scene}
-            index={index}
-            language={language}
-            active={active === scene.id}
-            setActive={setActive}
-          />
-        ))}
-      </div>
-      <div className="campaign-signature">EST. 2026 · ARACELI FRADEJAS MUÑOZ</div>
-    </section>
+        <div className="campaign-signature">EST. 2026 · ARACELI FRADEJAS MUÑOZ</div>
+      </section>
+    </>
   );
 }

@@ -1610,7 +1610,7 @@ main:focus {
   padding-top: 45px;
   padding-bottom: 35px;
 }
-.campaign-heading h1 {
+.campaign-heading h2 {
   font-size: clamp(2.5rem, 4vw, 4.6rem);
   margin: 14px 0 0;
   max-width: 700px;
@@ -1761,6 +1761,126 @@ main:focus {
 }
 @media (prefers-reduced-motion: reduce) {
   .campaign-scene > video {
+    transition: none;
+  }
+}
+
+.maison-film {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  isolation: isolate;
+  background: #241c28;
+  color: #fff;
+}
+.maison-film > img,
+.maison-film > video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.maison-film > video {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.maison-film.is-playing > video {
+  opacity: 1;
+}
+.maison-film::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgb(15 12 19 / 0.65), transparent 75%),
+    linear-gradient(0deg, rgb(15 12 19 / 0.5), transparent 35%);
+  pointer-events: none;
+}
+.maison-film-copy {
+  position: absolute;
+  z-index: 1;
+  left: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 48%;
+}
+.maison-film-copy h1 {
+  font-size: clamp(2rem, 5vw, 5.5rem);
+  line-height: 1.05;
+  white-space: pre-line;
+  margin: 18px 0;
+}
+.maison-film-copy .eyebrow {
+  color: #fff;
+  font-size: clamp(0.5rem, 0.9vw, 0.8rem);
+}
+.maison-film-description {
+  font-size: clamp(0.7rem, 1.2vw, 1rem);
+  margin: 0 0 24px;
+}
+.maison-film-controls {
+  position: absolute;
+  z-index: 1;
+  bottom: 22px;
+  left: 8%;
+  right: 4%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.maison-film-controls > span {
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+}
+.maison-film-controls button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid rgb(255 255 255 / 0.6);
+  background: rgb(15 12 19 / 0.45);
+  color: #fff;
+  cursor: pointer;
+}
+.maison-film-controls button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+@media (max-width: 700px) {
+  .maison-film-copy {
+    left: 5%;
+    max-width: 65%;
+    top: 43%;
+  }
+  .maison-film-copy h1 {
+    font-size: clamp(1.3rem, 5vw, 2.5rem);
+    margin: 10px 0;
+  }
+  .maison-film-description {
+    display: none;
+  }
+  .maison-film-copy .campaign-link {
+    font-size: 0.6rem;
+  }
+  .maison-film-controls {
+    left: 5%;
+    bottom: 8px;
+  }
+  .maison-film-controls > span {
+    display: none;
+  }
+  .maison-film-controls button {
+    margin-left: auto;
+    font-size: 0.65rem;
+    padding: 6px 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .maison-film > video {
     transition: none;
   }
 }

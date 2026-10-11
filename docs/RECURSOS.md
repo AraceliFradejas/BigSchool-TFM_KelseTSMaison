@@ -72,3 +72,13 @@ La portada reproduce un solo vídeo al pasar el cursor o enfocar el enlace y ofr
 La revisión de la portada parte de cuatro universos propios inspirados en el contraste entre las eras: Midnight Atelier (azotea nocturna, brillo y giro), Rosé Daydream (jardín rosa al atardecer, paseo y sonrisa), Woodland Stories (bosque, hojas y falda en movimiento) y Scarlet Avenue (avenida otoñal, pasos y bufanda). Las escenas mantienen modelos adultas ficticias y enlaces a las colecciones del catálogo.
 
 Los prompts y parámetros de generación se conservan en [CAMPANA-ERAS.json](CAMPANA-ERAS.json). Se utiliza el conector de Runway para generar clips de diez segundos a 720p, verticales y sin audio. Los carteles se extraen del primer fotograma de cada clip con FFmpeg para conservar la continuidad visual; esta revisión no utiliza la herramienta de generación de imágenes. Los MP4 se optimizan con H.264 y `faststart` y los carteles se guardan como WebP.
+
+## Película panorámica Maison
+
+La idea del hero a todo el ancho parte de la revisión de `CinematicHero.jsx` de KelseTS Cars. Maison utiliza un componente propio, sin trasladar archivos ni vídeos de Cars: formato 16:9, reproducción silenciosa, pausa manual, pausa fuera de pantalla y al ocultar la pestaña, cartel estático con movimiento reducido.
+
+La prueba narrativa se genera con el conector de Runway: cuatro escenas, quince segundos totales, una protagonista ficticia rubia y cambios de outfit, momento del día y estación. Una primera generación recibió prompts truncados por el servicio; se corrigieron a menos de 500 caracteres por escena y se generó una nueva prueba. La continuidad se evalúa visualmente y no se considera garantizada por el prompt.
+
+El guion largo está en [PELICULA-MAISON.json](PELICULA-MAISON.json): doce clips de diez segundos y fundidos de medio segundo, duración objetivo de 114,5 segundos. Estos doce clips siguen pendientes; la prueba breve no se presenta como película de dos minutos. `scripts/assemble-maison-film.py` ensambla fuentes locales y permite añadir música con `--music`. Se ha verificado con dos vídeos de prueba y con un tono sintético temporal; no se ha creado ni añadido música de Suno.
+
+Las fuentes del montaje se ubican en `docbase/film-source`, fuera de Git. Ejecución prevista, cuando estén completas: `python3 scripts/assemble-maison-film.py docs/PELICULA-MAISON.json frontend/public/media/maison-film.mp4 --music docbase/film-source/maison-suno.wav`.

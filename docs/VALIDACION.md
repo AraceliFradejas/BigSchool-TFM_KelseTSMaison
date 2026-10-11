@@ -107,3 +107,11 @@ Catálogo local y respuestas HTTP comprobados: 51 artículos, 140 variantes, 15 
 - Safari: cuatro escenas visibles con nombres y textos en castellano; activación individual de los cuatro controles y pausa del anterior al cambiar.
 - Captura: [campaña de eras](evidencias/maison-hero-eras.png).
 - Compilación de producción y comprobación de espacios correctas. Continúa pendiente la comprobación en un móvil real.
+
+## Tráiler panorámico — 11 de octubre de 2026
+
+- Vídeo final: 1280 × 720, quince segundos, cuatro escenas estacionales, sin audio; revisión de ocho fotogramas distribuidos por la secuencia.
+- Safari de escritorio: película en el hero a todo el ancho, título superpuesto legible y botones de reproducción y pausa comprobados.
+- [Captura del hero](evidencias/maison-film-hero.png).
+- Ensamblador: prueba real con dos clips, fundido de medio segundo y salida H.264 1280 × 720; segunda prueba con audio sintético temporal, salida AAC. Los archivos de prueba no se publican.
+- La película de 114,5 segundos y la pista de Suno siguen pendientes. Se cierra primero el tráiler con el saldo disponible, según la preferencia de Araceli.

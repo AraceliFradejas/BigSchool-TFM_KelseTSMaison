@@ -1,0 +1,100 @@
+{
+  "title": "Todas tus eras · Un día, cuatro estaciones",
+  "targetSeconds": 114.5,
+  "transitionSeconds": 0.5,
+  "music": "Pendiente: pista original de Suno proporcionada o generada con autorización",
+  "status": "Guion de montaje; clips individuales pendientes de generación",
+  "prototype": {
+    "tool": "Runway generate_multishot_video",
+    "durationSeconds": 15,
+    "ratio": "16:9",
+    "shots": [
+      {
+        "prompt": "Spring sunrise, pink blossom garden. A fictional adult blonde woman, 30, blue eyes, long honey-blonde hair with fringe, oval face, red lipstick, wears an ivory silk blouse and rose midi skirt. She walks rightward, holding an ivory bag, smiling. Wide cinematic tracking shot. Keep this exact face and hair in ALL shots. Luxury fashion film, photorealistic, 16:9, subject right of centre, empty space left. No text. Match her walking action into the next scene."
+      },
+      {
+        "prompt": "Summer afternoon, Parisian avenue, red café awnings. SAME fictional blonde woman, 30, blue eyes, long honey-blonde hair with fringe, oval face, red lipstick. Now a crimson silk midi dress and red heels. Walking rightward, she removes sunglasses and smiles at camera. Wide tracking shot, photorealistic luxury fashion film, 16:9, subject right of centre, empty space left. Preserve face from shot 1. Match walking action into autumn. No text."
+      },
+      {
+        "prompt": "Autumn dusk, misty woodland, amber leaves. SAME fictional blonde woman, 30, blue eyes, honey-blonde hair with fringe, oval face, red lipstick. Now camel wool coat, burgundy scarf, checked midi skirt and cognac boots. She walks rightward and draws scarf close as leaves drift around her. Wide tracking shot, photorealistic luxury fashion film, 16:9, subject right of centre, empty space left. Preserve face from shots 1 and 2. Match walking into winter. No text."
+      },
+      {
+        "prompt": "Winter midnight, rooftop, indigo skyline, silver spotlights and gentle snow. SAME fictional blonde woman, 30, blue eyes, long honey-blonde hair with fringe, oval face, red lipstick. Now emerald sequined gown and silver heels. She walks rightward then turns gracefully, gown flaring, smiling at camera. Wide cinematic shot, photorealistic luxury fashion film, 16:9, subject right of centre, empty space left. Preserve identical face from earlier shots. No text."
+      }
+    ]
+  },
+  "clips": [
+    {
+      "file": "../docbase/film-source/1-1.mp4",
+      "chapter": "Primavera · Amanecer",
+      "targetSeconds": 10,
+      "action": "Plano general: caminar por el escenario"
+    },
+    {
+      "file": "../docbase/film-source/1-2.mp4",
+      "chapter": "Primavera · Amanecer",
+      "targetSeconds": 10,
+      "action": "Plano detalle: accesorio y textura del outfit"
+    },
+    {
+      "file": "../docbase/film-source/1-3.mp4",
+      "chapter": "Primavera · Amanecer",
+      "targetSeconds": 10,
+      "action": "Plano medio: giro y transición al siguiente capítulo"
+    },
+    {
+      "file": "../docbase/film-source/2-1.mp4",
+      "chapter": "Verano · Tarde",
+      "targetSeconds": 10,
+      "action": "Plano general: caminar por el escenario"
+    },
+    {
+      "file": "../docbase/film-source/2-2.mp4",
+      "chapter": "Verano · Tarde",
+      "targetSeconds": 10,
+      "action": "Plano detalle: accesorio y textura del outfit"
+    },
+    {
+      "file": "../docbase/film-source/2-3.mp4",
+      "chapter": "Verano · Tarde",
+      "targetSeconds": 10,
+      "action": "Plano medio: giro y transición al siguiente capítulo"
+    },
+    {
+      "file": "../docbase/film-source/3-1.mp4",
+      "chapter": "Otoño · Atardecer",
+      "targetSeconds": 10,
+      "action": "Plano general: caminar por el escenario"
+    },
+    {
+      "file": "../docbase/film-source/3-2.mp4",
+      "chapter": "Otoño · Atardecer",
+      "targetSeconds": 10,
+      "action": "Plano detalle: accesorio y textura del outfit"
+    },
+    {
+      "file": "../docbase/film-source/3-3.mp4",
+      "chapter": "Otoño · Atardecer",
+      "targetSeconds": 10,
+      "action": "Plano medio: giro y transición al siguiente capítulo"
+    },
+    {
+      "file": "../docbase/film-source/4-1.mp4",
+      "chapter": "Invierno · Medianoche",
+      "targetSeconds": 10,
+      "action": "Plano general: caminar por el escenario"
+    },
+    {
+      "file": "../docbase/film-source/4-2.mp4",
+      "chapter": "Invierno · Medianoche",
+      "targetSeconds": 10,
+      "action": "Plano detalle: accesorio y textura del outfit"
+    },
+    {
+      "file": "../docbase/film-source/4-3.mp4",
+      "chapter": "Invierno · Medianoche",
+      "targetSeconds": 10,
+      "action": "Plano medio: giro y transición al siguiente capítulo"
+    }
+  ]
+}
