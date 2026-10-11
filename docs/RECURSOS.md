@@ -66,3 +66,9 @@ Cuatro fotografías editoriales generadas con la herramienta integrada de imáge
 Los cuatro clips se generaron en la web de Runway con Seedance 2.5 a partir de las fotografías originales: cinco segundos, formato vertical y sin audio. Los originales MOV se convirtieron con FFmpeg a MP4 H.264, con `faststart`, y se optimizaron para la web. Se sirven desde `frontend/public/media/hero-*.mp4`.
 
 La portada reproduce un solo vídeo al pasar el cursor o enfocar el enlace y ofrece un botón de reproducción y pausa. Carga cada clip cuando se activa por primera vez, pausa al salir de pantalla o esconder la pestaña y respeta la preferencia de reducir movimiento. Las fotografías permanecen como portada y alternativa si falla la reproducción.
+
+## Campaña «Todas tus eras»
+
+La revisión de la portada parte de cuatro universos propios inspirados en el contraste entre las eras: Midnight Atelier (azotea nocturna, brillo y giro), Rosé Daydream (jardín rosa al atardecer, paseo y sonrisa), Woodland Stories (bosque, hojas y falda en movimiento) y Scarlet Avenue (avenida otoñal, pasos y bufanda). Las escenas mantienen modelos adultas ficticias y enlaces a las colecciones del catálogo.
+
+Los prompts y parámetros de generación se conservan en [CAMPANA-ERAS.json](CAMPANA-ERAS.json). Se utiliza el conector de Runway para generar clips de diez segundos a 720p, verticales y sin audio. Los carteles se extraen del primer fotograma de cada clip con FFmpeg para conservar la continuidad visual; esta revisión no utiliza la herramienta de generación de imágenes. Los MP4 se optimizan con H.264 y `faststart` y los carteles se guardan como WebP.

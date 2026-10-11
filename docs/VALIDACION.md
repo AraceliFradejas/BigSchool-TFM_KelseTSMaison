@@ -99,3 +99,11 @@ Catálogo local y respuestas HTTP comprobados: 51 artículos, 140 variantes, 15 
 - Cuatro vídeos reales de Runway incorporados en MP4 H.264, sin audio, de cinco segundos y con carga al activarlos.
 - Safari de escritorio: activación individual de Emerald Evening, Studio Ivory, City Pages y Maison Departure; al cambiar de look, el anterior queda pausado.
 - Se mantiene pendiente la comprobación en un móvil real.
+
+## Campaña «Todas tus eras» — 11 de octubre de 2026
+
+- Cuatro nuevos clips de diez segundos, con escenarios y movimientos distintos; revisión visual de cinco fotogramas repartidos por cada secuencia.
+- Primer fotograma de cada vídeo utilizado como cartel WebP; archivos MP4 optimizados con FFmpeg y carteles con Sharp.
+- Safari: cuatro escenas visibles con nombres y textos en castellano; activación individual de los cuatro controles y pausa del anterior al cambiar.
+- Captura: [campaña de eras](evidencias/maison-hero-eras.png).
+- Compilación de producción y comprobación de espacios correctas. Continúa pendiente la comprobación en un móvil real.

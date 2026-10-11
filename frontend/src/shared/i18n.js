@@ -15,7 +15,7 @@ export const words = {
     heroEyebrow: 'UNIVERSO KelseTS · MAISON',
     heroTitle: 'Tu estilo cuenta\nuna historia.',
     heroBody:
-      'Un universo swiftie para vestir tus propias historias. Satén para una noche especial, rojo para un concierto y punto para los pequeños planes.',
+      'Cuatro universos para todas tus eras: el brillo de medianoche, un romance en rosa, historias entre árboles y el rojo del otoño. Elige cómo quieres contar la tuya.',
     explore: 'Explorar la boutique',
     discoverLooks: 'Encuentra tu combinación',
     edit: 'LA SELECCIÓN MAISON',
@@ -201,7 +201,7 @@ export const words = {
     heroEyebrow: 'KelseTS UNIVERSE · MAISON',
     heroTitle: 'Your style tells\na story.',
     heroBody:
-      'A swiftie universe for your own stories. Satin for a special night, red for a concert and knitwear for everyday plans.',
+      'Four worlds for all your eras: midnight shimmer, a romance in pink, stories among the trees and autumn red. Choose how to tell yours.',
     explore: 'Explore the boutique',
     discoverLooks: 'Find your combination',
     edit: 'THE MAISON EDIT',

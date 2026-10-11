@@ -6,39 +6,39 @@ import { Icon } from '../../shared/components';
 const scenes = [
   {
     id: 'emerald',
-    name: 'Emerald Evening',
+    name: 'Midnight Atelier',
     collection: 'spotlight',
-    image: '/media/hero-emerald.webp',
-    video: '/media/hero-emerald.mp4',
-    es: 'Gala en verde y plata',
-    en: 'An evening in green and silver',
+    image: '/media/hero-era-emerald.webp',
+    video: '/media/hero-era-emerald.mp4',
+    es: 'La noche se viste de brillo',
+    en: 'Dress the night in shimmer',
   },
   {
     id: 'ivory',
-    name: 'Studio Ivory',
+    name: 'Rosé Daydream',
     collection: 'studio-ivory',
-    image: '/media/hero-ivory.webp',
-    video: '/media/hero-ivory.mp4',
-    es: 'Sastrería para brillar',
-    en: 'Tailoring in the spotlight',
+    image: '/media/hero-era-ivory.webp',
+    video: '/media/hero-era-ivory.mp4',
+    es: 'Romance bajo un cielo rosa',
+    en: 'Romance beneath a pink sky',
   },
   {
     id: 'city',
-    name: 'City Pages',
+    name: 'Woodland Stories',
     collection: 'city-pages',
-    image: '/media/hero-city.webp',
-    video: '/media/hero-city.mp4',
-    es: 'Tu historia en la ciudad',
-    en: 'Your story in the city',
+    image: '/media/hero-era-city.webp',
+    video: '/media/hero-era-city.mp4',
+    es: 'Historias entre hojas y luz',
+    en: 'Stories between leaves and light',
   },
   {
     id: 'travel',
-    name: 'Maison Departure',
+    name: 'Scarlet Avenue',
     collection: 'travel-maison',
-    image: '/media/hero-travel.webp',
-    video: '/media/hero-travel.mp4',
-    es: 'El lujo de ir a tu ritmo',
-    en: 'The luxury of your own pace',
+    image: '/media/hero-era-travel.webp',
+    video: '/media/hero-era-travel.mp4',
+    es: 'Otoño, rojo y nuevos caminos',
+    en: 'Autumn, red and new paths',
   },
 ];
 
@@ -94,7 +94,9 @@ function CampaignScene({ scene, index, active, setActive, language }) {
       ref={root}
       className={`campaign-scene${playing ? ' is-playing' : ''}`}
       onPointerEnter={(event) => {
-        if (event.pointerType === 'mouse' && canPlay) setActive(scene.id);
+        if (event.pointerType === 'mouse' && canPlay && !event.target.closest('button')) {
+          setActive(scene.id);
+        }
       }}
       onPointerLeave={(event) => {
         if (event.pointerType === 'mouse') setActive(null);

@@ -1,0 +1,29 @@
+{
+  "tool": "Runway connector",
+  "model": "seedance-2",
+  "resolution": "720p",
+  "durationSeconds": 10,
+  "audio": false,
+  "scenes": [
+    {
+      "id": "emerald",
+      "name": "MIDNIGHT ATELIER",
+      "prompt": "Photorealistic luxury boutique fashion campaign for KelseTS Maison. Single continuous full-body shot, entire head and feet stay visible with breathing room. Vertical 9:16. A midnight rooftop above a glamorous city, indigo sky, silver spotlights cutting through soft haze, sparkling skyline and wet reflective dark floor. An original fictional sophisticated 30-year-old blonde woman in an emerald sequined full-length gown and silver heels. She takes two confident runway steps toward camera, then a graceful half turn makes the skirt flare and emerald sequins shimmer; she looks over her shoulder with a lively smile. Slow subtle camera arc. Dramatic nocturnal pop glamour, distinctive energetic fashion campaign. Natural anatomically correct body and hands, realistic fabric and skin, consistent outfit and face throughout. No text, no logos, no singing, no celebrity likeness, no cuts, no beige palace courtyard. Silent clip."
+    },
+    {
+      "id": "ivory",
+      "name": "ROSÉ DAYDREAM",
+      "prompt": "Photorealistic luxury boutique fashion campaign for KelseTS Maison. Single continuous full-body shot, entire head and feet stay visible with breathing room. Vertical 9:16. A romantic rooftop garden at sunset, rose pink and lilac sky, pale pink roses, warm backlight, pastel city silhouettes. An original fictional sophisticated 32-year-old Black woman with short natural curls in a luxurious ivory tailored suit, satin camisole and heels. She walks diagonally through the garden, gently raises her face to the sun and laughs naturally, then swings her ivory blazer open and turns to camera. Camera tracks sideways. Joyful airy romantic pop atmosphere, luminous colours. Natural anatomically correct body and hands, realistic fabric and skin, consistent outfit and face throughout. No text, no logos, no singing, no celebrity likeness, no cuts, no beige palace courtyard. Silent clip."
+    },
+    {
+      "id": "city",
+      "name": "WOODLAND STORIES",
+      "prompt": "Photorealistic luxury boutique fashion campaign for KelseTS Maison. Single continuous full-body shot, entire head and feet stay visible with breathing room. Vertical 9:16. An enchanted autumn woodland with tall trees, amber leaves, moss and soft morning mist, shafts of warm sunlight. An original fictional sophisticated 28-year-old East Asian woman in a black fine knit turtleneck, brown plaid midi skirt and cognac leather boots. She walks along a forest path, lifts the edge of her skirt slightly and makes one playful flowing turn; skirt and hair move visibly in the breeze, leaves drift past her. Gentle backward camera tracking. Intimate poetic acoustic storytelling mood, rich organic textures. Natural anatomically correct body and hands, realistic fabric and skin, consistent outfit and face throughout. No text, no logos, no singing, no celebrity likeness, no cuts, no beige palace courtyard. Silent clip."
+    },
+    {
+      "id": "travel",
+      "name": "SCARLET AVENUE",
+      "prompt": "Photorealistic luxury boutique fashion campaign for KelseTS Maison. Single continuous full-body shot, entire head and feet stay visible with breathing room. Vertical 9:16. A Parisian autumn avenue with red café awnings, golden plane trees, warm brick and elegant shop windows, vivid fallen red and amber leaves. An original fictional sophisticated 37-year-old Latina woman with wavy brunette hair, red lipstick, luxurious camel wool coat, deep burgundy scarf, tailored dark trousers, leather ankle boots and structured cognac tote. She strides confidently along pavement, tosses her scarf over one shoulder and turns with a broad smile, coat hem swinging naturally. Camera follows with gentle lateral tracking. Bold warm autumn street fashion, youthful stylish cinematic energy. Natural anatomically correct body and hands, realistic fabric and skin, consistent outfit and face throughout. No text, no logos, no singing, no celebrity likeness, no cuts, no beige palace courtyard. Silent clip."
+    }
+  ]
+}
