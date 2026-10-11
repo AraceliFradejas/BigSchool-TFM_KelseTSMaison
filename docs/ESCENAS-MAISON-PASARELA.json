@@ -1,0 +1,51 @@
+{
+  "scenes": {
+    "linen": {
+      "imageTool": "OpenAI image generation",
+      "imagePrompt": "ivory Italian linen double-breasted trouser suit, silk camisole, tan leather handbag, Lake Como stone terrace, summer breeze, shimmering lake and mountains",
+      "reference": "Fotograma de la protagonista original",
+      "videoModel": "gen-4-turbo",
+      "durationSeconds": 10,
+      "creditsUsed": 50,
+      "motionPrompt": "A fashion model walks slowly along the lake terrace, pauses beside the balustrade and looks toward the mountains, then gently turns back with a soft smile. Summer breeze moves her hair and linen jacket, sunlight sparkles on water. Smooth slow lateral tracking, full body, one continuous cinematic shot.",
+      "correctedMotionPrompt": "One woman walks continuously forward with confident natural runway steps, her outfit moving with every stride. The camera smoothly tracks backward at her pace, maintaining a full-body fashion shot. She keeps walking throughout. The entire location remains empty except for this single woman. One uninterrupted cinematic solo runway walk.",
+      "correctionCreditsUsed": 50
+    },
+    "tuxedo": {
+      "imageTool": "OpenAI image generation",
+      "imagePrompt": "black Italian tailored tuxedo with satin lapels, ivory silk shirt, black pointed heels, evening Milan opera foyer, warm gilded architecture",
+      "reference": "Fotograma de la protagonista original",
+      "videoModel": "gen-4-turbo",
+      "durationSeconds": 10,
+      "creditsUsed": 50,
+      "motionPrompt": "The fashion model takes two confident steps across the opera foyer, gently adjusts her satin lapel and makes a poised quarter turn with a soft smile. Warm lights reflect on the marble floor. Slow subtle camera arc, full body, realistic cloth movement, one continuous shot.",
+      "correctedMotionPrompt": "One woman walks continuously forward with confident natural runway steps, her outfit moving with every stride. The camera smoothly tracks backward at her pace, maintaining a full-body fashion shot. She keeps walking throughout. The entire location remains empty except for this single woman. One uninterrupted cinematic solo runway walk.",
+      "correctionCreditsUsed": 50
+    },
+    "daily": {
+      "imageTool": "OpenAI image generation",
+      "imagePrompt": "navy tailored blazer, ivory shirt, high-waisted dark straight jeans, tan leather loafers and structured handbag, bright elegant London residential street after light rain",
+      "reference": "Fotograma de la protagonista original",
+      "videoModel": "gen-4-turbo",
+      "durationSeconds": 10,
+      "creditsUsed": 50,
+      "motionPrompt": "The fashion model walks naturally along the elegant residential street, her handbag swings gently. She pauses, brushes a strand of hair aside and turns her head with a relaxed smile. Soft sunshine after rain, a light breeze moves the blazer. Smooth lateral tracking, full body, one continuous shot.",
+      "correctedMotionPrompt": null,
+      "correctionCreditsUsed": 0
+    },
+    "burgundy": {
+      "imageTool": "OpenAI image generation",
+      "imagePrompt": "deep burgundy couture evening gown with flowing silk skirt, delicate gold earrings, palatial rose garden at blue hour, mist and dramatic clouds",
+      "reference": "Fotograma de la protagonista original",
+      "videoModel": "gen-4-turbo",
+      "durationSeconds": 10,
+      "creditsUsed": 50,
+      "motionPrompt": "The fashion model gently lifts one side of her flowing skirt and makes a slow graceful half turn in the rose garden, then lets the silk settle naturally. A light breeze moves her hair and roses, mist drifts across the path. Slow gentle camera push, wide full body, one continuous cinematic shot.",
+      "correctedMotionPrompt": null,
+      "correctionCreditsUsed": 0
+    }
+  },
+  "creditsUsed": 300,
+  "creditsRemaining": 22,
+  "notes": "200 créditos para cuatro clips iniciales y 100 para dos correcciones autorizadas. Londres y gala se corrigen mediante cortes, sin nuevas generaciones."
+}

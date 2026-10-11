@@ -1832,6 +1832,7 @@ main:focus {
   gap: 20px;
 }
 .maison-film-controls > span {
+  margin-right: auto;
   font-size: 0.55rem;
   letter-spacing: 0.12em;
 }
@@ -1882,5 +1883,90 @@ main:focus {
 @media (prefers-reduced-motion: reduce) {
   .maison-film > video {
     transition: none;
+  }
+}
+
+/* Keep the film unobstructed and navigation compact on smaller screens. */
+.mobile-account {
+  display: none;
+}
+@media (max-width: 1000px) {
+  .site-header .menu-toggle {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+  .main-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--paper);
+    border-block: 1px solid var(--line);
+    padding: 15px 25px;
+    max-height: calc(100svh - 140px);
+    overflow-y: auto;
+    box-shadow: 0 10px 15px #26232210;
+  }
+  .main-nav.is-open {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .main-nav a {
+    font-size: 0.9rem;
+    min-height: 44px;
+    padding: 12px 0;
+  }
+  .main-nav .mobile-account {
+    display: block;
+  }
+}
+@media (max-width: 700px) {
+  .maison-film {
+    aspect-ratio: auto;
+    height: calc(100svh - 106px);
+    min-height: 460px;
+    padding: 0;
+  }
+  .maison-film > img,
+  .maison-film > video {
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .maison-film::after {
+    background: linear-gradient(0deg, rgb(15 12 19 / 0.78), transparent 65%);
+  }
+  .maison-film-copy {
+    top: auto;
+    bottom: 120px;
+    left: 6%;
+    right: 6%;
+    max-width: none;
+    transform: none;
+  }
+  .maison-film-copy h1 {
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
+    max-width: 9ch;
+    margin: 18px 0;
+  }
+  .maison-film-copy .campaign-link {
+    font-size: 0.8rem;
+  }
+  .maison-film-controls {
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    bottom: max(24px, env(safe-area-inset-bottom));
+    justify-content: flex-end;
+    gap: 8px;
+    background: transparent;
+  }
+  .maison-film-controls button {
+    margin-left: 0;
+    font-size: 0.75rem;
   }
 }

@@ -1,0 +1,74 @@
+{
+  "source": "Máster 4K del montaje final",
+  "resolution": "1080×1440",
+  "method": "Recorte vertical 3:4 con altura completa; centro por escena e interpolación durante fundidos. La web ajusta el encuadre a la altura disponible del móvil.",
+  "creditsUsed": 0,
+  "transitionSeconds": 0.5882352941176471,
+  "scenes": [
+    {
+      "chapter": "Primavera y verano",
+      "startSeconds": 0,
+      "horizontalCenterFraction": 0.6
+    },
+    {
+      "chapter": "Otoño",
+      "startSeconds": 8.77451,
+      "horizontalCenterFraction": 0.59
+    },
+    {
+      "chapter": "Esmeralda",
+      "startSeconds": 14.11765,
+      "horizontalCenterFraction": 0.61
+    },
+    {
+      "chapter": "Lluvia",
+      "startSeconds": 17.10784,
+      "horizontalCenterFraction": 0.75
+    },
+    {
+      "chapter": "Gala azul",
+      "startSeconds": 28.33333,
+      "horizontalCenterFraction": 0.61
+    },
+    {
+      "chapter": "Lino",
+      "startSeconds": 33.67647,
+      "horizontalCenterFraction": 0.54
+    },
+    {
+      "chapter": "Esmoquin",
+      "startSeconds": 44.95098,
+      "horizontalCenterFraction": 0.56
+    },
+    {
+      "chapter": "Londres",
+      "startSeconds": 50.29412,
+      "horizontalCenterFraction": 0.59
+    },
+    {
+      "chapter": "Burdeos",
+      "startSeconds": 55.63725,
+      "horizontalCenterFraction": 0.61
+    },
+    {
+      "chapter": "Milán",
+      "startSeconds": 60.39216,
+      "horizontalCenterFraction": 0.56
+    },
+    {
+      "chapter": "Alpes",
+      "startSeconds": 65.73529,
+      "horizontalCenterFraction": 0.59
+    },
+    {
+      "chapter": "Riviera",
+      "startSeconds": 71.07843,
+      "horizontalCenterFraction": 0.57
+    },
+    {
+      "chapter": "Terciopelo",
+      "startSeconds": 76.42157,
+      "horizontalCenterFraction": 0.58
+    }
+  ]
+}

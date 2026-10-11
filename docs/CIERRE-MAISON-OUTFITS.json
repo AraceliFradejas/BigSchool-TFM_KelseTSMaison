@@ -1,0 +1,50 @@
+{
+  "scenes": [
+    {
+      "name": "pinstripe",
+      "imagePrompt": "impeccably tailored navy pinstripe three-piece Italian trouser suit, waistcoat over ivory silk blouse, simple black pumps, private modern Milan stone art gallery with empty spacious halls in warm afternoon light",
+      "imageTool": "OpenAI image generation",
+      "videoModel": "gen-4-turbo",
+      "motionPrompt": "The woman walks straight forward at an ordinary relaxed pace with short even steps. Her feet land on two comfortably spaced parallel tracks. Her arms swing gently beside her body. Head and shoulders stay naturally aligned, gaze forward. Her tailored jacket moves softly with her steps. Smooth backward camera tracking maintains a full-body shot. Single continuous shot in an empty gallery.",
+      "durationSeconds": 5,
+      "creditsUsed": 25
+    },
+    {
+      "name": "cashmere",
+      "imagePrompt": "ivory cashmere turtleneck, chocolate leather midi skirt with a modest walking slit, camel knee-high boots with a low stable heel, private alpine chalet terrace after gentle snowfall, mountain pines, warm windows, empty path",
+      "imageTool": "OpenAI image generation",
+      "videoModel": "gen-4-turbo",
+      "motionPrompt": "The woman takes short comfortable steps straight forward along the stone terrace. Her boots plant naturally on the ground, her arms gently alternate at her sides. Her head stays aligned with her shoulders, gaze forward. The leather skirt moves subtly around her knees, a light breeze moves her hair. Camera tracks backward slowly, full-body view. Single continuous shot, empty terrace.",
+      "durationSeconds": 5,
+      "creditsUsed": 25
+    },
+    {
+      "name": "riviera",
+      "imagePrompt": "pale blue Oxford shirt with sleeves neatly down, high-waisted cream straight trousers, elegant navy flat loafers, fine gold earrings, empty private Mediterranean marina promenade at morning, clear blue sea and pale stone colonnade",
+      "imageTool": "OpenAI image generation",
+      "videoModel": "gen-4-turbo",
+      "motionPrompt": "The woman walks straight forward with short easy natural steps in flat loafers. Her feet land on comfortably spaced parallel tracks, arms swinging softly at her sides. Her head remains aligned with her shoulders, gaze forward. A sea breeze gently moves her hair and shirt. Smooth backward camera tracking keeps her full body visible. One continuous shot, empty promenade.",
+      "durationSeconds": 5,
+      "creditsUsed": 25
+    },
+    {
+      "name": "velvet",
+      "imagePrompt": "luxurious black velvet evening gown with a modest off-shoulder neckline, gentle flowing hem and gold earrings, private Art Deco hotel foyer at night, amber lamps, polished stone, empty elegant lobby",
+      "imageTool": "OpenAI image generation",
+      "videoModel": "gen-4-turbo",
+      "motionPrompt": "The woman takes small natural forward steps, head and shoulders facing forward together. Her arms remain relaxed beside her body. The velvet dress moves softly around her legs and its hem trails naturally across the floor. Warm reflections shimmer as the camera tracks slowly backward, maintaining a full-body view. One continuous shot in an empty private lobby.",
+      "durationSeconds": 5,
+      "creditsUsed": 25
+    }
+  ],
+  "generationCreditsUsed": 100,
+  "upscaleBudgetCredits": 40,
+  "upscaleRateCreditsPerSecond": 2,
+  "source": "https://runway.com/apps/upscale-video",
+  "status": "Cuatro clips revisados y bloque reescalado a 4096×2304, completado.",
+  "upscaleCreditsUsed": 37,
+  "totalCreditsUsed": 137,
+  "creditsBefore": 7150,
+  "creditsRemaining": 7013,
+  "upscaleDurationSeconds": 18.666667
+}

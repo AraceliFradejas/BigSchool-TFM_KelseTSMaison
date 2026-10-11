@@ -1,0 +1,134 @@
+{
+  "title": "Maison · Climas, sastrería y gala",
+  "transitionSeconds": 0.5,
+  "clips": [
+    {
+      "file": "../frontend/public/media/maison-film-daylight.mp4",
+      "chapter": "Primavera y verano"
+    },
+    {
+      "file": "../frontend/public/media/maison-film-autumn.mp4",
+      "chapter": "Otoño · Bufanda con identidad corregida"
+    },
+    {
+      "file": "../frontend/public/media/maison-film-midnight.mp4",
+      "chapter": "Esmeralda · Medianoche"
+    },
+    {
+      "file": "../frontend/public/media/maison-film-rain.mp4",
+      "chapter": "Sastrería italiana · Lluvia"
+    },
+    {
+      "file": "../frontend/public/media/maison-film-gala.mp4",
+      "chapter": "Gala · Nieve",
+      "type": "Animación de cinco segundos"
+    },
+    {
+      "file": "../frontend/public/media/maison-film-linen.mp4",
+      "chapter": "Lino · Lago"
+    },
+    {
+      "file": "../frontend/public/media/maison-film-tuxedo.mp4",
+      "chapter": "Esmoquin · Ópera"
+    },
+    {
+      "file": "../frontend/public/media/maison-film-daily.mp4",
+      "chapter": "Blazer y denim · Londres"
+    },
+    {
+      "file": "../frontend/public/media/maison-film-burgundy.mp4",
+      "chapter": "Burdeos · Jardín"
+    },
+    {
+      "file": "../frontend/public/media/maison-film-pinstripe.mp4",
+      "chapter": "Sastrería de raya diplomática · Milán"
+    },
+    {
+      "file": "../frontend/public/media/maison-film-cashmere.mp4",
+      "chapter": "Cachemir · Alpes"
+    },
+    {
+      "file": "../frontend/public/media/maison-film-riviera.mp4",
+      "chapter": "Oxford y pantalón marfil · Riviera"
+    },
+    {
+      "file": "../frontend/public/media/maison-film-velvet.mp4",
+      "chapter": "Terciopelo negro · Noche"
+    }
+  ],
+  "generation": {
+    "rain": {
+      "model": "seedance-2-mini",
+      "durationSeconds": 10,
+      "prompt": "Use the reference image ONLY to preserve the exact identity of the original fictional blonde adult woman: same face, honey-blonde hair, fringe, red lipstick, age 30. Replace the outfit and environment completely. Photorealistic luxury fashion film, 16:9, full body, subject right of centre, negative space left. A rainy Milan street at blue hour, wet stone pavement and warm shop windows, no readable signage. She wears an impeccably cut Italian charcoal double-breasted wool suit, ivory silk shirt, black pointed heels and a structured burgundy handbag. She walks beneath a black umbrella, stops to close it as the rain eases, adjusts her jacket lapel and confidently smiles to camera. Gentle lateral tracking, visible cloth movement and rain reflections. Keep face identical throughout, realistic anatomy, no text, no logos, no speaking. Silent.",
+      "reference": "Fotograma del tráiler a los 6,5 segundos",
+      "creditsUsed": 160
+    },
+    "gala": {
+      "imageTool": "OpenAI image generation",
+      "videoModel": "gen-4-turbo",
+      "reference": "Mismo fotograma de identidad",
+      "status": "Animación completada",
+      "durationSeconds": 5,
+      "creditsUsed": 25,
+      "creditsRemaining": 47,
+      "motionPrompt": "A fashion model makes a slow graceful quarter-turn on the spot, gently opening her cape to show the blue gown. Satin fabric moves softly in the breeze. Light snow drifts through warm evening lights. Static wide camera, one continuous shot, natural subtle movement.",
+      "imagePrompt": "Preservar el personaje ficticio del fotograma de referencia: vestido de gala azul zafiro, capa marfil, clutch plateado, exterior de ópera iluminada, nieve, plano entero 16:9 y espacio libre a la izquierda."
+    },
+    "autumn": {
+      "imageTool": "OpenAI image generation",
+      "references": [
+        "Fotograma de otoño del tráiler a los nueve segundos",
+        "Fotograma de la protagonista a los 6,5 segundos"
+      ],
+      "videoModel": "gen-4-turbo",
+      "durationSeconds": 5,
+      "creditsUsed": 25,
+      "motionPrompt": "Static wide cinematic shot. The fashion model takes two gentle steps through the autumn leaves, softly draws her scarf closer and turns her head toward camera with a natural smile. Her hair, coat hem and scarf move lightly in the breeze. Warm sunlight through mist, a few leaves drifting. One continuous shot with subtle natural motion.",
+      "status": "Completada y revisada visualmente"
+    }
+  },
+  "encoding": {
+    "master": "3840×2160 H.264 CRF 18",
+    "web": "1920×1080 CRF 20 y 2560×1440 CRF 21",
+    "audio": "AAC 128 kb/s",
+    "fps": 24,
+    "mobile": "1080×1440 H.264 CRF 21, reencuadre por escena"
+  },
+  "removedScene": "La toma de otoño con identidad incorrecta se sustituyó por una versión corregida.",
+  "creditsRemaining": 7013,
+  "upscale": {
+    "tool": "Upscale Video de Runway",
+    "source": "https://runway.com/apps/upscale-video",
+    "pasarelaCreditsUsed": 47,
+    "closingCreditsUsed": 37,
+    "status": "Tres bloques fuente reescalados a 4096×2304 y revisados."
+  },
+  "reward": {
+    "reason": "Generate with an App for 1st time",
+    "credits": 300
+  },
+  "finalEdit": {
+    "durationSeconds": 82.958333,
+    "speed": 0.85,
+    "music": "Runway Pulse · Suno · proporcionada por Araceli",
+    "musicSource": "../frontend/public/music/Runway Pulse.mp3",
+    "cuts": {
+      "london": "Nueva animación de cinco segundos con bolso cruzado y ambas manos libres.",
+      "burgundy": "Nueva animación de cinco segundos: caminar frontal, sin giro de cuello.",
+      "tuxedo": "Nueva animación de cinco segundos desde postura neutral, sin piernas cruzadas.",
+      "linen": "Nueva animación de diez segundos, una única protagonista con un bolso."
+    },
+    "musicGain": 0.7,
+    "audioFadesSeconds": 2,
+    "status": "Montaje final con cuatro looks de cierre, sin repetir escenas.",
+    "additionalCreditsUsed": 75,
+    "creditsBeforeCorrections": 7272,
+    "looks": 14,
+    "sourceBlocks": [
+      "Maestro base 29,125 s",
+      "Pasarela corregida 23,708333 s",
+      "Cierre 18,666667 s"
+    ]
+  }
+}

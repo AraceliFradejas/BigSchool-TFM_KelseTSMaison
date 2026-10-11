@@ -1,0 +1,26 @@
+{
+  "budgetCredits": 75,
+  "creditsUsed": 75,
+  "creditsBefore": 7272,
+  "creditsRemaining": 7197,
+  "scenes": {
+    "daily": {
+      "durationSeconds": 5,
+      "creditsUsed": 25,
+      "prompt": "Single continuous shot. The woman walks straight ahead at an ordinary relaxed pace, taking short natural steps. Her feet land on two parallel tracks with a small space between them. Her arms swing gently beside her body. Her head stays aligned with her shoulders, gaze forward. The crossbody bag remains attached to its strap and rests against her hip, swaying slightly with her steps. The camera tracks backward smoothly to keep her full body visible. Empty private street.",
+      "status": "Generada y revisada en secuencia de fotogramas"
+    },
+    "tuxedo": {
+      "durationSeconds": 5,
+      "creditsUsed": 25,
+      "prompt": "Single continuous shot. The woman walks straight forward at a normal relaxed pace with short even steps, like walking through a foyer. Her feet land on two parallel tracks, comfortably spaced. Her arms swing gently and alternately beside her body. Her shoulders remain level and her head stays aligned with her torso, gaze forward. The camera smoothly tracks backward, maintaining a full-body frame. Empty private opera foyer.",
+      "status": "Generada y revisada en secuencia de fotogramas"
+    },
+    "burgundy": {
+      "durationSeconds": 5,
+      "creditsUsed": 25,
+      "prompt": "Single continuous shot. The woman takes small natural forward steps toward the camera, keeping her head and shoulders facing forward together. Her arms remain relaxed beside her body. The gown moves gently around her legs and its hem trails naturally along the stone path. A light breeze softly ripples the skirt. The camera slowly tracks backward to maintain the full-body view. Empty private rose garden.",
+      "status": "Generada y revisada en secuencia de fotogramas"
+    }
+  }
+}

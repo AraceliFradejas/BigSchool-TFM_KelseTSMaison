@@ -114,4 +114,22 @@ Catálogo local y respuestas HTTP comprobados: 51 artículos, 140 variantes, 15 
 - Safari de escritorio: película en el hero a todo el ancho, título superpuesto legible y botones de reproducción y pausa comprobados.
 - [Captura del hero](evidencias/maison-film-hero.png).
 - Ensamblador: prueba real con dos clips, fundido de medio segundo y salida H.264 1280 × 720; segunda prueba con audio sintético temporal, salida AAC. Los archivos de prueba no se publican.
-- La película de 114,5 segundos y la pista de Suno siguen pendientes. Se cierra primero el tráiler con el saldo disponible, según la preferencia de Araceli.
+- En esta primera revisión se cerró un tráiler; la ampliación posterior se recoge debajo.
+
+## Película final con música · 11 de octubre de 2026
+
+- Duración final: 82,958333 segundos, catorce looks, formato 16:9 y 24 fps, comprobados con FFprobe. Máster privado 3840×2160; copias web H.264 1920×1080 y 2560×1440 con audio AAC. Ambas copias se decodifican completas con FFmpeg sin errores.
+- Música «Runway Pulse», creada en Suno y aportada por Araceli; duración original 192,8535 segundos. Se utiliza su inicio, ganancia 0,7 y fundidos de dos segundos.
+- Londres, esmoquin y burdeos se sustituyen por nuevas tomas completas de cinco segundos, revisadas y aceptadas por Araceli en el montaje previo de un minuto. El lago conserva la nueva toma con una sola protagonista y un bolso.
+- Los cuatro looks de cierre se revisan mediante fotogramas repartidos por cada clip, antes y después de la mejora 4K. Revisión adicional del montaje completo cada dos segundos para comprobar secuencia, continuidad y transiciones. Esta revisión por muestreo no garantiza la ausencia de todos los artefactos generativos.
+- Safari reproduce directamente la copia final de 1440p, con duración nativa mostrada como un minuto y veintidós segundos y sonido. Controles de música y pausa comprobados en la portada, en castellano e inglés.
+- Mejora del cierre: 37 créditos; generaciones: 100. Total 137 dentro del máximo autorizado de 140; saldo 7.013. El reescalado anterior de pasarela consumió otros 47 créditos, registrado por separado.
+- `npm run build`: compilación correcta. `git diff --check`: sin errores de espacios. Las comprobaciones en un móvil físico siguen pendientes.
+
+## Revisión responsive del cierre · 11 de octubre de 2026
+
+- Chrome con emulación responsive de 390 píxeles, iPhone SE 375×667 e iPad Mini 768×1024. Encuadre panorámico en tablet y vertical a toda la altura disponible bajo la cabecera en móvil; textos y navegación revisados visualmente. La emulación no sustituye una prueba en teléfono físico.
+- Corregida la selección de la fuente de vídeo: una URL explícita que responde a cambios de anchura, versión vertical para móvil y panorámica 1080p o 1440p para pantallas mayores. Comprobada la reproducción y activación de música en móvil.
+- Tras la revisión de Araceli, el hero móvil ocupa la altura disponible de pantalla. Usa un reencuadre vertical por escena, con música y pausa superpuestas y título grande; castellano e inglés revisados. Menú hamburguesa hasta 1000 píxeles; incluye Mi cuenta y mantiene idioma, favoritos y bolsa en la cabecera.
+- Comprobadas apertura y cierre del menú, cierre con Escape en tablet y cierre al navegar a Moda. Referencia de interacción consultada en Cars, sin modificar ese proyecto.
+- Evidencias: [móvil](evidencias/maison-film-mobile.png), [menú](evidencias/maison-menu-mobile.png) y [tablet](evidencias/maison-film-tablet.png).

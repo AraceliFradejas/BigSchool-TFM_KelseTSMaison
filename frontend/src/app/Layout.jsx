@@ -78,6 +78,9 @@ export default function Layout() {
           <NavLink to="/collections">{t.collections}</NavLink>
           <NavLink to="/looks">{t.looks}</NavLink>
           <NavLink to="/story">{t.about}</NavLink>
+          <NavLink className="mobile-account" to="/account">
+            {t.account}
+          </NavLink>
           {user?.role === 'team' && <NavLink to="/team">{t.team}</NavLink>}
         </nav>
       </header>

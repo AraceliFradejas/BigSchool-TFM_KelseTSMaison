@@ -79,6 +79,34 @@ La idea del hero a todo el ancho parte de la revisión de `CinematicHero.jsx` de
 
 La prueba narrativa se genera con el conector de Runway: cuatro escenas, quince segundos totales, una protagonista ficticia rubia y cambios de outfit, momento del día y estación. Una primera generación recibió prompts truncados por el servicio; se corrigieron a menos de 500 caracteres por escena y se generó una nueva prueba. La continuidad se evalúa visualmente y no se considera garantizada por el prompt.
 
-El guion largo está en [PELICULA-MAISON.json](PELICULA-MAISON.json): doce clips de diez segundos y fundidos de medio segundo, duración objetivo de 114,5 segundos. Estos doce clips siguen pendientes; la prueba breve no se presenta como película de dos minutos. `scripts/assemble-maison-film.py` ensambla fuentes locales y permite añadir música con `--music`. Se ha verificado con dos vídeos de prueba y con un tono sintético temporal; no se ha creado ni añadido música de Suno.
+El guion largo está en [PELICULA-MAISON.json](PELICULA-MAISON.json): doce clips de diez segundos y fundidos de medio segundo, duración objetivo de 114,5 segundos. Estos doce clips siguen pendientes; la prueba breve no se presenta como película de dos minutos. `scripts/assemble-maison-film.py` ensambla fuentes locales y permite añadir música con `--music`. Se ha verificado con dos vídeos de prueba y con un tono sintético temporal; en esa primera prueba no se había añadido música de Suno; la ampliación posterior utiliza la pista aportada por Araceli.
 
 Las fuentes del montaje se ubican en `docbase/film-source`, fuera de Git. Ejecución prevista, cuando estén completas: `python3 scripts/assemble-maison-film.py docs/PELICULA-MAISON.json frontend/public/media/maison-film.mp4 --music docbase/film-source/maison-suno.wav`.
+
+### Ampliación: lluvia, sastrería y gala
+
+La identidad se referencia con un fotograma del tráiler a los 6,5 segundos. La escena de diez segundos de sastrería italiana bajo la lluvia se genera en Runway y cuesta 160 créditos. La imagen de gala con vestido azul, capa marfil y nieve se crea con la herramienta integrada de imágenes de OpenAI, sin consumir créditos de Runway. Su animación de cinco segundos utiliza Gen-4 Turbo y cuesta 25 créditos, dejando 47 en la cuenta. El presupuesto restante se conserva; no se realizan recargas.
+
+El montaje reproducible y sus parámetros están en [MONTAJE-MAISON-CLIMAS.json](MONTAJE-MAISON-CLIMAS.json). El tráiler original se conserva en `maison-film-trailer.mp4`; las nuevas escenas se unen con fundidos de medio segundo. En esa etapa la película estaba sin audio; el montaje posterior incorpora la pista de Suno.
+
+La escena de otoño se recupera mediante una edición de imagen que conserva abrigo, bufanda y bosque, pero utiliza el rostro de la protagonista del tráiler. Se anima cinco segundos con Gen-4 Turbo (25 créditos). Runway concede automáticamente 300 créditos por la misión «Generate with an App for 1st time», verificada en Quests; el saldo tras esta corrección es de 322 créditos. El reescalado desde el conector queda bloqueado por saldo, mientras que la App de la web funciona con el plan Pro y conserva el saldo. El primer máster reescalado mide 4096 × 2304.
+
+Se revisa el catálogo oficial de skills de OpenAI y no se encuentra una skill específica de mejora de vídeo. Se utiliza Topaz AI a través de Upscale Video en la web de Runway. El catálogo consultado no es una afirmación sobre todas las skills o servicios disponibles.
+
+### Montaje de un minuto y correcciones de movimiento
+
+La ampliación incorpora cuatro imágenes creadas con la herramienta integrada de OpenAI y cuatro animaciones de diez segundos (200 créditos). Lago y esmoquin se regeneran para eliminar figuras secundarias y avanzar como en pasarela (100 créditos autorizados). La revisión de Araceli detecta además problemas de accesorio, cuello y pisada; Londres, esmoquin y burdeos se sustituyen por tres nuevas tomas de cinco segundos (75 créditos autorizados). No se realizan generaciones adicionales fuera de esos presupuestos. Tras la recarga realizada por Araceli, la última ronda parte de 7.272 créditos y termina en 7.197. Los prompts y el gasto están en [Correcciones de movimiento](CORRECCIONES-MAISON-MOVIMIENTO.json).
+
+La pista «Runway Pulse», aportada por Araceli en `frontend/public/music/Runway Pulse.mp3`, contiene metadatos de Suno y dura 192,8535 segundos. El vídeo utiliza el inicio de la pista, audio AAC, ganancia 0,7 y fundidos de audio de dos segundos. No se genera música adicional. El ritmo del vídeo se ajusta a 0,85 conservando las escenas sin repetirlas.
+
+### Cierre con cuatro nuevos looks
+
+Se incorporan raya diplomática en Milán, cachemir en los Alpes, camisa Oxford y pantalón marfil en la Riviera y terciopelo negro en un hotel Art Déco. Las cuatro imágenes se crean con la herramienta integrada de OpenAI; sus animaciones de cinco segundos usan Gen-4 Turbo y consumen 100 créditos. Los prompts describen pasos cortos hacia delante, brazos relajados, cabeza alineada y cámara retrocediendo. Se revisan los fotogramas antes del montaje. [Prompts y presupuesto](CIERRE-MAISON-OUTFITS.json).
+
+El reescalado del bloque de pasarela consumió 47 créditos tras la recarga y cambio de plan a Max; la previsión inicial de coste cero no se cumplió. La mejora del cierre de 18,67 segundos consume 37 créditos, dentro de los 40 adicionales autorizados. La App publica una tarifa de [2 créditos por segundo](https://runway.com/apps/upscale-video). El cierre suma 137 créditos y deja un saldo de 7.013. No se solicitan más generaciones ni mejoras pagadas.
+
+El montaje final utiliza tres bloques fuente 4096×2304, fundidos de medio segundo y velocidad 0,85. FFmpeg exporta un máster privado 3840×2160 (CRF 18) y copias web 1920×1080 (CRF 20) y 2560×1440 (CRF 21), a 24 fotogramas por segundo, H.264, AAC 128 kb/s y `faststart`. Los originales de alta resolución permanecen en `docbase/film-source`, ignorado por Git. La mejora de resolución conserva el movimiento; no es una corrección de anatomía.
+
+La revisión responsive consulta el menú de Cars como referencia de interacción. Maison mantiene su componente propio: menú desplegable hasta 1000 píxeles, cierre con Escape y al cambiar de ruta. Tras la revisión de Araceli, el hero móvil llena la altura disponible bajo la cabecera y mantiene los controles superpuestos. No se trasladan archivos ni recursos de Cars.
+
+La copia móvil 1080×1440 se obtiene del máster 4K con recortes horizontales centrados por escena, conservando la altura original. La posición se interpola durante los fundidos. No consume créditos ni genera movimientos nuevos. [Parámetros del reencuadre](REENCUADRE-MAISON-MOBILE.json); ejecución: `python3 scripts/reframe-maison-film.py docs/REENCUADRE-MAISON-MOBILE.json docbase/film-source/maison-film-master-4k.mp4 frontend/public/media/maison-film-mobile.mp4`. La web ajusta el encuadre a la proporción del móvil y cambia la fuente al cruzar los puntos de corte de pantalla.
