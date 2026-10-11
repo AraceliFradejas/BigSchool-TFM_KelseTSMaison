@@ -40,6 +40,10 @@ Las pruebas usan bases temporales y cuentas ficticias, sin conectar con servicio
 
 `npm audit --omit=dev --json` terminó con **cero vulnerabilidades conocidas** en las dependencias de producción en la consulta realizada. Es el resultado del registro npm en esa fecha; no garantiza ausencia de defectos ni cubre las dependencias de desarrollo.
 
+## GitHub Actions
+
+El workflow de pruebas y build ha terminado correctamente en GitHub para el commit `ebf349b9ca67ffe4a7ab03fcf29782dc2e90048c`. Ejecuta instalación limpia, pruebas y compilación en un runner Ubuntu con Node 22. [Resultado de la ejecución](https://github.com/AraceliFradejas/BigSchool-TFM_KelseTSMaison/actions/runs/38147827899).
+
 ## Recorrido en Safari
 
 Se ha comprobado el siguiente recorrido en la aplicación local:
@@ -61,7 +65,7 @@ Las capturas están en [Evidencias](evidencias/README.md). Se revisaron visualme
 - Lector de pantalla y revisión completa de contraste y foco.
 - Formulario de alta, creación de producto y subida de imagen desde la interfaz en ambos idiomas. Sus reglas de API sí tienen pruebas.
 - Despliegue HTTPS, cookies Secure, proxy, persistencia y restauración de una copia en el proveedor elegido.
-- Ejecución del Dockerfile y del workflow de GitHub Actions.
+- Ejecución del Dockerfile.
 - Carga, procesos múltiples y estabilidad a largo plazo.
 - IA y app nativa: no están implementadas y no hay pruebas de funcionamiento de esas ampliaciones.
 
