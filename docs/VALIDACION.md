@@ -133,3 +133,31 @@ Catálogo local y respuestas HTTP comprobados: 51 artículos, 140 variantes, 15 
 - Tras la revisión de Araceli, el hero móvil ocupa la altura disponible de pantalla. Usa un reencuadre vertical por escena, con música y pausa superpuestas y título grande; castellano e inglés revisados. Menú hamburguesa hasta 1000 píxeles; incluye Mi cuenta y mantiene idioma, favoritos y bolsa en la cabecera.
 - Comprobadas apertura y cierre del menú, cierre con Escape en tablet y cierre al navegar a Moda. Referencia de interacción consultada en Cars, sin modificar ese proyecto.
 - Evidencias: [móvil](evidencias/maison-film-mobile.png), [menú](evidencias/maison-menu-mobile.png) y [tablet](evidencias/maison-film-tablet.png).
+
+## Pasarela ilustrada en revisión · 12 de octubre de 2026
+
+- Nueve animaciones de diez segundos, 36 outfits en composiciones de cuatro paneles; coste 450 créditos. Montajes de 86,75 s en 1280×720 y 85,625 s en 1080×1440, con música de Suno. Decodificación completa de ambas copias con FFmpeg sin errores.
+- Revisión de fotogramas y reproducción en Chrome; controles de música y pausa comprobados, incluida emulación iPhone SE. Compilación de producción correcta.
+- Araceli rechaza el movimiento: las prendas apenas se mueven y predomina un pequeño zoom. Estos montajes no se consideran una pasarela validada.
+- Se cambia a una única prenda por toma: prueba de cinco segundos con cámara fija y pasos alternos, coste adicional de 25 créditos. Revisión de diez fotogramas: los zapatos se levantan y apoyan alternativamente y los pantalones cambian de posición. Araceli acepta esta prueba y autoriza hasta 875 créditos adicionales para los otros 35 outfits.
+- Subtotal antes de la ampliación: 475 créditos; saldo 6.538. La prueba está en `/pruebas/pasarela-caminata.html`, en bucle y con controles.
+
+### Ampliación individual tras aprobar la caminata
+
+- 35 clips individuales adicionales de cinco segundos: 875 créditos netos. Tres generaciones fallidas devolvieron 75 créditos; se obtuvieron sus sustituciones sin superar el máximo autorizado. Saldo final de la ampliación: 5.663. Total del 12 de octubre: 1.350 créditos, incluidas las primeras pruebas. No se ha realizado reescalado pagado.
+- Las imágenes recortadas de las láminas dan resultados desiguales. Se reconstruyen once fotogramas individualmente con más espacio de suelo y se animan; su revisión muestra pasos alternos. Se conservan los prompts y las tareas en las fuentes privadas.
+- Revisión visual de fotogramas repartidos por cada clip: 23 looks muestran pasos claros; trece mantienen una pose casi fija. Lista exacta en [PELICULA-MAISON-ILUSTRADA.json](PELICULA-MAISON-ILUSTRADA.json). La revisión por muestreo no garantiza ausencia de artefactos y el resultado sigue siendo un borrador.
+- Montaje local con los 36 looks: escritorio 1920×1080, nueve bloques de cuatro prendas, 62,624674 s; móvil 1080×1440, una prenda por plano y extractos de 2,5 s, 90 s. Cortes directos para evitar zapatos duplicados durante fundidos. En escritorio las caminatas se reproducen a velocidad 0,72.
+- Música Runway Pulse, H.264, AAC 128 kb/s, 24 fps y faststart. Ambas exportaciones decodificadas completas con FFmpeg sin errores. FFprobe confirma dimensiones, duración y pistas de vídeo/audio.
+- Vídeo completo servido por Vite local: HTTP 200 y video/mp4. Portada selecciona la copia vertical hasta 700 px. El título se sitúa arriba para dejar visibles las piernas y los pasos. Compilación de producción correcta. La nueva edición aún no tiene comprobación visual responsive ni prueba en teléfono físico.
+- Incorporado a la portada local para revisión; no se ha hecho commit, push ni despliegue remoto de este borrador.
+
+### Nueva dirección: pasarela lateral
+
+Araceli rechaza el montaje de 36 looks por movimientos insuficientes y extraños y propone una vista lateral con avance de izquierda a derecha sobre escenarios que se desplazan. Se prepara una prueba independiente de veinte segundos: dos outfits, cuatro pasadas, un fondo continuo y la pista Runway Pulse. Las imágenes y cuatro poses por prenda se generan con la herramienta integrada de imágenes de OpenAI. La composición se realiza con FFmpeg, sin nuevas generaciones de Runway y sin créditos adicionales.
+
+La hoja de poses se extrae y se alinea mediante `scripts/prepare-maison-lateral-frames.mjs`; `scripts/render-maison-lateral-pilot.py` reproduce las poses a 5 fps y compone el vídeo H.264 a 24 fps. La revisión de veinte fotogramas durante los dos primeros segundos muestra alternancia de poses de piernas y avance horizontal; otra hoja cada dos segundos revisa el recorrido y el escenario. Decodificación completa sin errores y página de prueba local con HTTP 200. Es una animación ilustrada de poses discretas, pendiente de aceptación; aún no incluye los 36 looks ni dura un minuto. Fuentes y prompts privados en `docbase/hero-lateral-v1`.
+
+### Cierre de la pasarela lateral
+
+Araceli acepta la ampliación de 36 looks y 90 segundos, con cadencia más lenta. Ambas exportaciones finales se decodifican completas sin errores; FFprobe confirma duración, dimensiones y audio. Se revisan visualmente 18 muestras de escritorio y una muestra por cada uno de los 36 looks móviles, con prendas y calzado dentro del encuadre. La portada se comprueba en Edge de escritorio y la compilación de producción termina correctamente. La copia móvil es 1080×1920 y se selecciona hasta 700 px. La emulación responsive no puede completarse porque la organización bloquea DevTools en Edge; no se ha probado esta versión en un teléfono físico. No se ha realizado commit, push ni despliegue remoto de esta revisión.

@@ -5,21 +5,16 @@ import { Icon } from '../../shared/components';
 
 export default function MaisonFilm() {
   const { language, t } = useMaison();
-  const selectFilmSource = () =>
-    window.matchMedia('(max-width: 700px)').matches
-      ? '/media/maison-film-mobile.mp4?v=maison-final-responsive-20261011'
-      : window.matchMedia('(min-width: 1400px)').matches
-        ? '/media/maison-film-1440.mp4?v=maison-final-responsive-20261011'
-        : '/media/maison-film.mp4?v=maison-final-responsive-20261011';
+  const selectFilmSource = () => window.matchMedia('(max-width: 700px)').matches
+    ? '/media/maison-film-lateral-mobile.mp4?v=lateral-20261012'
+    : '/media/maison-film-lateral.mp4?v=lateral-20261012';
   const [filmSource, setFilmSource] = useState(selectFilmSource);
   const portrait = filmSource.includes('mobile');
   const poster = portrait
-    ? '/media/maison-film-mobile-poster.webp'
-    : '/media/maison-film-poster.webp';
+    ? '/media/maison-film-lateral-mobile-poster.webp'
+    : '/media/maison-film-lateral-poster.webp';
   useEffect(() => {
-    const queries = ['(max-width: 700px)', '(min-width: 1400px)'].map((query) =>
-      window.matchMedia(query),
-    );
+    const queries = ['(max-width: 700px)'].map((query) => window.matchMedia(query));
     const update = () => setFilmSource(selectFilmSource());
     queries.forEach((query) => query.addEventListener('change', update));
     return () => queries.forEach((query) => query.removeEventListener('change', update));
@@ -27,9 +22,13 @@ export default function MaisonFilm() {
   const video = useRef(null);
   const root = useRef(null);
   const [paused, setPaused] = useState(false);
-  const [playing, setPlaying] = useState(false);
+  const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [muted, setMuted] = useState(true);
+  useEffect(() => {
+    setReady(false);
+    setFailed(false);
+  }, [filmSource]);
   const [reduced, setReduced] = useState(
     () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   );
@@ -67,14 +66,14 @@ export default function MaisonFilm() {
   return (
     <section
       ref={root}
-      className={`maison-film${playing ? ' is-playing' : ''}`}
+      className={`maison-film is-illustrated${ready ? ' is-playing' : ''}`}
       aria-labelledby="maison-film-title"
     >
       <img
         src={poster}
         alt=""
         width={portrait ? 1080 : 1920}
-        height={portrait ? 1440 : 1080}
+        height={portrait ? 1920 : 1080}
         fetchPriority="high"
       />
       {!failed && (
@@ -89,21 +88,20 @@ export default function MaisonFilm() {
           playsInline
           preload={reduced ? 'none' : 'metadata'}
           aria-hidden="true"
-          onPlaying={() => setPlaying(true)}
-          onPause={() => setPlaying(false)}
+          onPlaying={() => setReady(true)}
           onError={() => {
             setFailed(true);
-            setPlaying(false);
+            setReady(false);
           }}
         />
       )}
       <div className="maison-film-copy">
-        <p className="eyebrow">KelseTS MAISON · {es ? 'TODAS TUS ERAS' : 'ALL YOUR ERAS'}</p>
+        <p className="eyebrow">KelseTS MAISON · {es ? 'EL CUADERNO' : 'THE SKETCHBOOK'}</p>
         <h1 id="maison-film-title">{t.heroTitle}</h1>
         <p className="maison-film-description">
           {es
-            ? 'Sol, lluvia y nieve. Del traje italiano a la gala. Todas tus versiones.'
-            : 'Sun, rain and snow. From Italian tailoring to gala. Every version of you.'}
+            ? 'Tinta, acuarela y prendas que cobran vida. Del día a día a la gala.'
+            : 'Ink, watercolor and clothes coming to life. From everyday moments to gala.'}
         </p>
         <Link className="campaign-link" to="/catalog">
           {t.explore} <Icon name="arrow" />
@@ -112,8 +110,8 @@ export default function MaisonFilm() {
       <div className="maison-film-controls">
         <span>
           {es
-            ? 'PELÍCULA MAISON · CLIMAS / SASTRERÍA / GALA'
-            : 'MAISON FILM · WEATHER / TAILORING / GALA'}
+            ? 'EL CUADERNO MAISON · DÍA A DÍA / ELEGANCIA / GALA'
+            : 'THE MAISON SKETCHBOOK · EVERYDAY / ELEGANCE / GALA'}
         </span>
         {!failed && !reduced && (
           <button

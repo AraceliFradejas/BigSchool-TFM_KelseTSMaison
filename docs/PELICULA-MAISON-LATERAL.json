@@ -1,0 +1,35 @@
+{
+  "status": "Aceptada por Araceli; integrada en la portada local",
+  "durationSeconds": 90,
+  "looks": 36,
+  "desktop": {
+    "file": "/media/maison-film-lateral.mp4",
+    "width": 1920,
+    "height": 1080
+  },
+  "mobile": {
+    "file": "/media/maison-film-lateral-mobile.mp4",
+    "width": 1080,
+    "height": 1920
+  },
+  "outputFrameRate": 24,
+  "poseFrameRate": 3.75,
+  "desktopMovementPixelsPerSecond": 200,
+  "music": "Runway Pulse — pista aportada por Araceli",
+  "art": "Herramienta integrada de imágenes de OpenAI; prendas ilustradas sin caras",
+  "composition": "FFmpeg; cuatro poses por outfit y desplazamiento lateral controlado",
+  "additionalRunwayCredits": 0,
+  "sourceManifest": "docbase/hero-lateral-v1/manifest.json",
+  "renderer": "scripts/render-maison-lateral-film.py",
+  "verification": [
+    "Decodificación completa sin errores de ambas exportaciones",
+    "Dimensiones, duración y audio comprobados con FFprobe",
+    "Revisión visual por muestreo de escritorio y de los 36 looks verticales",
+    "Portada visible en Edge de escritorio",
+    "Compilación de producción correcta"
+  ],
+  "pendingVerification": [
+    "Prueba en teléfono físico",
+    "Emulación responsive en navegador: DevTools bloqueado por política de Edge"
+  ]
+}

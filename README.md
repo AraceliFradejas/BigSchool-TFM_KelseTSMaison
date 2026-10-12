@@ -22,7 +22,7 @@ Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS 
 
 ### Qué puedes hacer
 
-- Ver una película panorámica con estaciones, sastrería y gala, música y controles de sonido, explorar cuatro looks que se animan al pasar el cursor y quince colecciones propias.
+- Ver una pasarela ilustrada de 36 looks, con escenarios, música y controles de reproducción, y explorar quince colecciones propias.
 - Consultar 51 artículos con 140 variantes, incluidas 24 piezas de la selección de lujo.
 - Explorar 21 looks editoriales de eventos, entrevistas y TV, estilo de calle y día a día.
 - Consultar Moda, Accesorios y Belleza con búsqueda, filtros, orden por precio y paginación.
@@ -165,7 +165,7 @@ After the AFM Moda Oceánica landing page and the full stack journey of KelseTS 
 
 ### What you can do
 
-- Watch the Maison film with fourteen looks, music and playback controls, enjoy a full-height mobile hero, and explore fifteen original collections.
+- Watch the illustrated runway with 36 looks, music and playback controls, enjoy a full-height mobile hero, and explore fifteen original collections.
 - Browse 51 products with 140 variants, including 24 pieces in the luxury edit.
 - Explore 21 editorial looks for events, interviews and TV, street style and everyday plans.
 - Browse Fashion, Accessories and Beauty with search, filters, price sorting and pagination.

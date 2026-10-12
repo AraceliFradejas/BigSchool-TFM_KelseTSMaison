@@ -1970,3 +1970,61 @@ main:focus {
     font-size: 0.75rem;
   }
 }
+
+@media (min-width: 701px) {
+  .maison-film.is-illustrated::after {
+    background: linear-gradient(180deg, rgb(15 12 19 / 0.65), transparent 30%);
+  }
+  .maison-film.is-illustrated .maison-film-copy {
+    left: 4%;
+    right: 4%;
+    top: 28px;
+    bottom: auto;
+    max-width: none;
+    transform: none;
+  }
+  .maison-film.is-illustrated .maison-film-copy h1 {
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    white-space: normal;
+    max-width: 65%;
+    margin: 8px 0;
+  }
+  .maison-film.is-illustrated .maison-film-description {
+    display: none;
+  }
+  .maison-film.is-illustrated .campaign-link {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  .maison-film.is-illustrated .maison-film-controls {
+    left: auto;
+    right: 4%;
+    top: 24px;
+    bottom: auto;
+    gap: 12px;
+  }
+  .maison-film.is-illustrated .maison-film-controls > span {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .maison-film.is-illustrated::after {
+    background:
+      linear-gradient(180deg, rgb(15 12 19 / 0.7), transparent 36%),
+      linear-gradient(0deg, rgb(15 12 19 / 0.5), transparent 18%);
+  }
+  .maison-film.is-illustrated .maison-film-copy {
+    top: 24px;
+    bottom: auto;
+  }
+  .maison-film.is-illustrated .maison-film-copy h1 {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+    max-width: 15ch;
+    margin: 10px 0;
+  }
+  .maison-film.is-illustrated .maison-film-copy .campaign-link {
+    font-size: 0.7rem;
+  }
+}

@@ -20,3 +20,4 @@ backend/runtime/
 *.sqlite-wal
 playwright-report/
 test-results/
+__pycache__/
