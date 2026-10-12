@@ -173,7 +173,7 @@ export const words = {
     legal:
       'KelseTS es una marca ficticia de Araceli Fradejas Muñoz. Proyecto educativo y de portfolio, sin ventas reales ni respaldo de celebridades, marcas o entidades deportivas.',
     creditsBody:
-      'El catálogo contiene productos y precios ficticios. Las imágenes fotorrealistas se han generado para esta demostración y no son fotografías de productos reales. La base del cliente HTTP y la organización por funcionalidades continúan el trabajo de KelseTS Cars.',
+      'El catálogo contiene productos y precios ficticios. Las imágenes fotorrealistas se han generado para esta demostración y no son fotografías de productos reales. Los títulos de canciones de Taylor Swift inspiran los nombres editoriales de la pasarela. La base del cliente HTTP y la organización por funcionalidades continúan el trabajo de KelseTS Cars.',
     footerLine: 'Moda. Historias. Un universo propio.',
     author: 'Araceli Fradejas Muñoz · TFM BigSchool',
     loading: 'Cargando…',
@@ -359,7 +359,7 @@ export const words = {
     legal:
       'KelseTS is a fictional brand by Araceli Fradejas Muñoz. An educational and portfolio project, with no real sales or endorsement by celebrities, brands or sporting organisations.',
     creditsBody:
-      'The catalogue contains fictional products and prices. The photorealistic images were generated for this demonstration and are not photographs of real products. The HTTP client foundation and feature-based organisation continue the work of KelseTS Cars.',
+      'The catalogue contains fictional products and prices. The photorealistic images were generated for this demonstration and are not photographs of real products. Taylor Swift song titles inspire the runway’s editorial names. The HTTP client foundation and feature-based organisation continue the work of KelseTS Cars.',
     footerLine: 'Fashion. Stories. A universe of our own.',
     author: 'Araceli Fradejas Muñoz · BigSchool final project',
     loading: 'Loading…',

@@ -22,9 +22,9 @@ Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS 
 
 ### Qué puedes hacer
 
-- Ver una pasarela ilustrada de 36 looks, con escenarios, música y controles de reproducción, y explorar quince colecciones propias.
-- Consultar 51 artículos con 140 variantes, incluidas 24 piezas de la selección de lujo.
-- Explorar 21 looks editoriales de eventos, entrevistas y TV, estilo de calle y día a día.
+- Ver una pasarela ilustrada de 36 looks, con escenarios, música y controles de reproducción, y explorar dieciséis colecciones propias.
+- Consultar 190 artículos con 996 variantes, incluidas las 139 piezas de los 36 looks de la pasarela.
+- Explorar 21 looks editoriales y los 36 outfits de la película; elegir piezas por separado o añadir el conjunto con sus tallas.
 - Consultar Moda, Accesorios y Belleza con búsqueda, filtros, orden por precio y paginación.
 - Elegir variantes y comprobar su precio y disponibilidad.
 - Registrarte, acceder y guardar productos en «Mi selección».
@@ -165,9 +165,9 @@ After the AFM Moda Oceánica landing page and the full stack journey of KelseTS 
 
 ### What you can do
 
-- Watch the illustrated runway with 36 looks, music and playback controls, enjoy a full-height mobile hero, and explore fifteen original collections.
-- Browse 51 products with 140 variants, including 24 pieces in the luxury edit.
-- Explore 21 editorial looks for events, interviews and TV, street style and everyday plans.
+- Watch the illustrated runway with 36 looks, music and playback controls, enjoy a full-height mobile hero, and explore sixteen original collections.
+- Browse 190 products with 996 variants, including the 139 pieces of the 36 runway outfits.
+- Explore 21 editorial looks and the 36 film outfits; choose separate pieces or add the complete outfit with individual sizes.
 - Browse Fashion, Accessories and Beauty with search, filters, price sorting and pagination.
 - Choose variants and check their prices and availability.
 - Register, sign in and save products to “My selection”.
@@ -290,6 +290,10 @@ The final project will include code, README, application access and slides. [Del
 
 KelseTS is a fictional brand by **Araceli Fradejas Muñoz**. Maison is an educational and portfolio project without commercial activity, affiliation, sponsorship or endorsement by celebrities, brands or sporting organisations. Its products, collections, prices and operations are fictional. Photorealistic catalogue images are generated representations of fictional products, not photographs of real merchandise. Font credits and licences are in [Resources](docs/RECURSOS.md).
 
-Para actualizar una base local anterior con los nuevos recursos de catálogo: `npm run media:migrate`. Solo sustituye las imágenes SVG originales; conserva stock, imágenes personalizadas y pedidos. Las instalaciones nuevas utilizan WebP desde el inicio.
+Para actualizar una base local anterior con los nuevos recursos de catálogo: `npm run media:migrate`. Sustituye las imágenes SVG originales y las fotos de conjunto usadas provisionalmente en las fichas de pasarela; conserva stock, imágenes personalizadas y pedidos. Las instalaciones nuevas utilizan WebP desde el inicio.
 
 Para aplicar los precios de lujo a una base local anterior: `npm run prices:migrate`. Conserva precios personalizados por Team, stock y pedidos anteriores. Las instalaciones nuevas incorporan los precios actualizados.
+
+Para actualizar los nombres editoriales anteriores de la pasarela: `npm run runway:names:migrate`. Solo cambia los nombres originales; respeta los nombres personalizados por Team, el stock y las líneas históricas de pedidos. Las instalaciones nuevas ya incluyen los títulos de canciones.
+
+Existing local databases can run `npm run media:migrate` for individual runway photographs and `npm run runway:names:migrate` for song titles. Both preserve managed stock, custom Team edits and historical orders. New installations include the current catalogue directly.

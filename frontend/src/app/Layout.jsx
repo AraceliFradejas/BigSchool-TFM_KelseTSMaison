@@ -76,6 +76,7 @@ export default function Layout() {
           <NavLink to="/catalog?category=accessories">{t.accessories}</NavLink>
           <NavLink to="/catalog?category=beauty">{t.beauty}</NavLink>
           <NavLink to="/collections">{t.collections}</NavLink>
+          <NavLink to="/runway">{language === 'es' ? 'La pasarela' : 'The runway'}</NavLink>
           <NavLink to="/looks">{t.looks}</NavLink>
           <NavLink to="/story">{t.about}</NavLink>
           <NavLink className="mobile-account" to="/account">

@@ -11,12 +11,18 @@ export default function Product() {
   const [variantId, setVariantId] = useState('');
   const product = resource.data;
   const related = useResource(product ? `/products?collection=${product.collectionId}` : null);
+  const lookResource = useResource(product ? '/looks' : null);
+  const matchingLook = lookResource.data?.find((look) =>
+    look.products.some((item) => item.id === id),
+  );
   useEffect(
     () =>
       setVariantId(
-        product?.variants.find((variant) => variant.stock > 0)?.id ||
-          product?.variants[0]?.id ||
-          '',
+        product?.tags.includes('runway')
+          ? ''
+          : product?.variants.find((variant) => variant.stock > 0)?.id ||
+              product?.variants[0]?.id ||
+              '',
       ),
     [product],
   );
@@ -31,7 +37,9 @@ export default function Product() {
         {product && (
           <>
             <div className="product-detail">
-              <div className="detail-picture">
+              <div
+                className={`detail-picture${product.tags.includes('runway') ? ' is-runway' : ''}`}
+              >
                 <img
                   {...catalogImageProps(product.image)}
                   sizes="(max-width: 800px) 90vw, 50vw"
@@ -41,6 +49,12 @@ export default function Product() {
                 />
               </div>
               <div className="detail-copy">
+                {matchingLook?.sourceId && (
+                  <Link className="text-link" to={`/runway/${matchingLook.id}`}>
+                    {language === 'es' ? 'Ver el look completo' : 'View complete outfit'} ·{' '}
+                    {matchingLook.name} <Icon name="arrow" />
+                  </Link>
+                )}
                 <Link className="eyebrow" to={`/catalog?collection=${product.collectionId}`}>
                   {product.collectionId.replaceAll('-', ' ')}
                 </Link>
@@ -71,7 +85,13 @@ export default function Product() {
                   ))}
                 </fieldset>
                 <p className={`stock-note ${variant?.stock > 0 ? '' : 'out'}`}>
-                  {variant?.stock > 0 ? `${variant.stock} ${t.stock}` : t.soldOut}
+                  {!variant
+                    ? language === 'es'
+                      ? 'Elige una talla o variante.'
+                      : 'Choose a size or variant.'
+                    : variant.stock > 0
+                      ? `${variant.stock} ${t.stock}`
+                      : t.soldOut}
                 </p>
                 <button
                   className="button full"
@@ -99,13 +119,23 @@ export default function Product() {
             <section className="section">
               <div className="section-intro">
                 <div>
-                  <h2>{t.related}</h2>
+                  <h2>
+                    {matchingLook
+                      ? language === 'es'
+                        ? 'Completa tu look'
+                        : 'Complete your look'
+                      : t.related}
+                  </h2>
                   <p>{t.relatedBody}</p>
                 </div>
               </div>
               <ResourceState resource={related}>
                 {related.data && (
-                  <ProductGrid products={related.data.items.filter((item) => item.id !== id)} />
+                  <ProductGrid
+                    products={(matchingLook?.products || related.data.items).filter(
+                      (item) => item.id !== id,
+                    )}
+                  />
                 )}
               </ResourceState>
             </section>

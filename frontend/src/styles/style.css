@@ -2028,3 +2028,174 @@ main:focus {
     font-size: 0.7rem;
   }
 }
+
+/* Runway wardrobe: photographs stay complete, including shoes and long hems. */
+.runway-home-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding-top: 42px;
+  padding-bottom: 42px;
+  border-bottom: 1px solid var(--line);
+}
+.runway-home-strip h2 {
+  font-size: clamp(1.5rem, 3vw, 2.3rem);
+  margin-bottom: 12px;
+}
+.runway-home-strip p:not(.eyebrow) {
+  color: var(--muted);
+}
+.runway-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 40px 22px;
+}
+.runway-card img {
+  display: block;
+  width: 100%;
+  height: 480px;
+  object-fit: contain;
+  background: #f8f4eb;
+}
+.runway-card .eyebrow {
+  margin-top: 20px;
+}
+.runway-card h2 {
+  font-size: 1.45rem;
+  margin: 10px 0;
+}
+.runway-card p {
+  color: var(--muted);
+}
+.runway-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 60px;
+  margin-top: 30px;
+  align-items: start;
+}
+.runway-look-photo {
+  width: 100%;
+  height: min(850px, 90svh);
+  object-fit: contain;
+  background: #f8f4eb;
+}
+.runway-detail h1 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  margin-bottom: 20px;
+}
+.runway-pieces {
+  margin-top: 30px;
+}
+.runway-piece {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+.runway-piece > a {
+  font-weight: 500;
+}
+.runway-piece-product {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.runway-piece-product img {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  object-fit: contain;
+  background: #f8f4eb;
+}
+.runway-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.runway-next {
+  margin-left: auto;
+}
+.runway-piece label {
+  display: grid;
+  gap: 7px;
+  font-size: 0.85rem;
+}
+.runway-piece label select {
+  width: 100%;
+}
+.runway-piece button {
+  align-self: end;
+}
+.runway-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  margin: 25px 0;
+}
+.product-card.is-runway .product-picture img,
+.detail-picture.is-runway img {
+  object-fit: contain;
+  background: #f8f4eb;
+}
+@media (max-width: 1000px) {
+  .runway-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .runway-card img {
+    height: 380px;
+  }
+  .runway-detail {
+    gap: 30px;
+  }
+}
+@media (max-width: 700px) {
+  .runway-home-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .runway-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px 12px;
+  }
+  .runway-card img {
+    height: 320px;
+  }
+  .runway-card h2 {
+    font-size: 1.2rem;
+  }
+  .runway-detail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .runway-look-photo {
+    height: 600px;
+    max-height: 85svh;
+  }
+  .runway-piece {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.runway-era-filter {
+  display: grid;
+  gap: 8px;
+  max-width: 400px;
+  margin: 25px 0 35px;
+}
+.runway-album {
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  margin: 10px 0 16px;
+}
+.runway-era-filter select {
+  min-width: 0;
+  width: 100%;
+}

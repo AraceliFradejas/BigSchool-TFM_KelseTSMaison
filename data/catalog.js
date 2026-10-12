@@ -1,3 +1,4 @@
+import { runwayCollections, runwayProducts, runwayLooks } from './runway-edit.js';
 import { luxuryCollections, createLuxuryProducts, luxuryLooks } from './luxury-edit.js';
 import { newCollections, createNewProducts, newLooks } from './swiftie-edit.js';
 const translated = (es, en) => ({ es, en });
@@ -40,6 +41,7 @@ export const collections = [
   },
   ...newCollections,
   ...luxuryCollections,
+  ...runwayCollections,
 ];
 function product(id, es, en, category, collectionId, priceCents, labels, tags, description) {
   return {
@@ -312,7 +314,7 @@ export const products = [
     ],
   ),
 ];
-products.push(...createNewProducts(product), ...createLuxuryProducts(product));
+products.push(...createNewProducts(product), ...createLuxuryProducts(product), ...runwayProducts);
 export const looks = [
   ...collections.slice(0, 5).map((collection, i) => ({
     id: `look-${collection.id}`,
@@ -323,4 +325,5 @@ export const looks = [
   })),
   ...newLooks,
   ...luxuryLooks,
+  ...runwayLooks,
 ];

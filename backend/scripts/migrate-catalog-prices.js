@@ -9,6 +9,7 @@ export function migrateCatalogPrices(db) {
   return transaction(db, () => {
     const result = { products: 0, variants: 0 };
     for (const product of products) {
+      if (!Object.hasOwn(legacyPrices, product.id)) continue;
       let changed = 0;
       for (const variant of product.variants) {
         changed += db

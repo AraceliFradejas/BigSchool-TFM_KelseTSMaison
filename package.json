@@ -15,12 +15,13 @@
     "dev": "node scripts/dev.mjs",
     "build": "npm run build -w frontend",
     "start": "npm start -w backend",
-    "test": "npm test -w backend && npm test -w packages/api-client",
+    "test": "npm test -w backend && npm test -w packages/api-client && node --test frontend/test/*.test.js",
     "seed": "npm run seed -w backend",
     "team:grant": "node --env-file-if-exists=backend/.env backend/scripts/grant-team.js",
     "media:migrate": "node --env-file-if-exists=backend/.env backend/scripts/migrate-catalog-images.js",
     "media:prepare": "node scripts/prepare-catalog-media.mjs",
-    "prices:migrate": "node --env-file-if-exists=backend/.env backend/scripts/migrate-catalog-prices.js"
+    "prices:migrate": "node --env-file-if-exists=backend/.env backend/scripts/migrate-catalog-prices.js",
+    "runway:names:migrate": "node --env-file-if-exists=backend/.env backend/scripts/migrate-runway-names.js"
   },
   "devDependencies": {
     "prettier": "^3.9.10"

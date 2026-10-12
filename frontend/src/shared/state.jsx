@@ -1,3 +1,4 @@
+import { mergeCartSelection } from './cart-selection';
 import { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 import { createApiClient } from '@maison/api-client';
 import { words, errors } from './i18n';
@@ -134,26 +135,20 @@ export function Provider({ children }) {
       notify(errorText(error), 'error');
     }
   }
+  function addSelection(pieces) {
+    if (!authReady) return false;
+    try {
+      const lines = mergeCartSelection(cart.lines, pieces);
+      setCart({ key: crypto.randomUUID(), lines });
+      notify(words[language].added);
+      return true;
+    } catch (error) {
+      notify(errors[language][error.message] || errors[language].invalid_input, 'error');
+      return false;
+    }
+  }
   function add(product, variant, quantity = 1) {
-    const current = cart.lines.find((line) => line.variantId === variant.id);
-    if (!authReady) return;
-    if ((current?.quantity || 0) + quantity > Math.min(10, variant.stock)) {
-      notify(errors[language].insufficient_stock, 'error');
-      return;
-    }
-    if (!current && cart.lines.length >= 30) {
-      notify(errors[language].invalid_input, 'error');
-      return;
-    }
-    setCart((previous) => ({
-      key: crypto.randomUUID(),
-      lines: current
-        ? previous.lines.map((line) =>
-            line.variantId === variant.id ? { ...line, quantity: line.quantity + quantity } : line,
-          )
-        : [...previous.lines, { productId: product.id, variantId: variant.id, quantity }],
-    }));
-    notify(words[language].added);
+    return addSelection([{ product, variant, quantity }]);
   }
   function updateQuantity(id, quantity) {
     setCart((previous) => ({
@@ -196,6 +191,7 @@ export function Provider({ children }) {
         logout,
         cart,
         add,
+        addSelection,
         updateQuantity,
         clearCart: () => setCart(emptyCart()),
         favorites,

@@ -4,12 +4,12 @@ import sharp from 'sharp';
 import { products } from '../data/catalog.js';
 
 const images = {};
-for (const { image } of products) {
+for (const image of new Set(products.map((product) => product.image))) {
   const filename = fileURLToPath(new URL(`../frontend/public${image}`, import.meta.url));
   const metadata = await sharp(filename).metadata();
   images[image] = metadata.width;
   await sharp(filename)
-    .resize(600)
+    .resize({ width: 600, withoutEnlargement: true })
     .webp({ quality: 80 })
     .toFile(filename.replace('.webp', '-small.webp'));
 }

@@ -62,6 +62,7 @@ export function Money({ cents }) {
   return new Intl.NumberFormat(language === 'es' ? 'es-ES' : 'en-IE', {
     style: 'currency',
     currency: 'EUR',
+    useGrouping: 'always',
   }).format(cents / 100);
 }
 export function ResourceState({ resource, children }) {
@@ -89,7 +90,7 @@ export function ProductCard({ product }) {
   const available = product.variants.some((variant) => variant.stock > 0);
   const saved = favorites.includes(product.id);
   return (
-    <article className="product-card">
+    <article className={`product-card${product.tags.includes('runway') ? ' is-runway' : ''}`}>
       <div className="product-picture">
         <Link to={`/products/${product.id}`} tabIndex={-1} aria-hidden="true">
           <img

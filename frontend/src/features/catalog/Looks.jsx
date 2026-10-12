@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useMaison, useResource, api } from '../../shared/state';
 import { PageHeading, Money, ProductGrid, ResourceState } from '../../shared/components';
@@ -35,6 +36,9 @@ export default function Looks() {
   return (
     <div className="container page">
       <PageHeading eyebrow={t.lookEyebrow} title={t.lookTitle} body={t.lookBody} />
+      <Link className="text-link" to="/runway">
+        {language === 'es' ? 'Comprar los 36 looks de la pasarela' : 'Shop the 36 runway looks'}
+      </Link>
       <section className="stylist-panel">
         <div>
           <h2>{t.stylist}</h2>
@@ -138,7 +142,7 @@ export default function Looks() {
           ))}
         </nav>
         {resource.data
-          ?.filter((look) => mood === 'all' || look.mood === mood)
+          ?.filter((look) => !look.sourceId && (mood === 'all' || look.mood === mood))
           .map((look) => (
             <section className="look-section" key={look.id}>
               <div className="section-intro">

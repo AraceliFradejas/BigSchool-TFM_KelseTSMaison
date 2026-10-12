@@ -1,0 +1,1721 @@
+[
+  {
+    "sourceId": "metro-ciudad-1",
+    "id": "look-runway-metro-ciudad-1",
+    "name": "Welcome to New York",
+    "mood": "street",
+    "image": "/media/runway-metro-ciudad-1.webp",
+    "pieces": [
+      {
+        "id": "runway-metro-ciudad-1-1",
+        "name": {
+          "es": "Gabardina camel · Welcome to New York",
+          "en": "Camel trench coat · Welcome to New York"
+        },
+        "kind": "coat",
+        "priceCents": 220000
+      },
+      {
+        "id": "runway-metro-ciudad-1-2",
+        "name": {
+          "es": "Camiseta marinera · Welcome to New York",
+          "en": "Striped ivory tee · Welcome to New York"
+        },
+        "kind": "top",
+        "priceCents": 29000
+      },
+      {
+        "id": "runway-metro-ciudad-1-3",
+        "name": {
+          "es": "Vaquero índigo · Welcome to New York",
+          "en": "Indigo jeans · Welcome to New York"
+        },
+        "kind": "jeans",
+        "priceCents": 68000
+      },
+      {
+        "id": "runway-metro-ciudad-1-4",
+        "name": {
+          "es": "Mocasines burdeos · Welcome to New York",
+          "en": "Burgundy loafers · Welcome to New York"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      },
+      {
+        "id": "runway-metro-ciudad-1-5",
+        "name": {
+          "es": "Bolso azul noche · Welcome to New York",
+          "en": "Navy shoulder bag · Welcome to New York"
+        },
+        "kind": "bag",
+        "priceCents": 145000
+      }
+    ],
+    "position": 1,
+    "previousName": "Promenade",
+    "songTitle": "Welcome to New York",
+    "songAlbum": "1989"
+  },
+  {
+    "sourceId": "elegancia-1",
+    "id": "look-runway-elegancia-1",
+    "name": "Style",
+    "mood": "television",
+    "image": "/media/runway-elegancia-1.webp",
+    "pieces": [
+      {
+        "id": "runway-elegancia-1-1",
+        "name": {
+          "es": "Americana cruzada marfil · Style",
+          "en": "Ivory double breasted blazer · Style"
+        },
+        "kind": "jacket",
+        "priceCents": 195000
+      },
+      {
+        "id": "runway-elegancia-1-2",
+        "name": {
+          "es": "Blusa champán · Style",
+          "en": "Champagne blouse · Style"
+        },
+        "kind": "shirt",
+        "priceCents": 75000
+      },
+      {
+        "id": "runway-elegancia-1-3",
+        "name": {
+          "es": "Pantalón de sastre marfil · Style",
+          "en": "Ivory tailored trousers · Style"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-elegancia-1-4",
+        "name": {
+          "es": "Zapatos burdeos · Style",
+          "en": "Burgundy low pumps · Style"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 2,
+    "previousName": "Milano Ivory",
+    "songTitle": "Style",
+    "songAlbum": "1989"
+  },
+  {
+    "sourceId": "eras-01-1",
+    "id": "look-runway-eras-01-1",
+    "name": "Our Song",
+    "mood": "everyday",
+    "image": "/media/runway-eras-01-1.webp",
+    "pieces": [
+      {
+        "id": "runway-eras-01-1-1",
+        "name": {
+          "es": "Blusa vichy turquesa · Our Song",
+          "en": "Turquoise gingham blouse · Our Song"
+        },
+        "kind": "shirt",
+        "priceCents": 75000
+      },
+      {
+        "id": "runway-eras-01-1-2",
+        "name": {
+          "es": "Falda midi marfil · Our Song",
+          "en": "Ivory A line midi skirt · Our Song"
+        },
+        "kind": "skirt",
+        "priceCents": 115000
+      },
+      {
+        "id": "runway-eras-01-1-3",
+        "name": {
+          "es": "Medias marfil · Our Song",
+          "en": "Ivory stockings · Our Song"
+        },
+        "kind": "socks",
+        "priceCents": 9500
+      },
+      {
+        "id": "runway-eras-01-1-4",
+        "name": {
+          "es": "Botines camel · Our Song",
+          "en": "Tan ankle boots · Our Song"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 3,
+    "previousName": "First Bloom",
+    "songTitle": "Our Song",
+    "songAlbum": "Taylor Swift"
+  },
+  {
+    "sourceId": "metro-ciudad-2",
+    "id": "look-runway-metro-ciudad-2",
+    "name": "Come In With the Rain",
+    "mood": "street",
+    "image": "/media/runway-metro-ciudad-2.webp",
+    "pieces": [
+      {
+        "id": "runway-metro-ciudad-2-1",
+        "name": {
+          "es": "Impermeable bosque · Come In With the Rain",
+          "en": "Forest raincoat · Come In With the Rain"
+        },
+        "kind": "coat",
+        "priceCents": 220000
+      },
+      {
+        "id": "runway-metro-ciudad-2-2",
+        "name": {
+          "es": "Jersey azul noche · Come In With the Rain",
+          "en": "Navy knit sweater · Come In With the Rain"
+        },
+        "kind": "knit",
+        "priceCents": 98000
+      },
+      {
+        "id": "runway-metro-ciudad-2-3",
+        "name": {
+          "es": "Pantalón azul noche · Come In With the Rain",
+          "en": "Navy trousers · Come In With the Rain"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-metro-ciudad-2-4",
+        "name": {
+          "es": "Botines negros · Come In With the Rain",
+          "en": "Black ankle boots · Come In With the Rain"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 4,
+    "previousName": "Rain Letters",
+    "songTitle": "Come In With the Rain",
+    "songAlbum": "Fearless"
+  },
+  {
+    "sourceId": "eras-01-2",
+    "id": "look-runway-eras-01-2",
+    "name": "Fearless",
+    "mood": "everyday",
+    "image": "/media/runway-eras-01-2.webp",
+    "pieces": [
+      {
+        "id": "runway-eras-01-2-1",
+        "name": {
+          "es": "Jersey dorado · Fearless",
+          "en": "Golden knit sweater · Fearless"
+        },
+        "kind": "knit",
+        "priceCents": 98000
+      },
+      {
+        "id": "runway-eras-01-2-2",
+        "name": {
+          "es": "Vaquero índigo · Fearless",
+          "en": "Dark denim jeans · Fearless"
+        },
+        "kind": "jeans",
+        "priceCents": 68000
+      },
+      {
+        "id": "runway-eras-01-2-3",
+        "name": {
+          "es": "Zapatillas marfil · Fearless",
+          "en": "Ivory retro sneakers · Fearless"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 5,
+    "previousName": "Golden Promise",
+    "songTitle": "Fearless",
+    "songAlbum": "Fearless"
+  },
+  {
+    "sourceId": "boceto-disenador-1",
+    "id": "look-runway-boceto-disenador-1",
+    "name": "Clean",
+    "mood": "television",
+    "image": "/media/runway-boceto-disenador-1.webp",
+    "pieces": [
+      {
+        "id": "runway-boceto-disenador-1-1",
+        "name": {
+          "es": "Camisa marfil · Clean",
+          "en": "Ivory shirt · Clean"
+        },
+        "kind": "shirt",
+        "priceCents": 75000
+      },
+      {
+        "id": "runway-boceto-disenador-1-2",
+        "name": {
+          "es": "Pantalón azul noche · Clean",
+          "en": "Navy wide trousers · Clean"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-boceto-disenador-1-3",
+        "name": {
+          "es": "Mocasines burdeos · Clean",
+          "en": "Burgundy loafers · Clean"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 6,
+    "previousName": "Ivory Pages",
+    "songTitle": "Clean",
+    "songAlbum": "1989"
+  },
+  {
+    "sourceId": "eras-01-3",
+    "id": "look-runway-eras-01-3",
+    "name": "Sparks Fly",
+    "mood": "dinner",
+    "image": "/media/runway-eras-01-3.webp",
+    "pieces": [
+      {
+        "id": "runway-eras-01-3-1",
+        "name": {
+          "es": "Cárdigan lavanda · Sparks Fly",
+          "en": "Lavender cardigan · Sparks Fly"
+        },
+        "kind": "knit",
+        "priceCents": 98000
+      },
+      {
+        "id": "runway-eras-01-3-2",
+        "name": {
+          "es": "Camiseta marfil · Sparks Fly",
+          "en": "Ivory tee · Sparks Fly"
+        },
+        "kind": "top",
+        "priceCents": 29000
+      },
+      {
+        "id": "runway-eras-01-3-3",
+        "name": {
+          "es": "Falda plisada ciruela · Sparks Fly",
+          "en": "Plum pleated midi skirt · Sparks Fly"
+        },
+        "kind": "skirt",
+        "priceCents": 115000
+      },
+      {
+        "id": "runway-eras-01-3-4",
+        "name": {
+          "es": "Medias ciruela · Sparks Fly",
+          "en": "Plum stockings · Sparks Fly"
+        },
+        "kind": "socks",
+        "priceCents": 9500
+      },
+      {
+        "id": "runway-eras-01-3-5",
+        "name": {
+          "es": "Zapatos burdeos · Sparks Fly",
+          "en": "Burgundy Mary Janes · Sparks Fly"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 7,
+    "previousName": "Violet Story",
+    "songTitle": "Sparks Fly",
+    "songAlbum": "Speak Now"
+  },
+  {
+    "sourceId": "metro-ciudad-3",
+    "id": "look-runway-metro-ciudad-3",
+    "name": "Begin Again",
+    "mood": "everyday",
+    "image": "/media/runway-metro-ciudad-3.webp",
+    "pieces": [
+      {
+        "id": "runway-metro-ciudad-3-1",
+        "name": {
+          "es": "Cárdigan burdeos · Begin Again",
+          "en": "Burgundy cable cardigan · Begin Again"
+        },
+        "kind": "knit",
+        "priceCents": 98000
+      },
+      {
+        "id": "runway-metro-ciudad-3-2",
+        "name": {
+          "es": "Camisa marfil · Begin Again",
+          "en": "Ivory shirt · Begin Again"
+        },
+        "kind": "shirt",
+        "priceCents": 75000
+      },
+      {
+        "id": "runway-metro-ciudad-3-3",
+        "name": {
+          "es": "Pantalón gris · Begin Again",
+          "en": "Grey trousers · Begin Again"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-metro-ciudad-3-4",
+        "name": {
+          "es": "Zapatillas marfil · Begin Again",
+          "en": "Ivory sneakers · Begin Again"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      },
+      {
+        "id": "runway-metro-ciudad-3-5",
+        "name": {
+          "es": "Bandolera marfil · Begin Again",
+          "en": "Ivory crossbody bag · Begin Again"
+        },
+        "kind": "bag",
+        "priceCents": 145000
+      }
+    ],
+    "position": 8,
+    "previousName": "Café Together",
+    "songTitle": "Begin Again",
+    "songAlbum": "Red"
+  },
+  {
+    "sourceId": "eras-01-4",
+    "id": "look-runway-eras-01-4",
+    "name": "Red",
+    "mood": "street",
+    "image": "/media/runway-eras-01-4.webp",
+    "pieces": [
+      {
+        "id": "runway-eras-01-4-1",
+        "name": {
+          "es": "Abrigo camel · Red",
+          "en": "Camel coat · Red"
+        },
+        "kind": "coat",
+        "priceCents": 220000
+      },
+      {
+        "id": "runway-eras-01-4-2",
+        "name": {
+          "es": "Camiseta marinera · Red",
+          "en": "Striped ivory tee · Red"
+        },
+        "kind": "top",
+        "priceCents": 29000
+      },
+      {
+        "id": "runway-eras-01-4-3",
+        "name": {
+          "es": "Vaquero azul · Red",
+          "en": "Blue jeans · Red"
+        },
+        "kind": "jeans",
+        "priceCents": 68000
+      },
+      {
+        "id": "runway-eras-01-4-4",
+        "name": {
+          "es": "Bufanda roja · Red",
+          "en": "Red knit scarf · Red"
+        },
+        "kind": "scarf",
+        "priceCents": 32000
+      },
+      {
+        "id": "runway-eras-01-4-5",
+        "name": {
+          "es": "Botines marrones · Red",
+          "en": "Brown ankle boots · Red"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 9,
+    "previousName": "Scarlet Postcard",
+    "songTitle": "Red",
+    "songAlbum": "Red"
+  },
+  {
+    "sourceId": "elegancia-2",
+    "id": "look-runway-elegancia-2",
+    "name": "The Manuscript",
+    "mood": "television",
+    "image": "/media/runway-elegancia-2.webp",
+    "pieces": [
+      {
+        "id": "runway-elegancia-2-1",
+        "name": {
+          "es": "Americana gris perla · The Manuscript",
+          "en": "Pearl grey longline blazer · The Manuscript"
+        },
+        "kind": "jacket",
+        "priceCents": 195000
+      },
+      {
+        "id": "runway-elegancia-2-2",
+        "name": {
+          "es": "Blusa marfil · The Manuscript",
+          "en": "Ivory blouse · The Manuscript"
+        },
+        "kind": "shirt",
+        "priceCents": 75000
+      },
+      {
+        "id": "runway-elegancia-2-3",
+        "name": {
+          "es": "Pantalón gris perla · The Manuscript",
+          "en": "Pearl grey pleated trousers · The Manuscript"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-elegancia-2-4",
+        "name": {
+          "es": "Pañuelo ciruela · The Manuscript",
+          "en": "Plum pocket square · The Manuscript"
+        },
+        "kind": "scarf",
+        "priceCents": 32000
+      },
+      {
+        "id": "runway-elegancia-2-5",
+        "name": {
+          "es": "Mocasines negros · The Manuscript",
+          "en": "Black loafers · The Manuscript"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 10,
+    "previousName": "Pearl Paragraph",
+    "songTitle": "The Manuscript",
+    "songAlbum": "The Tortured Poets Department"
+  },
+  {
+    "sourceId": "eras-02-1",
+    "id": "look-runway-eras-02-1",
+    "name": "New Romantics",
+    "mood": "everyday",
+    "image": "/media/runway-eras-02-1.webp",
+    "pieces": [
+      {
+        "id": "runway-eras-02-1-1",
+        "name": {
+          "es": "Camisa azul cielo · New Romantics",
+          "en": "Pale blue shirt · New Romantics"
+        },
+        "kind": "shirt",
+        "priceCents": 75000
+      },
+      {
+        "id": "runway-eras-02-1-2",
+        "name": {
+          "es": "Vaquero marfil · New Romantics",
+          "en": "Ivory jeans · New Romantics"
+        },
+        "kind": "jeans",
+        "priceCents": 68000
+      },
+      {
+        "id": "runway-eras-02-1-3",
+        "name": {
+          "es": "Zapatillas azul noche · New Romantics",
+          "en": "Navy canvas sneakers · New Romantics"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 11,
+    "previousName": "Skyline Blue",
+    "songTitle": "New Romantics",
+    "songAlbum": "1989"
+  },
+  {
+    "sourceId": "everyday-2",
+    "id": "look-runway-everyday-2",
+    "name": "Fifteen",
+    "mood": "everyday",
+    "image": "/media/runway-everyday-2.webp",
+    "pieces": [
+      {
+        "id": "runway-everyday-2-1",
+        "name": {
+          "es": "Polo marinero azul · Fifteen",
+          "en": "Navy striped knit polo · Fifteen"
+        },
+        "kind": "knit",
+        "priceCents": 98000
+      },
+      {
+        "id": "runway-everyday-2-2",
+        "name": {
+          "es": "Vaquero azul claro · Fifteen",
+          "en": "Light wash jeans · Fifteen"
+        },
+        "kind": "jeans",
+        "priceCents": 68000
+      },
+      {
+        "id": "runway-everyday-2-3",
+        "name": {
+          "es": "Mocasines burdeos · Fifteen",
+          "en": "Burgundy loafers · Fifteen"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 12,
+    "previousName": "Campus Notes",
+    "songTitle": "Fifteen",
+    "songAlbum": "Fearless"
+  },
+  {
+    "sourceId": "eras-02-2",
+    "id": "look-runway-eras-02-2",
+    "name": "...Ready for It?",
+    "mood": "concert",
+    "image": "/media/runway-eras-02-2.webp",
+    "pieces": [
+      {
+        "id": "runway-eras-02-2-1",
+        "name": {
+          "es": "Bomber negra · ...Ready for It?",
+          "en": "Black bomber jacket · ...Ready for It?"
+        },
+        "kind": "jacket",
+        "priceCents": 195000
+      },
+      {
+        "id": "runway-eras-02-2-2",
+        "name": {
+          "es": "Camiseta antracita · ...Ready for It?",
+          "en": "Charcoal tee · ...Ready for It?"
+        },
+        "kind": "top",
+        "priceCents": 29000
+      },
+      {
+        "id": "runway-eras-02-2-3",
+        "name": {
+          "es": "Pantalón cargo antracita · ...Ready for It?",
+          "en": "Charcoal cargo trousers · ...Ready for It?"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-eras-02-2-4",
+        "name": {
+          "es": "Zapatillas negras · ...Ready for It?",
+          "en": "Black trainers · ...Ready for It?"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 13,
+    "previousName": "Nocturne",
+    "songTitle": "...Ready for It?",
+    "songAlbum": "reputation"
+  },
+  {
+    "sourceId": "metro-ciudad-4",
+    "id": "look-runway-metro-ciudad-4",
+    "name": "The Man",
+    "mood": "television",
+    "image": "/media/runway-metro-ciudad-4.webp",
+    "pieces": [
+      {
+        "id": "runway-metro-ciudad-4-1",
+        "name": {
+          "es": "Americana azul noche · The Man",
+          "en": "Navy blazer · The Man"
+        },
+        "kind": "jacket",
+        "priceCents": 195000
+      },
+      {
+        "id": "runway-metro-ciudad-4-2",
+        "name": {
+          "es": "Camisa azul cielo · The Man",
+          "en": "Pale blue shirt · The Man"
+        },
+        "kind": "shirt",
+        "priceCents": 75000
+      },
+      {
+        "id": "runway-metro-ciudad-4-3",
+        "name": {
+          "es": "Pantalón gris · The Man",
+          "en": "Grey trousers · The Man"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-metro-ciudad-4-4",
+        "name": {
+          "es": "Mocasines burdeos · The Man",
+          "en": "Burgundy loafers · The Man"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 14,
+    "previousName": "City Chapter",
+    "songTitle": "The Man",
+    "songAlbum": "Lover"
+  },
+  {
+    "sourceId": "eras-02-3",
+    "id": "look-runway-eras-02-3",
+    "name": "Daylight",
+    "mood": "everyday",
+    "image": "/media/runway-eras-02-3.webp",
+    "pieces": [
+      {
+        "id": "runway-eras-02-3-1",
+        "name": {
+          "es": "Cárdigan rosa · Daylight",
+          "en": "Blush cardigan · Daylight"
+        },
+        "kind": "knit",
+        "priceCents": 98000
+      },
+      {
+        "id": "runway-eras-02-3-2",
+        "name": {
+          "es": "Camiseta lavanda · Daylight",
+          "en": "Lavender tee · Daylight"
+        },
+        "kind": "top",
+        "priceCents": 29000
+      },
+      {
+        "id": "runway-eras-02-3-3",
+        "name": {
+          "es": "Vaquero gris · Daylight",
+          "en": "Grey jeans · Daylight"
+        },
+        "kind": "jeans",
+        "priceCents": 68000
+      },
+      {
+        "id": "runway-eras-02-3-4",
+        "name": {
+          "es": "Zapatillas marfil · Daylight",
+          "en": "Ivory sneakers · Daylight"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 15,
+    "previousName": "Rose Daylight",
+    "songTitle": "Daylight",
+    "songAlbum": "Lover"
+  },
+  {
+    "sourceId": "boceto-disenador-2",
+    "id": "look-runway-boceto-disenador-2",
+    "name": "ivy",
+    "mood": "dinner",
+    "image": "/media/runway-boceto-disenador-2.webp",
+    "pieces": [
+      {
+        "id": "runway-boceto-disenador-2-1",
+        "name": {
+          "es": "Abrigo marfil · ivy",
+          "en": "Ivory overcoat · ivy"
+        },
+        "kind": "coat",
+        "priceCents": 220000
+      },
+      {
+        "id": "runway-boceto-disenador-2-2",
+        "name": {
+          "es": "Vestido cruzado salvia · ivy",
+          "en": "Sage wrap dress · ivy"
+        },
+        "kind": "dress",
+        "priceCents": 245000
+      },
+      {
+        "id": "runway-boceto-disenador-2-3",
+        "name": {
+          "es": "Zapatos marfil · ivy",
+          "en": "Ivory closed pumps · ivy"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 16,
+    "previousName": "Sage Reverie",
+    "songTitle": "ivy",
+    "songAlbum": "evermore"
+  },
+  {
+    "sourceId": "eras-02-4",
+    "id": "look-runway-eras-02-4",
+    "name": "cardigan",
+    "mood": "everyday",
+    "image": "/media/runway-eras-02-4.webp",
+    "pieces": [
+      {
+        "id": "runway-eras-02-4-1",
+        "name": {
+          "es": "Cárdigan marfil · cardigan",
+          "en": "Ivory cable cardigan · cardigan"
+        },
+        "kind": "knit",
+        "priceCents": 98000
+      },
+      {
+        "id": "runway-eras-02-4-2",
+        "name": {
+          "es": "Camiseta gris · cardigan",
+          "en": "Grey tee · cardigan"
+        },
+        "kind": "top",
+        "priceCents": 29000
+      },
+      {
+        "id": "runway-eras-02-4-3",
+        "name": {
+          "es": "Falda midi antracita · cardigan",
+          "en": "Charcoal midi skirt · cardigan"
+        },
+        "kind": "skirt",
+        "priceCents": 115000
+      },
+      {
+        "id": "runway-eras-02-4-4",
+        "name": {
+          "es": "Medias burdeos · cardigan",
+          "en": "Burgundy stockings · cardigan"
+        },
+        "kind": "socks",
+        "priceCents": 9500
+      },
+      {
+        "id": "runway-eras-02-4-5",
+        "name": {
+          "es": "Mocasines burdeos · cardigan",
+          "en": "Burgundy loafers · cardigan"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 17,
+    "previousName": "Quiet Folio",
+    "songTitle": "cardigan",
+    "songAlbum": "folklore"
+  },
+  {
+    "sourceId": "everyday-1",
+    "id": "look-runway-everyday-1",
+    "name": "Lavender Haze",
+    "mood": "everyday",
+    "image": "/media/runway-everyday-1.webp",
+    "pieces": [
+      {
+        "id": "runway-everyday-1-1",
+        "name": {
+          "es": "Jersey lavanda · Lavender Haze",
+          "en": "Lavender cable sweater · Lavender Haze"
+        },
+        "kind": "knit",
+        "priceCents": 98000
+      },
+      {
+        "id": "runway-everyday-1-2",
+        "name": {
+          "es": "Pantalón marfil · Lavender Haze",
+          "en": "Ivory trousers · Lavender Haze"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-everyday-1-3",
+        "name": {
+          "es": "Zapatillas crema · Lavender Haze",
+          "en": "Cream sneakers · Lavender Haze"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 18,
+    "previousName": "Lavender Morning",
+    "songTitle": "Lavender Haze",
+    "songAlbum": "Midnights"
+  },
+  {
+    "sourceId": "eras-03-1",
+    "id": "look-runway-eras-03-1",
+    "name": "willow",
+    "mood": "weekend",
+    "image": "/media/runway-eras-03-1.webp",
+    "pieces": [
+      {
+        "id": "runway-eras-03-1-1",
+        "name": {
+          "es": "Sobrecamisa de cuadros cálidos · willow",
+          "en": "Warm plaid overshirt · willow"
+        },
+        "kind": "shirt",
+        "priceCents": 75000
+      },
+      {
+        "id": "runway-eras-03-1-2",
+        "name": {
+          "es": "Jersey marfil · willow",
+          "en": "Ivory cable sweater · willow"
+        },
+        "kind": "knit",
+        "priceCents": 98000
+      },
+      {
+        "id": "runway-eras-03-1-3",
+        "name": {
+          "es": "Pantalón de pana marrón · willow",
+          "en": "Brown corduroy trousers · willow"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-eras-03-1-4",
+        "name": {
+          "es": "Botines negros · willow",
+          "en": "Black ankle boots · willow"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 19,
+    "previousName": "Amber Woods",
+    "songTitle": "willow",
+    "songAlbum": "evermore"
+  },
+  {
+    "sourceId": "sport-1",
+    "id": "look-runway-sport-1",
+    "name": "Shake It Off",
+    "mood": "weekend",
+    "image": "/media/runway-sport-1.webp",
+    "pieces": [
+      {
+        "id": "runway-sport-1-1",
+        "name": {
+          "es": "Cortavientos burdeos · Shake It Off",
+          "en": "Burgundy windbreaker · Shake It Off"
+        },
+        "kind": "sport",
+        "priceCents": 68000
+      },
+      {
+        "id": "runway-sport-1-2",
+        "name": {
+          "es": "Camiseta marfil · Shake It Off",
+          "en": "Ivory athletic tee · Shake It Off"
+        },
+        "kind": "top",
+        "priceCents": 29000
+      },
+      {
+        "id": "runway-sport-1-3",
+        "name": {
+          "es": "Pantalón deportivo azul · Shake It Off",
+          "en": "Navy track trousers · Shake It Off"
+        },
+        "kind": "sport-bottom",
+        "priceCents": 49000
+      },
+      {
+        "id": "runway-sport-1-4",
+        "name": {
+          "es": "Zapatillas marfil · Shake It Off",
+          "en": "Ivory running shoes · Shake It Off"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 20,
+    "previousName": "Park Pulse",
+    "songTitle": "Shake It Off",
+    "songAlbum": "1989"
+  },
+  {
+    "sourceId": "eras-03-2",
+    "id": "look-runway-eras-03-2",
+    "name": "Midnight Rain",
+    "mood": "dinner",
+    "image": "/media/runway-eras-03-2.webp",
+    "pieces": [
+      {
+        "id": "runway-eras-03-2-1",
+        "name": {
+          "es": "Abrigo azul noche · Midnight Rain",
+          "en": "Navy overcoat · Midnight Rain"
+        },
+        "kind": "coat",
+        "priceCents": 220000
+      },
+      {
+        "id": "runway-eras-03-2-2",
+        "name": {
+          "es": "Jersey azul estrellado · Midnight Rain",
+          "en": "Star detail navy sweater · Midnight Rain"
+        },
+        "kind": "knit",
+        "priceCents": 98000
+      },
+      {
+        "id": "runway-eras-03-2-3",
+        "name": {
+          "es": "Pantalón gris · Midnight Rain",
+          "en": "Grey tailored trousers · Midnight Rain"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-eras-03-2-4",
+        "name": {
+          "es": "Mocasines plateados · Midnight Rain",
+          "en": "Silver loafers · Midnight Rain"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 21,
+    "previousName": "Midnight Margin",
+    "songTitle": "Midnight Rain",
+    "songAlbum": "Midnights"
+  },
+  {
+    "sourceId": "boceto-disenador-3",
+    "id": "look-runway-boceto-disenador-3",
+    "name": "All Too Well",
+    "mood": "everyday",
+    "image": "/media/runway-boceto-disenador-3.webp",
+    "pieces": [
+      {
+        "id": "runway-boceto-disenador-3-1",
+        "name": {
+          "es": "Abrigo camel · All Too Well",
+          "en": "Camel coat · All Too Well"
+        },
+        "kind": "coat",
+        "priceCents": 220000
+      },
+      {
+        "id": "runway-boceto-disenador-3-2",
+        "name": {
+          "es": "Jersey burdeos · All Too Well",
+          "en": "Burgundy cable sweater · All Too Well"
+        },
+        "kind": "knit",
+        "priceCents": 98000
+      },
+      {
+        "id": "runway-boceto-disenador-3-3",
+        "name": {
+          "es": "Pantalón gris · All Too Well",
+          "en": "Grey trousers · All Too Well"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-boceto-disenador-3-4",
+        "name": {
+          "es": "Botines marrones · All Too Well",
+          "en": "Brown ankle boots · All Too Well"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 22,
+    "previousName": "Autumn Ink",
+    "songTitle": "All Too Well",
+    "songAlbum": "Red"
+  },
+  {
+    "sourceId": "eras-03-3",
+    "id": "look-runway-eras-03-3",
+    "name": "The Albatross",
+    "mood": "television",
+    "image": "/media/runway-eras-03-3.webp",
+    "pieces": [
+      {
+        "id": "runway-eras-03-3-1",
+        "name": {
+          "es": "Camisa marfil · The Albatross",
+          "en": "Ivory shirt · The Albatross"
+        },
+        "kind": "shirt",
+        "priceCents": 75000
+      },
+      {
+        "id": "runway-eras-03-3-2",
+        "name": {
+          "es": "Chaleco antracita · The Albatross",
+          "en": "Charcoal tailored waistcoat · The Albatross"
+        },
+        "kind": "waistcoat",
+        "priceCents": 85000
+      },
+      {
+        "id": "runway-eras-03-3-3",
+        "name": {
+          "es": "Pantalón gris · The Albatross",
+          "en": "Grey tailored trousers · The Albatross"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-eras-03-3-4",
+        "name": {
+          "es": "Botines negros · The Albatross",
+          "en": "Black ankle boots · The Albatross"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 23,
+    "previousName": "Ivory Manuscript",
+    "songTitle": "The Albatross",
+    "songAlbum": "The Tortured Poets Department"
+  },
+  {
+    "sourceId": "everyday-4",
+    "id": "look-runway-everyday-4",
+    "name": "august",
+    "mood": "weekend",
+    "image": "/media/runway-everyday-4.webp",
+    "pieces": [
+      {
+        "id": "runway-everyday-4-1",
+        "name": {
+          "es": "Sobrecamisa marfil · august",
+          "en": "Ivory overshirt · august"
+        },
+        "kind": "shirt",
+        "priceCents": 75000
+      },
+      {
+        "id": "runway-everyday-4-2",
+        "name": {
+          "es": "Camiseta salvia · august",
+          "en": "Sage tee · august"
+        },
+        "kind": "top",
+        "priceCents": 29000
+      },
+      {
+        "id": "runway-everyday-4-3",
+        "name": {
+          "es": "Pantalón azul noche · august",
+          "en": "Navy relaxed trousers · august"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-everyday-4-4",
+        "name": {
+          "es": "Zapatillas marfil · august",
+          "en": "Ivory canvas sneakers · august"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 24,
+    "previousName": "Sunday Coast",
+    "songTitle": "august",
+    "songAlbum": "folklore"
+  },
+  {
+    "sourceId": "eras-03-4",
+    "id": "look-runway-eras-03-4",
+    "name": "Opalite",
+    "mood": "dinner",
+    "image": "/media/runway-eras-03-4.webp",
+    "pieces": [
+      {
+        "id": "runway-eras-03-4-1",
+        "name": {
+          "es": "Americana naranja cobre · Opalite",
+          "en": "Burnt orange blazer · Opalite"
+        },
+        "kind": "jacket",
+        "priceCents": 195000
+      },
+      {
+        "id": "runway-eras-03-4-2",
+        "name": {
+          "es": "Camiseta crema · Opalite",
+          "en": "Cream tee · Opalite"
+        },
+        "kind": "top",
+        "priceCents": 29000
+      },
+      {
+        "id": "runway-eras-03-4-3",
+        "name": {
+          "es": "Vaquero índigo · Opalite",
+          "en": "Dark navy jeans · Opalite"
+        },
+        "kind": "jeans",
+        "priceCents": 68000
+      },
+      {
+        "id": "runway-eras-03-4-4",
+        "name": {
+          "es": "Pañuelo turquesa · Opalite",
+          "en": "Teal pocket square · Opalite"
+        },
+        "kind": "scarf",
+        "priceCents": 32000
+      },
+      {
+        "id": "runway-eras-03-4-5",
+        "name": {
+          "es": "Mocasines crema · Opalite",
+          "en": "Cream loafers · Opalite"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 25,
+    "previousName": "Copper Spotlight",
+    "songTitle": "Opalite",
+    "songAlbum": "The Life of a Showgirl"
+  },
+  {
+    "sourceId": "sport-2",
+    "id": "look-runway-sport-2",
+    "name": "Jump Then Fall",
+    "mood": "weekend",
+    "image": "/media/runway-sport-2.webp",
+    "pieces": [
+      {
+        "id": "runway-sport-2-1",
+        "name": {
+          "es": "Chaqueta deportiva salvia · Jump Then Fall",
+          "en": "Sage sports jacket · Jump Then Fall"
+        },
+        "kind": "sport",
+        "priceCents": 68000
+      },
+      {
+        "id": "runway-sport-2-2",
+        "name": {
+          "es": "Camiseta blanca · Jump Then Fall",
+          "en": "White athletic tee · Jump Then Fall"
+        },
+        "kind": "top",
+        "priceCents": 29000
+      },
+      {
+        "id": "runway-sport-2-3",
+        "name": {
+          "es": "Bermudas antracita · Jump Then Fall",
+          "en": "Charcoal relaxed shorts · Jump Then Fall"
+        },
+        "kind": "sport-bottom",
+        "priceCents": 49000
+      },
+      {
+        "id": "runway-sport-2-4",
+        "name": {
+          "es": "Calcetines blancos · Jump Then Fall",
+          "en": "White athletic socks · Jump Then Fall"
+        },
+        "kind": "socks",
+        "priceCents": 9500
+      },
+      {
+        "id": "runway-sport-2-5",
+        "name": {
+          "es": "Zapatillas crema · Jump Then Fall",
+          "en": "Cream trainers · Jump Then Fall"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 26,
+    "previousName": "Sage Motion",
+    "songTitle": "Jump Then Fall",
+    "songAlbum": "Fearless"
+  },
+  {
+    "sourceId": "sport-3",
+    "id": "look-runway-sport-3",
+    "name": "long story short",
+    "mood": "weekend",
+    "image": "/media/runway-sport-3.webp",
+    "pieces": [
+      {
+        "id": "runway-sport-3-1",
+        "name": {
+          "es": "Sudadera avena · long story short",
+          "en": "Oatmeal sweatshirt · long story short"
+        },
+        "kind": "sport",
+        "priceCents": 68000
+      },
+      {
+        "id": "runway-sport-3-2",
+        "name": {
+          "es": "Joggers verde bosque · long story short",
+          "en": "Forest green joggers · long story short"
+        },
+        "kind": "sport-bottom",
+        "priceCents": 49000
+      },
+      {
+        "id": "runway-sport-3-3",
+        "name": {
+          "es": "Zapatillas burdeos · long story short",
+          "en": "Burgundy trainers · long story short"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 27,
+    "previousName": "Forest Pace",
+    "songTitle": "long story short",
+    "songAlbum": "evermore"
+  },
+  {
+    "sourceId": "sport-4",
+    "id": "look-runway-sport-4",
+    "name": "Holy Ground",
+    "mood": "weekend",
+    "image": "/media/runway-sport-4.webp",
+    "pieces": [
+      {
+        "id": "runway-sport-4-1",
+        "name": {
+          "es": "Chaqueta deportiva azul · Holy Ground",
+          "en": "Navy track jacket · Holy Ground"
+        },
+        "kind": "sport",
+        "priceCents": 68000
+      },
+      {
+        "id": "runway-sport-4-2",
+        "name": {
+          "es": "Camiseta azul cielo · Holy Ground",
+          "en": "Pale blue tee · Holy Ground"
+        },
+        "kind": "top",
+        "priceCents": 29000
+      },
+      {
+        "id": "runway-sport-4-3",
+        "name": {
+          "es": "Pantalón deportivo marfil · Holy Ground",
+          "en": "Ivory track trousers · Holy Ground"
+        },
+        "kind": "sport-bottom",
+        "priceCents": 49000
+      },
+      {
+        "id": "runway-sport-4-4",
+        "name": {
+          "es": "Zapatillas azul y crema · Holy Ground",
+          "en": "Navy cream sneakers · Holy Ground"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 28,
+    "previousName": "Studio Rhythm",
+    "songTitle": "Holy Ground",
+    "songAlbum": "Red"
+  },
+  {
+    "sourceId": "everyday-3",
+    "id": "look-runway-everyday-3",
+    "name": "Cruel Summer",
+    "mood": "concert",
+    "image": "/media/runway-everyday-3.webp",
+    "pieces": [
+      {
+        "id": "runway-everyday-3-1",
+        "name": {
+          "es": "Bomber burdeos · Cruel Summer",
+          "en": "Burgundy bomber jacket · Cruel Summer"
+        },
+        "kind": "jacket",
+        "priceCents": 195000
+      },
+      {
+        "id": "runway-everyday-3-2",
+        "name": {
+          "es": "Camiseta marfil · Cruel Summer",
+          "en": "Ivory tee · Cruel Summer"
+        },
+        "kind": "top",
+        "priceCents": 29000
+      },
+      {
+        "id": "runway-everyday-3-3",
+        "name": {
+          "es": "Vaquero antracita · Cruel Summer",
+          "en": "Charcoal jeans · Cruel Summer"
+        },
+        "kind": "jeans",
+        "priceCents": 68000
+      },
+      {
+        "id": "runway-everyday-3-4",
+        "name": {
+          "es": "Botines negros · Cruel Summer",
+          "en": "Black ankle boots · Cruel Summer"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 29,
+    "previousName": "Encore Street",
+    "songTitle": "Cruel Summer",
+    "songAlbum": "Lover"
+  },
+  {
+    "sourceId": "boceto-disenador-4",
+    "id": "look-runway-boceto-disenador-4",
+    "name": "Gorgeous",
+    "mood": "dinner",
+    "image": "/media/runway-boceto-disenador-4.webp",
+    "pieces": [
+      {
+        "id": "runway-boceto-disenador-4-1",
+        "name": {
+          "es": "Americana de terciopelo azul · Gorgeous",
+          "en": "Navy velvet blazer · Gorgeous"
+        },
+        "kind": "jacket",
+        "priceCents": 195000
+      },
+      {
+        "id": "runway-boceto-disenador-4-2",
+        "name": {
+          "es": "Camisa marfil · Gorgeous",
+          "en": "Ivory shirt · Gorgeous"
+        },
+        "kind": "shirt",
+        "priceCents": 75000
+      },
+      {
+        "id": "runway-boceto-disenador-4-3",
+        "name": {
+          "es": "Pantalón azul noche · Gorgeous",
+          "en": "Navy trousers · Gorgeous"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-boceto-disenador-4-4",
+        "name": {
+          "es": "Mocasines negros · Gorgeous",
+          "en": "Black loafers · Gorgeous"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 30,
+    "previousName": "Velvet Library",
+    "songTitle": "Gorgeous",
+    "songAlbum": "reputation"
+  },
+  {
+    "sourceId": "elegancia-4",
+    "id": "look-runway-elegancia-4",
+    "name": "Maroon",
+    "mood": "dinner",
+    "image": "/media/runway-elegancia-4.webp",
+    "pieces": [
+      {
+        "id": "runway-elegancia-4-1",
+        "name": {
+          "es": "Abrigo camel · Maroon",
+          "en": "Camel fine coat · Maroon"
+        },
+        "kind": "coat",
+        "priceCents": 220000
+      },
+      {
+        "id": "runway-elegancia-4-2",
+        "name": {
+          "es": "Blusa drapeada burdeos · Maroon",
+          "en": "Burgundy draped blouse · Maroon"
+        },
+        "kind": "shirt",
+        "priceCents": 75000
+      },
+      {
+        "id": "runway-elegancia-4-3",
+        "name": {
+          "es": "Pantalón azul noche · Maroon",
+          "en": "Navy wide tailored trousers · Maroon"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-elegancia-4-4",
+        "name": {
+          "es": "Zapatos burdeos · Maroon",
+          "en": "Burgundy low pumps · Maroon"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 31,
+    "previousName": "Burgundy Supper",
+    "songTitle": "Maroon",
+    "songAlbum": "Midnights"
+  },
+  {
+    "sourceId": "elegancia-3",
+    "id": "look-runway-elegancia-3",
+    "name": "End Game",
+    "mood": "event",
+    "image": "/media/runway-elegancia-3.webp",
+    "pieces": [
+      {
+        "id": "runway-elegancia-3-1",
+        "name": {
+          "es": "Chaqueta esmoquin negra · End Game",
+          "en": "Black velvet tuxedo jacket · End Game"
+        },
+        "kind": "jacket",
+        "priceCents": 195000
+      },
+      {
+        "id": "runway-elegancia-3-2",
+        "name": {
+          "es": "Blusa marfil · End Game",
+          "en": "Ivory blouse · End Game"
+        },
+        "kind": "shirt",
+        "priceCents": 75000
+      },
+      {
+        "id": "runway-elegancia-3-3",
+        "name": {
+          "es": "Pantalón esmoquin negro · End Game",
+          "en": "Black tuxedo trousers · End Game"
+        },
+        "kind": "trousers",
+        "priceCents": 89000
+      },
+      {
+        "id": "runway-elegancia-3-4",
+        "name": {
+          "es": "Zapatos plateados · End Game",
+          "en": "Silver low pumps · End Game"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 32,
+    "previousName": "Opera Noir",
+    "songTitle": "End Game",
+    "songAlbum": "reputation"
+  },
+  {
+    "sourceId": "gala-1",
+    "id": "look-runway-gala-1",
+    "name": "Enchanted",
+    "mood": "event",
+    "image": "/media/runway-gala-1.webp",
+    "pieces": [
+      {
+        "id": "runway-gala-1-1",
+        "name": {
+          "es": "Vestido largo ciruela · Enchanted",
+          "en": "Plum flowing gown · Enchanted"
+        },
+        "kind": "gown",
+        "priceCents": 495000
+      },
+      {
+        "id": "runway-gala-1-2",
+        "name": {
+          "es": "Zapatos metalizados · Enchanted",
+          "en": "Metallic low pumps · Enchanted"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 33,
+    "previousName": "Plum Sonata",
+    "songTitle": "Enchanted",
+    "songAlbum": "Speak Now"
+  },
+  {
+    "sourceId": "gala-2",
+    "id": "look-runway-gala-2",
+    "name": "Bejeweled",
+    "mood": "event",
+    "image": "/media/runway-gala-2.webp",
+    "pieces": [
+      {
+        "id": "runway-gala-2-1",
+        "name": {
+          "es": "Vestido azul estrellado · Bejeweled",
+          "en": "Navy embroidered star gown · Bejeweled"
+        },
+        "kind": "gown",
+        "priceCents": 495000
+      },
+      {
+        "id": "runway-gala-2-2",
+        "name": {
+          "es": "Zapatos plateados · Bejeweled",
+          "en": "Silver evening pumps · Bejeweled"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 34,
+    "previousName": "Constellation",
+    "songTitle": "Bejeweled",
+    "songAlbum": "Midnights"
+  },
+  {
+    "sourceId": "gala-3",
+    "id": "look-runway-gala-3",
+    "name": "Love Story",
+    "mood": "event",
+    "image": "/media/runway-gala-3.webp",
+    "pieces": [
+      {
+        "id": "runway-gala-3-1",
+        "name": {
+          "es": "Mono de gala champán · Love Story",
+          "en": "Champagne evening jumpsuit · Love Story"
+        },
+        "kind": "gown",
+        "priceCents": 495000
+      },
+      {
+        "id": "runway-gala-3-2",
+        "name": {
+          "es": "Sobrecapa bordada dorada · Love Story",
+          "en": "Gold embroidered overlayer · Love Story"
+        },
+        "kind": "overlayer",
+        "priceCents": 175000
+      },
+      {
+        "id": "runway-gala-3-3",
+        "name": {
+          "es": "Zapatos dorados · Love Story",
+          "en": "Gold low pumps · Love Story"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 35,
+    "previousName": "Champagne Vow",
+    "songTitle": "Love Story",
+    "songAlbum": "Fearless"
+  },
+  {
+    "sourceId": "gala-4",
+    "id": "look-runway-gala-4",
+    "name": "The Life of a Showgirl",
+    "mood": "event",
+    "image": "/media/runway-gala-4.webp",
+    "pieces": [
+      {
+        "id": "runway-gala-4-1",
+        "name": {
+          "es": "Vestido largo cobre · The Life of a Showgirl",
+          "en": "Copper flowing gown · The Life of a Showgirl"
+        },
+        "kind": "gown",
+        "priceCents": 495000
+      },
+      {
+        "id": "runway-gala-4-2",
+        "name": {
+          "es": "Chal marfil bordado · The Life of a Showgirl",
+          "en": "Embroidered ivory shawl · The Life of a Showgirl"
+        },
+        "kind": "scarf",
+        "priceCents": 32000
+      },
+      {
+        "id": "runway-gala-4-3",
+        "name": {
+          "es": "Zapatos marfil · The Life of a Showgirl",
+          "en": "Ivory evening pumps · The Life of a Showgirl"
+        },
+        "kind": "shoes",
+        "priceCents": 79000
+      }
+    ],
+    "position": 36,
+    "previousName": "Copper Curtain",
+    "songTitle": "The Life of a Showgirl",
+    "songAlbum": "The Life of a Showgirl"
+  }
+]

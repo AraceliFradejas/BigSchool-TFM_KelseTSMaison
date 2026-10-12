@@ -10,6 +10,24 @@ export default function Home() {
   return (
     <>
       <CampaignHero />
+      <section className="runway-home-strip container">
+        <div>
+          <p className="eyebrow">THE RUNWAY WARDROBE · 36 LOOKS</p>
+          <h2>
+            {language === 'es'
+              ? 'Del cuaderno a tu armario'
+              : 'From the sketchbook to your wardrobe'}
+          </h2>
+          <p>
+            {language === 'es'
+              ? 'Las prendas que acabas de ver desfilar. Una pieza, un conjunto, tu propia historia.'
+              : 'The pieces you just watched on the runway. One piece, one outfit, your own story.'}
+          </p>
+        </div>
+        <Link className="button secondary" to="/runway">
+          {language === 'es' ? 'Comprar los looks' : 'Shop the runway'} <Icon name="arrow" />
+        </Link>
+      </section>
       <section className="section container">
         <div className="section-intro">
           <div>

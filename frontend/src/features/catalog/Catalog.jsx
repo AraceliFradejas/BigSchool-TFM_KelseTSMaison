@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { useMaison, useResource } from '../../shared/state';
 import { PageHeading, ProductGrid, ResourceState, Icon } from '../../shared/components';
 export default function Catalog() {
-  const { t } = useMaison();
+  const { t, language } = useMaison();
   const [params, setParams] = useSearchParams();
   const [search, setSearch] = useState(params.get('q') || '');
   const collections = useResource('/collections');
@@ -28,6 +28,12 @@ export default function Catalog() {
   return (
     <div className="container page">
       <PageHeading eyebrow="KelseTS MAISON" title={t.catalogue} />
+      <Link className="text-link" to="/runway">
+        {language === 'es'
+          ? 'Descubre los 36 looks de la pasarela'
+          : 'Discover the 36 runway looks'}{' '}
+        <Icon name="arrow" />
+      </Link>
       <div className="filters">
         <form className="search-field" onSubmit={submit}>
           <label className="sr-only" htmlFor="catalog-search">
@@ -106,6 +112,14 @@ export default function Catalog() {
             onChange={(event) => change('luxury', event.target.checked ? '1' : '')}
           />
           {t.luxuryOnly}
+        </label>
+        <label className="checkbox-label">
+          <input
+            type="checkbox"
+            checked={params.get('runway') === '1'}
+            onChange={(event) => change('runway', event.target.checked ? '1' : '')}
+          />
+          {language === 'es' ? 'Piezas de la pasarela' : 'Runway pieces'}
         </label>
         {params.size > 0 && (
           <button className="link-button" onClick={() => setParams({})}>

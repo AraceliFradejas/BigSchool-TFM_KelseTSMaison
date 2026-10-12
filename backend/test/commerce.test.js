@@ -1,3 +1,6 @@
+import { migrateRunwayNames } from '../scripts/migrate-runway-names.js';
+import runwayEntries from '../../data/runway-edit.json' with { type: 'json' };
+import { products, looks } from '../../data/catalog.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
@@ -54,16 +57,19 @@ function draft(db, id = 'satin-story') {
 test('public catalogue exposes bilingual variants and filters with pagination', async (t) => {
   const { app } = setup(t);
   const first = await request(app).get('/api/v1/products');
-  assert.equal(first.body.data.total, 51);
+  assert.equal(first.body.data.total, products.length);
   assert.equal(first.body.data.items.length, 12);
   const second = await request(app).get('/api/v1/products?page=2');
   assert.equal(second.body.data.items.length, 12);
   const third = await request(app).get('/api/v1/products?page=3');
   assert.equal(third.body.data.items.length, 12);
-  const last = await request(app).get('/api/v1/products?page=5');
-  assert.equal(last.body.data.items.length, 3);
+  const last = await request(app).get(`/api/v1/products?page=${Math.ceil(products.length / 12)}`);
+  assert.equal(last.body.data.items.length, products.length % 12 || 12);
   const luxury = await request(app).get('/api/v1/products?luxury=1');
-  assert.equal(luxury.body.data.total, 24);
+  assert.equal(
+    luxury.body.data.total,
+    products.filter((product) => product.tags.includes('luxury')).length,
+  );
   assert.ok(luxury.body.data.items.every((product) => product.tags.includes('luxury')));
   const beauty = await request(app).get('/api/v1/products?category=beauty&q=labial');
   assert.deepEqual(
@@ -362,8 +368,12 @@ test('the seed preserves edited products, consumed stock and existing users', (t
 test('new editorial looks reference existing products and support event and TV suggestions', async (t) => {
   const { app, agent, db } = setup(t);
   const response = await request(app).get('/api/v1/looks');
-  assert.equal(response.body.data.length, 21);
-  assert.ok(response.body.data.every((look) => look.complete && look.products.length >= 3));
+  assert.equal(response.body.data.length, looks.length);
+  assert.ok(
+    response.body.data
+      .filter((look) => !look.sourceId)
+      .every((look) => look.complete && look.products.length >= 3),
+  );
   const green = await post(agent, '/stylist', {
     occasion: 'event',
     color: 'green',
@@ -411,7 +421,21 @@ test('catalog image migration preserves custom images and stock and is idempoten
   custom.image = '/uploads/custom.webp';
   db.prepare("UPDATE products SET data=? WHERE id='warm-notes'").run(JSON.stringify(custom));
   db.prepare("UPDATE variants SET stock=2 WHERE id='satin-story-1'").run();
-  assert.equal(migrateCatalogImages(db), 1);
+  const runwayPiece = runwayEntries[0].pieces[0];
+  const {
+    variants: runwayVariants,
+    revision: runwayRevision,
+    ...runwayData
+  } = getProduct(db, runwayPiece.id);
+  runwayData.image = runwayEntries[0].image;
+  db.prepare('UPDATE products SET data=? WHERE id=?').run(
+    JSON.stringify(runwayData),
+    runwayPiece.id,
+  );
+  db.prepare('UPDATE variants SET stock=2 WHERE id=?').run(runwayVariants[0].id);
+  assert.equal(migrateCatalogImages(db), 2);
+  assert.equal(getProduct(db, runwayPiece.id).image, `/media/${runwayPiece.id}.webp`);
+  assert.equal(getProduct(db, runwayPiece.id).variants[0].stock, 2);
   assert.equal(getProduct(db, 'satin-story').image, '/media/satin-story.webp');
   assert.equal(getProduct(db, 'satin-story').revision, 2);
   assert.equal(getProduct(db, 'satin-story').variants[0].stock, 2);
@@ -466,4 +490,75 @@ test('luxury price migration preserves stock, Team prices and historical orders'
   assert.deepEqual(db.prepare('SELECT lines, total_cents FROM orders').get(), before);
   assert.equal(before.total_cents, 7900);
   assert.deepEqual(migrateCatalogPrices(db), { products: 0, variants: 0 });
+});
+
+test('all 36 runway outfits expose purchasable pieces and preserve existing seed data', async (t) => {
+  const { db, app } = setup(t);
+  const response = await request(app).get('/api/v1/looks');
+  const runway = response.body.data.filter((look) => look.sourceId);
+  assert.equal(runway.length, 36);
+  assert.equal(new Set(runway.map((look) => look.sourceId)).size, 36);
+  assert.deepEqual(
+    runway.map((look) => look.position),
+    Array.from({ length: 36 }, (_, i) => i + 1),
+  );
+  assert.ok(runway.every((look) => look.complete && look.products.length >= 2));
+  const filtered = await request(app).get('/api/v1/products?runway=1');
+  assert.equal(filtered.body.data.total, 139);
+  assert.ok(filtered.body.data.items.every((product) => product.tags.includes('runway')));
+  const first = runway[0].products[0];
+  db.prepare('UPDATE variants SET stock=1 WHERE id=?').run(first.variants[0].id);
+  assert.equal(seedDatabase(db), 0);
+  assert.equal(getProduct(db, first.id).variants[0].stock, 1);
+  assert.ok(getProduct(db, 'satin-story'));
+});
+
+test('runway outfit orders use server prices and stock for every piece', async (t) => {
+  const { app, agent, db } = setup(t);
+  await register(agent);
+  const looksResponse = await request(app).get('/api/v1/looks');
+  const look = looksResponse.body.data.find((look) => look.sourceId === 'metro-ciudad-1');
+  const chosen = look.products.map((product) => product.variants[0]);
+  const expected = chosen.reduce((sum, variant) => sum + variant.priceCents, 0);
+  const response = await post(agent, '/orders', {
+    idempotencyKey: randomUUID(),
+    lines: chosen.map((variant) => ({ variantId: variant.id, quantity: 1 })),
+  });
+  assert.equal(response.status, 201);
+  assert.equal(response.body.data.totalCents, expected);
+  assert.equal(response.body.data.lines.length, chosen.length);
+  for (const variant of chosen)
+    assert.equal(
+      db.prepare('SELECT stock FROM variants WHERE id=?').get(variant.id).stock,
+      variant.stock - 1,
+    );
+});
+
+test('song-title migration preserves Team names and stock and is idempotent', (t) => {
+  const { db } = setup(t);
+  const look = runwayEntries[0];
+  const first = getProduct(db, look.pieces[0].id);
+  const { variants, revision, ...data } = first;
+  data.name = {
+    es: `${look.pieces[0].name.es.split(' · ')[0]} · ${look.previousName}`,
+    en: `${look.pieces[0].name.en.split(' · ')[0]} · ${look.previousName}`,
+  };
+  db.prepare('UPDATE products SET data=? WHERE id=?').run(JSON.stringify(data), first.id);
+  db.prepare('UPDATE variants SET stock=2 WHERE id=?').run(variants[0].id);
+  const custom = getProduct(db, look.pieces[1].id);
+  const { variants: customVariants, revision: customRevision, ...customData } = custom;
+  customData.name = { es: 'Nombre del Team', en: 'Team name' };
+  db.prepare('UPDATE products SET data=? WHERE id=?').run(JSON.stringify(customData), custom.id);
+  const originalLook = JSON.parse(
+    db.prepare('SELECT data FROM looks WHERE id=?').get(look.id).data,
+  );
+  originalLook.name = look.previousName;
+  delete originalLook.songTitle;
+  delete originalLook.songAlbum;
+  db.prepare('UPDATE looks SET data=? WHERE id=?').run(JSON.stringify(originalLook), look.id);
+  assert.deepEqual(migrateRunwayNames(db), { products: 1, looks: 1 });
+  assert.equal(getProduct(db, first.id).name.es, look.pieces[0].name.es);
+  assert.equal(getProduct(db, first.id).variants[0].stock, 2);
+  assert.deepEqual(getProduct(db, custom.id).name, customData.name);
+  assert.deepEqual(migrateRunwayNames(db), { products: 0, looks: 0 });
 });

@@ -15,7 +15,7 @@ export function getProduct(db, id) {
     ...JSON.parse(row.data),
     revision: row.revision,
     variants: db
-      .prepare('SELECT * FROM variants WHERE product_id=? ORDER BY id')
+      .prepare('SELECT * FROM variants WHERE product_id=? ORDER BY rowid')
       .all(id)
       .map((variant) => ({
         id: variant.id,
@@ -57,9 +57,17 @@ export function catalogRouter(db) {
   );
   router.get('/products', (req, res) => {
     let items = allProducts(db);
-    const { q = '', category, collection, available, luxury, sort = 'editorial' } = req.query;
+    const {
+      q = '',
+      category,
+      collection,
+      available,
+      luxury,
+      runway,
+      sort = 'editorial',
+    } = req.query;
     if (
-      [q, category, collection, available, luxury, sort].some(
+      [q, category, collection, available, luxury, runway, sort].some(
         (value) => value !== undefined && typeof value !== 'string',
       )
     )
@@ -79,6 +87,7 @@ export function catalogRouter(db) {
     if (category) items = items.filter((item) => item.category === category);
     if (collection) items = items.filter((item) => item.collectionId === collection);
     if (luxury === '1') items = items.filter((item) => item.tags.includes('luxury'));
+    if (runway === '1') items = items.filter((item) => item.tags.includes('runway'));
     if (available === '1')
       items = items.filter((item) => item.variants.some((variant) => variant.stock > 0));
     const price = (item) => Math.min(...item.variants.map((variant) => variant.priceCents));
