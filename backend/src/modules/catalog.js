@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { productSchema, stylistSchema } from '@maison/contracts';
+import { productSchema, stylistSchema, catalogQuerySchema, variantSize } from '@maison/contracts';
 import { HttpError, parse, send } from '../http.js';
 import { transaction } from '../db.js';
 import { requireUser, requireTeam } from './auth.js';
@@ -64,15 +64,11 @@ export function catalogRouter(db) {
       available,
       luxury,
       runway,
+      size,
+      maxPriceCents,
+      page: requestedPage,
       sort = 'editorial',
-    } = req.query;
-    if (
-      [q, category, collection, available, luxury, runway, sort].some(
-        (value) => value !== undefined && typeof value !== 'string',
-      )
-    )
-      throw new HttpError(400, 'invalid_input');
-    if (q.length > 120) throw new HttpError(400, 'invalid_input');
+    } = parse(catalogQuerySchema, req.query);
     const normalized = (value) =>
       value
         .normalize('NFD')
@@ -88,13 +84,28 @@ export function catalogRouter(db) {
     if (collection) items = items.filter((item) => item.collectionId === collection);
     if (luxury === '1') items = items.filter((item) => item.tags.includes('luxury'));
     if (runway === '1') items = items.filter((item) => item.tags.includes('runway'));
-    if (available === '1')
-      items = items.filter((item) => item.variants.some((variant) => variant.stock > 0));
-    const price = (item) => Math.min(...item.variants.map((variant) => variant.priceCents));
+    // Size, budget and availability must match the same variant.
+    items = items.flatMap((item) => {
+      const eligible = item.variants.filter(
+        (variant) =>
+          (!size || variantSize(variant) === size) &&
+          (available !== '1' || variant.stock > 0) &&
+          (maxPriceCents === undefined || variant.priceCents <= maxPriceCents),
+      );
+      return eligible.length
+        ? [
+            {
+              ...item,
+              matchedPriceCents: Math.min(...eligible.map((variant) => variant.priceCents)),
+            },
+          ]
+        : [];
+    });
+    const price = (item) => item.matchedPriceCents;
     if (sort === 'price-asc') items.sort((a, b) => price(a) - price(b));
     if (sort === 'price-desc') items.sort((a, b) => price(b) - price(a));
-    const page = Math.max(1, Math.floor(Number(req.query.page) || 1));
     const pageSize = 12;
+    const page = Math.min(requestedPage, Math.max(1, Math.ceil(items.length / pageSize)));
     send(res, {
       items: items.slice((page - 1) * pageSize, page * pageSize),
       total: items.length,

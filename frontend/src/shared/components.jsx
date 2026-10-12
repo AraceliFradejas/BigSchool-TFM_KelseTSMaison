@@ -84,7 +84,7 @@ export function ResourceState({ resource, children }) {
     );
   return children;
 }
-export function ProductCard({ product }) {
+export function ProductCard({ product, returnTo }) {
   const { language, t, favorites, user, toggleFavorite } = useMaison();
   const navigate = useNavigate();
   const available = product.variants.some((variant) => variant.stock > 0);
@@ -92,7 +92,12 @@ export function ProductCard({ product }) {
   return (
     <article className={`product-card${product.tags.includes('runway') ? ' is-runway' : ''}`}>
       <div className="product-picture">
-        <Link to={`/products/${product.id}`} tabIndex={-1} aria-hidden="true">
+        <Link
+          to={`/products/${product.id}`}
+          state={returnTo ? { returnTo } : undefined}
+          tabIndex={-1}
+          aria-hidden="true"
+        >
           <img
             {...catalogImageProps(product.image)}
             alt=""
@@ -119,21 +124,28 @@ export function ProductCard({ product }) {
         <div>
           <span className="eyebrow small">{t[product.category]}</span>
           <h3>
-            <Link to={`/products/${product.id}`}>{product.name[language]}</Link>
+            <Link to={`/products/${product.id}`} state={returnTo ? { returnTo } : undefined}>
+              {product.name[language]}
+            </Link>
           </h3>
         </div>
         <span className="product-price">
-          <Money cents={Math.min(...product.variants.map((variant) => variant.priceCents))} />
+          <Money
+            cents={
+              product.matchedPriceCents ??
+              Math.min(...product.variants.map((variant) => variant.priceCents))
+            }
+          />
         </span>
       </div>
     </article>
   );
 }
-export function ProductGrid({ products }) {
+export function ProductGrid({ products, returnTo }) {
   return (
     <div className="product-grid">
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.id} product={product} returnTo={returnTo} />
       ))}
     </div>
   );

@@ -25,12 +25,12 @@ Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS 
 - Ver una pasarela ilustrada de 36 looks, con escenarios, música y controles de reproducción, y explorar dieciséis colecciones propias.
 - Consultar 190 artículos con 996 variantes, incluidas las 139 piezas de los 36 looks de la pasarela.
 - Explorar 21 looks editoriales y los 36 outfits de la película; elegir piezas por separado o añadir el conjunto con sus tallas.
-- Consultar Moda, Accesorios y Belleza con búsqueda, filtros, orden por precio y paginación.
+- Consultar Moda, Accesorios y Belleza con búsqueda, filtros de talla y precio máximo por pieza, orden por precio y paginación. Al volver desde una ficha se conservan los filtros.
 - Elegir variantes y comprobar su precio y disponibilidad.
 - Registrarte, acceder y guardar productos en «Mi selección».
 - Preparar una bolsa y crear pedidos de demostración; consultar su historial, detalle y comunicaciones.
 - Buscar combinaciones editoriales según ocasión, paleta, presupuesto y preferencia de incluir belleza.
-- Gestionar productos, textos ES/EN, imágenes, variantes y stock desde Team; avanzar o cancelar pedidos según las transiciones permitidas.
+- Gestionar productos, textos ES/EN, imágenes, variantes y stock desde Team; buscar por nombre o identificador, filtrar visibles y archivados y avanzar o cancelar pedidos según las transiciones permitidas.
 - Cambiar entre castellano e inglés conservando la ruta y la bolsa.
 
 «Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. Está identificado como **modo editorial, sin IA**. Maison Stylist con un proveedor de IA y la app nativa siguen siendo ampliaciones por evaluar.
@@ -113,6 +113,8 @@ El servidor calcula los totales en céntimos y comprueba cada variante. El stock
 
 Team puede confirmar, simular el envío y marcar la entrega. También puede cancelar un pedido pendiente o confirmado, recuperando sus unidades una sola vez. Las líneas conservan nombre, imagen, variante y precio aunque después cambie el catálogo. Las comunicaciones permanecen dentro de la cuenta y tienen textos ES/EN.
 
+La bolsa permite actualizar precios y disponibilidad. Si faltan unidades, indica la pieza afectada y permite ajustar su cantidad; el pedido permanece bloqueado hasta resolverla. Los filtros de talla, precio y disponibilidad se aplican a la misma variante.
+
 ### Pruebas y evidencias
 
 ```bash
@@ -168,12 +170,12 @@ After the AFM Moda Oceánica landing page and the full stack journey of KelseTS 
 - Watch the illustrated runway with 36 looks, music and playback controls, enjoy a full-height mobile hero, and explore sixteen original collections.
 - Browse 190 products with 996 variants, including the 139 pieces of the 36 runway outfits.
 - Explore 21 editorial looks and the 36 film outfits; choose separate pieces or add the complete outfit with individual sizes.
-- Browse Fashion, Accessories and Beauty with search, filters, price sorting and pagination.
+- Browse Fashion, Accessories and Beauty with search, size and maximum price filters, price sorting and pagination. Returning from a product keeps the catalogue filters.
 - Choose variants and check their prices and availability.
 - Register, sign in and save products to “My selection”.
 - Prepare a bag, create demonstration orders and view their history, details and messages.
 - Find editorial combinations by occasion, palette, budget and whether to include beauty.
-- Manage products, ES/EN text, images, variants and stock in Team; advance or cancel orders through allowed transitions.
+- Manage products, ES/EN text, images, variants and stock in Team; search by name or identifier, filter visible and archived products, and advance or cancel orders through allowed transitions.
 - Switch between Spanish and English while keeping your route and bag.
 
 “Complete your look” uses manual selections and actual catalogue availability. It is labelled **editorial mode, without AI**. Maison Stylist with an AI provider and a native app remain extensions to evaluate.
@@ -255,6 +257,8 @@ Reload the web after this change. The command affects only your local database o
 The server calculates totals in cents and checks every variant. Stock is deducted transactionally when the order is created: a failed piece rolls back the whole order. Replaying the same order with the same key does not consume stock again or duplicate its message.
 
 Team can confirm, simulate dispatch and mark delivery. It can also cancel a pending or confirmed order, restoring units once. Lines preserve the name, image, variant and price even if the catalogue changes later. Messages remain inside the account and have ES/EN text.
+
+The bag can refresh prices and availability. If stock is insufficient, it identifies the affected piece and lets you adjust its quantity; checkout remains disabled until resolved. Size, price and availability filters apply to the same variant.
 
 ### Tests and evidence
 

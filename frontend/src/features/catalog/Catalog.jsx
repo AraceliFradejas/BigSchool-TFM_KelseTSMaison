@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { catalogueSizes } from '@maison/contracts/rules';
 import { useMaison, useResource } from '../../shared/state';
-import { PageHeading, ProductGrid, ResourceState, Icon } from '../../shared/components';
+import { PageHeading, ProductGrid, ResourceState, Icon, Money } from '../../shared/components';
 export default function Catalog() {
   const { t, language } = useMaison();
   const [params, setParams] = useSearchParams();
@@ -93,6 +94,36 @@ export default function Catalog() {
           </select>
         </label>
       </div>
+      <div className="catalog-extra-filters">
+        <label>
+          {t.sizeFilter}
+          <select
+            value={params.get('size') || ''}
+            onChange={(event) => change('size', event.target.value)}
+          >
+            <option value="">{t.allSizes}</option>
+            {catalogueSizes.map((size) => (
+              <option key={size} value={size}>
+                {size === 'one' ? t.oneSize : size}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          {t.maximumPrice}
+          <select
+            value={params.get('maxPriceCents') || ''}
+            onChange={(event) => change('maxPriceCents', event.target.value)}
+          >
+            <option value="">{t.anyPrice}</option>
+            {[10000, 25000, 50000, 100000, 250000, 500000, 1000000].map((cents) => (
+              <option key={cents} value={cents}>
+                <Money cents={cents} />
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
       <div className="catalog-meta">
         <span>
           {products.data?.total ?? '—'} {t.results}
@@ -131,7 +162,7 @@ export default function Catalog() {
         {products.data && (
           <>
             {products.data.items.length ? (
-              <ProductGrid products={products.data.items} />
+              <ProductGrid products={products.data.items} returnTo={`/catalog?${params}`} />
             ) : (
               <div className="empty-state">{t.noResults}</div>
             )}

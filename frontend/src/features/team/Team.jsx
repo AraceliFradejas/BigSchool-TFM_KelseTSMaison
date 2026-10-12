@@ -10,7 +10,7 @@ function freshProduct() {
     description: { es: '', en: '' },
     category: 'fashion',
     collectionId: 'golden-hour',
-    image: '/media/satin-story.svg',
+    image: '/media/satin-story.webp',
     active: false,
     tags: [],
     variants: [{ id: '', label: { es: '', en: '' }, priceCents: 1000, stock: 0 }],
@@ -40,6 +40,17 @@ function Editor({ initial, onClose, onSaved }) {
   async function save(event) {
     event.preventDefault();
     if (busy) return;
+    const missingLanguage = ['es', 'en'].find(
+      (locale) =>
+        !draft.name[locale].trim() ||
+        draft.description[locale].trim().length < 10 ||
+        draft.variants.some((item) => !item.label[locale].trim()),
+    );
+    if (missingLanguage) {
+      setEditLanguage(missingLanguage);
+      setError(`${t.completeTranslation}: ${missingLanguage === 'es' ? t.spanish : t.english}.`);
+      return;
+    }
     setBusy(true);
     setError('');
     try {
@@ -365,8 +376,22 @@ export default function Team() {
   const { t, language } = useMaison();
   const [tab, setTab] = useState('products');
   const [editing, setEditing] = useState(null);
+  const [search, setSearch] = useState('');
+  const [visibility, setVisibility] = useState('all');
   const products = useResource(tab === 'products' ? '/team/products' : null);
   const orders = useResource(tab === 'orders' ? '/team/orders' : null);
+  const normalized = (value) =>
+    value
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+  const visibleProducts = products.data?.filter(
+    (product) =>
+      normalized(`${product.id} ${product.name.es} ${product.name.en}`).includes(
+        normalized(search.trim()),
+      ) &&
+      (visibility === 'all' || (visibility === 'active' ? product.active : !product.active)),
+  );
   return (
     <div className="container page">
       <PageHeading eyebrow="KelseTS MAISON" title={t.team} body={t.teamIntro} />
@@ -411,10 +436,35 @@ export default function Team() {
                 <button className="button" onClick={() => setEditing(freshProduct())}>
                   {t.newProduct}
                 </button>
+                <label>
+                  {t.search}
+                  <input
+                    type="search"
+                    maxLength={120}
+                    value={search}
+                    placeholder={t.teamSearchPlaceholder}
+                    onChange={(event) => setSearch(event.target.value)}
+                  />
+                </label>
+                <label>
+                  {t.visibility}
+                  <select
+                    value={visibility}
+                    onChange={(event) => setVisibility(event.target.value)}
+                  >
+                    <option value="all">{t.allProducts}</option>
+                    <option value="active">{t.visibleProducts}</option>
+                    <option value="archived">{t.archivedProducts}</option>
+                  </select>
+                </label>
               </div>
               <ResourceState resource={products}>
+                <p className="fine-print" role="status">
+                  {visibleProducts?.length ?? 0} {t.results}
+                </p>
+                {visibleProducts?.length === 0 && <div className="empty-state">{t.noResults}</div>}
                 <div className="team-product-list">
-                  {products.data?.map((product) => (
+                  {visibleProducts?.map((product) => (
                     <article className="team-product" key={product.id}>
                       <img src={product.image} alt="" width="60" height="75" />
                       <div>

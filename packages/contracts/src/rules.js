@@ -7,3 +7,28 @@ export const transitions = {
   delivered: [],
   cancelled: [],
 };
+
+export const catalogueSizes = [
+  'XS',
+  'S',
+  'M',
+  'L',
+  'XL',
+  'XXL',
+  '35',
+  '36',
+  '37',
+  '38',
+  '39',
+  '40',
+  '41',
+  '42',
+  'one',
+];
+
+// Existing labels also contain colours and formats; only recognised sizes qualify.
+export function variantSize(variant) {
+  const parts = variant.label.en.split('·').map((part) => part.trim());
+  if (parts.includes('One size')) return 'one';
+  return catalogueSizes.find((size) => parts.includes(size));
+}

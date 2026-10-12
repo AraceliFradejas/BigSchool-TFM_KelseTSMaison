@@ -80,6 +80,64 @@ test('public catalogue exposes bilingual variants and filters with pagination', 
   assert.equal(garment.body.data.variants[2].stock, 0);
   assert.ok(garment.body.data.name.en);
 });
+test('size, budget and stock filters match the same variant, including coloured size labels', async (t) => {
+  const { app, db } = setup(t);
+  const garment = getProduct(db, 'satin-story');
+  db.prepare('UPDATE variants SET price_cents=40000, stock=3 WHERE id=?').run(
+    garment.variants[0].id,
+  );
+  db.prepare('UPDATE variants SET price_cents=90000, stock=3 WHERE id=?').run(
+    garment.variants[1].id,
+  );
+  db.prepare('UPDATE variants SET price_cents=30000, stock=0 WHERE id=?').run(
+    garment.variants[2].id,
+  );
+  const query = (size) =>
+    request(app).get(
+      `/api/v1/products?q=${encodeURIComponent(garment.name.en)}&size=${size}&maxPriceCents=50000&available=1`,
+    );
+  const small = await query('S');
+  assert.equal(small.status, 200);
+  assert.equal(small.body.data.total, 1);
+  assert.equal(small.body.data.items[0].id, garment.id);
+  assert.equal(small.body.data.items[0].matchedPriceCents, 40000);
+  assert.equal((await query('M')).body.data.total, 0);
+  assert.equal((await query('L')).body.data.total, 0);
+  const oneSize = await request(app).get('/api/v1/products?size=one');
+  assert.equal(oneSize.status, 200);
+  assert.ok(oneSize.body.data.total > 0);
+  assert.ok(
+    oneSize.body.data.items.every((item) =>
+      item.variants.some((variant) => variant.label.en.includes('One size')),
+    ),
+  );
+});
+test('catalogue rejects malformed filter and page values and clamps obsolete pages', async (t) => {
+  const { app } = setup(t);
+  for (const query of [
+    'page=Infinity',
+    'page=-1',
+    'page=1.5',
+    'page=1&page=2',
+    'size=M&size=L',
+    'size=unknown',
+    'maxPriceCents=NaN',
+    'maxPriceCents=1000001',
+    'maxPriceCents=-1',
+    'sort=unknown',
+  ]) {
+    const response = await request(app).get(`/api/v1/products?${query}`);
+    assert.equal(response.status, 400, query);
+    assert.equal(response.body.error, 'invalid_input');
+  }
+  const last = await request(app).get('/api/v1/products?page=999');
+  assert.equal(last.status, 200);
+  assert.equal(last.body.data.page, Math.ceil(products.length / 12));
+  assert.ok(last.body.data.items.length > 0);
+  const empty = await request(app).get('/api/v1/products?q=NoSuchMaisonPiece&page=999');
+  assert.equal(empty.body.data.total, 0);
+  assert.equal(empty.body.data.page, 1);
+});
 test('registration rejects role injection and password hashes never reach the client', async (t) => {
   const { agent, db } = setup(t);
   const invalid = await post(agent, '/auth/register', {

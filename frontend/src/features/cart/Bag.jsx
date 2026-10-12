@@ -94,6 +94,26 @@ export default function Bag() {
                       <h2>{t.soldOut}</h2>
                     )}
                     <p>{line.variant?.label[language] || t.unavailableCart}</p>
+                    {line.variant && line.variant.stock < line.quantity && (
+                      <div className="bag-stock-warning" role="alert">
+                        <p>
+                          {line.variant.stock === 0
+                            ? t.soldOut
+                            : `${t.availableQuantity}: ${line.variant.stock}`}
+                        </p>
+                        {line.variant.stock > 0 && (
+                          <button
+                            className="underlined"
+                            disabled={busy}
+                            onClick={() =>
+                              updateQuantity(line.variantId, Math.min(10, line.variant.stock))
+                            }
+                          >
+                            {t.adjustQuantity}
+                          </button>
+                        )}
+                      </div>
+                    )}
                     {line.variant && (
                       <p>
                         <Money cents={line.variant.priceCents} />
@@ -139,6 +159,13 @@ export default function Bag() {
                 </strong>
               </p>
               <p className="fine-print">{t.checkoutNotice}</p>
+              <button
+                className="link-button bag-refresh"
+                disabled={busy}
+                onClick={() => setVersion((value) => value + 1)}
+              >
+                {t.refreshBag}
+              </button>
               {unavailable && (
                 <p className="form-error" role="alert">
                   {t.unavailableCart}

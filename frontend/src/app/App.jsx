@@ -51,17 +51,19 @@ export default function App() {
                 ? t.looks
                 : location.pathname === '/bag'
                   ? t.cart
-                  : location.pathname === '/story'
-                    ? t.about
-                    : location.pathname === '/collections'
-                      ? t.collections
-                      : location.pathname === '/credits'
-                        ? t.credits
-                        : location.pathname === '/team'
-                          ? t.team
-                          : location.pathname.startsWith('/orders/')
-                            ? t.orderDetail
-                            : t.account;
+                  : location.pathname === '/favorites'
+                    ? t.favorites
+                    : location.pathname === '/story'
+                      ? t.about
+                      : location.pathname === '/collections'
+                        ? t.collections
+                        : location.pathname === '/credits'
+                          ? t.credits
+                          : location.pathname === '/team'
+                            ? t.team
+                            : location.pathname.startsWith('/orders/')
+                              ? t.orderDetail
+                              : t.account;
     document.title = `${page} · KelseTS Maison`;
   }, [location.pathname, language]);
   return (

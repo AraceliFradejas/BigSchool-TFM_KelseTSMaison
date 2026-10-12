@@ -1,6 +1,6 @@
 import { catalogImageProps } from '../../shared/media';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useMaison, useResource } from '../../shared/state';
 import { Money, ProductGrid, ResourceState, Icon } from '../../shared/components';
 export default function Product() {
@@ -8,6 +8,12 @@ export default function Product() {
   const resource = useResource(`/products/${encodeURIComponent(id)}`);
   const { language, t, add, user, favorites, toggleFavorite, authReady } = useMaison();
   const navigate = useNavigate();
+  const location = useLocation();
+  const returnTo =
+    typeof location.state?.returnTo === 'string' &&
+    /^\/catalog(?:\?|$)/.test(location.state.returnTo)
+      ? location.state.returnTo
+      : '/catalog';
   const [variantId, setVariantId] = useState('');
   const product = resource.data;
   const related = useResource(product ? `/products?collection=${product.collectionId}` : null);
@@ -30,7 +36,7 @@ export default function Product() {
   const saved = favorites.includes(id);
   return (
     <div className="container page product-page">
-      <Link className="back-link" to="/catalog">
+      <Link className="back-link" to={returnTo}>
         ← {t.catalogue}
       </Link>
       <ResourceState resource={resource}>

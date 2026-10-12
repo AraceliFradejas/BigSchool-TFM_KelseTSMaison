@@ -571,6 +571,30 @@ main:focus {
 .catalog-meta > span {
   margin-right: auto;
 }
+.catalog-extra-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 650px;
+  margin-top: 18px;
+}
+.catalog-extra-filters label {
+  font-size: 0.8rem;
+  min-width: 0;
+}
+.catalog-extra-filters select {
+  width: 100%;
+  min-width: 0;
+}
+.bag-stock-warning {
+  color: var(--red);
+  font-size: 0.8rem;
+  margin: 12px 0;
+}
+.bag-refresh {
+  margin-bottom: 20px;
+  text-align: left;
+}
 .checkbox-label {
   flex-direction: row;
   align-items: center;
@@ -957,7 +981,16 @@ main:focus {
   color: var(--red);
 }
 .team-toolbar {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 18px;
   margin-bottom: 30px;
+}
+.team-toolbar label {
+  flex: 1 1 240px;
+  font-size: 0.8rem;
+  min-width: 0;
 }
 .team-product {
   display: flex;

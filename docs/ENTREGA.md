@@ -17,7 +17,7 @@ Fuente académica: `Documentacion-TFM.pdf`, conservado como referencia privada. 
 ## Funcionalidades implementadas
 
 - Portada, historia, créditos y redes personales.
-- Catálogo ES/EN, búsqueda, filtros, precios, paginación y fichas con variantes.
+- Catálogo de 190 artículos ES/EN, búsqueda, filtros de talla y presupuesto, precios, paginación y fichas con variantes. Los 36 looks de la película permiten elegir piezas por separado o el conjunto completo.
 - Disponibilidad por variante, cuentas, sesión y favoritos.
 - Bolsa, pedido de demostración, historial, detalle y comunicaciones internas.
 - Team para productos, imágenes, variantes, stock y estados de pedidos.
@@ -26,10 +26,10 @@ Fuente académica: `Documentacion-TFM.pdf`, conservado como referencia privada. 
 
 ## Cierre pendiente
 
-1. Revisar identidad de marca y sustituir o aprobar las ilustraciones de esta muestra.
+1. Cerrar la revisión editorial del catálogo fotorrealista y sus fichas; la pasarela ilustrada de 90 segundos ya está aceptada.
 2. Elegir persistencia y alojamiento, desplegar y repetir las pruebas en ese entorno.
 3. Comprobar iPhone, iPad y Android; revisar teclado y lector de pantalla.
-4. Completar casos de interfaz: formularios ES/EN, creación de un producto, subida de imagen, navegación móvil y errores de conexión.
+4. Completar casos de interfaz pendientes: alta de cuenta, navegación con teclado, lector de pantalla y errores de conexión. Creación de producto bilingüe y subida de imagen desde Team comprobadas en una copia local aislada el 12 de octubre.
 5. Preparar slides y demostración sobre la versión desplegada; actualizar memoria y evidencias.
 6. Elegir como máximo una ampliación inicial, IA o app, después de medir el tiempo restante.
 

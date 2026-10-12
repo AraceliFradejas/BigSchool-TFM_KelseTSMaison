@@ -2,6 +2,8 @@ import { z } from 'zod';
 
 import { categories, orderStatuses, transitions } from './rules.js';
 export { categories, orderStatuses, transitions };
+export { catalogueSizes, variantSize } from './rules.js';
+export { catalogQuerySchema } from './catalog.js';
 const text = z.string().trim().min(1).max(120);
 const bilingual = z.object({ es: text, en: text }).strict();
 export const registerSchema = z
