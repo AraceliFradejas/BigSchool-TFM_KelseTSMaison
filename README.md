@@ -121,9 +121,10 @@ La bolsa permite actualizar precios y disponibilidad. Si faltan unidades, indica
 ```bash
 npm test
 npm run build
+npm run check:production
 ```
 
-Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. Las comprobaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md); las capturas de Safari, en [Evidencias](docs/evidencias/README.md).
+Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. Las comprobaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md); las capturas de Safari, en [Evidencias](docs/evidencias/README.md).
 
 ### Despliegue y entrega
 
@@ -267,9 +268,10 @@ The bag can refresh prices and availability. If stock is insufficient, it identi
 ```bash
 npm test
 npm run build
+npm run check:production
 ```
 
-Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. Executed checks and their limits are in [Validation](docs/VALIDACION.md); Safari screenshots are in [Evidence](docs/evidencias/README.md).
+Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. Executed checks and their limits are in [Validation](docs/VALIDACION.md); Safari screenshots are in [Evidence](docs/evidencias/README.md).
 
 ### Deployment and delivery
 

@@ -27,7 +27,7 @@ Fuente académica: `Documentacion-TFM.pdf`, conservado como referencia privada. 
 ## Cierre pendiente
 
 1. Completar los detalles editoriales que surjan de la revisión a resolución completa y de las pruebas de dispositivo. El 17 de octubre se revisaron las 190 imágenes en láminas de contacto y se comprobaron fichas de muestra con los nombres musicales; la pasarela ilustrada de 90 segundos ya está aceptada.
-2. Elegir persistencia y alojamiento, desplegar y repetir las pruebas en ese entorno.
+2. Elegir persistencia y alojamiento, desplegar y repetir las pruebas en ese entorno. El 17 de octubre se verificó en local el build con configuración de producción y la restauración independiente de datos ficticios; no acredita despliegue público ni Docker.
 3. Comprobar iPhone, iPad y Android; revisar teclado y lector de pantalla.
 4. Completar la auditoría de teclado y lector de pantalla. El 17 de octubre se revisaron el foco entre páginas, filtros, salto al contenido y cierre del menú con Escape; se corrigieron los problemas encontrados. Alta desde el formulario, acceso, redirección y recuperación de conexión comprobados en una base temporal aislada el 17 de octubre. Creación de producto bilingüe y subida de imagen desde Team comprobadas en una copia local aislada el 12 de octubre.
 5. Preparar slides y demostración sobre la versión desplegada; actualizar memoria y evidencias.
@@ -56,3 +56,12 @@ Las horas disponibles siguen sin concretarse. Este calendario es una propuesta a
 8. Demostración, aprendizajes y siguientes pasos.
 
 Este guion no sustituye las slides exigidas para la entrega.
+
+## Cierre de sesión · 17 de octubre de 2026
+
+- Catálogo de 190 artículos con nombres musicales ES/EN: las 139 piezas de pasarela conservan sus títulos y los 51 artículos anteriores tienen su correspondencia y migración reproducible. Las personalizaciones de Team y los pedidos históricos se conservan.
+- Revisadas las 190 imágenes en láminas de contacto; fichas, variantes, continuidad de filtros, registro, errores de conexión y navegación por teclado comprobados en los recorridos descritos en Validación.
+- Verificación final del trabajo: 42 pruebas correctas y chequeo del build real con configuración de producción correcto. Copia y restauración local de datos ficticios comprobadas. El Dockerfile y su healthcheck siguen pendientes de ejecutar en Docker.
+- Próximo paso: elegir alojamiento y persistencia propios de Maison, concretar configuración, desplegar y validar HTTPS, reinicio y conservación de datos. No hay alojamiento contratado ni publicación pública realizada.
+- También quedan dispositivos físicos, lector de pantalla, auditoría completa de accesibilidad, slides y revisión final de memoria y evidencias. No se ha activado IA ni creado app nativa.
+- Para retomar: leer este cierre y `docs/DESPLIEGUE.md`; consultar `docs/VALIDACION.md` para distinguir lo comprobado de lo pendiente.
