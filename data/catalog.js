@@ -1,6 +1,8 @@
+import songProductNames from './song-product-names.json' with { type: 'json' };
 import { runwayCollections, runwayProducts, runwayLooks } from './runway-edit.js';
 import { luxuryCollections, createLuxuryProducts, luxuryLooks } from './luxury-edit.js';
 import { newCollections, createNewProducts, newLooks } from './swiftie-edit.js';
+const musicalNames = new Map(songProductNames.map((entry) => [entry.id, entry.name]));
 const translated = (es, en) => ({ es, en });
 export const collections = [
   {
@@ -46,7 +48,7 @@ export const collections = [
 function product(id, es, en, category, collectionId, priceCents, labels, tags, description) {
   return {
     id,
-    name: translated(es, en),
+    name: musicalNames.get(id) || translated(es, en),
     category,
     collectionId,
     image: `/media/${id}.webp`,

@@ -45,6 +45,9 @@ export const words = {
     next: 'Siguiente',
     page: 'Página',
     variant: 'Elige tu variante',
+    chooseVariant: 'Elige una talla o variante.',
+    priceFrom: 'Desde',
+    completeLookBody: 'Piezas de esta selección editorial. Elige cada variante desde su ficha.',
     stock: 'unidades disponibles',
     soldOut: 'Agotado',
     add: 'Añadir a la bolsa',
@@ -187,7 +190,7 @@ export const words = {
     legal:
       'KelseTS es una marca ficticia de Araceli Fradejas Muñoz. Proyecto educativo y de portfolio, sin ventas reales ni respaldo de celebridades, marcas o entidades deportivas.',
     creditsBody:
-      'El catálogo contiene productos y precios ficticios. Las imágenes fotorrealistas se han generado para esta demostración y no son fotografías de productos reales. Los títulos de canciones de Taylor Swift inspiran los nombres editoriales de la pasarela. La base del cliente HTTP y la organización por funcionalidades continúan el trabajo de KelseTS Cars.',
+      'El catálogo contiene productos y precios ficticios. Las imágenes fotorrealistas se han generado para esta demostración y no son fotografías de productos reales. Los títulos de canciones de Taylor Swift inspiran los nombres editoriales del catálogo y la pasarela. La base del cliente HTTP y la organización por funcionalidades continúan el trabajo de KelseTS Cars.',
     footerLine: 'Moda. Historias. Un universo propio.',
     author: 'Araceli Fradejas Muñoz · TFM BigSchool',
     loading: 'Cargando…',
@@ -245,6 +248,10 @@ export const words = {
     next: 'Next',
     page: 'Page',
     variant: 'Choose your variant',
+    chooseVariant: 'Choose a size or variant.',
+    priceFrom: 'From',
+    completeLookBody:
+      'Pieces from this editorial selection. Choose each variant on its product page.',
     stock: 'units available',
     soldOut: 'Sold out',
     add: 'Add to bag',
@@ -387,7 +394,7 @@ export const words = {
     legal:
       'KelseTS is a fictional brand by Araceli Fradejas Muñoz. An educational and portfolio project, with no real sales or endorsement by celebrities, brands or sporting organisations.',
     creditsBody:
-      'The catalogue contains fictional products and prices. The photorealistic images were generated for this demonstration and are not photographs of real products. Taylor Swift song titles inspire the runway’s editorial names. The HTTP client foundation and feature-based organisation continue the work of KelseTS Cars.',
+      'The catalogue contains fictional products and prices. The photorealistic images were generated for this demonstration and are not photographs of real products. Taylor Swift song titles inspire the catalogue and runway editorial names. The HTTP client foundation and feature-based organisation continue the work of KelseTS Cars.',
     footerLine: 'Fashion. Stories. A universe of our own.',
     author: 'Araceli Fradejas Muñoz · BigSchool final project',
     loading: 'Loading…',
@@ -422,6 +429,8 @@ export const errors = {
     origin_denied: 'No se puede completar la petición desde este origen.',
     rate_limited: 'Demasiadas peticiones. Espera un momento y vuelve a probar.',
     not_found: 'No se ha encontrado este contenido.',
+    network_error:
+      'No se ha podido conectar con Maison. Comprueba tu conexión y vuelve a intentarlo.',
     invalid_response: 'La respuesta del servidor no es válida.',
     server_error: 'El servidor no ha podido completar la acción.',
   },
@@ -446,6 +455,7 @@ export const errors = {
     origin_denied: 'This request cannot be completed from this origin.',
     rate_limited: 'Too many requests. Wait a moment and try again.',
     not_found: 'This content was not found.',
+    network_error: 'Could not connect to Maison. Check your connection and try again.',
     invalid_response: 'The server response is not valid.',
     server_error: 'The server could not complete the action.',
   },

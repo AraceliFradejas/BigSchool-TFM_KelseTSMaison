@@ -18,6 +18,9 @@ export function createApiClient({ baseUrl = '/api/v1', fetchImpl = globalThis.fe
         ...(method !== 'GET' ? { 'X-Maison-Request': '1' } : {}),
       },
       body: body === undefined ? undefined : multipart ? body : JSON.stringify(body),
+    }).catch((error) => {
+      if (error.name === 'AbortError' || signal?.aborted) throw error;
+      throw new ApiError('network_error', 0);
     });
     let payload;
     try {

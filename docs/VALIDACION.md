@@ -184,3 +184,38 @@ Araceli acepta la ampliación de 36 looks y 90 segundos, con cadencia más lenta
 - Pedido temporal confirmado y cancelado desde Team: estado final cancelado, dos unidades recuperadas y tres comunicaciones visibles en la cuenta. La copia de revisión contiene 191 productos; la instalación principal conserva sus 190 productos y siete unidades de la variante utilizada en la prueba.
 - Revisión visual de filtros a anchura lógica estrecha mediante zoom del navegador al 300 %, con menú móvil y selectores dentro del ancho. Zoom restaurado al 100 %. No equivale a emulación de dispositivo ni a una prueba en teléfono físico.
 - `npm run build` y `git diff --check`: correctos. Bundle JS de aproximadamente 350 kB, 109 kB con gzip. Las 183 claves ES/EN coinciden. El recorrido aislado utiliza el build servido por Express, sin Vite; no acredita un despliegue HTTPS público. El alta completa desde el formulario, dispositivos reales y lector de pantalla siguen pendientes.
+
+### Revisión de catálogo y fichas · 17 de octubre
+
+- Auditoría de la semilla: 190 artículos, 16 colecciones y 57 looks. Los nombres y descripciones de producto contienen texto ES/EN; todas las imágenes principales existen y las referencias de productos y colecciones son válidas. Esta comprobación no acredita la calidad visual individual de las 190 imágenes.
+- Todas las fichas requieren elegir explícitamente variante antes de añadir a la bolsa. Las agotadas permanecen visibles y deshabilitadas. El precio inicial es el mínimo de las variantes y lleva «Desde» / «From» cuando difieren; elegir variante muestra su precio. El estado de disponibilidad utiliza `role="status"`; no se ha probado con lector de pantalla.
+- Los enlaces de colección muestran su nombre editorial. «Completa tu look» describe una selección editorial y no presupone que todas las piezas pertenezcan a la misma colección. Las recomendaciones del look no dependen de que termine correctamente la petición de artículos de colección.
+- Edge, build servido por Express en `http://127.0.0.1:3000`: revisión visual del catálogo Golden Hour y ficha Satin Story; sin variante inicial, botón de bolsa deshabilitado y talla L agotada. Al elegir M, se habilita añadir. Cambio a inglés conserva M. Ficha Warm Notes: «From €95.00», selección de 50 ml y precio de 145,00 € al volver al castellano. No se añadieron piezas ni se crearon pedidos.
+- Navegación desde catálogo con `collection=golden-hour&available=1` a Satin Story y después a los pendientes recomendados: el enlace de vuelta conserva ambos filtros.
+- No se cierra todavía la revisión editorial completa, ni se acreditan aquí dispositivos físicos, lector de pantalla o despliegue público.
+- Verificación final: 35 pruebas correctas (28 de backend, 4 de cliente HTTP y 3 de selección de bolsa), compilación correcta y `git diff --check` sin incidencias. Coinciden las 186 claves ES/EN. Las pruebas necesitaron acceso a puertos locales fuera del sandbox: dentro fallaban con `listen EPERM`.
+
+### Nombres musicales de catálogo · 17 de octubre
+
+- Los 51 artículos previos a la pasarela reciben nombres ES/EN con títulos de canciones; las 139 piezas de pasarela conservan los suyos. Los identificadores y rutas de imagen no cambian. El criterio queda recogido en `AGENTS.md` para futuras incorporaciones.
+- Dos pruebas nuevas verifican cobertura de la semilla y migración: traducciones de Team conservadas de forma independiente, stock y precios intactos, líneas históricas sin cambios, incremento de revisión e idempotencia. Se actualiza el nombre esperado del vestido en la prueba existente de copia histórica de pedido.
+- Migración ejecutada en la instalación local: 51 productos actualizados. Edge muestra «Pendientes · Daylight» con recomendaciones «Vestido · Enchanted» y «Perfume · Sweet Nothing».
+- `npm test`: 37 pruebas correctas (30 backend, 4 cliente HTTP, 3 bolsa). `npm run build`: correcto.
+
+### Revisión visual y formulario de acceso · 17 de octubre
+
+- Revisadas las 190 imágenes principales en siete láminas de contacto generadas con Sharp, identificador y nombre musical. A escala de miniatura, los tipos de prenda, accesorios y belleza corresponden a sus nombres; no se observan imágenes ausentes ni fotografías de conjuntos sustituyendo a las piezas. Las láminas se conservan en `docs/evidencias/catalogo/`. Esta revisión no acredita detalles de textura o acabado a resolución completa, ni el responsive de las 190 fichas.
+- Registro desde el formulario comprobado en Edge con datos ficticios y una base temporal independiente en `/tmp`, servida en `http://localhost:3001` para separar también las cookies de la instalación principal. Campos obligatorios validados por el navegador; alta correcta y redirección a la ficha solicitada en `next`. No se envían correos externos. Contraseña descartada en el aviso de guardado del navegador.
+- Acceso incorrecto probado con Tab entre correo, contraseña y botón, y envío con Return. No equivale a una auditoría completa de teclado. Detectado y corregido el error que conservaba el mensaje en el idioma anterior: ahora se traduce al renderizar, conservando el código del error. Comprobado el cambio inglés/castellano con el aviso visible.
+- Caída de conexión simulada deteniendo únicamente el servidor temporal. El cliente HTTP devuelve `network_error` y el formulario muestra un aviso ES/EN para comprobar conexión y reintentar. No hace reintentos automáticos. Al restablecer el servidor, el reintento explícito accede a la cuenta sin rellenar de nuevo el formulario. Cierre de sesión final comprobado.
+- Dos pruebas nuevas verifican el código de red, ausencia de reintentos y preservación de cancelaciones normales y con motivo personalizado. `npm test`: 39 correctas (30 backend, 6 cliente HTTP y 3 bolsa). Compilación y `git diff --check` correctos.
+- Pendientes: revisión de detalles de imágenes a resolución completa cuando proceda, dispositivos físicos, auditoría completa de teclado, lector de pantalla y validación en despliegue público.
+
+### Foco y navegación por teclado · 17 de octubre
+
+- Al cambiar de ruta, el foco pasa al contenido principal; modificar filtros de la misma ruta conserva el foco en el control. Escape cierra el menú móvil y devuelve el foco al botón si estaba dentro de sus enlaces. Elegir un enlace cierra el menú y sitúa el foco en el contenido, incluso si solo cambia la categoría del catálogo.
+- Moda, Accesorios y Belleza marcan `aria-current="page"` según la categoría de la URL; se evita que las tres se indiquen como actuales por compartir `/catalog`. Revisión de código, sin validación con lector de pantalla.
+- La contraseña tiene una etiqueta explícita y su ayuda de registro queda asociada mediante `aria-describedby`, separada del nombre del campo. Edge muestra el campo como «Contraseña» y la ayuda como texto independiente.
+- Edge: navegación de ficha a catálogo y Tab al primer enlace de contenido; cambio de categoría con teclado manteniendo foco en el selector; a zoom del 300 %, apertura de menú, recorrido con Tab hasta Moda, cierre con Escape y retorno al botón; reapertura y activación con Return, menú cerrado y siguiente Tab en el contenido. Zoom restaurado al 100 %. No equivale a emulación ni prueba de teléfono.
+- En registro, activación de «Ir al contenido» con Return y siguiente Tab en Nombre; Tab avanza por correo y contraseña. Descartadas las sugerencias del navegador; no se creó ninguna cuenta durante esta revisión.
+- `npm test`: 39 correctas. Compilación y `git diff --check` correctos. Sigue pendiente una auditoría completa, el lector de pantalla y dispositivos físicos.

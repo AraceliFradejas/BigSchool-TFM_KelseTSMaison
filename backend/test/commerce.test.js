@@ -219,7 +219,7 @@ test('order prices come from the server and snapshots survive product changes', 
   assert.equal(edited.status, 200, JSON.stringify(edited.body));
   const saved = await agent.get(`/api/v1/orders/${order.id}`);
   assert.equal(saved.body.data.lines[0].unitPriceCents, 185000);
-  assert.equal(saved.body.data.lines[0].name.es, 'Vestido Satin Story');
+  assert.equal(saved.body.data.lines[0].name.es, 'Vestido · Enchanted');
   assert.equal((await agent.get('/api/v1/messages')).body.data.length, 1);
 });
 test('replaying the same order does not consume stock or duplicate communications', async (t) => {

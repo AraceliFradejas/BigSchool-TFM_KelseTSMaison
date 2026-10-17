@@ -791,6 +791,11 @@ main:focus {
   flex-direction: column;
   gap: 23px;
 }
+.access-password {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .access-form > p {
   font-size: 0.86rem;
   margin-bottom: 0;

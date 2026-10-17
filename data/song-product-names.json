@@ -1,0 +1,614 @@
+[
+  {
+    "id": "satin-story",
+    "previousName": {
+      "es": "Vestido Satin Story",
+      "en": "Satin Story dress"
+    },
+    "name": {
+      "es": "Vestido · Enchanted",
+      "en": "Dress · Enchanted"
+    },
+    "songTitle": "Enchanted"
+  },
+  {
+    "id": "sunlit-hoops",
+    "previousName": {
+      "es": "Pendientes Sunlit",
+      "en": "Sunlit earrings"
+    },
+    "name": {
+      "es": "Pendientes · Daylight",
+      "en": "Earrings · Daylight"
+    },
+    "songTitle": "Daylight"
+  },
+  {
+    "id": "warm-notes",
+    "previousName": {
+      "es": "Perfume Warm Notes",
+      "en": "Warm Notes fragrance"
+    },
+    "name": {
+      "es": "Perfume · Sweet Nothing",
+      "en": "Fragrance · Sweet Nothing"
+    },
+    "songTitle": "Sweet Nothing"
+  },
+  {
+    "id": "velvet-night",
+    "previousName": {
+      "es": "Blazer Velvet Night",
+      "en": "Velvet Night blazer"
+    },
+    "name": {
+      "es": "Blazer · Midnight Rain",
+      "en": "Blazer · Midnight Rain"
+    },
+    "songTitle": "Midnight Rain"
+  },
+  {
+    "id": "after-hours",
+    "previousName": {
+      "es": "Bolso After Hours",
+      "en": "After Hours bag"
+    },
+    "name": {
+      "es": "Bolso · Bejeweled",
+      "en": "Bag · Bejeweled"
+    },
+    "songTitle": "Bejeweled"
+  },
+  {
+    "id": "moonlit-shade",
+    "previousName": {
+      "es": "Sombra Moonlit",
+      "en": "Moonlit eyeshadow"
+    },
+    "name": {
+      "es": "Sombra · Lavender Haze",
+      "en": "Eyeshadow · Lavender Haze"
+    },
+    "songTitle": "Lavender Haze"
+  },
+  {
+    "id": "field-notes",
+    "previousName": {
+      "es": "Blusa Field Notes",
+      "en": "Field Notes blouse"
+    },
+    "name": {
+      "es": "Blusa · ivy",
+      "en": "Blouse · ivy"
+    },
+    "songTitle": "ivy"
+  },
+  {
+    "id": "woven-days",
+    "previousName": {
+      "es": "Bolso Woven Days",
+      "en": "Woven Days bag"
+    },
+    "name": {
+      "es": "Bolso · seven",
+      "en": "Bag · seven"
+    },
+    "songTitle": "seven"
+  },
+  {
+    "id": "petal-touch",
+    "previousName": {
+      "es": "Colorete Petal Touch",
+      "en": "Petal Touch blush"
+    },
+    "name": {
+      "es": "Colorete · the lakes",
+      "en": "Blush · the lakes"
+    },
+    "songTitle": "the lakes"
+  },
+  {
+    "id": "red-letter",
+    "previousName": {
+      "es": "Camisa Red Letter",
+      "en": "Red Letter shirt"
+    },
+    "name": {
+      "es": "Camisa · Red",
+      "en": "Shirt · Red"
+    },
+    "songTitle": "Red"
+  },
+  {
+    "id": "little-letter",
+    "previousName": {
+      "es": "Pañuelo Little Letter",
+      "en": "Little Letter scarf"
+    },
+    "name": {
+      "es": "Pañuelo · All Too Well",
+      "en": "Scarf · All Too Well"
+    },
+    "songTitle": "All Too Well"
+  },
+  {
+    "id": "crimson-kiss",
+    "previousName": {
+      "es": "Labial Crimson Kiss",
+      "en": "Crimson Kiss lipstick"
+    },
+    "name": {
+      "es": "Labial · Wildest Dreams",
+      "en": "Lipstick · Wildest Dreams"
+    },
+    "songTitle": "Wildest Dreams"
+  },
+  {
+    "id": "slow-sunday",
+    "previousName": {
+      "es": "Jersey Slow Sunday",
+      "en": "Slow Sunday sweater"
+    },
+    "name": {
+      "es": "Jersey · peace",
+      "en": "Sweater · peace"
+    },
+    "songTitle": "peace"
+  },
+  {
+    "id": "weekend-cap",
+    "previousName": {
+      "es": "Gorra Weekend Club",
+      "en": "Weekend Club cap"
+    },
+    "name": {
+      "es": "Gorra · 22",
+      "en": "Cap · 22"
+    },
+    "songTitle": "22"
+  },
+  {
+    "id": "soft-morning",
+    "previousName": {
+      "es": "Bálsamo Soft Morning",
+      "en": "Soft Morning balm"
+    },
+    "name": {
+      "es": "Bálsamo · Begin Again",
+      "en": "Balm · Begin Again"
+    },
+    "songTitle": "Begin Again"
+  },
+  {
+    "id": "emerald-afterglow",
+    "previousName": {
+      "es": "Vestido Emerald Afterglow",
+      "en": "Emerald Afterglow gown"
+    },
+    "name": {
+      "es": "Vestido · Afterglow",
+      "en": "Gown · Afterglow"
+    },
+    "songTitle": "Afterglow"
+  },
+  {
+    "id": "silver-step",
+    "previousName": {
+      "es": "Sandalias Silver Step",
+      "en": "Silver Step sandals"
+    },
+    "name": {
+      "es": "Sandalias · mirrorball",
+      "en": "Sandals · mirrorball"
+    },
+    "songTitle": "mirrorball"
+  },
+  {
+    "id": "starlit-clutch",
+    "previousName": {
+      "es": "Clutch Starlit",
+      "en": "Starlit clutch"
+    },
+    "name": {
+      "es": "Clutch · Starlight",
+      "en": "Clutch · Starlight"
+    },
+    "songTitle": "Starlight"
+  },
+  {
+    "id": "ivory-interview",
+    "previousName": {
+      "es": "Blazer Ivory Interview",
+      "en": "Ivory Interview blazer"
+    },
+    "name": {
+      "es": "Blazer · The Man",
+      "en": "Blazer · The Man"
+    },
+    "songTitle": "The Man"
+  },
+  {
+    "id": "ivory-lines",
+    "previousName": {
+      "es": "Pantalón Ivory Lines",
+      "en": "Ivory Lines trousers"
+    },
+    "name": {
+      "es": "Pantalón · Mastermind",
+      "en": "Trousers · Mastermind"
+    },
+    "songTitle": "Mastermind"
+  },
+  {
+    "id": "studio-satin",
+    "previousName": {
+      "es": "Top Studio Satin",
+      "en": "Studio Satin top"
+    },
+    "name": {
+      "es": "Top · Clean",
+      "en": "Top · Clean"
+    },
+    "songTitle": "Clean"
+  },
+  {
+    "id": "city-check",
+    "previousName": {
+      "es": "Minifalda City Check",
+      "en": "City Check mini skirt"
+    },
+    "name": {
+      "es": "Minifalda · Welcome to New York",
+      "en": "Mini skirt · Welcome to New York"
+    },
+    "songTitle": "Welcome to New York"
+  },
+  {
+    "id": "avenue-boots",
+    "previousName": {
+      "es": "Botas Avenue",
+      "en": "Avenue boots"
+    },
+    "name": {
+      "es": "Botas · Cornelia Street",
+      "en": "Boots · Cornelia Street"
+    },
+    "songTitle": "Cornelia Street"
+  },
+  {
+    "id": "quiet-ink",
+    "previousName": {
+      "es": "Jersey Quiet Ink",
+      "en": "Quiet Ink turtleneck"
+    },
+    "name": {
+      "es": "Jersey · The Story of Us",
+      "en": "Turtleneck · The Story of Us"
+    },
+    "songTitle": "The Story of Us"
+  },
+  {
+    "id": "cabin-cardigan",
+    "previousName": {
+      "es": "Cárdigan Cabin Letters",
+      "en": "Cabin Letters cardigan"
+    },
+    "name": {
+      "es": "Cárdigan · cardigan",
+      "en": "Cardigan · cardigan"
+    },
+    "songTitle": "cardigan"
+  },
+  {
+    "id": "weekend-denim",
+    "previousName": {
+      "es": "Vaqueros Weekend Denim",
+      "en": "Weekend Denim jeans"
+    },
+    "name": {
+      "es": "Vaqueros · Our Song",
+      "en": "Jeans · Our Song"
+    },
+    "songTitle": "Our Song"
+  },
+  {
+    "id": "coffee-loafers",
+    "previousName": {
+      "es": "Mocasines Coffee Date",
+      "en": "Coffee Date loafers"
+    },
+    "name": {
+      "es": "Mocasines · Everything Has Changed",
+      "en": "Loafers · Everything Has Changed"
+    },
+    "songTitle": "Everything Has Changed"
+  },
+  {
+    "id": "atelier-trench",
+    "previousName": {
+      "es": "Gabardina Atelier",
+      "en": "Atelier trench coat"
+    },
+    "name": {
+      "es": "Gabardina · Come In With the Rain",
+      "en": "Trench coat · Come In With the Rain"
+    },
+    "songTitle": "Come In With the Rain"
+  },
+  {
+    "id": "cashmere-whisper",
+    "previousName": {
+      "es": "Jersey Cashmere Whisper",
+      "en": "Cashmere Whisper sweater"
+    },
+    "name": {
+      "es": "Jersey · invisible string",
+      "en": "Sweater · invisible string"
+    },
+    "songTitle": "invisible string"
+  },
+  {
+    "id": "atelier-midi",
+    "previousName": {
+      "es": "Falda Atelier Midi",
+      "en": "Atelier Midi skirt"
+    },
+    "name": {
+      "es": "Falda · Timeless",
+      "en": "Skirt · Timeless"
+    },
+    "songTitle": "Timeless"
+  },
+  {
+    "id": "atelier-pumps",
+    "previousName": {
+      "es": "Salones Atelier",
+      "en": "Atelier pumps"
+    },
+    "name": {
+      "es": "Salones · Style",
+      "en": "Pumps · Style"
+    },
+    "songTitle": "Style"
+  },
+  {
+    "id": "noir-tuxedo",
+    "previousName": {
+      "es": "Blazer Noir Tuxedo",
+      "en": "Noir Tuxedo blazer"
+    },
+    "name": {
+      "es": "Blazer · End Game",
+      "en": "Blazer · End Game"
+    },
+    "songTitle": "End Game"
+  },
+  {
+    "id": "noir-trousers",
+    "previousName": {
+      "es": "Pantalón Noir Lines",
+      "en": "Noir Lines trousers"
+    },
+    "name": {
+      "es": "Pantalón · …Ready For It?",
+      "en": "Trousers · …Ready For It?"
+    },
+    "songTitle": "…Ready For It?"
+  },
+  {
+    "id": "pearl-paragraph",
+    "previousName": {
+      "es": "Collar Pearl Paragraph",
+      "en": "Pearl Paragraph necklace"
+    },
+    "name": {
+      "es": "Collar · This Love",
+      "en": "Necklace · This Love"
+    },
+    "songTitle": "This Love"
+  },
+  {
+    "id": "noir-pumps",
+    "previousName": {
+      "es": "Salones Noir",
+      "en": "Noir pumps"
+    },
+    "name": {
+      "es": "Salones · Dress",
+      "en": "Pumps · Dress"
+    },
+    "songTitle": "Dress"
+  },
+  {
+    "id": "rose-reverie",
+    "previousName": {
+      "es": "Vestido Rose Reverie",
+      "en": "Rose Reverie gown"
+    },
+    "name": {
+      "es": "Vestido · Love Story",
+      "en": "Gown · Love Story"
+    },
+    "songTitle": "Love Story"
+  },
+  {
+    "id": "rose-clutch",
+    "previousName": {
+      "es": "Clutch Rose Notes",
+      "en": "Rose Notes clutch"
+    },
+    "name": {
+      "es": "Clutch · Paper Rings",
+      "en": "Clutch · Paper Rings"
+    },
+    "songTitle": "Paper Rings"
+  },
+  {
+    "id": "rose-sandals",
+    "previousName": {
+      "es": "Sandalias Rose Step",
+      "en": "Rose Step sandals"
+    },
+    "name": {
+      "es": "Sandalias · Lover",
+      "en": "Sandals · Lover"
+    },
+    "songTitle": "Lover"
+  },
+  {
+    "id": "rose-drops",
+    "previousName": {
+      "es": "Pendientes Rose Drops",
+      "en": "Rose Drops earrings"
+    },
+    "name": {
+      "es": "Pendientes · Today Was a Fairytale",
+      "en": "Earrings · Today Was a Fairytale"
+    },
+    "songTitle": "Today Was a Fairytale"
+  },
+  {
+    "id": "sapphire-top",
+    "previousName": {
+      "es": "Top Sapphire Light",
+      "en": "Sapphire Light top"
+    },
+    "name": {
+      "es": "Top · Sparks Fly",
+      "en": "Top · Sparks Fly"
+    },
+    "songTitle": "Sparks Fly"
+  },
+  {
+    "id": "sapphire-skirt",
+    "previousName": {
+      "es": "Falda Sapphire Night",
+      "en": "Sapphire Night skirt"
+    },
+    "name": {
+      "es": "Falda · Long Live",
+      "en": "Skirt · Long Live"
+    },
+    "songTitle": "Long Live"
+  },
+  {
+    "id": "sapphire-drops",
+    "previousName": {
+      "es": "Pendientes Sapphire Drops",
+      "en": "Sapphire Drops earrings"
+    },
+    "name": {
+      "es": "Pendientes · Electric Touch",
+      "en": "Earrings · Electric Touch"
+    },
+    "songTitle": "Electric Touch"
+  },
+  {
+    "id": "stage-boots",
+    "previousName": {
+      "es": "Botines Stage Silver",
+      "en": "Stage Silver boots"
+    },
+    "name": {
+      "es": "Botines · I Can See You",
+      "en": "Boots · I Can See You"
+    },
+    "songTitle": "I Can See You"
+  },
+  {
+    "id": "travel-coat",
+    "previousName": {
+      "es": "Abrigo Travel Maison",
+      "en": "Travel Maison coat"
+    },
+    "name": {
+      "es": "Abrigo · Getaway Car",
+      "en": "Coat · Getaway Car"
+    },
+    "songTitle": "Getaway Car"
+  },
+  {
+    "id": "travel-scarf",
+    "previousName": {
+      "es": "Bufanda Travel Soft",
+      "en": "Travel Soft scarf"
+    },
+    "name": {
+      "es": "Bufanda · Safe & Sound",
+      "en": "Scarf · Safe & Sound"
+    },
+    "songTitle": "Safe & Sound"
+  },
+  {
+    "id": "journey-tote",
+    "previousName": {
+      "es": "Bolso Journey Tote",
+      "en": "Journey tote"
+    },
+    "name": {
+      "es": "Bolso · The Outside",
+      "en": "Tote · The Outside"
+    },
+    "songTitle": "The Outside"
+  },
+  {
+    "id": "journey-boots",
+    "previousName": {
+      "es": "Botines Journey",
+      "en": "Journey boots"
+    },
+    "name": {
+      "es": "Botines · Out of the Woods",
+      "en": "Boots · Out of the Woods"
+    },
+    "songTitle": "Out of the Woods"
+  },
+  {
+    "id": "velvet-romance",
+    "previousName": {
+      "es": "Vestido Velvet Romance",
+      "en": "Velvet Romance dress"
+    },
+    "name": {
+      "es": "Vestido · Maroon",
+      "en": "Dress · Maroon"
+    },
+    "songTitle": "Maroon"
+  },
+  {
+    "id": "velvet-bow",
+    "previousName": {
+      "es": "Lazo Velvet Letters",
+      "en": "Velvet Letters bow"
+    },
+    "name": {
+      "es": "Lazo · King of My Heart",
+      "en": "Bow · King of My Heart"
+    },
+    "songTitle": "King of My Heart"
+  },
+  {
+    "id": "golden-chain",
+    "previousName": {
+      "es": "Pulsera Golden Chain",
+      "en": "Golden Chain bracelet"
+    },
+    "name": {
+      "es": "Pulsera · gold rush",
+      "en": "Bracelet · gold rush"
+    },
+    "songTitle": "gold rush"
+  },
+  {
+    "id": "wine-pumps",
+    "previousName": {
+      "es": "Salones Wine Velvet",
+      "en": "Wine Velvet pumps"
+    },
+    "name": {
+      "es": "Salones · Gorgeous",
+      "en": "Pumps · Gorgeous"
+    },
+    "songTitle": "Gorgeous"
+  }
+]

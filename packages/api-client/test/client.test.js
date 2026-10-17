@@ -57,3 +57,40 @@ test('multipart upload lets fetch set its boundary', async () => {
   assert.equal(options.body, body);
   assert.equal(options.headers['Content-Type'], undefined);
 });
+
+test('connection failures expose a translatable code without retrying the action', async () => {
+  let attempts = 0;
+  const client = createApiClient({
+    fetchImpl: async () => {
+      attempts++;
+      throw new TypeError('Failed to fetch');
+    },
+  });
+  await assert.rejects(
+    client.request('/auth/register', { method: 'POST', body: {} }),
+    (error) => error instanceof ApiError && error.code === 'network_error' && error.status === 0,
+  );
+  assert.equal(attempts, 1);
+});
+
+test('cancelled requests retain their abort error and custom abort reason', async () => {
+  const abort = new DOMException('Cancelled', 'AbortError');
+  const client = createApiClient({
+    fetchImpl: async () => {
+      throw abort;
+    },
+  });
+  await assert.rejects(client.request('/products'), (error) => error === abort);
+  const controller = new AbortController();
+  const reason = new Error('Navigation changed');
+  controller.abort(reason);
+  const custom = createApiClient({
+    fetchImpl: async () => {
+      throw reason;
+    },
+  });
+  await assert.rejects(
+    custom.request('/products', { signal: controller.signal }),
+    (error) => error === reason,
+  );
+});

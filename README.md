@@ -26,6 +26,7 @@ Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS 
 - Consultar 190 artículos con 996 variantes, incluidas las 139 piezas de los 36 looks de la pasarela.
 - Explorar 21 looks editoriales y los 36 outfits de la película; elegir piezas por separado o añadir el conjunto con sus tallas.
 - Consultar Moda, Accesorios y Belleza con búsqueda, filtros de talla y precio máximo por pieza, orden por precio y paginación. Al volver desde una ficha se conservan los filtros.
+- Descubrir piezas con nombres de canciones de Taylor Swift o inspirados en ellas, como Enchanted, Daylight y cardigan.
 - Elegir variantes y comprobar su precio y disponibilidad.
 - Registrarte, acceder y guardar productos en «Mi selección».
 - Preparar una bolsa y crear pedidos de demostración; consultar su historial, detalle y comunicaciones.
@@ -171,6 +172,7 @@ After the AFM Moda Oceánica landing page and the full stack journey of KelseTS 
 - Browse 190 products with 996 variants, including the 139 pieces of the 36 runway outfits.
 - Explore 21 editorial looks and the 36 film outfits; choose separate pieces or add the complete outfit with individual sizes.
 - Browse Fashion, Accessories and Beauty with search, size and maximum price filters, price sorting and pagination. Returning from a product keeps the catalogue filters.
+- Discover pieces named after or inspired by Taylor Swift songs, including Enchanted, Daylight and cardigan.
 - Choose variants and check their prices and availability.
 - Register, sign in and save products to “My selection”.
 - Prepare a bag, create demonstration orders and view their history, details and messages.
@@ -301,3 +303,7 @@ Para aplicar los precios de lujo a una base local anterior: `npm run prices:migr
 Para actualizar los nombres editoriales anteriores de la pasarela: `npm run runway:names:migrate`. Solo cambia los nombres originales; respeta los nombres personalizados por Team, el stock y las líneas históricas de pedidos. Las instalaciones nuevas ya incluyen los títulos de canciones.
 
 Existing local databases can run `npm run media:migrate` for individual runway photographs and `npm run runway:names:migrate` for song titles. Both preserve managed stock, custom Team edits and historical orders. New installations include the current catalogue directly.
+
+Para actualizar los 51 nombres de producto anteriores a la selección musical: `npm run catalog:names:migrate`. Conserva cada traducción personalizada por Team, identificadores, precios, existencias y pedidos históricos. Las instalaciones nuevas incluyen los nombres musicales; las 139 piezas de pasarela mantienen sus títulos de canciones.
+
+Run `npm run catalog:names:migrate` to update the 51 earlier product names to the musical selection. It preserves each custom Team translation, IDs, prices, stock and historical orders. New installations include the musical names; the 139 runway pieces keep their song titles.

@@ -26,10 +26,10 @@ Fuente académica: `Documentacion-TFM.pdf`, conservado como referencia privada. 
 
 ## Cierre pendiente
 
-1. Cerrar la revisión editorial del catálogo fotorrealista y sus fichas; la pasarela ilustrada de 90 segundos ya está aceptada.
+1. Completar los detalles editoriales que surjan de la revisión a resolución completa y de las pruebas de dispositivo. El 17 de octubre se revisaron las 190 imágenes en láminas de contacto y se comprobaron fichas de muestra con los nombres musicales; la pasarela ilustrada de 90 segundos ya está aceptada.
 2. Elegir persistencia y alojamiento, desplegar y repetir las pruebas en ese entorno.
 3. Comprobar iPhone, iPad y Android; revisar teclado y lector de pantalla.
-4. Completar casos de interfaz pendientes: alta de cuenta, navegación con teclado, lector de pantalla y errores de conexión. Creación de producto bilingüe y subida de imagen desde Team comprobadas en una copia local aislada el 12 de octubre.
+4. Completar la auditoría de teclado y lector de pantalla. El 17 de octubre se revisaron el foco entre páginas, filtros, salto al contenido y cierre del menú con Escape; se corrigieron los problemas encontrados. Alta desde el formulario, acceso, redirección y recuperación de conexión comprobados en una base temporal aislada el 17 de octubre. Creación de producto bilingüe y subida de imagen desde Team comprobadas en una copia local aislada el 12 de octubre.
 5. Preparar slides y demostración sobre la versión desplegada; actualizar memoria y evidencias.
 6. Elegir como máximo una ampliación inicial, IA o app, después de medir el tiempo restante.
 

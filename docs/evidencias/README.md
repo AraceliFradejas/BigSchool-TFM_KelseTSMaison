@@ -17,3 +17,15 @@ Team muestra el mismo pedido confirmado, su detalle y las acciones permitidas de
 ## Pendiente de ampliar
 
 Faltan capturas de la portada, catálogo, ficha, bolsa, editor de producto, subida de imagen, castellano, dispositivo real y entorno desplegado. La relación de pruebas ejecutadas y sus límites está en [Validación](../VALIDACION.md).
+
+## Láminas de catálogo · 17 de octubre
+
+Estas imágenes son láminas de contacto compuestas con Sharp a partir de los recursos de producto; no son capturas del navegador. Muestran las 190 imágenes principales con sus identificadores y nombres musicales para revisar la correspondencia visual a escala de miniatura. No acreditan todas las fichas ni todos los tamaños de pantalla.
+
+- [Productos 1–30](catalogo/catalog-1.jpg).
+- [Productos 31–60](catalogo/catalog-2.jpg).
+- [Productos 61–90](catalogo/catalog-3.jpg).
+- [Productos 91–120](catalogo/catalog-4.jpg).
+- [Productos 121–150](catalogo/catalog-5.jpg).
+- [Productos 151–180](catalogo/catalog-6.jpg).
+- [Productos 181–190](catalogo/catalog-7.jpg).

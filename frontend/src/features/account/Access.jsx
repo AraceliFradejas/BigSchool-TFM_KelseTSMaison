@@ -16,12 +16,12 @@ export default function Access() {
       : '/account';
   const navigate = useNavigate();
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null);
   async function submit(event) {
     event.preventDefault();
     if (busy) return;
     setBusy(true);
-    setError('');
+    setError(null);
     const data = new FormData(event.currentTarget);
     const body = { email: data.get('email'), password: data.get('password') };
     if (register) body.name = data.get('name');
@@ -33,7 +33,7 @@ export default function Access() {
       authenticated(current);
       navigate(next, { replace: true });
     } catch (error) {
-      setError(errorText(error));
+      setError(error);
     } finally {
       setBusy(false);
     }
@@ -57,9 +57,11 @@ export default function Access() {
           {t.email}
           <input type="email" name="email" autoComplete="email" maxLength={254} required />
         </label>
-        <label>
-          {t.password}
+        <div className="access-password">
+          <label htmlFor="access-password">{t.password}</label>
           <input
+            id="access-password"
+            aria-describedby={register ? 'access-password-help' : undefined}
             type="password"
             name="password"
             autoComplete={register ? 'new-password' : 'current-password'}
@@ -67,11 +69,11 @@ export default function Access() {
             maxLength={128}
             required
           />
-          {register && <small>{t.passwordHelp}</small>}
-        </label>
+          {register && <small id="access-password-help">{t.passwordHelp}</small>}
+        </div>
         {error && (
           <p className="form-error" role="alert">
-            {error}
+            {errorText(error)}
           </p>
         )}
         <button className="button full" disabled={busy || !authReady}>
@@ -82,7 +84,7 @@ export default function Access() {
           <Link
             className="underlined"
             to={`/access?${new URLSearchParams({ mode: register ? 'login' : 'register', next })}`}
-            onClick={() => setError('')}
+            onClick={() => setError(null)}
           >
             {register ? t.login : t.register}
           </Link>

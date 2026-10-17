@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useMaison } from '../shared/state';
 import { Icon } from '../shared/components';
@@ -14,17 +14,30 @@ export default function Layout() {
   const { language, setLanguage, t, cart, user } = useMaison();
   const [menu, setMenu] = useState(false);
   const location = useLocation();
+  const mainRef = useRef(null);
+  const menuButtonRef = useRef(null);
+  const navRef = useRef(null);
+  const previousPath = useRef(location.pathname);
+  const category = new URLSearchParams(location.search).get('category');
   useEffect(() => {
     setMenu(false);
+    if (previousPath.current !== location.pathname) {
+      mainRef.current?.focus({ preventScroll: true });
+      previousPath.current = location.pathname;
+    }
     window.scrollTo(0, 0);
   }, [location.pathname, location.search]);
   useEffect(() => {
     const close = (event) => {
-      if (event.key === 'Escape') setMenu(false);
+      if (event.key !== 'Escape' || !menu) return;
+      const focusInMenu = navRef.current?.contains(document.activeElement);
+      setMenu(false);
+      if (focusInMenu && menuButtonRef.current?.getClientRects().length)
+        menuButtonRef.current.focus();
     };
     window.addEventListener('keydown', close);
     return () => window.removeEventListener('keydown', close);
-  }, []);
+  }, [menu]);
   const count = cart.lines.reduce((total, line) => total + line.quantity, 0);
   return (
     <>
@@ -35,6 +48,7 @@ export default function Layout() {
       <header className="site-header">
         <div className="header-top">
           <button
+            ref={menuButtonRef}
             className="icon-button menu-toggle"
             aria-label={menu ? t.closeMenu : t.openMenu}
             aria-expanded={menu}
@@ -68,13 +82,27 @@ export default function Layout() {
           </div>
         </div>
         <nav
+          ref={navRef}
           id="main-nav"
+          onClick={(event) => {
+            if (!menu || !event.target.closest('a')) return;
+            setMenu(false);
+            mainRef.current?.focus({ preventScroll: true });
+          }}
           className={`main-nav ${menu ? 'is-open' : ''}`}
           aria-label={language === 'es' ? 'Navegación principal' : 'Main navigation'}
         >
-          <NavLink to="/catalog?category=fashion">{t.fashion}</NavLink>
-          <NavLink to="/catalog?category=accessories">{t.accessories}</NavLink>
-          <NavLink to="/catalog?category=beauty">{t.beauty}</NavLink>
+          {['fashion', 'accessories', 'beauty'].map((value) => (
+            <Link
+              key={value}
+              to={`/catalog?category=${value}`}
+              aria-current={
+                location.pathname === '/catalog' && category === value ? 'page' : undefined
+              }
+            >
+              {t[value]}
+            </Link>
+          ))}
           <NavLink to="/collections">{t.collections}</NavLink>
           <NavLink to="/runway">{language === 'es' ? 'La pasarela' : 'The runway'}</NavLink>
           <NavLink to="/looks">{t.looks}</NavLink>
@@ -85,7 +113,7 @@ export default function Layout() {
           {user?.role === 'team' && <NavLink to="/team">{t.team}</NavLink>}
         </nav>
       </header>
-      <main id="main" tabIndex={-1}>
+      <main ref={mainRef} id="main" tabIndex={-1}>
         <Outlet />
       </main>
       <footer className="site-footer">

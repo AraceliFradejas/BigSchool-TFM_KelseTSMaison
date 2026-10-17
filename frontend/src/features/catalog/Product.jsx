@@ -16,24 +16,19 @@ export default function Product() {
       : '/catalog';
   const [variantId, setVariantId] = useState('');
   const product = resource.data;
+  const collections = useResource('/collections');
+  const collection = collections.data?.find((item) => item.id === product?.collectionId);
   const related = useResource(product ? `/products?collection=${product.collectionId}` : null);
   const lookResource = useResource(product ? '/looks' : null);
   const matchingLook = lookResource.data?.find((look) =>
     look.products.some((item) => item.id === id),
   );
-  useEffect(
-    () =>
-      setVariantId(
-        product?.tags.includes('runway')
-          ? ''
-          : product?.variants.find((variant) => variant.stock > 0)?.id ||
-              product?.variants[0]?.id ||
-              '',
-      ),
-    [product],
-  );
+  useEffect(() => setVariantId(''), [id]);
   const variant = product?.variants.find((item) => item.id === variantId);
   const saved = favorites.includes(id);
+  const recommendations = (matchingLook?.products || related.data?.items || []).filter(
+    (item) => item.id !== id,
+  );
   return (
     <div className="container page product-page">
       <Link className="back-link" to={returnTo}>
@@ -62,11 +57,20 @@ export default function Product() {
                   </Link>
                 )}
                 <Link className="eyebrow" to={`/catalog?collection=${product.collectionId}`}>
-                  {product.collectionId.replaceAll('-', ' ')}
+                  {collection?.name || t.collection}
                 </Link>
                 <h1>{product.name[language]}</h1>
                 <p className="detail-price">
-                  <Money cents={variant?.priceCents || product.variants[0].priceCents} />
+                  {!variant &&
+                    new Set(product.variants.map((item) => item.priceCents)).size > 1 && (
+                      <>{t.priceFrom} </>
+                    )}
+                  <Money
+                    cents={
+                      variant?.priceCents ??
+                      Math.min(...product.variants.map((item) => item.priceCents))
+                    }
+                  />
                 </p>
                 <p className="detail-description">{product.description[language]}</p>
                 <fieldset className="variant-options">
@@ -79,6 +83,7 @@ export default function Product() {
                       <input
                         type="radio"
                         name="variant"
+                        disabled={item.stock === 0}
                         value={item.id}
                         checked={variantId === item.id}
                         onChange={() => setVariantId(item.id)}
@@ -90,11 +95,11 @@ export default function Product() {
                     </label>
                   ))}
                 </fieldset>
-                <p className={`stock-note ${variant?.stock > 0 ? '' : 'out'}`}>
+                <p className={`stock-note ${variant?.stock > 0 ? '' : 'out'}`} role="status">
                   {!variant
-                    ? language === 'es'
-                      ? 'Elige una talla o variante.'
-                      : 'Choose a size or variant.'
+                    ? product.variants.some((item) => item.stock > 0)
+                      ? t.chooseVariant
+                      : t.soldOut
                     : variant.stock > 0
                       ? `${variant.stock} ${t.stock}`
                       : t.soldOut}
@@ -132,16 +137,12 @@ export default function Product() {
                         : 'Complete your look'
                       : t.related}
                   </h2>
-                  <p>{t.relatedBody}</p>
+                  <p>{matchingLook ? t.completeLookBody : t.relatedBody}</p>
                 </div>
               </div>
-              <ResourceState resource={related}>
-                {related.data && (
-                  <ProductGrid
-                    products={(matchingLook?.products || related.data.items).filter(
-                      (item) => item.id !== id,
-                    )}
-                  />
+              <ResourceState resource={matchingLook ? lookResource : related}>
+                {recommendations.length > 0 && (
+                  <ProductGrid products={recommendations} returnTo={returnTo} />
                 )}
               </ResourceState>
             </section>
