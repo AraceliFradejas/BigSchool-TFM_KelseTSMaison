@@ -71,7 +71,7 @@ Después, comprobar registro, acceso, recarga de sesión, favoritos, variantes, 
 
 MongoDB y Cloudinary se respaldan con mecanismos propios del servicio. No presentar la prueba anterior de copiar un runtime SQLite cerrado como backup de Atlas. Probar una restauración en una base independiente y verificar las referencias de Cloudinary antes de dar este bloque por cerrado.
 
-El limitador por IP actual vive en memoria por instancia; no es una cuota distribuida entre funciones de Vercel. No se han medido carga ni escalado. La conexión externa y las cookies a través del proxy publicado se han comprobado. Siguen pendientes la restauración en los proveedores, medición de carga y verificación de persistencia tras un nuevo redeploy.
+El limitador por IP actual vive en memoria por instancia; no es una cuota distribuida entre funciones de Vercel. No se han medido carga ni escalado. La conexión externa y las cookies a través del proxy publicado se han comprobado. Tras redesplegar la API desde `86c7d82`, la misma cuenta y sesión Team y el catálogo siguen disponibles. Quedan la comprobación específica de un pedido y una imagen durante otro redeploy, la restauración en los proveedores y la medición de carga.
 
 SQLite se conserva para la demostración local y sus migraciones previas. Ese modo sí requiere disco persistente si se ejecuta en un servidor tradicional. Su copia coherente exige cerrar el proceso y copiar base y uploads juntos, o utilizar un backup SQLite validado. El Dockerfile corresponde a ese modo local y sigue sin ejecutarse en Docker. Render no es el destino elegido.
 

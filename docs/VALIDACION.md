@@ -1,5 +1,13 @@
 # Validación de la primera versión de Maison
 
+### Continuidad después de redesplegar la API · 18 de octubre de 2026
+
+- Segundo avance publicado: `86c7d82`, «Publica Maison en Vercel y verifica el recorrido real de Team». [GitHub Actions, ejecución 17](https://github.com/AraceliFradejas/BigSchool-TFM_KelseTSMaison/actions/runs/39135881861), completada correctamente.
+- Vercel recibe el push y completa un nuevo despliegue de producción de la API con esa revisión. Una sesión Team iniciada antes del cambio sigue identificando a la misma cuenta y el catálogo público conserva 190 productos después del cambio. Se cierra esa sesión y se comprueba su revocación.
+- Chequeo público de solo lectura repetido tras el redeploy: correcto. Eliminados el archivo temporal usado para trasladar variables a Vercel y el archivo privado con la cookie de esta comprobación. El `.env` local permanece ignorado por Git.
+- Esta comprobación acredita continuidad de cuenta, sesión y catálogo. No sustituye la comprobación específica de un pedido y una imagen conservados durante otro redeploy, ni una restauración de backups.
+
+
 ### Vercel y recorrido HTTP real · 18 de octubre de 2026
 
 - Publicados web y API independientes desde `be67431`: https://kelsets-maison.vercel.app y https://kelsets-maison-api.vercel.app. Los dos builds completan en Vercel. No se activan planes de pago.
