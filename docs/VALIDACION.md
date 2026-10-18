@@ -311,3 +311,15 @@ Tras comprobar ausencia de referencias en pedidos y de uso compartido de la imag
 - Metro arranca para Expo Go. No hay Xcode ni emulador Android instalados en este entorno y todavía no se ha ejecutado esta app en un móvil: Araceli ofrece probar ambos sistemas. Exportar no acredita un recorrido nativo ni genera un IPA/APK de distribución. No se publica en App Store ni Google Play.
 
 El recorrido privado (sesión, pedidos, favoritos y Team), la prueba física y el asistente IA quedan pendientes. Véase [guía móvil](../mobile/README.md).
+
+
+### Incidencia inicial de acceso a Expo Go
+
+Araceli informa que Expo Go no aparece en Play Store y de contenido no válido en iOS. Se comprueba Metro activo y un manifiesto JSON válido para iOS con SDK 57 por HTTP local. Se corrige la guía: descarga Android desde la página oficial de Expo y requisito de iniciar sesión con la misma cuenta en CLI y Expo Go de iOS. Estas comprobaciones no prueban que el teléfono alcance la red local ni resuelven por sí solas el mensaje de Cámara; la ejecución física continúa pendiente.
+
+
+### Primer arranque físico comunicado y adaptación visual
+
+Araceli confirma que Maison abre en iPhone y Android a través de Expo Go. No se ha recibido todavía evidencia del recorrido completo ni modelos/versiones de los dispositivos. Su primera observación es que los controles resultan demasiado cuadrados.
+
+Se ajustan botones de marca, imágenes, selección y navegación inferior; se incorporan botones del sistema para volver/reintentar y selección de idioma con ActionSheetIOS/Alert. Android utiliza `android_ripple`; iOS, opacidad y escala al pulsar. La barra inferior sigue siendo personalizada, con roles de pestaña, iconos y contador de bolsa. Exportación iOS/Android y tres pruebas del modelo correctas; revisión visual física de estos cambios pendiente. No se modifica la web ni la lógica de stock/pedidos.

@@ -11,7 +11,9 @@ npm ci
 npm run mobile
 ```
 
-Instala Expo Go desde App Store o Google Play. Conecta móvil y ordenador a la misma Wi-Fi. En iPhone, escanea el QR de la terminal con Cámara; en Android, desde Expo Go. El ordenador y Metro deben permanecer encendidos. La dirección local cambia al cambiar de red; usa siempre el QR de la ejecución actual. No hace falta una clave de Atlas, Cloudinary ni una cuenta de pago de Expo.
+Instala Expo Go desde App Store o Google Play. Si no aparece la versión compatible en Google Play, utiliza la [página oficial de instalación Android para SDK 57](https://expo.dev/go?device=true&platform=android&sdkVersion=57), que proporciona la descarga oficial de Expo. Conecta móvil y ordenador a la misma Wi-Fi. En iPhone, escanea el QR de la terminal con Cámara; en Android, desde Expo Go. El ordenador y Metro deben permanecer encendidos. La dirección local cambia al cambiar de red; usa siempre el QR de la ejecución actual. No hace falta una clave de Atlas, Cloudinary ni una cuenta de pago de Expo.
+
+**Cuenta de Expo en iPhone:** desde septiembre de 2026, Expo Go para iOS con SDK 57 exige la misma cuenta iniciada en Expo Go y en la CLI del ordenador. Ejecuta `npx expo login` dentro de `mobile/`, completa el acceso y utiliza esa misma cuenta en Expo Go antes de abrir el QR. Expo recomienda también iniciar sesión en Android para ver los servidores de desarrollo. Véase el [aviso oficial de Expo](https://expo.dev/changelog/expo-go-57-login). Un mensaje de Cámara sobre contenido no válido no acredita por sí solo un fallo de cuenta: hay que distinguir si el enlace llega a abrir Expo Go.
 
 Se elige SDK 57 porque la [guía oficial de Expo](https://docs.expo.dev/get-started/create-a-project/) lo indica para Expo Go en dispositivos físicos durante la transición a SDK 58 (consulta del 18 de octubre de 2026). Las dependencias están fijadas en el lockfile. La configuración de Metro sigue la [guía oficial de monorepos](https://docs.expo.dev/guides/monorepos/).
 
@@ -32,7 +34,7 @@ npx expo-doctor
 
 Exportación de los paquetes de iOS y Android correcta y 21/21 comprobaciones de Expo Doctor correctas. Esto comprueba el empaquetado y la configuración, no una ejecución en un teléfono ni un IPA/APK instalable. No se ha generado un binario de distribución ni publicado en tiendas. `mobile/dist/` queda fuera de Git.
 
-Prueba pendiente con Araceli en **iPhone y Android**:
+Araceli confirma que la app abre en **iPhone y Android**. Falta completar y registrar el recorrido siguiente:
 
 1. Abrir el QR, comprobar logo, imágenes, scroll y zonas seguras.
 2. Buscar una pieza, cambiar categoría y pasar de página.
@@ -48,3 +50,10 @@ Prueba pendiente con Araceli en **iPhone y Android**:
 Acceso, registro, favoritos, pedidos, historial, Team y asistente de IA todavía no están integrados en la app. El siguiente bloque deberá comprobar la sesión nativa contra la API antes de añadir el recorrido privado. No se guardan credenciales ni se trasladan las cookies del navegador.
 
 La revisión inicial de `npm audit --omit=dev` señala 22 avisos en el árbol Expo/React Native (7 moderados, 15 altos), con avisos base en braces, node-forge y uuid y propagación al resto del árbol. La corrección automática propone versiones mayores incompatibles o retrocesos de SDK: no se aplica `--force`. Debe revisarse la ruta de actualización compatible antes de preparar una distribución. No equivale a afirmar que cada aviso afecte al código empaquetado de la app.
+
+
+## Adaptación de controles a iOS y Android
+
+Tras el primer arranque, Araceli señala que la interfaz resulta demasiado rectangular en ambos dispositivos. Se incorpora el botón del sistema de React Native para volver y reintentar; el idioma utiliza ActionSheetIOS en iOS y un diálogo Alert en Android. Las acciones de marca mantienen componentes Pressable personalizados con esquinas suaves, selección rellena, respuesta de opacidad en iOS y onda nativa de Android. El campo de búsqueda ofrece el borrado integrado de iOS.
+
+La navegación inferior es una barra personalizada accesible con iconos y contador de bolsa; no se presenta como UITabBar o una barra Material nativa. Se mantienen los componentes de sistema de teclado, scroll, zonas seguras y alertas. Esta revisión pasa exportación iOS/Android y las tres pruebas del modelo móvil; la comprobación visual del ajuste en teléfonos sigue pendiente. Referencia: [Pressable de React Native](https://reactnative.dev/docs/pressable).

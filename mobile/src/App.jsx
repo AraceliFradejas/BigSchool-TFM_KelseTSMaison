@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
+  ActionSheetIOS,
+  Button as NativeButton,
   Alert,
   BackHandler,
   FlatList,
@@ -18,6 +20,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Brand from './Brand';
+import Svg, { Path } from 'react-native-svg';
 import { api, addToBag, imageUrl, money, resolveBag, restoreBag } from './model';
 
 const BAG_KEY = '@kelsets-maison/bag/v1';
@@ -108,16 +111,20 @@ function Button({ children, onPress, disabled, secondary, selected, ...props }) 
         ...(selected === undefined ? {} : { selected }),
       }}
       disabled={disabled}
+      android_ripple={{ color: secondary ? '#b3152b22' : '#ffffff33' }}
       onPress={onPress}
       style={({ pressed }) => [
         s.button,
         secondary && s.secondary,
         selected && s.selected,
-        (disabled || pressed) && s.dim,
+        disabled && s.dim,
+        pressed && Platform.OS === 'ios' && s.pressed,
       ]}
       {...props}
     >
-      <Text style={[s.buttonText, secondary && s.secondaryText]}>{children}</Text>
+      <Text style={[s.buttonText, secondary && s.secondaryText, selected && s.selectedText]}>
+        {children}
+      </Text>
     </Pressable>
   );
 }
@@ -171,7 +178,7 @@ function Resource({ resource, t, children }) {
         <Text accessibilityRole="alert">
           {resource.error.status === 404 ? t.unavailable : t.network}
         </Text>
-        <Button onPress={resource.reload}>{t.retry}</Button>
+        <NativeButton title={t.retry} color="#b3152b" onPress={resource.reload} />
       </View>
     );
   return children;
@@ -205,6 +212,8 @@ function Catalogue({ language, t, open }) {
               changePage(1);
             }}
             returnKeyType="search"
+            clearButtonMode="while-editing"
+            autoCorrect={false}
             style={s.input}
           />
           <Button
@@ -299,9 +308,9 @@ function Detail({ id, language, t, add, back }) {
       contentContainerStyle={s.content}
       refreshControl={<RefreshControl refreshing={false} onRefresh={resource.reload} />}
     >
-      <Button secondary onPress={back}>
-        ← {t.back}
-      </Button>
+      <View style={s.backControl}>
+        <NativeButton title={t.back} color="#b3152b" onPress={back} />
+      </View>
       <Resource resource={resource} t={t}>
         {product && (
           <>
@@ -478,6 +487,27 @@ export default function App() {
     });
     return () => sub.remove();
   }, [route]);
+  function chooseLanguage() {
+    if (Platform.OS === 'ios') {
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          title: language === 'es' ? 'Idioma' : 'Language',
+          options: ['Castellano', 'English', language === 'es' ? 'Cancelar' : 'Cancel'],
+          cancelButtonIndex: 2,
+          tintColor: '#b3152b',
+        },
+        (index) => {
+          if (index < 2) setLanguage(index === 0 ? 'es' : 'en');
+        },
+      );
+    } else {
+      Alert.alert(language === 'es' ? 'Idioma' : 'Language', undefined, [
+        { text: 'Castellano', onPress: () => setLanguage('es') },
+        { text: 'English', onPress: () => setLanguage('en') },
+        { text: language === 'es' ? 'Cancelar' : 'Cancel', style: 'cancel' },
+      ]);
+    }
+  }
   function change(next) {
     setLines(next);
     writes.current = writes.current
@@ -512,7 +542,7 @@ export default function App() {
           <Button
             secondary
             accessibilityLabel={language === 'es' ? 'Switch to English' : 'Cambiar a castellano'}
-            onPress={() => setLanguage((l) => (l === 'es' ? 'en' : 'es'))}
+            onPress={chooseLanguage}
           >
             {language.toUpperCase()} / {language === 'es' ? 'EN' : 'ES'}
           </Button>
@@ -538,21 +568,54 @@ export default function App() {
         ) : (
           <Catalogue language={language} t={t} open={open} />
         )}
-        <View style={s.tabs}>
-          <Button
-            secondary
-            selected={route.screen === 'catalogue'}
-            onPress={() => setRoute({ screen: 'catalogue' })}
-          >
-            {t.catalogue}
-          </Button>
-          <Button
-            secondary
-            selected={route.screen === 'bag'}
-            onPress={() => setRoute({ screen: 'bag' })}
-          >
-            {t.bag} ({lines.reduce((sum, line) => sum + line.quantity, 0)})
-          </Button>
+        <View style={s.tabs} accessibilityRole="tablist">
+          {['catalogue', 'bag'].map((screen) => {
+            const selected =
+              route.screen === screen || (route.screen === 'detail' && route.from === screen);
+            const count = lines.reduce((sum, line) => sum + line.quantity, 0);
+            return (
+              <Pressable
+                key={screen}
+                accessibilityRole="tab"
+                accessibilityLabel={`${t[screen]}${screen === 'bag' ? ` (${count})` : ''}`}
+                accessibilityState={{ selected }}
+                onPress={() => setRoute({ screen })}
+                android_ripple={{ color: '#b3152b22' }}
+                style={({ pressed }) => [
+                  s.tab,
+                  selected && s.activeTab,
+                  pressed && Platform.OS === 'ios' && s.pressed,
+                ]}
+              >
+                <View style={s.tabIcon}>
+                  <Svg
+                    width={24}
+                    height={24}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke={selected ? '#b3152b' : '#777169'}
+                    strokeWidth={1.7}
+                    accessibilityElementsHidden
+                    importantForAccessibility="no-hide-descendants"
+                  >
+                    <Path
+                      d={
+                        screen === 'catalogue'
+                          ? 'M3 9h18L19 3H5L3 9ZM4 9v12h16V9M9 21v-7h6v7M3 9c0 3 4 3 4 0 0 3 5 3 5 0 0 3 5 3 5 0 0 3 4 3 4 0'
+                          : 'M5 7h14l2 14H3L5 7ZM8 8V6a4 4 0 0 1 8 0v2'
+                      }
+                    />
+                  </Svg>
+                  {screen === 'bag' && count > 0 && (
+                    <View style={s.badge}>
+                      <Text style={s.badgeText}>{count}</Text>
+                    </View>
+                  )}
+                </View>
+                <Text style={[s.tabLabel, selected && s.selectedText]}>{t[screen]}</Text>
+              </Pressable>
+            );
+          })}
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -590,28 +653,34 @@ const s = StyleSheet.create({
     borderColor: '#b8b2a7',
     padding: 12,
     color: '#242320',
-    backgroundColor: '#fff',
+    backgroundColor: '#eeeae3',
+    borderRadius: 14,
     minHeight: 48,
   },
   chips: { gap: 8, paddingVertical: 12 },
   button: {
-    backgroundColor: '#242320',
-    paddingVertical: 12,
+    backgroundColor: '#b3152b',
+    borderRadius: Platform.OS === 'ios' ? 14 : 24,
+    overflow: 'hidden',
+    paddingVertical: 13,
     paddingHorizontal: 16,
     minHeight: 48,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonText: { color: '#fff', fontSize: 14 },
-  secondary: { borderWidth: 1, borderColor: '#cfc8bc', backgroundColor: '#f6f4ee' },
+  buttonText: { color: '#fff', fontSize: 15, fontWeight: '600' },
+  secondary: { borderWidth: 0, backgroundColor: '#eeeae3' },
   secondaryText: { color: '#242320' },
-  selected: { borderColor: '#b3152b', borderWidth: 2 },
+  selected: { backgroundColor: '#f7dfe3' },
+  selectedText: { color: '#a50e27', fontWeight: '700' },
+  pressed: { opacity: 0.65, transform: [{ scale: 0.98 }] },
+  backControl: { alignSelf: 'flex-start', minHeight: 44, justifyContent: 'center' },
   dim: { opacity: 0.45 },
   grid: { padding: 16, paddingTop: 4 },
   gridRow: { gap: 12 },
   card: { flex: 1, maxWidth: '50%', marginBottom: 22 },
-  photo: { width: '100%', aspectRatio: 0.8, backgroundColor: '#ebe6dc' },
-  largePhoto: { width: '100%', aspectRatio: 0.8, backgroundColor: '#ebe6dc' },
+  photo: { width: '100%', aspectRatio: 0.8, backgroundColor: '#ebe6dc', borderRadius: 16 },
+  largePhoto: { width: '100%', aspectRatio: 0.8, backgroundColor: '#ebe6dc', borderRadius: 22 },
   category: { color: '#6c665e', fontSize: 10, textTransform: 'uppercase', marginTop: 10 },
   name: { color: '#242320', fontSize: 15, marginVertical: 6 },
   price: { color: '#242320', fontSize: 15, fontWeight: '600', marginBottom: 8 },
@@ -622,6 +691,7 @@ const s = StyleSheet.create({
     lineHeight: 21,
     color: '#6c665e',
     backgroundColor: '#eee9df',
+    borderRadius: 16,
     padding: 14,
   },
   content: { padding: 18, gap: 12 },
@@ -630,11 +700,39 @@ const s = StyleSheet.create({
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   pagination: { paddingVertical: 16, gap: 14, alignItems: 'center' },
   bagLine: { paddingVertical: 16, gap: 8, borderBottomWidth: 1, borderColor: '#d9d4ca' },
+  tab: {
+    flex: 1,
+    minHeight: 56,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
+    borderRadius: 24,
+    overflow: 'hidden',
+  },
+  activeTab: { backgroundColor: Platform.OS === 'android' ? '#f7dfe3' : '#f4eeea' },
+  tabIcon: { width: 28, height: 26, alignItems: 'center' },
+  tabLabel: { fontSize: 12, fontWeight: '500', color: '#777169' },
+  badge: {
+    position: 'absolute',
+    right: -12,
+    top: -5,
+    backgroundColor: '#b3152b',
+    minWidth: 18,
+    height: 18,
+    borderRadius: 9,
+    paddingHorizontal: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  badgeText: { color: '#fff', fontSize: 10, fontWeight: '700' },
   tabs: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    borderTopWidth: 1,
+    borderTopWidth: StyleSheet.hairlineWidth,
     borderColor: '#d9d4ca',
-    padding: 12,
+    backgroundColor: '#fffcf7',
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    gap: 12,
   },
 });
