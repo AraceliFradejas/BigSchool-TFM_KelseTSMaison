@@ -256,6 +256,9 @@ function Editor({ initial, onClose, onSaved }) {
                     variant(index, 'priceCents', Math.round(Number(event.target.value) * 100))
                   }
                 />
+                <small>
+                  <Money cents={item.priceCents} />
+                </small>
               </label>
               <label>
                 {t.stockLabel}

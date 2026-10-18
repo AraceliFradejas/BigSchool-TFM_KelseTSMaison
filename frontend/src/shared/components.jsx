@@ -1,3 +1,4 @@
+import { formatMoney } from '@maison/contracts/money';
 import { catalogImageProps } from './media';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMaison } from './state';
@@ -59,11 +60,7 @@ export function Icon({ name, ...props }) {
 }
 export function Money({ cents }) {
   const { language } = useMaison();
-  return new Intl.NumberFormat(language === 'es' ? 'es-ES' : 'en-IE', {
-    style: 'currency',
-    currency: 'EUR',
-    useGrouping: 'always',
-  }).format(cents / 100);
+  return formatMoney(cents, language);
 }
 export function ResourceState({ resource, children }) {
   const { t, errorText } = useMaison();

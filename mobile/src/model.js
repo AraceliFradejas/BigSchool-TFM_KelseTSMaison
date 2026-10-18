@@ -66,12 +66,7 @@ export function resolveBag(lines, products) {
     };
   });
 }
-export function money(cents, language) {
-  return new Intl.NumberFormat(language === 'es' ? 'es-ES' : 'en-IE', {
-    style: 'currency',
-    currency: 'EUR',
-  }).format(cents / 100);
-}
+export { formatMoney as money } from '@maison/contracts/money';
 
 export function outfitSelection(look, selected) {
   if (!look?.complete || !look.products?.length) throw new Error('invalid_input');

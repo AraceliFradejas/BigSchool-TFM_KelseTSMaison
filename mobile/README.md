@@ -67,4 +67,7 @@ Al abrir de nuevo la app aparece una entrada animada del mismo logo de Maison, s
 
 Se prepara además el arranque estático de una futura app independiente mediante el plugin oficial `expo-splash-screen` y `assets/splash-logo.png`, rasterizado desde el SVG del logo web existente. El arranque estático y la animación dentro de la app son pasos distintos. [Expo Go no permite comprobar fielmente el splash de la app distribuida](https://docs.expo.dev/versions/v57.0.0/sdk/splash-screen/); esa comprobación requiere un binario de distribución. La animación de logo no es el vídeo de 90 segundos de la pasarela.
 
-Comprobado: exportación iOS/Android, configuración Expo Doctor 21/21 y cuatro pruebas del modelo móvil. Pendiente: revisión visual de esta entrada corregida y del recorrido de outfits en iPhone, Android e iPad.
+Comprobado: exportación iOS/Android, configuración Expo Doctor 21/21 y cuatro pruebas del modelo móvil. Araceli confirma que la entrada corregida funciona en iPhone e iPad. Android comunica un error durante la actualización en caliente: se reinicia Metro con caché limpia y se comprueban los bundles de desarrollo de ambas plataformas. Araceli confirma después que Android vuelve a cargar. El recorrido completo de outfits sigue pendiente de confirmar.
+
+
+Los importes usan el mismo formateador compartido que la web: en castellano, `1.850,00 €`, `10.000,00 €` y separación de todos los grupos de miles; en inglés, `€1,850.00`. Esta presentación no modifica los valores en céntimos.

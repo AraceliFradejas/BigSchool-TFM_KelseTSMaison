@@ -332,3 +332,17 @@ Se añade la pestaña Outfits, conectada a las selecciones `sourceId` de `/looks
 La entrada con logo utiliza Animated, respeta reducción de movimiento y se puede saltar. Araceli comunica que la primera versión solo aparece en la zona inferior; se sustituye la superposición por un Modal nativo `fullScreen`, con contenido flex y margen seguro inferior, para independizar su tamaño del layout. Logo con ancho adaptable. Esta corrección todavía requiere confirmación visual en los teléfonos. El logo PNG del arranque estático deriva del SVG de BrandLogo de la web y se configura con `expo-splash-screen`; el splash distribuido no se valida en Expo Go.
 
 Exportación iOS/Android correcta después del ajuste, cuatro pruebas del modelo correctas y Expo Doctor 21/21. No se afirma comprobado el recorrido físico de selección de outfits ni el splash de distribución.
+
+
+### Android tras actualización en caliente · 18 de octubre
+
+Araceli confirma funcionamiento en iPhone y iPad tras el ajuste de entrada y comunica un SyntaxError en Android. Metro registra `Unable to resolve ./Outfits` durante la incorporación de archivos, antes de terminar la actualización; no se ha recibido aún el texto exacto del error del teléfono. Se reinicia Metro con `--clear`, manteniendo puerto y dirección de desarrollo. Los bundles de desarrollo Android e iOS responden HTTP 200 como JavaScript y ambos superan una comprobación de sintaxis con esbuild. Esto acredita el servidor limpio, no confirma todavía la recuperación del dispositivo Android. Se solicita reabrir Maison desde Expo Go; si persiste, falta la captura o el texto exacto del error.
+
+
+Araceli confirma después que Android vuelve a cargar tras el reinicio con caché limpia. La recuperación queda confirmada por la usuaria; no implica que el recorrido de outfits completo esté verificado.
+
+### Separación de miles en todos los importes
+
+Araceli detecta `1850,00` en la app y solicita `1.850,00`. La web ya utilizaba agrupación forzada; el formateador móvil omitía esa opción. Se unifica web y app en `@maison/contracts/money`, con agrupación siempre y dos decimales. Se aplica a precios de catálogo/ficha, filtros de presupuesto, líneas y totales de bolsa, outfits, historial, detalle y Team mediante los componentes existentes. Los campos HTML numéricos conservan el valor editable sin separadores y muestran al lado su lectura monetaria formateada en el editor de Team y en el presupuesto editorial. No cambian céntimos almacenados ni precios históricos.
+
+Dos pruebas comprueban el caso de cuatro cifras, límites desde cero hasta millones, inglés y las 996 variantes de la semilla; las nueve pruebas de bolsa/modelo/formato pasan. Build web, chequeo local de producción y exportación iOS/Android correctos. El bundle de desarrollo Android responde HTTP 200 como JavaScript con el nuevo módulo compartido. Revisión visual del formato en los teléfonos pendiente.

@@ -9,6 +9,7 @@ export default function Looks() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [mood, setMood] = useState('all');
+  const [budget, setBudget] = useState('6500');
   async function submit(event) {
     event.preventDefault();
     setBusy(true);
@@ -73,9 +74,15 @@ export default function Looks() {
               min="1"
               max="10000"
               step="0.01"
-              defaultValue="6500"
+              value={budget}
+              onChange={(event) => setBudget(event.target.value)}
               required
             />
+            {budget !== '' && Number.isFinite(Number(budget)) && (
+              <small>
+                <Money cents={Math.round(Number(budget) * 100)} />
+              </small>
+            )}
           </label>
           <label>
             {t.color}

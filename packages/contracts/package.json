@@ -6,7 +6,8 @@
   "exports": {
     ".": "./src/index.js",
     "./rules": "./src/rules.js",
-    "./cart-selection": "./src/cart-selection.js"
+    "./cart-selection": "./src/cart-selection.js",
+    "./money": "./src/money.js"
   },
   "dependencies": {
     "zod": "^4.1.11"
