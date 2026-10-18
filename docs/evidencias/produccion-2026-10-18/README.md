@@ -1,6 +1,6 @@
 # Capturas de la web publicada · 18 de octubre de 2026
 
-Capturas originales de Chrome en escritorio sobre https://kelsets-maison.vercel.app, realizadas el 18 de octubre de 2026. Se conserva la ventana del navegador y la dirección pública; no se han reconstruido ni retocado las pantallas. Son vistas parciales de la interfaz, no pruebas de todos los comportamientos del sistema. Las capturas 1–5 se tomaron sin modificar productos ni crear pedidos. La ampliación 6–16 documenta después un pedido de demostración creado, confirmado y cancelado para esta revisión; se conserva cancelado en el historial de Team Maison. En las capturas 13–14 no se guardaron cambios. La secuencia 17–19 documenta después una creación temporal archivada y su limpieza.
+Capturas originales de Chrome en escritorio sobre https://kelsets-maison.vercel.app, realizadas el 18 de octubre de 2026. Se conserva la ventana del navegador y la dirección pública; no se han reconstruido ni retocado las pantallas. Son vistas parciales de la interfaz, no pruebas de todos los comportamientos del sistema. Las capturas 1–5 se tomaron sin modificar productos ni crear pedidos. La ampliación 6–16 documenta después un pedido de demostración creado, confirmado y cancelado para esta revisión; se conserva cancelado en el historial de Team Maison. En las capturas 13–14 no se guardaron cambios. La secuencia 17–19 documenta después una creación temporal archivada y su limpieza. Las capturas 20–23 recogen la ampliación del pago simulado, su rechazo y el justificante del pedido de prueba.
 
 ## 1. Portada en castellano
 
@@ -108,4 +108,22 @@ Tras guardar las evidencias se comprueba que la pieza no está referenciada por 
 
 ## Evidencias que quedan por ampliar
 
-Teléfono físico y más tamaños y recorridos responsive. El asistente de IA de outfits y la app nativa siguen pendientes de implementación y no se presentan como funcionalidades capturadas. Las verificaciones técnicas realizadas se detallan en [VALIDACION.md](../../VALIDACION.md).
+Tengo pendientes las capturas de los teléfonos y más tamaños y recorridos responsive. La app nativa tiene su propio registro de pruebas; no aparece en estas capturas de Chrome. El asistente de IA de outfits sigue pendiente de implementación. Las verificaciones técnicas realizadas se detallan en [VALIDACION.md](../../VALIDACION.md).
+
+## 20–23. Pago simulado y justificante DEMO
+
+![Revisión y métodos de pago ficticios](20-revision-pago-simulado.jpg)
+
+He abierto la revisión de dos unidades del vestido Enchanted, variante M, con un importe simulado de 3.700,00 €. Veo cuenta bancaria ficticia, tarjeta ficticia y PayPal simulado; no hay campos de datos bancarios ni enlaces a pasarelas. La confirmación está desactivada hasta aceptar el aviso académico. Después de esta primera captura he ajustado la disposición horizontal de las opciones para compactar la revisión.
+
+![Rechazo del pago ficticio](21-pago-simulado-rechazado.jpg)
+
+He elegido «Simular pago rechazado» y aceptado el aviso. La interfaz informa del rechazo, mantiene la bolsa y aclara que no se ha creado un pedido ni descontado stock.
+
+![Pedido aceptado y justificante de demostración](22-pedido-pago-simulado.jpg)
+
+Después he escogido PayPal simulado y un resultado aceptado. El pedido `111d84b9-7a4e-413d-b713-596eeeeba640` aparece pendiente, con el mensaje de confirmación, las dos unidades, el total conservado, referencia DEMO y cargo real de 0,00 €.
+
+![Pedido cancelado conservando el justificante](23-justificante-tras-cancelacion.jpg)
+
+He cancelado el pedido desde Team para reponer sus dos unidades. Conservo el pedido cancelado y sus comunicaciones en el historial; el justificante sigue indicando el método simulado y cargo real cero. No se ha realizado ningún pago ni envío real.

@@ -1,6 +1,6 @@
 # KelseTS Maison · app móvil
 
-Primera etapa nativa con React Native y Expo SDK 57, independiente de la web y conectada a su API HTTPS. Incluye catálogo paginado, búsqueda, categorías, ficha bilingüe con variantes, disponibilidad y bolsa local. Los componentes son nativos; no se utiliza un WebView.
+Primera etapa nativa con React Native y Expo SDK 57, independiente de la web y conectada a su API HTTPS. Incluye catálogo paginado, búsqueda, categorías, ficha bilingüe con variantes, disponibilidad, outfits, bolsa por cuenta, acceso, pago simulado, historial y comunicaciones. Los componentes son nativos; no se utiliza un WebView.
 
 ## Arranque
 

@@ -2312,3 +2312,13 @@ main:focus {
   padding: 18px;
   background: #edf4ef;
 }
+.payment-review h2 {
+  font-size: clamp(26px, 3vw, 36px);
+}
+.payment-review p {
+  margin-block: 0;
+}
+.payment-review .payment-option {
+  flex-direction: row;
+  justify-content: flex-start;
+}
