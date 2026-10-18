@@ -298,3 +298,16 @@ Se abre el editor existente y se capturan sus campos ES/EN sin guardar modificac
 Se añaden las capturas 17–19: subida mediante selector nativo de una copia del recurso propio `satin-story.webp`; creación desde la interfaz de `evidencia-daylight-20261018`, archivada, con traducciones ES/EN, una variante, precio 10 € y stock cero; búsqueda y reapertura con la referencia de imagen conservada. La entrada automatizada pierde una vocal acentuada en la etiqueta castellana («M · Champn»); la evidencia conserva ese estado real. No se modifican piezas existentes.
 
 Tras comprobar ausencia de referencias en pedidos y de uso compartido de la imagen, se limpian exclusivamente el producto, variante y referencia temporales de Atlas y su imagen de Cloudinary. Resultado: 190 productos; cero productos, variantes o referencias de esa prueba. Las capturas se conservan en el índice y el pedido cancelado anterior permanece en el historial.
+
+
+## Primera etapa móvil nativa · 18 de octubre de 2026
+
+- Expo SDK 57 y React Native 0.86.3, con React/React DOM 19.2.3 unificados para evitar duplicados. Módulos nativos instalados mediante `expo install`. Metro utiliza la configuración oficial de monorepos.
+- Catálogo, búsqueda, categorías, paginación, ficha, variantes y bolsa local ES/EN implementados. Reutiliza el cliente HTTP; la lógica de cantidades de web pasa a `@maison/contracts/cart-selection` sin cambiar sus reglas. La bolsa local guarda solo identificadores/cantidades y recupera precio y stock de la API.
+- `npm test`: 56 correctas (44 backend, 6 cliente HTTP, 3 bolsa compartida y 3 modelo móvil). Los casos móviles cubren restauración corrupta/duplicada, descarte de precios almacenados, cambios de disponibilidad y restricción a URL HTTPS e imágenes del mismo origen.
+- `npm run mobile:export`: paquetes Hermes de iOS y Android generados correctamente. `expo install --check`: dependencias compatibles. `expo-doctor`: 21/21 después de retirar una opción de splash ya no admitida y resolver la duplicación de React.
+- `npm run build` y `npm run check:production` correctos tras unificar React. La primera ejecución de tests encontró EPERM al abrir loopback en el sandbox; la repetición con permisos de puertos pasa. No fue un fallo de lógica de la aplicación.
+- La auditoría del árbol de dependencias informa 22 avisos (7 moderados y 15 altos) en Expo/React Native y sus dependencias; se documentan en la guía móvil. No se aplica una corrección forzada incompatible.
+- Metro arranca para Expo Go. No hay Xcode ni emulador Android instalados en este entorno y todavía no se ha ejecutado esta app en un móvil: Araceli ofrece probar ambos sistemas. Exportar no acredita un recorrido nativo ni genera un IPA/APK de distribución. No se publica en App Store ni Google Play.
+
+El recorrido privado (sesión, pedidos, favoritos y Team), la prueba física y el asistente IA quedan pendientes. Véase [guía móvil](../mobile/README.md).

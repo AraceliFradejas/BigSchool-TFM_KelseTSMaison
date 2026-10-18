@@ -1,0 +1,640 @@
+import { useEffect, useRef, useState } from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  BackHandler,
+  FlatList,
+  Image,
+  Platform,
+  Pressable,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Brand from './Brand';
+import { api, addToBag, imageUrl, money, resolveBag, restoreBag } from './model';
+
+const BAG_KEY = '@kelsets-maison/bag/v1';
+const words = {
+  es: {
+    demo: 'Boutique de demostración · Sin cobros reales',
+    catalogue: 'Boutique',
+    bag: 'Bolsa',
+    title: 'Tu estilo, tu historia.',
+    search: 'Buscar una pieza',
+    all: 'Todo',
+    fashion: 'Moda',
+    accessories: 'Accesorios',
+    beauty: 'Belleza',
+    empty: 'No hay piezas con estos filtros.',
+    retry: 'Reintentar',
+    loading: 'Cargando…',
+    network: 'No podemos conectar con Maison. Revisa la conexión y vuelve a intentarlo.',
+    back: 'Volver',
+    choose: 'Elige tu variante',
+    sold: 'Agotado',
+    available: 'unidades disponibles',
+    add: 'Añadir a la bolsa',
+    added: 'Añadido a tu bolsa',
+    stock: 'La cantidad supera las existencias disponibles.',
+    unavailable: 'Esta pieza ya no está disponible.',
+    total: 'Total de demostración',
+    remove: 'Quitar',
+    update: 'Actualizar precios y existencias',
+    emptyBag: 'Tu bolsa espera una historia.',
+    bagNotice:
+      'Los precios y existencias se consultan de nuevo al abrir la bolsa. Los pedidos desde la app estarán disponibles en una próxima etapa.',
+    invalid: 'Revisa esta pieza: ya no está disponible en esa cantidad.',
+    storage: 'No hemos podido guardar la bolsa en este dispositivo.',
+    previous: 'Anterior',
+    next: 'Siguiente',
+    pieces: 'piezas',
+    page: 'Página',
+    select: 'Selecciona una variante para continuar.',
+    detail: 'Pieza ficticia. No se realizan ventas ni envíos.',
+    close: 'Aceptar',
+  },
+  en: {
+    demo: 'Demonstration boutique · No real payments',
+    catalogue: 'Boutique',
+    bag: 'Bag',
+    title: 'Your style, your story.',
+    search: 'Find a piece',
+    all: 'All',
+    fashion: 'Fashion',
+    accessories: 'Accessories',
+    beauty: 'Beauty',
+    empty: 'No pieces match these filters.',
+    retry: 'Try again',
+    loading: 'Loading…',
+    network: 'We cannot connect to Maison. Check your connection and try again.',
+    back: 'Back',
+    choose: 'Choose your variant',
+    sold: 'Sold out',
+    available: 'units available',
+    add: 'Add to bag',
+    added: 'Added to your bag',
+    stock: 'The quantity exceeds the available stock.',
+    unavailable: 'This piece is no longer available.',
+    total: 'Demonstration total',
+    remove: 'Remove',
+    update: 'Refresh prices and availability',
+    emptyBag: 'Your bag is waiting for a story.',
+    bagNotice:
+      'Prices and availability are refreshed when you open your bag. Ordering in the app will be available in a future stage.',
+    invalid: 'Review this piece: this quantity is no longer available.',
+    storage: 'We could not save your bag on this device.',
+    previous: 'Previous',
+    next: 'Next',
+    pieces: 'pieces',
+    page: 'Page',
+    select: 'Choose a variant to continue.',
+    detail: 'A fictional piece. No real sales or shipping.',
+    close: 'OK',
+  },
+};
+function Button({ children, onPress, disabled, secondary, selected, ...props }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{
+        disabled: Boolean(disabled),
+        ...(selected === undefined ? {} : { selected }),
+      }}
+      disabled={disabled}
+      onPress={onPress}
+      style={({ pressed }) => [
+        s.button,
+        secondary && s.secondary,
+        selected && s.selected,
+        (disabled || pressed) && s.dim,
+      ]}
+      {...props}
+    >
+      <Text style={[s.buttonText, secondary && s.secondaryText]}>{children}</Text>
+    </Pressable>
+  );
+}
+function Photo({ product, language, large = false }) {
+  const [failed, setFailed] = useState(false);
+  const uri = imageUrl(product?.image);
+  return uri && !failed ? (
+    <Image
+      key={uri}
+      accessibilityLabel={product.name[language]}
+      source={{ uri }}
+      onError={() => setFailed(true)}
+      resizeMode="cover"
+      style={large ? s.largePhoto : s.photo}
+    />
+  ) : (
+    <View style={large ? s.largePhoto : s.photo}>
+      <Text>{product?.name[language]}</Text>
+    </View>
+  );
+}
+function useRemote(path) {
+  const [state, setState] = useState({ loading: true });
+  const [version, setVersion] = useState(0);
+  useEffect(() => {
+    const controller = new AbortController();
+    setState({ loading: true });
+    api
+      .request(path, { signal: controller.signal })
+      .then((data) => {
+        if (!controller.signal.aborted) setState({ data, loading: false });
+      })
+      .catch((error) => {
+        if (!controller.signal.aborted) setState({ error, loading: false });
+      });
+    return () => controller.abort();
+  }, [path, version]);
+  return { ...state, reload: () => setVersion((n) => n + 1) };
+}
+function Resource({ resource, t, children }) {
+  if (resource.loading)
+    return (
+      <View style={s.message}>
+        <ActivityIndicator color="#b3152b" />
+        <Text accessibilityLiveRegion="polite">{t.loading}</Text>
+      </View>
+    );
+  if (resource.error)
+    return (
+      <View style={s.message}>
+        <Text accessibilityRole="alert">
+          {resource.error.status === 404 ? t.unavailable : t.network}
+        </Text>
+        <Button onPress={resource.reload}>{t.retry}</Button>
+      </View>
+    );
+  return children;
+}
+function Catalogue({ language, t, open }) {
+  const [query, setQuery] = useState('');
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('');
+  const [page, setPage] = useState(1);
+  const resource = useRemote(
+    `/products?q=${encodeURIComponent(search)}&page=${page}${category ? `&category=${category}` : ''}`,
+  );
+  const list = useRef(null);
+  function changePage(value) {
+    setPage(value);
+    list.current?.scrollToOffset({ offset: 0, animated: false });
+  }
+  return (
+    <View style={s.flex}>
+      <View style={s.intro}>
+        <Text style={s.title}>{t.title}</Text>
+        <View style={s.searchRow}>
+          <TextInput
+            accessibilityLabel={t.search}
+            placeholder={t.search}
+            value={query}
+            onChangeText={setQuery}
+            maxLength={120}
+            onSubmitEditing={() => {
+              setSearch(query.trim());
+              changePage(1);
+            }}
+            returnKeyType="search"
+            style={s.input}
+          />
+          <Button
+            onPress={() => {
+              setSearch(query.trim());
+              changePage(1);
+            }}
+          >
+            {t.search}
+          </Button>
+        </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={s.chips}
+        >
+          {['', 'fashion', 'accessories', 'beauty'].map((value) => (
+            <Button
+              key={value}
+              secondary
+              selected={category === value}
+              onPress={() => {
+                setCategory(value);
+                changePage(1);
+              }}
+            >
+              {value ? t[value] : t.all}
+            </Button>
+          ))}
+        </ScrollView>
+      </View>
+      <Resource resource={resource} t={t}>
+        <FlatList
+          ref={list}
+          data={resource.data?.items || []}
+          numColumns={2}
+          keyExtractor={(p) => p.id}
+          contentContainerStyle={s.grid}
+          columnWrapperStyle={s.gridRow}
+          refreshing={false}
+          onRefresh={resource.reload}
+          ListEmptyComponent={<Text style={s.message}>{t.empty}</Text>}
+          renderItem={({ item }) => (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={item.name[language]}
+              onPress={() => open(item.id)}
+              style={s.card}
+            >
+              <Photo product={item} language={language} />
+              <Text style={s.category}>{t[item.category]}</Text>
+              <Text style={s.name}>{item.name[language]}</Text>
+              <Text style={s.price}>
+                {money(Math.min(...item.variants.map((v) => v.priceCents)), language)}
+              </Text>
+            </Pressable>
+          )}
+          ListFooterComponent={
+            <View style={s.pagination}>
+              <Text>
+                {resource.data?.total} {t.pieces} · {t.page} {resource.data?.page}
+              </Text>
+              <View style={s.row}>
+                <Button secondary disabled={page <= 1} onPress={() => changePage(page - 1)}>
+                  {t.previous}
+                </Button>
+                <Button
+                  secondary
+                  disabled={
+                    !resource.data ||
+                    resource.data.page * resource.data.pageSize >= resource.data.total
+                  }
+                  onPress={() => changePage(page + 1)}
+                >
+                  {t.next}
+                </Button>
+              </View>
+            </View>
+          }
+        />
+      </Resource>
+    </View>
+  );
+}
+function Detail({ id, language, t, add, back }) {
+  const resource = useRemote(`/products/${encodeURIComponent(id)}`);
+  const [selected, setSelected] = useState(null);
+  const product = resource.data;
+  const variant = product?.variants.find((v) => v.id === selected);
+  return (
+    <ScrollView
+      contentContainerStyle={s.content}
+      refreshControl={<RefreshControl refreshing={false} onRefresh={resource.reload} />}
+    >
+      <Button secondary onPress={back}>
+        ← {t.back}
+      </Button>
+      <Resource resource={resource} t={t}>
+        {product && (
+          <>
+            <Photo key={product.image} product={product} language={language} large />
+            <Text style={s.title}>{product.name[language]}</Text>
+            <Text style={s.price}>
+              {money(
+                variant?.priceCents ?? Math.min(...product.variants.map((v) => v.priceCents)),
+                language,
+              )}
+            </Text>
+            <Text style={s.body}>{product.description[language]}</Text>
+            <Text style={s.section}>{t.choose}</Text>
+            {product.variants.map((v) => (
+              <Button
+                key={v.id}
+                secondary
+                selected={selected === v.id}
+                disabled={v.stock <= 0}
+                onPress={() => setSelected(v.id)}
+              >
+                {v.label[language]}
+                {v.stock <= 0 ? ` · ${t.sold}` : ''}
+              </Button>
+            ))}
+            <Text accessibilityLiveRegion="polite" style={s.body}>
+              {variant ? `${variant.stock} ${t.available}` : t.select}
+            </Text>
+            <Button
+              disabled={!variant || variant.stock <= 0}
+              onPress={() => add(product, variant.id)}
+            >
+              {t.add}
+            </Button>
+            <Text style={s.notice}>{t.detail}</Text>
+          </>
+        )}
+      </Resource>
+    </ScrollView>
+  );
+}
+function Bag({ lines, change, language, t, open }) {
+  const [state, setState] = useState({ loading: true });
+  const [version, setVersion] = useState(0);
+  useEffect(() => {
+    const controller = new AbortController();
+    setState({ loading: true });
+    Promise.all(
+      [...new Set(lines.map((line) => line.productId))].map((id) =>
+        api
+          .request(`/products/${encodeURIComponent(id)}`, { signal: controller.signal })
+          .catch((e) => {
+            if (e.status === 404) return null;
+            throw e;
+          }),
+      ),
+    )
+      .then((products) => {
+        if (!controller.signal.aborted)
+          setState({ data: resolveBag(lines, products), loading: false });
+      })
+      .catch((error) => {
+        if (!controller.signal.aborted) setState({ error, loading: false });
+      });
+    return () => controller.abort();
+  }, [lines, version]);
+  const reload = () => setVersion((v) => v + 1);
+  const allValid = state.data?.every((row) => row.valid);
+  return (
+    <ScrollView contentContainerStyle={s.content}>
+      <Text style={s.title}>{t.bag}</Text>
+      <Text style={s.notice}>{t.bagNotice}</Text>
+      <Resource resource={{ ...state, reload }} t={t}>
+        {!lines.length && <Text style={s.body}>{t.emptyBag}</Text>}
+        {state.data?.map((line) => (
+          <View key={line.variantId} style={s.bagLine}>
+            {line.product && (
+              <Pressable accessibilityRole="button" onPress={() => open(line.productId)}>
+                <Text style={s.name}>{line.product.name[language]}</Text>
+              </Pressable>
+            )}
+            <Text>
+              {line.variant?.label[language] || line.variantId} · × {line.quantity}
+            </Text>
+            {line.variant && <Text style={s.price}>{money(line.totalCents, language)}</Text>}
+            {!line.valid && <Text style={s.error}>{t.invalid}</Text>}
+            <View style={s.row}>
+              <Button
+                secondary
+                disabled={line.quantity <= 1}
+                accessibilityLabel={language === 'es' ? 'Reducir cantidad' : 'Decrease quantity'}
+                onPress={() =>
+                  change(
+                    lines.map((l) =>
+                      l.variantId === line.variantId ? { ...l, quantity: l.quantity - 1 } : l,
+                    ),
+                  )
+                }
+              >
+                −
+              </Button>
+              <Button
+                secondary
+                disabled={!line.variant || line.quantity >= Math.min(10, line.variant.stock)}
+                accessibilityLabel={language === 'es' ? 'Aumentar cantidad' : 'Increase quantity'}
+                onPress={() =>
+                  change(
+                    lines.map((l) =>
+                      l.variantId === line.variantId ? { ...l, quantity: l.quantity + 1 } : l,
+                    ),
+                  )
+                }
+              >
+                +
+              </Button>
+              <Button
+                secondary
+                onPress={() => change(lines.filter((l) => l.variantId !== line.variantId))}
+              >
+                {t.remove}
+              </Button>
+            </View>
+          </View>
+        ))}
+        {Boolean(lines.length) && (
+          <>
+            <Text style={s.section}>
+              {t.total}:{' '}
+              {allValid
+                ? money(state.data?.reduce((sum, line) => sum + line.totalCents, 0) || 0, language)
+                : '—'}
+            </Text>
+            <Button secondary onPress={reload}>
+              {t.update}
+            </Button>
+          </>
+        )}
+      </Resource>
+    </ScrollView>
+  );
+}
+export default function App() {
+  const [language, setLanguage] = useState('es');
+  const t = words[language];
+  const [route, setRoute] = useState({ screen: 'catalogue' });
+  const [lines, setLines] = useState([]);
+  const [ready, setReady] = useState(false);
+  const [storageError, setStorageError] = useState(false);
+  const writes = useRef(Promise.resolve());
+  useEffect(() => {
+    let mounted = true;
+    AsyncStorage.getItem(BAG_KEY)
+      .then((value) => {
+        if (mounted) {
+          setLines(restoreBag(value));
+          setReady(true);
+        }
+      })
+      .catch(() => {
+        if (mounted) {
+          setStorageError(true);
+          setReady(true);
+        }
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+  useEffect(() => {
+    const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (route.screen === 'catalogue') return false;
+      setRoute({ screen: route.from || 'catalogue' });
+      return true;
+    });
+    return () => sub.remove();
+  }, [route]);
+  function change(next) {
+    setLines(next);
+    writes.current = writes.current
+      .catch(() => {})
+      .then(() => AsyncStorage.setItem(BAG_KEY, JSON.stringify(next)))
+      .then(() => setStorageError(false))
+      .catch(() => setStorageError(true));
+  }
+  function add(product, variantId) {
+    try {
+      change(addToBag(lines, product, variantId));
+      Alert.alert(t.added, '', [{ text: t.close }]);
+    } catch (e) {
+      Alert.alert(t.stock);
+    }
+  }
+  const open = (id) =>
+    setRoute({ screen: 'detail', id, from: route.screen === 'bag' ? 'bag' : 'catalogue' });
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView style={s.app}>
+        <StatusBar style="dark" />
+        <Text style={s.banner}>{t.demo}</Text>
+        <View style={s.header}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t.catalogue}
+            onPress={() => setRoute({ screen: 'catalogue' })}
+          >
+            <Brand />
+          </Pressable>
+          <Button
+            secondary
+            accessibilityLabel={language === 'es' ? 'Switch to English' : 'Cambiar a castellano'}
+            onPress={() => setLanguage((l) => (l === 'es' ? 'en' : 'es'))}
+          >
+            {language.toUpperCase()} / {language === 'es' ? 'EN' : 'ES'}
+          </Button>
+        </View>
+        {storageError && (
+          <Text accessibilityRole="alert" style={s.error}>
+            {t.storage}
+          </Text>
+        )}
+        {!ready ? (
+          <ActivityIndicator color="#b3152b" />
+        ) : route.screen === 'detail' ? (
+          <Detail
+            key={route.id}
+            id={route.id}
+            language={language}
+            t={t}
+            add={add}
+            back={() => setRoute({ screen: route.from })}
+          />
+        ) : route.screen === 'bag' ? (
+          <Bag lines={lines} change={change} language={language} t={t} open={open} />
+        ) : (
+          <Catalogue language={language} t={t} open={open} />
+        )}
+        <View style={s.tabs}>
+          <Button
+            secondary
+            selected={route.screen === 'catalogue'}
+            onPress={() => setRoute({ screen: 'catalogue' })}
+          >
+            {t.catalogue}
+          </Button>
+          <Button
+            secondary
+            selected={route.screen === 'bag'}
+            onPress={() => setRoute({ screen: 'bag' })}
+          >
+            {t.bag} ({lines.reduce((sum, line) => sum + line.quantity, 0)})
+          </Button>
+        </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
+  );
+}
+const s = StyleSheet.create({
+  app: { flex: 1, backgroundColor: '#f6f4ee' },
+  flex: { flex: 1 },
+  banner: {
+    backgroundColor: '#b3152b',
+    color: '#fff',
+    textAlign: 'center',
+    padding: 9,
+    fontSize: 11,
+  },
+  header: {
+    paddingHorizontal: 18,
+    paddingVertical: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderColor: '#d9d4ca',
+  },
+  title: {
+    fontFamily: Platform.OS === 'ios' ? 'Georgia' : 'serif',
+    color: '#242320',
+    fontSize: 30,
+    marginVertical: 12,
+  },
+  intro: { paddingHorizontal: 16, paddingTop: 4 },
+  searchRow: { gap: 8 },
+  input: {
+    borderWidth: 1,
+    borderColor: '#b8b2a7',
+    padding: 12,
+    color: '#242320',
+    backgroundColor: '#fff',
+    minHeight: 48,
+  },
+  chips: { gap: 8, paddingVertical: 12 },
+  button: {
+    backgroundColor: '#242320',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    minHeight: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: { color: '#fff', fontSize: 14 },
+  secondary: { borderWidth: 1, borderColor: '#cfc8bc', backgroundColor: '#f6f4ee' },
+  secondaryText: { color: '#242320' },
+  selected: { borderColor: '#b3152b', borderWidth: 2 },
+  dim: { opacity: 0.45 },
+  grid: { padding: 16, paddingTop: 4 },
+  gridRow: { gap: 12 },
+  card: { flex: 1, maxWidth: '50%', marginBottom: 22 },
+  photo: { width: '100%', aspectRatio: 0.8, backgroundColor: '#ebe6dc' },
+  largePhoto: { width: '100%', aspectRatio: 0.8, backgroundColor: '#ebe6dc' },
+  category: { color: '#6c665e', fontSize: 10, textTransform: 'uppercase', marginTop: 10 },
+  name: { color: '#242320', fontSize: 15, marginVertical: 6 },
+  price: { color: '#242320', fontSize: 15, fontWeight: '600', marginBottom: 8 },
+  body: { color: '#514c45', fontSize: 16, lineHeight: 25 },
+  section: { fontSize: 19, color: '#242320', marginVertical: 10 },
+  notice: {
+    fontSize: 13,
+    lineHeight: 21,
+    color: '#6c665e',
+    backgroundColor: '#eee9df',
+    padding: 14,
+  },
+  content: { padding: 18, gap: 12 },
+  message: { padding: 24, gap: 14 },
+  error: { color: '#b3152b', padding: 12 },
+  row: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
+  pagination: { paddingVertical: 16, gap: 14, alignItems: 'center' },
+  bagLine: { paddingVertical: 16, gap: 8, borderBottomWidth: 1, borderColor: '#d9d4ca' },
+  tabs: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    borderTopWidth: 1,
+    borderColor: '#d9d4ca',
+    padding: 12,
+  },
+});

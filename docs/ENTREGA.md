@@ -31,7 +31,7 @@ Fuente académica: `Documentacion-TFM.pdf`, conservado como referencia privada. 
 3. Comprobar iPhone, iPad y Android; revisar teclado y lector de pantalla.
 4. Completar la auditoría de teclado y lector de pantalla. El 17 de octubre se revisaron el foco entre páginas, filtros, salto al contenido y cierre del menú con Escape; se corrigieron los problemas encontrados. Alta desde el formulario, acceso, redirección y recuperación de conexión comprobados en una base temporal aislada el 17 de octubre. Creación de producto bilingüe y subida de imagen desde Team comprobadas en una copia local aislada el 12 de octubre.
 5. Preparar slides y demostración sobre la versión desplegada; actualizar memoria y evidencias.
-6. Incorporar la app nativa y el asistente de IA de outfits solicitados por Araceli el 18 de octubre. Empezar por conectar y verificar los servicios compartidos; concretar después la implementación y el acceso del evaluador. Ninguna de las dos ampliaciones está implementada todavía.
+6. Incorporar la app nativa y el asistente de IA de outfits solicitados por Araceli el 18 de octubre. Empezar por conectar y verificar los servicios compartidos; concretar después la implementación y el acceso del evaluador. La app comienza con catálogo, variantes y bolsa local en Expo; prueba física y recorrido privado pendientes. El asistente de IA sigue pendiente.
 
 ## Calendario orientativo
 
@@ -78,7 +78,7 @@ Este guion no sustituye las slides exigidas para la entrega.
 
 ## App y asistente de outfits · objetivos confirmados el 18 de octubre
 
-Araceli quiere ambas ampliaciones: una app nativa y un asistente de IA para outfits. No se consideran terminadas por disponer de web responsive o del selector editorial actual. La app reutilizará la API y los contratos de Maison; Expo/React Native es una opción a evaluar. El asistente deberá consultar el catálogo real, respetar variantes, presupuesto y stock, y conservar el modo editorial si el proveedor falla. No creará pedidos ni cambiará la bolsa sin una acción explícita. El proveedor y el modelo aún no están elegidos; no hay claves ni consumo de IA configurados. La distribución nativa y el acceso para evaluación siguen por concretar.
+Araceli quiere ambas ampliaciones: una app nativa y un asistente de IA para outfits. No se consideran terminadas por disponer de web responsive o del selector editorial actual. La app reutilizará la API y los contratos de Maison. Se inicia con Expo/React Native para catálogo, variantes y bolsa local; ejecución física y recorrido privado pendientes. El asistente deberá consultar el catálogo real, respetar variantes, presupuesto y stock, y conservar el modo editorial si el proveedor falla. No creará pedidos ni cambiará la bolsa sin una acción explícita. El proveedor y el modelo aún no están elegidos; no hay claves ni consumo de IA configurados. La distribución nativa y el acceso para evaluación siguen por concretar.
 
 ## Publicación y Team · 18 de octubre de 2026
 
@@ -88,4 +88,11 @@ Araceli quiere ambas ampliaciones: una app nativa y un asistente de IA para outf
 - Revisadas portada y catálogo publicados en Chrome de escritorio. No equivale a validar todo el recorrido privado desde navegador ni a dispositivos físicos.
 - API redesplegada automáticamente desde `86c7d82`, con CI correcto. Comprobadas continuidad de la misma cuenta y sesión Team y conservación del catálogo; cierre de esa sesión y nuevo chequeo público correctos. Falta comprobar específicamente un pedido y una imagen durante otro redeploy, además de la restauración de backups.
 - Editor de Team y subida desde Chrome publicados comprobados: creación bilingüe de pieza archivada, imagen desde el selector, guardado, búsqueda, reapertura y cambios de precio/stock. Datos temporales retirados; se conserva la sesión de Araceli y el catálogo original.
-- Siguiente bloque: compra e historial completos desde navegador y evidencias, comprobaciones restantes de persistencia; después continuar con las ampliaciones solicitadas. Mailtrap queda para más adelante.
+- Compra e historial desde navegador y 19 capturas completados; se conserva un pedido cancelado de demostración. Siguen pendientes las comprobaciones restantes de persistencia y backups, y las ampliaciones solicitadas. Mailtrap queda para más adelante.
+
+
+## Inicio de app nativa · 18 de octubre de 2026
+
+Araceli elige comenzar por la app y ofrece probar en iPhone y Android. Se añade `mobile/` con Expo SDK 57 y React Native: catálogo paginado con búsqueda/categorías, ficha con variantes y bolsa local ES/EN. Reutiliza el cliente HTTP y las reglas de cantidades de la web. No se integra aún acceso, pedidos ni Team.
+
+Exportación de paquetes iOS/Android correcta y Expo Doctor 21/21. Web y API mantienen sus verificaciones. El siguiente paso es la prueba física con Expo Go y el registro de sus resultados; después, sesión y recorrido privado. No se presenta el empaquetado como una ejecución física ni una publicación en tiendas. Instrucciones y limitaciones en [app móvil](../mobile/README.md).

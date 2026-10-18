@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "KelseTS Maison",
+    "slug": "kelsets-maison",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kelsets.maison"
+    },
+    "android": {
+      "package": "com.kelsets.maison"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "backgroundColor": "#f6f4ee"
+  }
+}

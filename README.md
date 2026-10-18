@@ -34,7 +34,7 @@ Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS 
 - Gestionar productos, textos ES/EN, imágenes, variantes y stock desde Team; buscar por nombre o identificador, filtrar visibles y archivados y avanzar o cancelar pedidos según las transiciones permitidas.
 - Cambiar entre castellano e inglés conservando la ruta y la bolsa.
 
-«Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. Está identificado como **modo editorial, sin IA**. Maison Stylist con un proveedor de IA y la app nativa siguen siendo ampliaciones por evaluar.
+«Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. Está identificado como **modo editorial, sin IA**. Maison Stylist con un proveedor de IA sigue pendiente. La [app nativa](mobile/README.md) tiene una primera etapa con catálogo, variantes y bolsa local; su prueba en dispositivos físicos y el recorrido privado siguen pendientes.
 
 ### Estructura y tecnologías
 
@@ -313,3 +313,13 @@ Existing local databases can run `npm run media:migrate` for individual runway p
 Para actualizar los 51 nombres de producto anteriores a la selección musical: `npm run catalog:names:migrate`. Conserva cada traducción personalizada por Team, identificadores, precios, existencias y pedidos históricos. Las instalaciones nuevas incluyen los nombres musicales; las 139 piezas de pasarela mantienen sus títulos de canciones.
 
 Run `npm run catalog:names:migrate` to update the 51 earlier product names to the musical selection. It preserves each custom Team translation, IDs, prices, stock and historical orders. New installations include the musical names; the 139 runway pieces keep their song titles.
+
+
+### App móvil · primera etapa
+
+La carpeta `mobile/` incorpora React Native y Expo: catálogo, búsqueda y categorías, fichas ES/EN, variantes y bolsa local conectados a la API publicada. Arranca con `npm run mobile` y abre el QR en Expo Go. Véanse [instalación y prueba en iPhone y Android](mobile/README.md). Exportación de iOS/Android y configuración verificadas; ejecución física, acceso y pedidos nativos pendientes.
+
+
+### Native app · first stage
+
+`mobile/` contains an Expo/React Native app with bilingual catalogue, search, categories, product variants and a local bag using the published HTTPS API. Run `npm run mobile` and scan the QR with Expo Go. iOS/Android bundles and Expo configuration have been checked; physical-device testing, authentication and ordering remain pending. See the [mobile guide](mobile/README.md).

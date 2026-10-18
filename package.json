@@ -6,7 +6,8 @@
   "workspaces": [
     "backend",
     "frontend",
-    "packages/*"
+    "packages/*",
+    "mobile"
   ],
   "engines": {
     "node": ">=22.13.0"
@@ -15,7 +16,7 @@
     "dev": "node scripts/dev.mjs",
     "build": "npm run build -w frontend",
     "start": "npm start -w backend",
-    "test": "npm test -w backend && npm test -w packages/api-client && node --test frontend/test/*.test.js",
+    "test": "npm test -w backend && npm test -w packages/api-client && node --test frontend/test/*.test.js && node --test mobile/test/*.test.js",
     "seed": "npm run seed -w backend",
     "team:grant": "node --env-file-if-exists=backend/.env backend/scripts/grant-team.js",
     "team:create": "node --env-file-if-exists=backend/.env backend/scripts/create-team.js",
@@ -26,7 +27,9 @@
     "catalog:names:migrate": "node --env-file-if-exists=backend/.env backend/scripts/migrate-song-product-names.js",
     "check:production": "node scripts/check-production-build.mjs",
     "check:deployment": "node scripts/check-deployment.mjs",
-    "seed:mongo": "node --env-file-if-exists=backend/.env backend/scripts/seed-mongo.js"
+    "seed:mongo": "node --env-file-if-exists=backend/.env backend/scripts/seed-mongo.js",
+    "mobile": "npm run start -w @maison/mobile",
+    "mobile:export": "npm run export -w @maison/mobile"
   },
   "devDependencies": {
     "prettier": "^3.9.10"

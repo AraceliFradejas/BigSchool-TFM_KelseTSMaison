@@ -1,0 +1,50 @@
+# KelseTS Maison · app móvil
+
+Primera etapa nativa con React Native y Expo SDK 57, independiente de la web y conectada a su API HTTPS. Incluye catálogo paginado, búsqueda, categorías, ficha bilingüe con variantes, disponibilidad y bolsa local. Los componentes son nativos; no se utiliza un WebView.
+
+## Arranque
+
+Desde la raíz del repositorio, con Node 22.13 o posterior:
+
+```sh
+npm ci
+npm run mobile
+```
+
+Instala Expo Go desde App Store o Google Play. Conecta móvil y ordenador a la misma Wi-Fi. En iPhone, escanea el QR de la terminal con Cámara; en Android, desde Expo Go. El ordenador y Metro deben permanecer encendidos. La dirección local cambia al cambiar de red; usa siempre el QR de la ejecución actual. No hace falta una clave de Atlas, Cloudinary ni una cuenta de pago de Expo.
+
+Se elige SDK 57 porque la [guía oficial de Expo](https://docs.expo.dev/get-started/create-a-project/) lo indica para Expo Go en dispositivos físicos durante la transición a SDK 58 (consulta del 18 de octubre de 2026). Las dependencias están fijadas en el lockfile. La configuración de Metro sigue la [guía oficial de monorepos](https://docs.expo.dev/guides/monorepos/).
+
+## Configuración
+
+La API predeterminada es `https://kelsets-maison.vercel.app/api/v1`. Para otro despliegue propio, copia `mobile/.env.example` a `mobile/.env` y cambia solo `EXPO_PUBLIC_API_URL` por su URL HTTPS terminada en `/api/v1`; reinicia Metro. Este valor es público y se incluye en el paquete. No pongas aquí contraseñas ni claves. La app no accede directamente a MongoDB ni Cloudinary.
+
+La bolsa guarda únicamente identificadores y cantidades en AsyncStorage. Al abrirla se consulta la API para recuperar precios y existencias; una pieza retirada o sin stock suficiente queda señalada y el total se oculta hasta corregirla. La bolsa del móvil es independiente de la del navegador. No reserva stock y no puede crear pedidos en esta etapa. Las reglas para añadir cantidades se comparten con la web mediante `@maison/contracts/cart-selection`.
+
+## Comprobaciones
+
+```sh
+npm test
+npm run mobile:export
+cd mobile
+npx expo-doctor
+```
+
+Exportación de los paquetes de iOS y Android correcta y 21/21 comprobaciones de Expo Doctor correctas. Esto comprueba el empaquetado y la configuración, no una ejecución en un teléfono ni un IPA/APK instalable. No se ha generado un binario de distribución ni publicado en tiendas. `mobile/dist/` queda fuera de Git.
+
+Prueba pendiente con Araceli en **iPhone y Android**:
+
+1. Abrir el QR, comprobar logo, imágenes, scroll y zonas seguras.
+2. Buscar una pieza, cambiar categoría y pasar de página.
+3. Abrir ficha, comprobar que una variante agotada está desactivada y añadir otra disponible.
+4. Abrir bolsa, cambiar cantidades, actualizar disponibilidad y retirar una línea.
+5. Cambiar ES/EN y comprobar nombres, variantes e importes.
+6. Cerrar y volver a abrir la app; comprobar que la bolsa se conserva.
+7. Desconectar la red, comprobar el error y reintentar al recuperar conexión.
+8. En Android, comprobar el botón Atrás en ficha y bolsa; registrar modelo y versión del sistema junto con las capturas.
+
+## Límites de esta etapa
+
+Acceso, registro, favoritos, pedidos, historial, Team y asistente de IA todavía no están integrados en la app. El siguiente bloque deberá comprobar la sesión nativa contra la API antes de añadir el recorrido privado. No se guardan credenciales ni se trasladan las cookies del navegador.
+
+La revisión inicial de `npm audit --omit=dev` señala 22 avisos en el árbol Expo/React Native (7 moderados, 15 altos), con avisos base en braces, node-forge y uuid y propagación al resto del árbol. La corrección automática propone versiones mayores incompatibles o retrocesos de SDK: no se aplica `--force`. Debe revisarse la ruta de actualización compatible antes de preparar una distribución. No equivale a afirmar que cada aviso afecte al código empaquetado de la app.
