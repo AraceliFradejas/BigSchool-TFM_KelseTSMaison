@@ -1,6 +1,6 @@
 # Despliegue de Maison · Vercel, MongoDB y Cloudinary
 
-Maison está publicada en [https://kelsets-maison.vercel.app](https://kelsets-maison.vercel.app), con [API propia](https://kelsets-maison-api.vercel.app/api/v1/health), siguiendo el patrón revisado de Cars: dos proyectos Vercel, MongoDB para datos y Cloudinary para las subidas. El 18 de octubre se verifican por HTTPS rutas públicas, recursos, permisos y el recorrido HTTP de Team, imagen y pedido de demostración con datos temporales. La revisión de interfaz privada en navegador y dispositivos físicos sigue pendiente.
+Maison está publicada en [https://kelsets-maison.vercel.app](https://kelsets-maison.vercel.app), con [API propia](https://kelsets-maison-api.vercel.app/api/v1/health), siguiendo el patrón revisado de Cars: dos proyectos Vercel, MongoDB para datos y Cloudinary para las subidas. El 18 de octubre se verifican por HTTPS rutas públicas, recursos, permisos y el recorrido HTTP de Team, imagen y pedido de demostración con datos temporales. También se comprueban en Chrome de escritorio creación y edición bilingüe desde Team y subida de una imagen temporal. La compra e historial completos desde navegador y las pruebas en dispositivos físicos siguen pendientes.
 
 ## Configuración preparada
 

@@ -1,5 +1,15 @@
 # Validación de la primera versión de Maison
 
+### Editor y subida desde Team publicado · 18 de octubre de 2026
+
+- Araceli confirma que accede sin error con su nueva contraseña. Después se revisa la sesión ya abierta en Chrome de escritorio sobre la web publicada, sin volver a introducir credenciales ni cerrar su sesión.
+- Desde «Nuevo producto» se crea `ui-daylight-20261018`, «Vestido · Daylight (prueba)», con nombre, descripción y etiqueta de variante ES/EN, colección Golden Hour, precio de 125 € y dos unidades. Se conserva archivado durante toda la prueba para no aparecer en el catálogo público.
+- Imagen WebP sintética propia de 600 × 750, seleccionada desde el diálogo de archivos de Team. Subida completada, ruta `/api/v1/images/…` asignada y miniatura visible. Lectura por HTTPS y decodificación WebP comprobadas contra el servicio real.
+- Guardado y búsqueda por identificador desde Team correctos. Reapertura del editor: textos ES/EN, imagen, precio y stock conservados. Se edita a 130 € y 23 unidades, se guarda y se comprueba la revisión 2 y esos valores en Atlas y en el listado de Team.
+- Se retiran únicamente esa pieza, su variante, la referencia de imagen y el recurso temporal de Cloudinary. Quedan los 190 productos originales. La lectura de la misma URL puede conservar la respuesta anterior por su caché de cinco minutos; la retirada no implica invalidación instantánea de copias cacheadas. Las peticiones nuevas con una URL sin caché devuelven 404 tanto en API como en web. Al recargar Team se conserva la sesión y el listado muestra 190 piezas.
+- No se modifican artículos originales ni se crean pedidos en esta revisión. No acredita todavía compra e historial completos desde navegador, dispositivo físico ni persistencia de imagen/pedido durante un redeploy. No hay cambios de código; la comprobación se añade a la documentación.
+
+
 ### Continuidad después de redesplegar la API · 18 de octubre de 2026
 
 - Segundo avance publicado: `86c7d82`, «Publica Maison en Vercel y verifica el recorrido real de Team». [GitHub Actions, ejecución 17](https://github.com/AraceliFradejas/BigSchool-TFM_KelseTSMaison/actions/runs/39135881861), completada correctamente.

@@ -73,7 +73,7 @@ Este guion no sustituye las slides exigidas para la entrega.
 - Se conserva SQLite para demostración local. `seed:mongo` inserta el catálogo ficticio sin trasladar automáticamente cuentas, pedidos o personalizaciones de la instalación local.
 - Añadido `check:deployment` para la futura URL, de solo lectura. Verificación con MongoDB temporal y dobles de Cloudinary; los resultados y límites están en `docs/VALIDACION.md`.
 - Atlas propio conectado y semilla cargada: 190 productos, 996 variantes, 16 colecciones y 57 looks; repetición sin duplicados. No se han creado cuentas ni pedidos en Atlas.
-- Cloudinary propio conectado: subida autenticada, lectura y decodificación de una imagen WebP temporal comprobadas; imagen eliminada al terminar. Sigue pendiente el recorrido de subida desde Team.
+- Cloudinary propio conectado: subida autenticada, lectura y decodificación de una imagen WebP temporal comprobadas; imagen eliminada al terminar. El recorrido posterior de subida desde Team en navegador se completa en la revisión descrita más abajo.
 - Próximo paso: preparar los dos proyectos de Vercel, ajustar el destino real del proxy y verificar publicación, sesión, imágenes y conservación de datos tras redeploy. El recorrido real con cuentas y pedidos sobre Atlas sigue pendiente.
 
 ## App y asistente de outfits · objetivos confirmados el 18 de octubre
@@ -87,4 +87,5 @@ Araceli quiere ambas ampliaciones: una app nativa y un asistente de IA para outf
 - Chequeo público de solo lectura correcto. Recorrido HTTP real por la web HTTPS: acceso Team, flags de cookie segura, subida/lectura de imagen, creación/edición de pieza temporal, favorito, pedido de demostración, copia histórica de nombre/precio, confirmación, cancelación y devolución de stock. Cierre de sesión y retirada de todos los datos temporales; se conserva la cuenta permanente.
 - Revisadas portada y catálogo publicados en Chrome de escritorio. No equivale a validar todo el recorrido privado desde navegador ni a dispositivos físicos.
 - API redesplegada automáticamente desde `86c7d82`, con CI correcto. Comprobadas continuidad de la misma cuenta y sesión Team y conservación del catálogo; cierre de esa sesión y nuevo chequeo público correctos. Falta comprobar específicamente un pedido y una imagen durante otro redeploy, además de la restauración de backups.
-- Siguiente bloque: recorrido privado en navegador y evidencias, comprobaciones restantes de persistencia; después continuar con las ampliaciones solicitadas. Mailtrap queda para más adelante.
+- Editor de Team y subida desde Chrome publicados comprobados: creación bilingüe de pieza archivada, imagen desde el selector, guardado, búsqueda, reapertura y cambios de precio/stock. Datos temporales retirados; se conserva la sesión de Araceli y el catálogo original.
+- Siguiente bloque: compra e historial completos desde navegador y evidencias, comprobaciones restantes de persistencia; después continuar con las ampliaciones solicitadas. Mailtrap queda para más adelante.
