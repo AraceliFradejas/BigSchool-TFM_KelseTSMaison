@@ -4,7 +4,7 @@ import { formatMoney } from '@maison/contracts/money';
 import { money } from '../../mobile/src/model.js';
 import { products } from '../../data/catalog.js';
 const normalize = (value) => value.replace(/\u00a0|\u202f/g, ' ');
-test('Spanish euro amounts always group four digits and larger totals on web and mobile', () => {
+test('European euro amounts in both languages always group thousands on web and mobile', () => {
   for (const [cents, expected] of [
     [0, '0,00 €'],
     [9500, '95,00 €'],
@@ -17,8 +17,10 @@ test('Spanish euro amounts always group four digits and larger totals on web and
   ]) {
     assert.equal(normalize(formatMoney(cents, 'es')), expected);
     assert.equal(normalize(money(cents, 'es')), expected);
+    assert.equal(normalize(formatMoney(cents, 'en')), expected);
+    assert.equal(normalize(money(cents, 'en')), expected);
   }
-  assert.equal(formatMoney(185000, 'en'), '€1,850.00');
+  assert.equal(normalize(formatMoney(185000, 'en')), '1.850,00 €');
 });
 test('every seeded catalogue variant follows the Spanish thousands and decimal convention', () => {
   const variants = products.flatMap((p) => p.variants);

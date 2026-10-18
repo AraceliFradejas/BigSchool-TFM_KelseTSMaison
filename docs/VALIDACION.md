@@ -346,3 +346,8 @@ Araceli confirma después que Android vuelve a cargar tras el reinicio con cach�
 Araceli detecta `1850,00` en la app y solicita `1.850,00`. La web ya utilizaba agrupación forzada; el formateador móvil omitía esa opción. Se unifica web y app en `@maison/contracts/money`, con agrupación siempre y dos decimales. Se aplica a precios de catálogo/ficha, filtros de presupuesto, líneas y totales de bolsa, outfits, historial, detalle y Team mediante los componentes existentes. Los campos HTML numéricos conservan el valor editable sin separadores y muestran al lado su lectura monetaria formateada en el editor de Team y en el presupuesto editorial. No cambian céntimos almacenados ni precios históricos.
 
 Dos pruebas comprueban el caso de cuatro cifras, límites desde cero hasta millones, inglés y las 996 variantes de la semilla; las nueve pruebas de bolsa/modelo/formato pasan. Build web, chequeo local de producción y exportación iOS/Android correctos. El bundle de desarrollo Android responde HTTP 200 como JavaScript con el nuevo módulo compartido. Revisión visual del formato en los teléfonos pendiente.
+
+
+### Formato europeo en ambos idiomas
+
+Araceli aclara que el formato requerido es europeo también al navegar en inglés. Se elimina la selección de locale por idioma del formateador compartido: ES y EN muestran siempre `1.850,00 €`, con punto de miles, coma decimal y dos decimales. Las pruebas de límites se aplican ahora a ambos idiomas tanto en web como en el adaptador móvil. La comprobación anterior de formato anglosajón queda sustituida por este criterio.

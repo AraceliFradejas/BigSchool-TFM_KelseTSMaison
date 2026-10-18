@@ -1,7 +1,7 @@
-// The same currency presentation for web, native app, filters and order totals.
+// European currency presentation in BOTH interface languages, on web and native.
 // es-ES otherwise omits the separator for four-digit amounts by default.
-export function formatMoney(cents, language = 'es') {
-  return new Intl.NumberFormat(language === 'es' ? 'es-ES' : 'en-IE', {
+export function formatMoney(cents) {
+  return new Intl.NumberFormat('es-ES', {
     style: 'currency',
     currency: 'EUR',
     useGrouping: 'always',

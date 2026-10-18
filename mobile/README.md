@@ -70,4 +70,4 @@ Se prepara además el arranque estático de una futura app independiente mediant
 Comprobado: exportación iOS/Android, configuración Expo Doctor 21/21 y cuatro pruebas del modelo móvil. Araceli confirma que la entrada corregida funciona en iPhone e iPad. Android comunica un error durante la actualización en caliente: se reinicia Metro con caché limpia y se comprueban los bundles de desarrollo de ambas plataformas. Araceli confirma después que Android vuelve a cargar. El recorrido completo de outfits sigue pendiente de confirmar.
 
 
-Los importes usan el mismo formateador compartido que la web: en castellano, `1.850,00 €`, `10.000,00 €` y separación de todos los grupos de miles; en inglés, `€1,850.00`. Esta presentación no modifica los valores en céntimos.
+Los importes usan el mismo formateador compartido que la web: en castellano y en inglés, `1.850,00 €`, `10.000,00 €`, siempre con punto de miles y coma decimal. Esta presentación no modifica los valores en céntimos.
