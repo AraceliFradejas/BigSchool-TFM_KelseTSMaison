@@ -1,5 +1,27 @@
 # Validación de la primera versión de Maison
 
+### Conexión real con Cloudinary · 18 de octubre de 2026
+
+- Comprobadas las credenciales guardadas por Araceli en `backend/.env`, sin mostrarlas. Subida autenticada mediante `createCloudinaryStorage` de una imagen WebP ficticia de 16 × 16 píxeles con identificador aleatorio dentro de la carpeta configurada de Maison.
+- Lectura real mediante `fetchCloudinaryImage`, con destino restringido y timeout; Sharp confirma WebP y dimensiones 16 × 16. Eliminación de la imagen temporal completada al finalizar.
+- No se han cambiado imágenes de catálogo, cuentas, pedidos ni datos de Cars. `backend/.env` continúa ignorado por Git. Esta prueba acredita el adaptador contra Cloudinary real; no equivale a una subida desde la interfaz de Team ni a una prueba del proxy publicado en Vercel.
+
+### Conexión y catálogo en Atlas · 18 de octubre de 2026
+
+- Comprobadas las credenciales guardadas por Araceli en `backend/.env` sin mostrarlas: conexión y `ping` correctos, topología compatible con transacciones y base inicialmente vacía. La conexión necesitó acceso de red fuera del sandbox.
+- Carga en la base propia `kelsets_maison`: 190 productos, 996 variantes, 16 colecciones y 57 looks. Una segunda ejecución inserta cero productos; no duplica el catálogo. La base conserva cero usuarios y cero pedidos: no se han trasladado cuentas, sesiones ni pedidos locales o de Cars.
+- Ajustado `seed:mongo` para que la carga de MongoDB no dependa de tener Cloudinary configurado. Comprobación de sintaxis y `git diff --check` correctos.
+- Cloudinary todavía tiene sus tres campos de credenciales vacíos en esta comprobación. No se acredita subida externa, recorrido con sesión en Atlas ni despliegue Vercel. Las comprobaciones previas descritas debajo conservan su alcance temporal.
+
+### Adaptación a Vercel, MongoDB y Cloudinary · 18 de octubre de 2026
+
+- Revisados conexión, configuraciones Vercel y controladores de subida/entrega de imágenes de Cars, sin abrir su `.env`, copiar secretos ni modificar el proyecto.
+- `npm test`: 53 pruebas correctas (44 backend contando subpruebas, 6 cliente HTTP y 3 bolsa). Las 42 pruebas anteriores siguen pasando. Los casos nuevos usan MongoDB 8.0.16 temporal en replica set, sin Atlas: catálogo y semilla idempotente, sesión, favoritos, privacidad, pedidos simultáneos con la misma clave, competencia por la última unidad, rollback de varias piezas, revisión de Team, variantes reservadas, copia histórica y cancelación concurrente con una sola devolución de stock.
+- Subida y entrega de WebP probadas con MongoDB temporal y dobles de Cloudinary. Se comprueban destino restringido a Maison, rechazo de formatos ajenos y límite de bytes de entrega. No se ha realizado una subida al servicio Cloudinary real.
+- `npm run build` y `npm run check:production`: correctos. El chequeo utiliza SQLite temporal y el build real; también verifica cinco rutas SPA, tres recursos, cabeceras, healthcheck, catálogo, imagen, protección de pedidos y Team y 404 de recurso ausente. No acredita despliegue remoto.
+- La ejecución necesitó permiso para puertos locales y descarga del binario de pruebas. Se preparan dos configuraciones Vercel; el empaquetado remoto, Atlas, Cloudinary real, cookies tras el proxy publicado y persistencia tras redeploy siguen pendientes. No se ha desplegado ni contratado ningún servicio.
+- Creados `backend/.env.example` sin secretos y `backend/.env` con campos privados vacíos, ignorado por Git y permisos 0600. No se han probado aún credenciales reales.
+
 Comprobaciones ejecutadas el **11 de octubre de 2026**, en macOS ARM64 con **Node.js 22.23.2** y **npm 10.9.8**. El resultado corresponde a la versión local; no acredita un despliegue público ni pruebas en dispositivos reales.
 
 ## Pruebas automatizadas

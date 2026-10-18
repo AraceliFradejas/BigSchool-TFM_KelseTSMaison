@@ -1,14 +1,13 @@
 import { Router } from 'express';
 import { z } from 'zod';
-import { existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import path from 'node:path';
+import { validateProductImage } from './media.js';
 import { productSchema, stylistSchema, catalogQuerySchema, variantSize } from '@maison/contracts';
 import { HttpError, parse, send } from '../http.js';
 import { transaction } from '../db.js';
 import { requireUser, requireTeam } from './auth.js';
 
 export function getProduct(db, id) {
+  if (db.kind === 'mongo') return db.getProduct(id);
   const row = db.prepare('SELECT data, revision FROM products WHERE id=?').get(id);
   if (!row) return null;
   return {
@@ -26,6 +25,7 @@ export function getProduct(db, id) {
   };
 }
 export function allProducts(db, includeInactive = false) {
+  if (db.kind === 'mongo') return db.allProducts(includeInactive);
   return db
     .prepare('SELECT id FROM products ORDER BY rowid')
     .all()
@@ -33,6 +33,7 @@ export function allProducts(db, includeInactive = false) {
     .filter((item) => includeInactive || item.active);
 }
 export function getLooks(db) {
+  if (db.kind === 'mongo') return db.getLooks();
   return db
     .prepare('SELECT data FROM looks ORDER BY rowid')
     .all()
@@ -46,17 +47,19 @@ export function getLooks(db) {
 }
 export function catalogRouter(db) {
   const router = Router();
-  router.get('/collections', (req, res) =>
+  router.get('/collections', async (req, res) =>
     send(
       res,
-      db
-        .prepare('SELECT data FROM collections ORDER BY rowid')
-        .all()
-        .map((row) => JSON.parse(row.data)),
+      db.kind === 'mongo'
+        ? await db.getCollections()
+        : db
+            .prepare('SELECT data FROM collections ORDER BY rowid')
+            .all()
+            .map((row) => JSON.parse(row.data)),
     ),
   );
-  router.get('/products', (req, res) => {
-    let items = allProducts(db);
+  router.get('/products', async (req, res) => {
+    let items = await allProducts(db);
     const {
       q = '',
       category,
@@ -113,15 +116,15 @@ export function catalogRouter(db) {
       pageSize,
     });
   });
-  router.get('/products/:id', (req, res) => {
-    const product = getProduct(db, req.params.id);
+  router.get('/products/:id', async (req, res) => {
+    const product = await getProduct(db, req.params.id);
     if (!product?.active) throw new HttpError(404, 'not_found');
     send(res, product);
   });
-  router.get('/looks', (req, res) => send(res, getLooks(db)));
-  router.post('/stylist', (req, res) => {
+  router.get('/looks', async (req, res) => send(res, await getLooks(db)));
+  router.post('/stylist', async (req, res) => {
     const preferences = parse(stylistSchema, req.body);
-    const results = getLooks(db)
+    const results = (await getLooks(db))
       .filter((look) => look.complete)
       .map((look) => {
         const products = look.products.filter(
@@ -159,26 +162,31 @@ export function catalogRouter(db) {
       .slice(0, 3);
     send(res, { mode: 'editorial', looks: results, preferences });
   });
-  router.get('/favorites', requireUser, (req, res) =>
+  router.get('/favorites', requireUser, async (req, res) =>
     send(
       res,
-      db
-        .prepare('SELECT product_id FROM favorites WHERE user_id=?')
-        .all(req.user.id)
-        .map((row) => getProduct(db, row.product_id))
-        .filter((item) => item?.active),
+      db.kind === 'mongo'
+        ? await db.getFavorites(req.user.id)
+        : db
+            .prepare('SELECT product_id FROM favorites WHERE user_id=?')
+            .all(req.user.id)
+            .map((row) => getProduct(db, row.product_id))
+            .filter((item) => item?.active),
     ),
   );
-  router.put('/favorites/:id', requireUser, (req, res) => {
-    if (!getProduct(db, req.params.id)?.active) throw new HttpError(404, 'not_found');
-    db.prepare('INSERT OR IGNORE INTO favorites VALUES (?,?)').run(req.user.id, req.params.id);
+  router.put('/favorites/:id', requireUser, async (req, res) => {
+    if (!(await getProduct(db, req.params.id))?.active) throw new HttpError(404, 'not_found');
+    if (db.kind === 'mongo') await db.setFavorite(req.user.id, req.params.id, true);
+    else db.prepare('INSERT OR IGNORE INTO favorites VALUES (?,?)').run(req.user.id, req.params.id);
     send(res, null);
   });
-  router.delete('/favorites/:id', requireUser, (req, res) => {
-    db.prepare('DELETE FROM favorites WHERE user_id=? AND product_id=?').run(
-      req.user.id,
-      req.params.id,
-    );
+  router.delete('/favorites/:id', requireUser, async (req, res) => {
+    if (db.kind === 'mongo') await db.setFavorite(req.user.id, req.params.id, false);
+    else
+      db.prepare('DELETE FROM favorites WHERE user_id=? AND product_id=?').run(
+        req.user.id,
+        req.params.id,
+      );
     send(res, null);
   });
   return router;
@@ -186,16 +194,13 @@ export function catalogRouter(db) {
 export function teamCatalogRouter(db, config) {
   const router = Router();
   router.use(requireTeam);
-  router.get('/products', (req, res) => send(res, allProducts(db, true)));
-  function save(input, create, revision) {
+  router.get('/products', async (req, res) => send(res, await allProducts(db, true)));
+  async function save(input, create, revision) {
+    const candidate = parse(productSchema, input);
+    await validateProductImage(candidate.image, config, db);
+    if (db.kind === 'mongo') return db.saveProduct(candidate, create, revision);
     return transaction(db, () => {
       const product = parse(productSchema, input);
-      const imageDirectory = product.image.startsWith('/uploads/')
-        ? config.uploadDir
-        : config.mediaDir ||
-          fileURLToPath(new URL('../../../frontend/public/media', import.meta.url));
-      if (!existsSync(path.join(imageDirectory, path.basename(product.image))))
-        throw new HttpError(400, 'invalid_image');
       if (!db.prepare('SELECT id FROM collections WHERE id=?').get(product.collectionId))
         throw new HttpError(400, 'invalid_collection');
       const existing = getProduct(db, product.id);
@@ -239,14 +244,14 @@ export function teamCatalogRouter(db, config) {
       return getProduct(db, product.id);
     });
   }
-  router.post('/products', (req, res) => send(res, save(req.body, true), 201));
-  router.put('/products/:id', (req, res) => {
+  router.post('/products', async (req, res) => send(res, await save(req.body, true), 201));
+  router.put('/products/:id', async (req, res) => {
     const input = parse(
       z.object({ product: productSchema, revision: z.number().int().min(1) }).strict(),
       req.body,
     );
     if (input.product.id !== req.params.id) throw new HttpError(400, 'invalid_input');
-    send(res, save(input.product, false, input.revision));
+    send(res, await save(input.product, false, input.revision));
   });
   return router;
 }

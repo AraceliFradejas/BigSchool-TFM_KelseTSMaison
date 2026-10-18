@@ -15,6 +15,7 @@ WORKDIR /app
 ENV NODE_ENV=production HOST=0.0.0.0 PORT=3000
 COPY --from=build /app/node_modules node_modules
 COPY --from=build /app/frontend/dist frontend/dist
+COPY --from=build /app/frontend/src/shared/catalog-images.json frontend/src/shared/catalog-images.json
 COPY package.json package-lock.json ./
 COPY backend backend
 COPY packages packages

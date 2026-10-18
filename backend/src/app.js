@@ -8,9 +8,9 @@ import { send, HttpError } from './http.js';
 import { authRouter, sessionMiddleware } from './modules/auth.js';
 import { catalogRouter, teamCatalogRouter } from './modules/catalog.js';
 import { ordersRouter, teamOrdersRouter } from './modules/orders.js';
-import { mediaRouter } from './modules/media.js';
+import { mediaRouter, imageDeliveryRouter } from './modules/media.js';
 
-export function createApp({ db, config, limits = true }) {
+export function createApp({ db, config, limits = true, cloudStorage, imageFetch }) {
   const app = express();
   app.disable('x-powered-by');
   if (config.trustProxy) app.set('trust proxy', 1);
@@ -57,22 +57,29 @@ export function createApp({ db, config, limits = true }) {
       : pass;
   app.use('/api', limiter(300, 60 * 1000), sessionMiddleware(db));
   app.get('/api/v1/health', (req, res) =>
-    send(res, { name: 'KelseTS Maison', mode: 'demo', database: 'sqlite' }),
+    send(res, {
+      name: 'KelseTS Maison',
+      mode: 'demo',
+      database: db.kind === 'mongo' ? 'mongodb' : 'sqlite',
+    }),
   );
+  if (config.mediaStorage === 'cloudinary')
+    app.use('/api/v1', imageDeliveryRouter(db, config, imageFetch));
   app.use('/api/v1/auth', authRouter(db, config, limiter(20, 15 * 60 * 1000)));
   app.use('/api/v1', catalogRouter(db), ordersRouter(db));
   app.use(
     '/api/v1/team',
     teamCatalogRouter(db, config),
     teamOrdersRouter(db),
-    mediaRouter(config.uploadDir),
+    mediaRouter(config.uploadDir, { db, config, cloudStorage }),
   );
   app.use('/api', (req, res, next) => next(new HttpError(404, 'not_found')));
-  app.use(
-    '/uploads',
-    express.static(config.uploadDir, { dotfiles: 'deny', index: false, maxAge: '1d' }),
-  );
-  if (existsSync(path.join(config.frontendDir, 'index.html'))) {
+  if (!config.serverless)
+    app.use(
+      '/uploads',
+      express.static(config.uploadDir, { dotfiles: 'deny', index: false, maxAge: '1d' }),
+    );
+  if (!config.serverless && existsSync(path.join(config.frontendDir, 'index.html'))) {
     app.use(express.static(config.frontendDir, { index: false }));
     app.get('/{*path}', (req, res, next) => {
       if (path.extname(req.path) || req.path.startsWith('/uploads/'))

@@ -23,7 +23,9 @@
     "prices:migrate": "node --env-file-if-exists=backend/.env backend/scripts/migrate-catalog-prices.js",
     "runway:names:migrate": "node --env-file-if-exists=backend/.env backend/scripts/migrate-runway-names.js",
     "catalog:names:migrate": "node --env-file-if-exists=backend/.env backend/scripts/migrate-song-product-names.js",
-    "check:production": "node scripts/check-production-build.mjs"
+    "check:production": "node scripts/check-production-build.mjs",
+    "check:deployment": "node scripts/check-deployment.mjs",
+    "seed:mongo": "node --env-file-if-exists=backend/.env backend/scripts/seed-mongo.js"
   },
   "devDependencies": {
     "prettier": "^3.9.10"

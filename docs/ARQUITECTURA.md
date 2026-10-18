@@ -1,12 +1,12 @@
 # Arquitectura y reglas de KelseTS Maison
 
-La primera versión es una web React con una API Express y una base SQLite independiente. Los cambios de stock, pedidos y comunicaciones comparten una transacción. El objetivo es conservar un recorrido de demostración consistente incluso cuando se repite una petición o cambia el catálogo.
+Maison tiene una web React y una API Express. El destino elegido es Vercel con MongoDB y Cloudinary propios, siguiendo el patrón de Cars. SQLite permanece como modo local independiente. La integración externa y la publicación siguen pendientes; MongoDB se ha comprobado con un replica set temporal. Los cambios de stock, pedidos y comunicaciones comparten una transacción. El objetivo es conservar un recorrido de demostración consistente incluso cuando se repite una petición o cambia el catálogo.
 
 ## Recorrido de datos
 
 ```mermaid
 flowchart LR
-  Seed[Catálogo ficticio ES/EN] --> DB[(SQLite Maison)]
+  Seed[Catálogo ficticio ES/EN] --> DB[(MongoDB Maison / SQLite local)]
   Browser[React y bolsa local] --> Client[Cliente HTTP]
   Client --> API[API Express]
   API --> Schemas[Validación Zod]
@@ -14,12 +14,13 @@ flowchart LR
   DB --> API
   API --> Browser
   Team[Team] --> API
-  API --> Media[Imágenes WebP propias]
+  API --> Media[Cloudinary: subidas WebP]
+  Browser --> Static[Estáticos Vercel: catálogo y vídeo]
 ```
 
 ## Modelos
 
-| Tabla       | Responsabilidad                                                                  |
+| Modelo      | Responsabilidad                                                                  |
 | ----------- | -------------------------------------------------------------------------------- |
 | users       | Perfil, correo normalizado, hash de contraseña y rol                             |
 | sessions    | Hash del token de sesión, cuenta y caducidad                                     |
@@ -31,14 +32,14 @@ flowchart LR
 | orders      | Cliente, clave de idempotencia, huella de líneas, copia de datos, total y estado |
 | messages    | Destinatario, pedido, textos ES/EN y fecha                                       |
 
-Los datos editoriales se almacenan como JSON y las existencias tienen columnas numéricas propias. La base activa claves foráneas, WAL y un tiempo de espera de bloqueo. La semilla inserta solo registros ausentes; no reinicia los datos gestionados.
+MongoDB guarda documentos nativos, con variantes separadas, índices únicos para identificadores, correo, favoritos y clave de pedido por cuenta, y caducidad TTL de sesiones; además comprueba la fecha al consultar sesión. SQLite almacena los datos editoriales como JSON y las existencias en columnas numéricas, con claves foráneas, WAL y tiempo de espera de bloqueo. La semilla inserta solo registros ausentes; no reinicia los datos gestionados.
 
 ## Creación del pedido
 
 1. Comprobar sesión y validar el cuerpo. No se aceptan precios del cliente, variantes repetidas ni cantidades fuera de 1–10.
-2. Abrir `BEGIN IMMEDIATE`.
+2. Abrir una transacción MongoDB con sesión, lectura snapshot y escritura majority; el modo SQLite usa `BEGIN IMMEDIATE`.
 3. Buscar un pedido de esa cuenta con la misma clave. Si sus líneas coinciden, devolverlo; si no, responder conflicto.
-4. Leer cada variante y comprobar que su producto siga activo. Descontar con `UPDATE ... WHERE stock >= quantity` y actualizar la revisión del producto.
+4. Leer cada variante y comprobar que su producto siga activo. Descontar con una actualización condicionada a `stock >= quantity` y actualizar la revisión del producto.
 5. Copiar nombres, imagen, variante y precio; calcular subtotales y total en céntimos.
 6. Insertar el pedido y su mensaje. Confirmar el conjunto o revertirlo si falla cualquier paso.
 
@@ -64,7 +65,7 @@ stateDiagram-v2
 
 La ficha devuelve una revisión. El editor la envía junto con el producto completo; la API rechaza una revisión desactualizada. Tanto una edición como un pedido o una cancelación incrementan ese número. Esto evita que una pantalla antigua reponga sin querer unidades vendidas después de abrirla.
 
-Crear y editar productos exige textos ES/EN, una colección existente, variantes con identificadores únicos y una imagen local. Ocultar un producto conserva sus datos y las copias de los pedidos anteriores.
+Crear y editar productos exige textos ES/EN, una colección existente, variantes con identificadores únicos y una imagen del catálogo o una subida registrada por Maison. Ocultar un producto conserva sus datos y las copias de los pedidos anteriores.
 
 ## Acceso y privacidad
 
@@ -78,9 +79,9 @@ Crear y editar productos exige textos ES/EN, una colección existente, variantes
 
 ## Imágenes
 
-Team puede subir JPG, PNG o WebP de hasta 5 MB. Se comprueba la firma y se decodifica con Sharp, con un límite de veinte millones de píxeles. La imagen se orienta, limita a 1600 × 2000 y convierte a WebP; no se conservan metadatos EXIF. El nombre es aleatorio y se guarda en un directorio propio ignorado por Git. No se admiten SVG subidos por usuarios.
+Team puede subir JPG, PNG o WebP de hasta 4 MiB, dejando margen para multipart en Vercel. Se comprueba la firma y se decodifica con Sharp, con un límite de veinte millones de píxeles. La imagen se orienta, limita a 1600 × 2000 y convierte a WebP; no se conservan metadatos EXIF. El nombre es aleatorio. En modo Cloudinary se guarda bajo `kelsets-maison/team` y MongoDB conserva su identificador; en modo local se guarda en un directorio ignorado por Git. No se admiten SVG subidos por usuarios.
 
-La semilla utiliza SVG originales y controlados desde el repositorio. Los archivos subidos que no se asignen a productos no tienen todavía una limpieza automática; su mantenimiento es una tarea pendiente.
+La semilla utiliza WebP propios y conserva los SVG anteriores para referencias históricas. Los estáticos de catálogo y vídeo se publican desde la web. Las subidas Cloudinary se entregan por `/api/v1/images/:id.webp`, construyendo un destino fijo y restringido; la API verifica formato, tamaño y timeout. Si falla el registro de una nueva subida, se intenta retirarla de Cloudinary. Las imágenes anteriores no se eliminan al editar porque pueden estar en pedidos históricos. Los archivos subidos que no se asignen a productos no tienen todavía una limpieza automática; su mantenimiento es una tarea pendiente.
 
 ## Combinaciones editoriales
 
@@ -90,9 +91,11 @@ La respuesta identifica `mode: editorial`. No existe una integración de IA en e
 
 ## Límites de esta versión
 
+En MongoDB, `withTransaction` permite reintentar conflictos transitorios; la unicidad del pedido por cuenta resuelve duplicados concurrentes. MongoDB requiere replica set o Atlas. La semilla es explícita, no se ejecuta en cada cold start. La conexión se reutiliza por instancia y vuelve a intentarse tras un fallo inicial. El limitador en memoria no es distribuido entre funciones. No se han medido carga ni escalado en Vercel.
+
 La API síncrona de SQLite encaja con una demostración pequeña y una sola instancia. No se han medido concurrencia de varios procesos ni cargas grandes. El almacenamiento exige disco persistente y copias coherentes de SQLite; copiar solo el archivo principal durante una escritura en WAL no basta.
 
-No hay recuperación de contraseña, verificación de correo, pagos, envíos reales, impuestos desglosados ni tarifas de transporte. El pedido usa únicamente precios ficticios finales. Tampoco hay correo externo, Cloudinary, integración de IA ni app nativa.
+No hay recuperación de contraseña, verificación de correo, pagos, envíos reales, impuestos desglosados ni tarifas de transporte. El pedido usa únicamente precios ficticios finales. Tampoco hay correo externo, integración de IA ni app nativa. Cloudinary está integrado en código y probado con dobles; su conexión real sigue pendiente.
 
 ## Referencias técnicas
 

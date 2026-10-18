@@ -72,6 +72,11 @@ function Editor({ initial, onClose, onSaved }) {
   async function upload(event) {
     const file = event.target.files[0];
     if (!file) return;
+    if (file.size > 4 * 1024 * 1024) {
+      setError(errorText({ code: 'file_too_large' }));
+      event.target.value = '';
+      return;
+    }
     setUploading(true);
     setError('');
     try {

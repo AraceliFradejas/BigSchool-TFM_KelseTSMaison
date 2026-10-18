@@ -47,7 +47,11 @@ export const productSchema = z
       .strict(),
     category: z.enum(categories),
     collectionId: text,
-    image: z.string().regex(/^\/(?:media|uploads)\/[a-zA-Z0-9._-]+\.(?:svg|jpg|jpeg|png|webp)$/),
+    image: z
+      .string()
+      .regex(
+        /^(?:\/(?:media|uploads)\/[a-zA-Z0-9._-]+\.(?:svg|jpg|jpeg|png|webp)|\/api\/v1\/images\/[a-f0-9-]{36}\.webp)$/,
+      ),
     active: z.boolean(),
     tags: z.array(z.string().regex(/^[a-z-]{1,40}$/)).max(20),
     variants: z.array(variantSchema).min(1).max(30),

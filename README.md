@@ -38,7 +38,7 @@ Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS 
 
 ### Estructura y tecnologías
 
-La web utiliza React, React Router, Vite y CSS. La API utiliza Node.js, Express, Zod, cookies de sesión y SQLite mediante `node:sqlite`. Sharp valida y optimiza las imágenes subidas desde Team. Los esquemas y las reglas de pedidos están en un paquete compartido; las peticiones pasan por un cliente HTTP independiente de React.
+La web utiliza React, React Router, Vite y CSS. La API utiliza Node.js, Express, Zod y cookies de sesión. La publicación se prepara con MongoDB y Cloudinary siguiendo el patrón de Cars; SQLite mediante `node:sqlite` conserva el modo local sin servicios externos. Sharp valida y optimiza las imágenes subidas desde Team. Los esquemas y las reglas de pedidos están en un paquete compartido; las peticiones pasan por un cliente HTTP independiente de React.
 
 ```text
 backend/
@@ -60,7 +60,7 @@ docs/                # Arquitectura, recursos, validación y entrega
 scripts/             # Arranque, recursos y migración de imágenes
 ```
 
-La base local permite probar Maison sin cuentas de servicios externos. Es independiente de Cars y no contiene sus usuarios, datos ni credenciales. En Node 22, `node:sqlite` muestra un aviso de funcionalidad experimental; el entorno comprobado está recogido en [Validación](docs/VALIDACION.md).
+La instalación descrita utiliza SQLite y almacenamiento local. Para MongoDB y Cloudinary, configura los servicios propios y ejecuta `npm run seed:mongo` siguiendo [Despliegue](docs/DESPLIEGUE.md). La base local permite probar Maison sin cuentas de servicios externos. Es independiente de Cars y no contiene sus usuarios, datos ni credenciales. En Node 22, `node:sqlite` muestra un aviso de funcionalidad experimental; el entorno comprobado está recogido en [Validación](docs/VALIDACION.md).
 
 ### Instalación local
 
@@ -128,7 +128,7 @@ Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos du
 
 ### Despliegue y entrega
 
-No hay todavía un despliegue público de Maison. Esta versión necesita **un servidor Node con disco persistente**, HTTPS y una única instancia de escritura. El [documento de despliegue](docs/DESPLIEGUE.md) describe la configuración y la alternativa de migrar la persistencia a un servicio alojado. El Dockerfile es una preparación pendiente de comprobar en Docker.
+No hay todavía un despliegue público de Maison. El destino elegido es **Vercel, con MongoDB y Cloudinary propios**, siguiendo el patrón de Cars: web y API separadas y proxy de `/api`. La configuración y la integración están preparadas en código; la conexión real a los servicios y la publicación siguen pendientes. El [documento de despliegue](docs/DESPLIEGUE.md) explica variables, semilla y verificaciones. Cuando exista una URL, `npm run check:deployment -- https://dominio-maison` permitirá comprobarla sin crear datos. El Dockerfile conserva la alternativa local con SQLite, pendiente de probar en Docker.
 
 La entrega del TFM reunirá código, README, acceso a la aplicación y slides. El [seguimiento de entrega](docs/ENTREGA.md) distingue lo realizado de lo pendiente; la presentación final no está generada todavía.
 
@@ -185,7 +185,7 @@ After the AFM Moda Oceánica landing page and the full stack journey of KelseTS 
 
 ### Structure and technologies
 
-The web uses React, React Router, Vite and CSS. The API uses Node.js, Express, Zod, session cookies and SQLite through `node:sqlite`. Sharp validates and optimises Team image uploads. Schemas and order rules live in a shared package; requests use an HTTP client independent of React.
+The web uses React, React Router, Vite and CSS. The API uses Node.js, Express, Zod and session cookies. Deployment is being prepared with MongoDB and Cloudinary following the Cars pattern; SQLite through `node:sqlite` retains the local mode without external services. Sharp validates and optimises Team image uploads. Schemas and order rules live in a shared package; requests use an HTTP client independent of React.
 
 ```text
 backend/
@@ -207,7 +207,7 @@ docs/                # Architecture, resources, validation and delivery
 scripts/             # Startup, assets and image migration
 ```
 
-The local database lets you try Maison without external service accounts. It is independent of Cars and contains none of its users, data or credentials. On Node 22, `node:sqlite` emits an experimental-feature warning; the checked environment is recorded in [Validation](docs/VALIDACION.md).
+The installation above uses SQLite and local storage. For MongoDB and Cloudinary, configure Maison services and run `npm run seed:mongo` following [Deployment](docs/DESPLIEGUE.md). The local database lets you try Maison without external service accounts. It is independent of Cars and contains none of its users, data or credentials. On Node 22, `node:sqlite` emits an experimental-feature warning; the checked environment is recorded in [Validation](docs/VALIDACION.md).
 
 ### Local installation
 
@@ -275,7 +275,7 @@ Priority tests cover permissions, privacy, stock, totals, duplicate orders, stat
 
 ### Deployment and delivery
 
-Maison has no public deployment yet. This version needs **a Node server with persistent disk**, HTTPS and a single writing instance. The [deployment document](docs/DESPLIEGUE.md) describes configuration and the alternative of migrating persistence to a hosted service. The Dockerfile is preparatory and has not been checked in Docker.
+Maison has no public deployment yet. The selected target is **Vercel with Maison's own MongoDB and Cloudinary services**, following the Cars pattern: separate web and API projects with an `/api` proxy. Configuration and integration code are prepared; live service connections and publication are still pending. The [deployment document](docs/DESPLIEGUE.md) covers variables, seeding and checks. Once a URL exists, `npm run check:deployment -- https://your-maison-host` can check it without creating data. The Dockerfile retains the local SQLite alternative, still untested in Docker.
 
 The final project will include code, README, application access and slides. [Delivery tracking](docs/ENTREGA.md) separates completed work from pending work; the final presentation has not been generated yet.
 

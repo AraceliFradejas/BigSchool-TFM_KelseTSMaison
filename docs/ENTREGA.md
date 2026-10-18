@@ -27,11 +27,11 @@ Fuente académica: `Documentacion-TFM.pdf`, conservado como referencia privada. 
 ## Cierre pendiente
 
 1. Completar los detalles editoriales que surjan de la revisión a resolución completa y de las pruebas de dispositivo. El 17 de octubre se revisaron las 190 imágenes en láminas de contacto y se comprobaron fichas de muestra con los nombres musicales; la pasarela ilustrada de 90 segundos ya está aceptada.
-2. Elegir persistencia y alojamiento, desplegar y repetir las pruebas en ese entorno. El 17 de octubre se verificó en local el build con configuración de producción y la restauración independiente de datos ficticios; no acredita despliegue público ni Docker.
+2. Configurar Vercel, MongoDB y Cloudinary propios, desplegar y repetir las pruebas en ese entorno. El 17 de octubre se verificó en local el build con configuración de producción y la restauración independiente de datos ficticios; no acredita despliegue público ni Docker.
 3. Comprobar iPhone, iPad y Android; revisar teclado y lector de pantalla.
 4. Completar la auditoría de teclado y lector de pantalla. El 17 de octubre se revisaron el foco entre páginas, filtros, salto al contenido y cierre del menú con Escape; se corrigieron los problemas encontrados. Alta desde el formulario, acceso, redirección y recuperación de conexión comprobados en una base temporal aislada el 17 de octubre. Creación de producto bilingüe y subida de imagen desde Team comprobadas en una copia local aislada el 12 de octubre.
 5. Preparar slides y demostración sobre la versión desplegada; actualizar memoria y evidencias.
-6. Elegir como máximo una ampliación inicial, IA o app, después de medir el tiempo restante.
+6. Incorporar la app nativa y el asistente de IA de outfits solicitados por Araceli el 18 de octubre. Empezar por conectar y verificar los servicios compartidos; concretar después la implementación y el acceso del evaluador. Ninguna de las dos ampliaciones está implementada todavía.
 
 ## Calendario orientativo
 
@@ -65,3 +65,17 @@ Este guion no sustituye las slides exigidas para la entrega.
 - Próximo paso: elegir alojamiento y persistencia propios de Maison, concretar configuración, desplegar y validar HTTPS, reinicio y conservación de datos. No hay alojamiento contratado ni publicación pública realizada.
 - También quedan dispositivos físicos, lector de pantalla, auditoría completa de accesibilidad, slides y revisión final de memoria y evidencias. No se ha activado IA ni creado app nativa.
 - Para retomar: leer este cierre y `docs/DESPLIEGUE.md`; consultar `docs/VALIDACION.md` para distinguir lo comprobado de lo pendiente.
+
+## Continuación · 18 de octubre de 2026
+
+- Destino elegido por Araceli: Vercel, MongoDB y Cloudinary, siguiendo Cars. Retirada la propuesta de Render. No se han contratado servicios ni publicado Maison.
+- Revisadas las configuraciones, conexión y entrega de imágenes de Cars, sin leer secretos ni modificar ese proyecto. Preparadas API y web separadas, persistencia MongoDB con transacciones y subida/entrega Cloudinary.
+- Se conserva SQLite para demostración local. `seed:mongo` inserta el catálogo ficticio sin trasladar automáticamente cuentas, pedidos o personalizaciones de la instalación local.
+- Añadido `check:deployment` para la futura URL, de solo lectura. Verificación con MongoDB temporal y dobles de Cloudinary; los resultados y límites están en `docs/VALIDACION.md`.
+- Atlas propio conectado y semilla cargada: 190 productos, 996 variantes, 16 colecciones y 57 looks; repetición sin duplicados. No se han creado cuentas ni pedidos en Atlas.
+- Cloudinary propio conectado: subida autenticada, lectura y decodificación de una imagen WebP temporal comprobadas; imagen eliminada al terminar. Sigue pendiente el recorrido de subida desde Team.
+- Próximo paso: preparar los dos proyectos de Vercel, ajustar el destino real del proxy y verificar publicación, sesión, imágenes y conservación de datos tras redeploy. El recorrido real con cuentas y pedidos sobre Atlas sigue pendiente.
+
+## App y asistente de outfits · objetivos confirmados el 18 de octubre
+
+Araceli quiere ambas ampliaciones: una app nativa y un asistente de IA para outfits. No se consideran terminadas por disponer de web responsive o del selector editorial actual. La app reutilizará la API y los contratos de Maison; Expo/React Native es una opción a evaluar. El asistente deberá consultar el catálogo real, respetar variantes, presupuesto y stock, y conservar el modo editorial si el proveedor falla. No creará pedidos ni cambiará la bolsa sin una acción explícita. El proveedor y el modelo aún no están elegidos; no hay claves ni consumo de IA configurados. La distribución nativa y el acceso para evaluación siguen por concretar.

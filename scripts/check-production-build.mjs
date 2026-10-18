@@ -7,6 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createApp } from '../backend/src/app.js';
 import { openDatabase, seedDatabase } from '../backend/src/db.js';
+import { checkDeployment } from './check-deployment.mjs';
 
 const frontendDir = fileURLToPath(new URL('../frontend/dist/', import.meta.url));
 let index;
@@ -36,6 +37,7 @@ try {
   server = app.listen(0, '127.0.0.1');
   await once(server, 'listening');
   const base = `http://127.0.0.1:${server.address().port}`;
+  console.log(`Deployment smoke check: ${await checkDeployment(base, { allowLocalHttp: true })}.`);
   const get = (route) => fetch(`${base}${route}`, { signal: AbortSignal.timeout(10000) });
   for (const route of ['/', '/catalog', '/products/satin-story', '/runway', '/access']) {
     const response = await get(route);

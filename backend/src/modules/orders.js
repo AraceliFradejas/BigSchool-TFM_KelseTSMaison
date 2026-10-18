@@ -7,7 +7,7 @@ import { transaction } from '../db.js';
 import { getProduct } from './catalog.js';
 import { requireUser, requireTeam } from './auth.js';
 
-const publicOrder = (row) => ({
+export const publicOrder = (row) => ({
   id: row.id,
   lines: JSON.parse(row.lines),
   totalCents: row.total_cents,
@@ -16,7 +16,7 @@ const publicOrder = (row) => ({
   updatedAt: row.updated_at,
   demo: true,
 });
-function message(db, userId, orderId, status) {
+export function orderMessage(status) {
   const titles = {
     pending: { es: 'Tu selección ya tiene una historia', en: 'Your selection has a story now' },
     confirmed: { es: 'Selección confirmada', en: 'Selection confirmed' },
@@ -46,15 +46,19 @@ function message(db, userId, orderId, status) {
       en: 'The order has been cancelled and its units are available again in the demonstration catalogue.',
     },
   };
+  return { title: titles[status], body: descriptions[status] };
+}
+function message(db, userId, orderId, status) {
   db.prepare('INSERT INTO messages VALUES (?,?,?,?,?)').run(
     randomUUID(),
     userId,
     orderId,
-    JSON.stringify({ title: titles[status], body: descriptions[status] }),
+    JSON.stringify(orderMessage(status)),
     new Date().toISOString(),
   );
 }
 export function createOrder(db, userId, input) {
+  if (db.kind === 'mongo') return db.createOrder(userId, input);
   const checkout = parse(checkoutSchema, input);
   const requestHash = createHash('sha256')
     .update(
@@ -111,6 +115,7 @@ export function createOrder(db, userId, input) {
   });
 }
 export function transitionOrder(db, id, status) {
+  if (db.kind === 'mongo') return db.transitionOrder(id, status);
   return transaction(db, () => {
     const order = db.prepare('SELECT * FROM orders WHERE id=?').get(id);
     if (!order) throw new HttpError(404, 'not_found');
@@ -136,38 +141,47 @@ export function transitionOrder(db, id, status) {
 export function ordersRouter(db) {
   const router = Router();
   router.use(requireUser);
-  router.post('/orders', (req, res) => {
-    const result = createOrder(db, req.user.id, req.body);
+  router.post('/orders', async (req, res) => {
+    const result = await createOrder(db, req.user.id, req.body);
     send(res, result.order, result.replay ? 200 : 201);
   });
-  router.get('/orders', (req, res) =>
+  router.get('/orders', async (req, res) =>
     send(
       res,
-      db
-        .prepare('SELECT * FROM orders WHERE user_id=? ORDER BY created_at DESC')
-        .all(req.user.id)
-        .map(publicOrder),
+      db.kind === 'mongo'
+        ? await db.getOrders(req.user.id)
+        : db
+            .prepare('SELECT * FROM orders WHERE user_id=? ORDER BY created_at DESC')
+            .all(req.user.id)
+            .map(publicOrder),
     ),
   );
-  router.get('/orders/:id', (req, res) => {
+  router.get('/orders/:id', async (req, res) => {
+    if (db.kind === 'mongo') {
+      const order = await db.getOrder(req.params.id, req.user.id);
+      if (!order) throw new HttpError(404, 'not_found');
+      return send(res, order);
+    }
     const row = db
       .prepare('SELECT * FROM orders WHERE id=? AND user_id=?')
       .get(req.params.id, req.user.id);
     if (!row) throw new HttpError(404, 'not_found');
     send(res, publicOrder(row));
   });
-  router.get('/messages', (req, res) =>
+  router.get('/messages', async (req, res) =>
     send(
       res,
-      db
-        .prepare('SELECT * FROM messages WHERE user_id=? ORDER BY created_at DESC')
-        .all(req.user.id)
-        .map((row) => ({
-          id: row.id,
-          orderId: row.order_id,
-          createdAt: row.created_at,
-          ...JSON.parse(row.data),
-        })),
+      db.kind === 'mongo'
+        ? await db.getMessages(req.user.id)
+        : db
+            .prepare('SELECT * FROM messages WHERE user_id=? ORDER BY created_at DESC')
+            .all(req.user.id)
+            .map((row) => ({
+              id: row.id,
+              orderId: row.order_id,
+              createdAt: row.created_at,
+              ...JSON.parse(row.data),
+            })),
     ),
   );
   return router;
@@ -175,20 +189,22 @@ export function ordersRouter(db) {
 export function teamOrdersRouter(db) {
   const router = Router();
   router.use(requireTeam);
-  router.get('/orders', (req, res) =>
+  router.get('/orders', async (req, res) =>
     send(
       res,
-      db
-        .prepare(
-          'SELECT o.*,u.name AS customer_name FROM orders o JOIN users u ON u.id=o.user_id ORDER BY o.created_at DESC',
-        )
-        .all()
-        .map((row) => ({ ...publicOrder(row), customerName: row.customer_name })),
+      db.kind === 'mongo'
+        ? await db.getOrders()
+        : db
+            .prepare(
+              'SELECT o.*,u.name AS customer_name FROM orders o JOIN users u ON u.id=o.user_id ORDER BY o.created_at DESC',
+            )
+            .all()
+            .map((row) => ({ ...publicOrder(row), customerName: row.customer_name })),
     ),
   );
-  router.patch('/orders/:id', (req, res) => {
+  router.patch('/orders/:id', async (req, res) => {
     const input = parse(z.object({ status: z.enum(orderStatuses) }).strict(), req.body);
-    send(res, transitionOrder(db, req.params.id, input.status));
+    send(res, await transitionOrder(db, req.params.id, input.status));
   });
   return router;
 }

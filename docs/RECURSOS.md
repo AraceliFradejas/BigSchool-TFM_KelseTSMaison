@@ -11,7 +11,7 @@ Maison tiene datos y recursos propios de demostración. La base técnica contin�
 | README y memoria de Cars                                                                             | Estructura bilingüe del README, motivación personal y separación entre presentación y detalle técnico                                                                                   |
 | [AFM Moda Oceánica](https://proyecto-landing-page-1.vercel.app/)                                     | Antecedente creativo de moda; no se han copiado sus imágenes, vídeo ni identidad oceánica                                                                                               |
 
-No se han copiado vehículos, citas, talleres, fotografías, bases de datos, cuentas, `.env`, credenciales ni historial Git de Cars. Las sesiones y la persistencia de Maison son implementaciones propias para esta versión.
+No se han copiado vehículos, citas, talleres, fotografías, bases de datos, cuentas, `.env`, credenciales ni historial Git de Cars. Las sesiones y las reglas de persistencia de Maison son propias. El 18 de octubre se revisan de Cars la conexión MongoDB, los dos despliegues Vercel, el proxy de API y los controladores de subida y entrega Cloudinary. Se adaptan esos patrones; Maison usa el driver oficial de MongoDB, no Mongoose, y transacciones propias para pedidos y stock. No se trasladan configuraciones privadas.
 
 ## Datos e imágenes
 
@@ -32,7 +32,7 @@ Las fuentes se empaquetan y sirven desde la aplicación. La interfaz no solicita
 
 ## Herramientas y atribuciones
 
-React y React Router componen la web; Vite genera el build. Express gestiona la API, Zod valida las entradas y Sharp decodifica y optimiza imágenes. Node proporciona SQLite, criptografía y el ejecutor de pruebas; Supertest comprueba las rutas HTTP. Las dependencias y sus versiones resueltas figuran en `package-lock.json` y conservan sus licencias en los paquetes instalados.
+React y React Router componen la web; Vite genera el build. Express gestiona la API, Zod valida las entradas y Sharp decodifica y optimiza imágenes. El driver oficial MongoDB y el SDK Cloudinary incorporan la persistencia y las subidas preparadas para Vercel. `mongodb-memory-server` permite probar transacciones en un replica set temporal; Cloudinary se comprueba con dobles, sin acreditar su servicio real. Node proporciona SQLite local, criptografía y el ejecutor de pruebas; Supertest comprueba las rutas HTTP. Las dependencias y sus versiones resueltas figuran en `package-lock.json` y conservan sus licencias en los paquetes instalados.
 
 Las evidencias visuales iniciales se capturaron en Safari con una cuenta ficticia local y muestran la versión anterior con ilustraciones. Las imágenes actuales se crearon y editaron con la herramienta integrada de generación de imágenes de OpenAI, usando el logo vectorial del proyecto como referencia para los envases. Sharp las convierte a WebP. La aplicación no llama a un proveedor de IA durante la navegación ni envía correo externo. Los encargos visuales están en `docs/recursos/catalogo-fotorrealista.json`.
 
