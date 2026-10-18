@@ -1,6 +1,6 @@
 # Capturas de la web publicada · 18 de octubre de 2026
 
-Capturas originales de Chrome y, en la ampliación 24–26, Safari de escritorio sobre https://kelsets-maison.vercel.app, realizadas el 18 de octubre de 2026. Se conserva la ventana del navegador y la dirección pública; no se han reconstruido ni retocado las pantallas. Son vistas parciales de la interfaz, no pruebas de todos los comportamientos del sistema. Las capturas 1–5 se tomaron sin modificar productos ni crear pedidos. La ampliación 6–16 documenta después un pedido de demostración creado, confirmado y cancelado para esta revisión; se conserva cancelado en el historial de Team Maison. En las capturas 13–14 no se guardaron cambios. La secuencia 17–19 documenta después una creación temporal archivada y su limpieza. Las capturas 20–23 recogen la ampliación del pago simulado, su rechazo y el justificante del pedido de prueba.
+Capturas originales de Chrome y, en la ampliación 24–27, Safari de escritorio sobre https://kelsets-maison.vercel.app, realizadas el 18 de octubre de 2026. Se conserva la ventana del navegador y la dirección pública; no se han reconstruido ni retocado las pantallas. Son vistas parciales de la interfaz, no pruebas de todos los comportamientos del sistema. Las capturas 1–5 se tomaron sin modificar productos ni crear pedidos. La ampliación 6–16 documenta después un pedido de demostración creado, confirmado y cancelado para esta revisión; se conserva cancelado en el historial de Team Maison. En las capturas 13–14 no se guardaron cambios. La secuencia 17–19 documenta después una creación temporal archivada y su limpieza. Las capturas 20–23 recogen la ampliación del pago simulado, su rechazo y el justificante del pedido de prueba.
 
 ## 1. Portada en castellano
 
@@ -143,3 +143,61 @@ He accedido con la cuenta Team Maison existente, sin guardar la contraseña en S
 El pedido `1c275c89-cef5-4bdf-848a-072c7cf2ead7` conserva el destinatario, la boutique y el intervalo estimado del 19 al 20 de octubre de 2026. La recogida es una simulación y su importe es cero. He abierto también el detalle desde Team y cancelado el pedido para reponer la unidad; conservo su histórico y sus comunicaciones. No se ha reservado una recogida física ni se ha realizado ningún cobro.
 
 Después de estas capturas simplifico el primer paso: el explorador de mapas se abre de forma opcional para que no sea necesario recorrer las tres fichas antes de continuar al pago. Las capturas conservan la versión que he comprobado, sin reconstruirla.
+
+## 27. Primeras boutiques en la portada · Safari
+
+![Primeras boutiques en la portada](27-primeras-boutiques-portada-safari.jpg)
+
+He comprobado las tres tarjetas de presentación y el acceso a la sección de boutiques desde la portada.
+
+## 28–39. Compra completa con envío ficticio · Chrome
+
+He recorrido la web publicada con la sesión de Team Maison. Utilizo exclusivamente datos ficticios para la entrega y un método de pago sin conexión bancaria. Las capturas muestran los pasos sucesivos, con desplazamientos cuando el contenido supera la ventana.
+
+![Producto y variante](28-compra-producto-variante-chrome.jpg)
+
+Elijo Enchanted M, con precio de 1.850,00 € y ocho unidades disponibles.
+
+![Bolsa con una unidad](29-compra-bolsa-chrome.jpg)
+
+Compruebo la imagen, la variante, la cantidad y el total antes de continuar.
+
+![Formulario inicial](30-compra-datos-entrega-vacios-chrome.jpg)
+
+El primer paso solicita destinatario y destino. El botón para continuar está deshabilitado mientras faltan los datos requeridos.
+
+![Domicilio ficticio completo](31-compra-domicilio-ficticio-chrome.jpg)
+
+Introduzco Alex Maison, Calle Ficticia, 10, 2.º A, 28001 Madrid, dentro de la Comunidad de Madrid.
+
+![Método ficticio y aceptación del aviso](32-compra-revision-pago-ficticio-chrome.jpg)
+
+Selecciono cuenta bancaria ficticia y acepto expresamente que se trata de una simulación. No se solicita un IBAN ni se conecta una pasarela.
+
+![Confirmación del pedido](33-compra-confirmacion-chrome.jpg)
+
+El pedido `4345dfb5-3d36-4c31-aa23-d538c5bfde59` se registra el 18 de octubre de 2026 a las 19:29, con una unidad y total simulado de 1.850,00 €.
+
+![Destinatario y fechas del justificante](34-compra-justificante-entrega-chrome.jpg)
+
+El justificante conserva el domicilio ficticio y la estimación del 21 al 23 de octubre de 2026. La estimación excluye fines de semana, sin ajustar festivos.
+
+![Referencia de demostración y cargo real cero](35-compra-referencia-cargo-cero-chrome.jpg)
+
+Conservo la referencia DEMO, el método ficticio y la indicación de cargo real de 0,00 €.
+
+![Historial y comunicación interna](36-compra-historial-comunicacion-chrome.jpg)
+
+Compruebo el pedido pendiente y su mensaje interno en Mi cuenta. Esta evidencia no acredita un envío de correo electrónico.
+
+![Detalle desde Team](37-compra-detalle-team-chrome.jpg)
+
+Abro el detalle desde la gestión de pedidos de Team para comprobar las líneas y el justificante.
+
+![Pedido cancelado](38-compra-cancelacion-team-chrome.jpg)
+
+Cancelo el pedido desde Team y vuelvo a su detalle: el estado cancelado queda guardado. Conservo el historial de la prueba.
+
+![Stock repuesto](39-compra-stock-repuesto-chrome.jpg)
+
+Vuelvo a seleccionar Enchanted M y compruebo las ocho unidades disponibles. La bolsa queda vacía. No se ha realizado ningún cobro, envío ni reserva real.
