@@ -314,7 +314,17 @@ test(
           idempotencyKey: randomUUID(),
           lines: [{ variantId: 'satin-story-1', quantity: 1 }],
           expectedTotalCents: before.variants[0].priceCents,
-          payment: { mode: 'demo', method: 'apple_pay', acknowledged: true, outcome: 'approved' },
+          payment: {
+            mode: 'demo',
+            method: 'apple_pay',
+            acknowledged: true,
+            outcome: 'approved',
+            fulfillment: {
+              method: 'pickup',
+              recipientName: 'Alex Maison',
+              boutiqueId: 'barcelona-passeig',
+            },
+          },
         };
         for (const invalid of [
           { ...payload, expectedTotalCents: 1 },

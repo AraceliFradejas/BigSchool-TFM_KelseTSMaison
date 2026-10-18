@@ -88,3 +88,11 @@ He añadido una revisión del pedido con cuenta bancaria ficticia, tarjeta ficti
 Antes de confirmar debo aceptar que es un proyecto académico y que no estoy comprando nada. Puedo elegir un resultado aceptado o rechazado para probar el recorrido. Un resultado aceptado registra el pedido pendiente y su comunicación interna; el justificante conserva el método, la referencia DEMO y el importe simulado, con cargo real de 0,00 €. El rechazo conserva la bolsa y no crea pedidos ni descuenta existencias. Los precios y el stock se validan en la API.
 
 La bolsa guarda identificadores, cantidades y la clave del intento por cuenta. Antes de confirmar compruebo que se puede guardar esa clave en el dispositivo; los reintentos usan la misma para evitar duplicados. La cuenta permite consultar historial, detalle y comunicaciones y cerrar sesión. La sesión utiliza las cookies de la API y se comprueba después de acceder y salir; tengo que confirmar su comportamiento en iPhone, iPad y Android. No se han enviado correos externos.
+
+## Entrega, recogida y Boutiques
+
+He ampliado el checkout con destinatario, domicilio o recogida y una revisión previa al pago. La cobertura inicial del domicilio es Comunidad de Madrid, Barcelona ciudad y Marbella. El pedido conserva sus datos y un intervalo estimado calculado en la API, con todos los importes reales a cero.
+
+La pestaña Boutiques muestra tres espacios ficticios Maison en los entornos de Serrano, Passeig de Gràcia y Puerto Banús. Incluye mapa nativo, fotografías acreditadas del entorno, selección para recogida y enlaces públicos a Street View. La ubicación solo se pide al pulsar «Calcular distancia»; también puedo elegir un punto en el mapa y olvidarlo. No guardo ese punto en AsyncStorage, en la cuenta ni en pedidos. La distancia es en línea recta, sin cálculo de rutas.
+
+Utilizo react-native-maps y expo-location compatibles con Expo Go SDK 57. Tengo pendiente comprobar sus mapas, permisos y el recorrido de entrega en iPhone, iPad y Android. Una futura distribución con Google Maps necesita configuración propia; no he añadido claves ni activado facturación. Referencias: [react-native-maps en Expo](https://docs.expo.dev/versions/v57.0.0/sdk/map-view/) y [Expo Location](https://docs.expo.dev/versions/v57.0.0/sdk/location/).

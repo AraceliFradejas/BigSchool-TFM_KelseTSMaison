@@ -1,8 +1,10 @@
 import { z } from 'zod';
+import { fulfillmentSchema } from './fulfillment.js';
 export const demoPaymentMethods = ['bank', 'card', 'paypal', 'apple_pay', 'samsung_pay'];
 export const demoPaymentSchema = z
   .object({
     mode: z.literal('demo'),
+    fulfillment: fulfillmentSchema.optional(),
     method: z.enum(demoPaymentMethods),
     acknowledged: z.literal(true),
     outcome: z.enum(['approved', 'declined']).default('approved'),

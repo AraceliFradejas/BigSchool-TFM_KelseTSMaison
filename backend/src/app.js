@@ -18,7 +18,7 @@ export function createApp({ db, config, limits = true, cloudStorage, imageFetch 
     helmet({
       contentSecurityPolicy: {
         directives: {
-          'img-src': ["'self'", 'data:'],
+          'img-src': ["'self'", 'data:', 'https://tile.openstreetmap.org'],
           'style-src': ["'self'", "'unsafe-inline'"],
           'upgrade-insecure-requests': config.production ? [] : null,
         },

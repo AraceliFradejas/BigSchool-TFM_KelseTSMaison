@@ -1,0 +1,26 @@
+[
+  {
+    "city": "madrid",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:01b_Madrid_Calle_de_Serrano_by_Lou.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/01b_Madrid_Calle_de_Serrano_by_Lou.jpg/1280px-01b_Madrid_Calle_de_Serrano_by_Lou.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "localPath": "frontend/public/media/boutique-madrid.webp",
+    "changes": "Resized to a maximum width of 1200 pixels and converted to WebP. Responsive crop in the interfaces.",
+    "checkedAt": "2026-10-18"
+  },
+  {
+    "city": "barcelona",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Passeig_de_Gr%C3%A0cia,_Barcelona.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Passeig_de_Gr%C3%A0cia%2C_Barcelona.jpg/1280px-Passeig_de_Gr%C3%A0cia%2C_Barcelona.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "localPath": "frontend/public/media/boutique-barcelona.webp",
+    "changes": "Resized to a maximum width of 1200 pixels and converted to WebP. Responsive crop in the interfaces.",
+    "checkedAt": "2026-10-18"
+  },
+  {
+    "city": "marbella",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Porto_Banus.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Porto_Banus.jpg/1280px-Porto_Banus.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "localPath": "frontend/public/media/boutique-marbella.webp",
+    "changes": "Resized to a maximum width of 1200 pixels and converted to WebP. Responsive crop in the interfaces.",
+    "checkedAt": "2026-10-18"
+  }
+]

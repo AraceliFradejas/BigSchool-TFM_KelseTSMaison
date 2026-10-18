@@ -1,3 +1,4 @@
+import { demoBoutiques, boutiqueCopy } from '@maison/contracts/boutiques';
 import CampaignHero from './CampaignHero';
 import { Link } from 'react-router-dom';
 import { useMaison, useResource } from '../../shared/state';
@@ -95,6 +96,53 @@ export default function Home() {
               ))}
             </div>
           </ResourceState>
+        </div>
+      </section>
+      <section className="section container home-boutiques" aria-labelledby="first-boutiques-title">
+        <div className="section-intro">
+          <div>
+            <p className="eyebrow">MADRID · BARCELONA · MARBELLA</p>
+            <h2 id="first-boutiques-title">{boutiqueCopy[language].title}</h2>
+            <p>{boutiqueCopy[language].intro}</p>
+          </div>
+          <Link className="button secondary" to="/boutiques">
+            {language === 'es' ? 'Descubrir las boutiques' : 'Discover the boutiques'}
+            <Icon name="arrow" />
+          </Link>
+        </div>
+        <p className="fine-print">{boutiqueCopy[language].fiction}</p>
+        <div className="boutique-cards">
+          {demoBoutiques.map((b) => (
+            <article key={b.id} className="boutique-card">
+              <Link to="/boutiques">
+                <img
+                  src={b.image}
+                  width="600"
+                  height="400"
+                  alt={b.location[language]}
+                  loading="lazy"
+                />
+              </Link>
+              <div className="boutique-card-body">
+                <p className="eyebrow">{b.city}</p>
+                <h3>
+                  <Link to="/boutiques">{b.name}</Link>
+                </h3>
+                <p>{b.location[language]}</p>
+                <p className="fine-print">{boutiqueCopy[language].photo}</p>
+                <p className="fine-print">
+                  <a href={b.photo.sourceUrl} target="_blank" rel="noreferrer">
+                    {b.photo.author}
+                  </a>{' '}
+                  ·{' '}
+                  <a href={b.photo.licenseUrl} target="_blank" rel="noreferrer">
+                    {b.photo.license}
+                  </a>{' '}
+                  · {boutiqueCopy[language].changes}
+                </p>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
       <section className="look-teaser container">

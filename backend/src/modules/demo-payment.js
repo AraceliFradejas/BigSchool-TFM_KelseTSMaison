@@ -1,3 +1,4 @@
+import { fulfillmentSnapshot } from '@maison/contracts/fulfillment';
 import { createHash } from 'node:crypto';
 import { HttpError } from '../http.js';
 export function checkoutHash(checkout) {
@@ -19,6 +20,9 @@ export function demoReceipt(checkout, id, totalCents, createdAt) {
     amountCents: totalCents,
     chargedCents: 0,
     currency: 'EUR',
+    ...(checkout.payment.fulfillment
+      ? { fulfillment: fulfillmentSnapshot(checkout.payment.fulfillment, createdAt) }
+      : {}),
     createdAt,
   };
 }

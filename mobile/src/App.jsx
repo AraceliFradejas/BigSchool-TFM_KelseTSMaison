@@ -1,3 +1,4 @@
+import Boutiques from './Boutiques';
 import { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -35,6 +36,7 @@ const words = {
     demo: 'Boutique de demostración · Sin cobros reales',
     catalogue: 'Boutique',
     outfits: 'Outfits',
+    boutiques: 'Boutiques',
     bag: 'Bolsa',
     account: 'Mi cuenta',
     title: 'Tu estilo, tu historia.',
@@ -75,6 +77,7 @@ const words = {
     demo: 'Demonstration boutique · No real payments',
     catalogue: 'Boutique',
     outfits: 'Outfits',
+    boutiques: 'Boutiques',
     bag: 'Bag',
     account: 'My account',
     title: 'Your style, your story.',
@@ -615,6 +618,7 @@ export default function App() {
             />
           ) : route.screen === 'checkout' ? (
             <Checkout
+              customer={user}
               language={language}
               rows={route.rows}
               total={route.total}
@@ -631,6 +635,11 @@ export default function App() {
               language={language}
               back={() => setRoute({ screen: 'account' })}
             />
+          ) : route.screen === 'boutiques' ? (
+            <ScrollView contentContainerStyle={s.content}>
+              <Text style={s.title}>Boutiques</Text>
+              <Boutiques language={language} />
+            </ScrollView>
           ) : route.screen === 'bag' ? (
             <Bag
               lines={lines}
@@ -649,7 +658,7 @@ export default function App() {
             <Catalogue language={language} t={t} open={open} />
           )}
           <View style={s.tabs} accessibilityRole="tablist">
-            {['catalogue', 'outfits', 'bag', 'account'].map((screen) => {
+            {['catalogue', 'outfits', 'boutiques', 'bag', 'account'].map((screen) => {
               const selected =
                 route.screen === screen ||
                 ((route.screen === 'detail' || route.screen === 'look') && route.from === screen);
@@ -686,9 +695,11 @@ export default function App() {
                             ? 'M3 9h18L19 3H5L3 9ZM4 9v12h16V9M9 21v-7h6v7M3 9c0 3 4 3 4 0 0 3 5 3 5 0 0 3 5 3 5 0 0 3 4 3 4 0'
                             : screen === 'outfits'
                               ? 'M9 5a3 3 0 0 1 6 0c0 2-3 2-3 4v2L3 17v3h18v-3l-9-6'
-                              : screen === 'account'
-                                ? 'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM4 21v-2a8 8 0 0 1 16 0v2'
-                                : 'M5 7h14l2 14H3L5 7ZM8 8V6a4 4 0 0 1 8 0v2'
+                              : screen === 'boutiques'
+                                ? 'M12 22S4 14 4 9a8 8 0 1 1 16 0c0 5-8 13-8 13ZM15 9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z'
+                                : screen === 'account'
+                                  ? 'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM4 21v-2a8 8 0 0 1 16 0v2'
+                                  : 'M5 7h14l2 14H3L5 7ZM8 8V6a4 4 0 0 1 8 0v2'
                         }
                       />
                     </Svg>

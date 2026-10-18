@@ -22,7 +22,7 @@ El recorrido principal conecta portada, catálogo, ficha, elección de variante,
 
 La diferencia editorial está en «Completa tu look»: dieciséis colecciones reúnen prendas, calzado, bolsos, joyería y propuestas de belleza en veintiuna selecciones manuales y los treinta y seis looks de la pasarela. El buscador de combinaciones comprueba ocasión, paleta, presupuesto y stock. Esta primera versión utiliza reglas y selecciones manuales; no hace peticiones a un modelo de IA.
 
-La web tiene textos en castellano e inglés y CSS responsive. La app nativa ya tiene una primera versión con catálogo, outfits y bolsa local, descrita más adelante. La integración con un proveedor de IA, las boutiques y las citas siguen pendientes. La web ya está publicada en [Vercel](https://kelsets-maison.vercel.app); las slides finales y las ampliaciones siguen pendientes de cierre.
+La web tiene textos en castellano e inglés y CSS responsive. La app nativa ya tiene una primera versión con catálogo, outfits y bolsa local, descrita más adelante. He incorporado boutiques ficticias con mapa y entrega simulada. La integración con un proveedor de IA y las citas siguen pendientes. La web ya está publicada en [Vercel](https://kelsets-maison.vercel.app); las slides finales y las ampliaciones siguen pendientes de cierre.
 
 ## 3 Organización técnica
 
@@ -157,3 +157,21 @@ El resultado aceptado registra un pedido de demostración pendiente y genera su 
 La API calcula el importe a partir del catálogo, comprueba que coincide con el total revisado y aplica pedido, stock y comunicación dentro de una transacción. La clave del intento evita duplicados si repito la confirmación. He comprobado estas reglas con SQLite y una réplica temporal de MongoDB, incluidos rechazo, cambio de importe, concurrencia y conservación del justificante al cancelar. Las pruebas no realizan operaciones en un banco ni en servicios de pago.
 
 Para consultar los resultados desde la app he incorporado acceso, registro, historial y comunicaciones. La bolsa se separa por cuenta y no guardo contraseñas en el almacenamiento local. La app verifica la sesión contra la API después de acceder y salir. Queda pendiente comprobar este nuevo recorrido privado en mis tres dispositivos; las pruebas anteriores de apertura y la generación de bundles no sustituyen esa comprobación.
+
+## Ampliación: destinatario, entrega y boutiques ficticias
+
+He ampliado la compra de demostración para poder indicar quién recibe la selección y elegir entre domicilio y recogida. Primero completo los datos de entrega y después reviso la selección, el destino y el pago ficticio. La cuenta identifica al cliente y el pedido conserva el nombre del destinatario. En domicilio guardo calle, código postal, localidad y zona; en recogida guardo la boutique elegida, sin añadir una dirección personal innecesaria.
+
+Por el momento he limitado el domicilio a la Comunidad de Madrid, Barcelona ciudad y Marbella. La API valida que el código postal pertenezca a las reglas de la zona seleccionada. Esta validación orientativa no verifica que una dirección exista ni conecta con un transportista. Pido datos ficticios para la demostración.
+
+He creado tres boutiques ficticias: Maison · Milla de Oro, en el entorno de Serrano y el barrio de Salamanca de Madrid; Maison · Passeig de Gràcia, en Barcelona; y Maison · Puerto Banús, en Marbella. No corresponden a locales reales de Maison ni implican acuerdos con tiendas de esas calles. Los puntos del mapa son aproximados. He revisado el patrón de sedes de KelseTS Cars y adaptado la presentación del mapa, fotografías del entorno, enlaces a Street View y cálculo de distancias, conservando los créditos de autoría y las licencias de las fotos. No he trasladado credenciales ni datos de Cars.
+
+El mapa web utiliza Leaflet y OpenStreetMap; la app utiliza react-native-maps. Las fotografías de Wikimedia Commons muestran el entorno real y llevan autor, fuente y licencia; no las presento como fotos de un escaparate Maison ni como capturas de Google Street View. El enlace a Street View permite explorar la calle en Google Maps. Las copias WebP conservan su licencia y tienen el cambio de formato y tamaño indicado.
+
+La ubicación es opcional y solo se solicita al pulsar el botón de distancia. También puedo elegir manualmente un punto en el mapa. Calculo kilómetros en línea recta dentro del cliente; no calculo rutas por carretera, no guardo la ubicación en la cuenta o el pedido y no solicito permisos en segundo plano. Puedo olvidar el punto elegido sin dejar de consultar las boutiques.
+
+El servidor calcula un intervalo estimado de 3–5 días laborables para domicilio y 1–2 para recogida a partir de la fecha de confirmación, con el calendario de Madrid. Excluyo sábados y domingos, pero no festivos. El pedido conserva las fechas y la copia de los datos de entrega; los reintentos no las recalculan ni duplican el pedido. Al cancelar se conserva ese histórico y se indica que la entrega simulada está cancelada. Team puede consultar los datos en el detalle del pedido. No hay reservas físicas, transportistas, envíos ni cargos reales.
+
+Tengo pendiente validar la ubicación y el mapa nativos en mis dispositivos. La generación de bundles no acredita que el permiso del sistema o las teselas se hayan probado en un teléfono. Para una futura distribución Android fuera de Expo Go habrá que configurar la clave propia del SDK de mapas; no he creado un proyecto de pago ni utilizado claves de Cars.
+
+La portada presenta «Nuestras primeras boutiques», con Madrid, Barcelona y Marbella, fotos acreditadas y acceso a la sección pública `/boutiques`. También puedo llegar desde el menú principal y la pestaña nativa; no necesito iniciar una compra para conocerlas.

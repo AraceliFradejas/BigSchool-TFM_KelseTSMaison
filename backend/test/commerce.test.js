@@ -623,7 +623,13 @@ test('song-title migration preserves Team names and stock and is idempotent', (t
 
 test('demo checkout validates consent and totals, rolls back declines and preserves one zero-charge receipt per attempt', async (t) => {
   const { db, agent, app } = setup(t);
-  const payment = { mode: 'demo', method: 'card', acknowledged: true, outcome: 'approved' };
+  const payment = {
+    mode: 'demo',
+    method: 'card',
+    acknowledged: true,
+    outcome: 'approved',
+    fulfillment: { method: 'pickup', recipientName: 'Alex Maison', boutiqueId: 'madrid-milla-oro' },
+  };
   const body = { ...checkout(), payment, expectedTotalCents: 185000 };
   assert.equal((await post(request(app), '/checkout/demo', body)).status, 401);
   await register(agent);
@@ -678,4 +684,60 @@ test('demo checkout validates consent and totals, rolls back declines and preser
     assert.equal(response.body.data.payment.method, method);
     assert.equal(response.body.data.payment.chargedCents, 0);
   }
+});
+
+test('checkout requires covered delivery, snapshots recipient and dates and binds the address to the attempt', async (t) => {
+  const { agent, db, app } = setup(t);
+  await register(agent);
+  const fulfillment = {
+    method: 'home',
+    recipientName: 'Alex Maison',
+    address: {
+      street: 'Calle Ficticia, 10',
+      postalCode: '28001',
+      city: 'Madrid',
+      area: 'madrid',
+      country: 'ES',
+    },
+  };
+  const payment = {
+    mode: 'demo',
+    method: 'bank',
+    acknowledged: true,
+    outcome: 'approved',
+    fulfillment,
+  };
+  const body = { ...checkout(), payment, expectedTotalCents: 185000 };
+  for (const invalid of [
+    { ...payment, fulfillment: undefined },
+    {
+      ...payment,
+      fulfillment: { ...fulfillment, address: { ...fulfillment.address, postalCode: '41001' } },
+    },
+    { ...payment, fulfillment: { ...fulfillment, estimatedTo: '2026-10-19' } },
+  ])
+    assert.equal((await post(agent, '/checkout/demo', { ...body, payment: invalid })).status, 400);
+  assert.equal(db.prepare('SELECT count(*) AS n FROM orders').get().n, 0);
+  const result = await post(agent, '/checkout/demo', body);
+  assert.equal(result.status, 201, JSON.stringify(result.body));
+  const saved = result.body.data.payment.fulfillment;
+  assert.equal(saved.recipientName, 'Alex Maison');
+  assert.deepEqual(saved.address, fulfillment.address);
+  assert.equal(saved.shippingCents, 0);
+  assert.match(saved.estimatedFrom, /^\d{4}-\d{2}-\d{2}$/);
+  const replay = await post(agent, '/checkout/demo', body);
+  assert.equal(replay.status, 200);
+  assert.deepEqual(replay.body.data.payment.fulfillment, saved);
+  const changed = await post(agent, '/checkout/demo', {
+    ...body,
+    payment: { ...payment, fulfillment: { ...fulfillment, recipientName: 'Other Person' } },
+  });
+  assert.equal(changed.status, 409);
+  const other = request.agent(app);
+  await register(other, 'other-delivery@example.test');
+  assert.equal((await other.get(`/api/v1/orders/${result.body.data.id}`)).status, 404);
+  assert.deepEqual(
+    (await agent.get(`/api/v1/orders/${result.body.data.id}`)).body.data.payment.fulfillment,
+    saved,
+  );
 });

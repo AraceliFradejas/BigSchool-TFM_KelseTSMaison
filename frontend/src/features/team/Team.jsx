@@ -1,3 +1,4 @@
+import { PaymentReceipt } from '../cart/PaymentReview';
 import { useState } from 'react';
 import { transitions } from '@maison/contracts/rules';
 import { useMaison, useResource, api } from '../../shared/state';
@@ -376,7 +377,12 @@ function ManagedOrder({ order, reload }) {
         ))}
         {transitions[order.status].length === 0 && <span className="fine-print">{t.terminal}</span>}
       </div>
-      {expanded && <OrderLines lines={order.lines} />}
+      {expanded && (
+        <>
+          <OrderLines lines={order.lines} />
+          <PaymentReceipt payment={order.payment} cancelled={order.status === 'cancelled'} />
+        </>
+      )}
     </article>
   );
 }

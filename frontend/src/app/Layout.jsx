@@ -106,6 +106,7 @@ export default function Layout() {
           <NavLink to="/collections">{t.collections}</NavLink>
           <NavLink to="/runway">{language === 'es' ? 'La pasarela' : 'The runway'}</NavLink>
           <NavLink to="/looks">{t.looks}</NavLink>
+          <NavLink to="/boutiques">{language === 'es' ? 'Boutiques' : 'Boutiques'}</NavLink>
           <NavLink to="/story">{t.about}</NavLink>
           <NavLink className="mobile-account" to="/account">
             {t.account}

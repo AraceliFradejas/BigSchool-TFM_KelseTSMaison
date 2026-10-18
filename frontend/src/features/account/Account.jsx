@@ -129,7 +129,7 @@ export function OrderDetail() {
                 <Money cents={order.totalCents} />
               </strong>
             </p>
-            <PaymentReceipt payment={order.payment} />
+            <PaymentReceipt payment={order.payment} cancelled={order.status==='cancelled'} />
             <p className="demo-notice">{t.orderNotice}</p>
           </>
         )}

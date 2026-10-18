@@ -36,9 +36,12 @@ export const checkoutSchema = z
   .refine((value) => !value.payment || value.expectedTotalCents !== undefined, {
     message: 'A simulated payment requires a reviewed total',
   });
-export const demoCheckoutSchema = checkoutSchema.refine((value) => Boolean(value.payment), {
-  message: 'A simulated payment must be acknowledged',
-});
+export const demoCheckoutSchema = checkoutSchema.refine(
+  (value) => Boolean(value.payment?.fulfillment),
+  {
+    message: 'A simulated payment requires acknowledged delivery details',
+  },
+);
 export const variantSchema = z
   .object({
     id: z.string().regex(/^[a-z0-9-]{1,80}$/),

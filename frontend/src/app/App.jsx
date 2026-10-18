@@ -1,3 +1,4 @@
+import Boutiques from '../features/boutiques/Boutiques';
 import Runway, { RunwayLook } from '../features/catalog/Runway';
 import { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
@@ -37,33 +38,37 @@ export default function App() {
   const location = useLocation();
   useEffect(() => {
     const page =
-      location.pathname === '/'
-        ? t.home
-        : location.pathname.startsWith('/runway')
-          ? language === 'es'
-            ? 'La pasarela'
-            : 'The runway'
-          : location.pathname.startsWith('/catalog')
-            ? t.catalogue
-            : location.pathname.startsWith('/products')
+      location.pathname === '/boutiques'
+        ? language === 'es'
+          ? 'Nuestras boutiques'
+          : 'Our boutiques'
+        : location.pathname === '/'
+          ? t.home
+          : location.pathname.startsWith('/runway')
+            ? language === 'es'
+              ? 'La pasarela'
+              : 'The runway'
+            : location.pathname.startsWith('/catalog')
               ? t.catalogue
-              : location.pathname === '/looks'
-                ? t.looks
-                : location.pathname === '/bag'
-                  ? t.cart
-                  : location.pathname === '/favorites'
-                    ? t.favorites
-                    : location.pathname === '/story'
-                      ? t.about
-                      : location.pathname === '/collections'
-                        ? t.collections
-                        : location.pathname === '/credits'
-                          ? t.credits
-                          : location.pathname === '/team'
-                            ? t.team
-                            : location.pathname.startsWith('/orders/')
-                              ? t.orderDetail
-                              : t.account;
+              : location.pathname.startsWith('/products')
+                ? t.catalogue
+                : location.pathname === '/looks'
+                  ? t.looks
+                  : location.pathname === '/bag'
+                    ? t.cart
+                    : location.pathname === '/favorites'
+                      ? t.favorites
+                      : location.pathname === '/story'
+                        ? t.about
+                        : location.pathname === '/collections'
+                          ? t.collections
+                          : location.pathname === '/credits'
+                            ? t.credits
+                            : location.pathname === '/team'
+                              ? t.team
+                              : location.pathname.startsWith('/orders/')
+                                ? t.orderDetail
+                                : t.account;
     document.title = `${page} · KelseTS Maison`;
   }, [location.pathname, language]);
   return (
@@ -76,6 +81,7 @@ export default function App() {
         <Route path="products/:id" element={<Product />} />
         <Route path="collections" element={<Collections />} />
         <Route path="looks" element={<Looks />} />
+        <Route path="boutiques" element={<Boutiques />} />
         <Route path="bag" element={<Bag />} />
         <Route path="access" element={<Access />} />
         <Route

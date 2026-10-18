@@ -2322,3 +2322,74 @@ main:focus {
   flex-direction: row;
   justify-content: flex-start;
 }
+.boutique-explorer {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.boutique-controls {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.boutique-map {
+  height: 390px;
+  width: 100%;
+  z-index: 0;
+  background: #e7e2d8;
+  border: 1px solid var(--line);
+}
+.boutique-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.boutique-card {
+  border: 1px solid var(--line);
+  min-width: 0;
+}
+.boutique-card.chosen {
+  border: 2px solid var(--red);
+}
+.boutique-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+.boutique-card-body {
+  display: grid;
+  gap: 14px;
+  padding: 20px;
+}
+.boutique-card-body h3,
+.boutique-card-body p {
+  margin: 0;
+}
+.boutique-card-body a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.payment-review .boutique-cards {
+  grid-template-columns: 1fr;
+}
+.payment-review .boutique-map {
+  height: 270px;
+}
+.delivery-summary {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid var(--line);
+}
+.delivery-summary h3 {
+  margin: 0;
+}
+@media (max-width: 800px) {
+  .boutique-cards {
+    grid-template-columns: 1fr;
+  }
+  .boutique-map {
+    height: 300px;
+  }
+}

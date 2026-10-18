@@ -1,3 +1,4 @@
+import { demoBoutiques, boutiqueCopy } from '@maison/contracts/boutiques';
 import { Link } from 'react-router-dom';
 import { useMaison } from '../../shared/state';
 import { PageHeading } from '../../shared/components';
@@ -41,12 +42,41 @@ export default function Story() {
   );
 }
 export function Credits() {
-  const { t } = useMaison();
+  const { t, language } = useMaison();
+  const b = boutiqueCopy[language];
   return (
     <div className="container page prose-page">
       <PageHeading title={t.credits} />
       <p>{t.legal}</p>
       <p>{t.creditsBody}</p>
+      <section id="boutique-photos">
+        <h2>{b.title}</h2>
+        <p>{b.photo}</p>
+        <p>{b.fiction}</p>
+        {demoBoutiques.map((item) => (
+          <article key={item.id}>
+            <h3>{item.name}</h3>
+            <p>
+              <a href={item.photo.sourceUrl} target="_blank" rel="noreferrer">
+                {item.photo.author} · Wikimedia Commons
+              </a>{' '}
+              ·{' '}
+              <a href={item.photo.licenseUrl} target="_blank" rel="noreferrer">
+                {item.photo.license}
+              </a>
+            </p>
+            <p>{b.changes}</p>
+          </article>
+        ))}
+        <p>
+          Mapas web: Leaflet · ©{' '}
+          <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">
+            OpenStreetMap contributors
+          </a>
+          . Street View: Google Maps.
+        </p>
+      </section>
+
       <p>{t.demo}</p>
       <p>{t.author}</p>
     </div>

@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { fulfillmentSchema, fulfillmentCopy } from '@maison/contracts/fulfillment';
+import { DeliveryForm, DeliverySummary } from './Delivery';
+import { useRef, useState } from 'react';
 import {
   ScrollView,
   Text,
@@ -9,21 +11,50 @@ import {
   Platform,
   StyleSheet,
   ActivityIndicator,
+  Keyboard,
 } from 'react-native';
 import { paymentCopy } from '@maison/contracts/demo-payment';
 import { accountCopy, commerceError } from './commerce-copy';
 import { useRemote } from './useRemote';
 import { money } from './model';
 const color = '#b3152b';
-export function Checkout({ language, rows, total, busy, error, back, confirm }) {
+export function Checkout({ language, rows, total, busy, error, back, confirm, customer }) {
   const t = paymentCopy[language];
+  const d = fulfillmentCopy[language];
+  const scroll = useRef(null);
+  const changeStep = (next) => {
+    Keyboard.dismiss();
+    setStep(next);
+    scroll.current?.scrollTo({ y: 0, animated: false });
+  };
+  const [step, setStep] = useState(1);
+  const [delivery, setDelivery] = useState({
+    method: 'home',
+    recipientName: '',
+    address: { street: '', postalCode: '', city: '', area: 'madrid', country: 'ES' },
+    boutiqueId: 'madrid-milla-oro',
+  });
+  const fulfillment =
+    delivery.method === 'home'
+      ? { method: 'home', recipientName: delivery.recipientName, address: delivery.address }
+      : {
+          method: 'pickup',
+          recipientName: delivery.recipientName,
+          boutiqueId: delivery.boutiqueId,
+        };
+  const valid = fulfillmentSchema.safeParse(fulfillment).success;
+
   const [method, setMethod] = useState('card');
   const [outcome, setOutcome] = useState('approved');
   const [acknowledged, setAcknowledged] = useState(false);
   return (
-    <ScrollView contentContainerStyle={s.page}>
+    <ScrollView ref={scroll} keyboardShouldPersistTaps="handled" contentContainerStyle={s.page}>
       <Button title={t.cancel} color={color} disabled={busy} onPress={back} />
-      <Text style={s.title}>{t.title}</Text>
+      <Text style={s.title}>{step === 1 ? d.title : t.title}</Text>
+      <Text>{d.steps}</Text>
+      <Text>
+        {d.customer}: {customer?.name}
+      </Text>
       <Text style={s.notice}>{t.warning}</Text>
       <Text>{t.details}</Text>
       {rows.map((row) => (
@@ -33,48 +64,69 @@ export function Checkout({ language, rows, total, busy, error, back, confirm }) 
         </Text>
       ))}
       <Text style={s.title}>{money(total, language)}</Text>
-      <Text style={s.heading}>{t.method}</Text>
-      {['bank', 'card', 'paypal', Platform.OS === 'ios' ? 'apple_pay' : 'samsung_pay'].map(
-        (value) => (
+      {step === 1 ? (
+        <DeliveryForm value={delivery} onChange={setDelivery} language={language} busy={busy} />
+      ) : (
+        <>
+          <DeliverySummary value={fulfillment} language={language} />
           <Button
-            key={value}
-            color={method === value ? color : '#686159'}
+            title={d.edit}
+            color={color}
             disabled={busy}
-            title={`${method === value ? '✓ ' : ''}${t[value]}`}
-            onPress={() => setMethod(value)}
+            onPress={() => {
+              changeStep(1);
+              setAcknowledged(false);
+            }}
           />
-        ),
+          <Text style={s.heading}>{t.method}</Text>
+          {['bank', 'card', 'paypal', Platform.OS === 'ios' ? 'apple_pay' : 'samsung_pay'].map(
+            (value) => (
+              <Button
+                key={value}
+                color={method === value ? color : '#686159'}
+                disabled={busy}
+                title={`${method === value ? '✓ ' : ''}${t[value]}`}
+                onPress={() => setMethod(value)}
+              />
+            ),
+          )}
+          <Text style={s.heading}>{t.test}</Text>
+          {['approved', 'declined'].map((value) => (
+            <Button
+              key={value}
+              color={outcome === value ? color : '#686159'}
+              disabled={busy}
+              title={`${outcome === value ? '✓ ' : ''}${t[value]}`}
+              onPress={() => setOutcome(value)}
+            />
+          ))}
+          <View style={s.row}>
+            <Switch
+              disabled={busy}
+              value={acknowledged}
+              onValueChange={setAcknowledged}
+              accessibilityLabel={t.consent}
+            />
+            <Text style={{ flex: 1 }}>{t.consent}</Text>
+          </View>
+          {error && (
+            <Text accessibilityRole="alert" style={s.error}>
+              {commerceError(error, language)}
+            </Text>
+          )}
+        </>
       )}
-      <Text style={s.heading}>{t.test}</Text>
-      {['approved', 'declined'].map((value) => (
-        <Button
-          key={value}
-          color={outcome === value ? color : '#686159'}
-          disabled={busy}
-          title={`${outcome === value ? '✓ ' : ''}${t[value]}`}
-          onPress={() => setOutcome(value)}
-        />
-      ))}
-      <View style={s.row}>
-        <Switch
-          disabled={busy}
-          value={acknowledged}
-          onValueChange={setAcknowledged}
-          accessibilityLabel={t.consent}
-        />
-        <Text style={{ flex: 1 }}>{t.consent}</Text>
-      </View>
-      {error && (
-        <Text accessibilityRole="alert" style={s.error}>
-          {commerceError(error, language)}
-        </Text>
-      )}
+      {!valid && <Text style={s.notice}>{d.invalid}</Text>}
       <Text style={s.notice}>{t.noCharge}</Text>
       <Button
         color={color}
-        disabled={busy || !acknowledged}
-        title={busy ? t.working : t.confirm}
-        onPress={() => confirm({ mode: 'demo', method, acknowledged: true, outcome })}
+        disabled={busy || !valid || (step === 2 && !acknowledged)}
+        title={busy ? t.working : step === 1 ? d.next : t.confirm}
+        onPress={() =>
+          step === 1
+            ? changeStep(2)
+            : confirm({ mode: 'demo', method, acknowledged: true, outcome, fulfillment })
+        }
       />
     </ScrollView>
   );
@@ -246,6 +298,11 @@ export function Order({ id, completed, language, back }) {
           {order.payment?.mode === 'demo' && (
             <>
               <Text style={s.heading}>{p.receipt}</Text>
+              <DeliverySummary
+                value={order.payment.fulfillment}
+                language={language}
+                cancelled={order.status === 'cancelled'}
+              />
               <Text>{p[order.payment.method]}</Text>
               <Text selectable>{order.payment.reference}</Text>
               <Text>{p.noCharge}</Text>
