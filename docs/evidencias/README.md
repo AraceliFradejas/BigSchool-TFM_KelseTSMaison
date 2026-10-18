@@ -1,4 +1,8 @@
-# Evidencias de Maison en Safari
+# Evidencias de Maison
+
+La selección de la versión publicada está en [Capturas de producción del 18 de octubre de 2026](produccion-2026-10-18/README.md): portada, catálogo, ficha, cuenta y Team, con pies y límites de cada evidencia.
+
+## Archivo histórico · Safari local
 
 Capturas del **11 de octubre de 2026**, tomadas en Safari sobre la aplicación local. La cuenta «Prueba Maison», el pedido y sus datos son ficticios. Estas capturas preceden al ajuste del logo KelseTS aplicado después; los estados del pedido son los observados durante la prueba. Las imágenes muestran comprobaciones parciales del recorrido, no una certificación general del sistema.
 
@@ -16,7 +20,7 @@ Team muestra el mismo pedido confirmado, su detalle y las acciones permitidas de
 
 ## Pendiente de ampliar
 
-Faltan capturas de la portada, catálogo, ficha, bolsa, editor de producto, subida de imagen, castellano, dispositivo real y entorno desplegado. La relación de pruebas ejecutadas y sus límites está en [Validación](../VALIDACION.md).
+La nueva selección publicada incorpora portada, catálogo, ficha, cuenta y Team en castellano. Quedan por ampliar bolsa, editor de producto, subida de imagen, inglés de la versión publicada y dispositivo real. La relación de pruebas ejecutadas y sus límites está en [Validación](../VALIDACION.md).
 
 ## Láminas de catálogo · 17 de octubre
 

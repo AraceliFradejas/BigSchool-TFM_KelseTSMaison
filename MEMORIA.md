@@ -109,3 +109,10 @@ Con 190 piezas, encontrar una talla y respetar un presupuesto resulta más impor
 La bolsa identifica qué pieza necesita una corrección de cantidad y permite actualizar sus precios y existencias. Team incorpora búsqueda por nombre en ambos idiomas o identificador y un filtro de artículos visibles y archivados. El editor señala las traducciones pendientes antes de guardar, manteniendo también la validación del servidor.
 
 El recorrido se ha comprobado en Edge sobre una copia aislada: acceso, favoritos, elección de talla, ajuste por cambio de stock, pedido, historial, comunicaciones y confirmación y cancelación desde Team. También se ha creado un producto bilingüe y subido su fotografía desde la interfaz. Los datos de esa revisión no alteran las cuentas ni las existencias de la instalación principal. Los detalles y límites de la revisión responsive están en la validación.
+
+
+## 14 Evidencias de la versión publicada
+
+El 18 de octubre de 2026 se guardan cinco capturas originales de Chrome sobre la web publicada en Vercel: portada, catálogo de 190 piezas, ficha con variantes, cuenta con sesión iniciada y gestión de productos de Team. El [índice de capturas](docs/evidencias/produccion-2026-10-18/README.md) reúne las imágenes y los pies para incorporarlos a la memoria final.
+
+Las capturas conservan la dirección pública y describen el estado observado. La cuenta aparece sin pedidos ni comunicaciones; no se utiliza esa imagen como prueba de un pedido o de envío de correo. La evidencia visual del editor, la subida, un pedido publicado, inglés y un teléfono físico queda por ampliar.
