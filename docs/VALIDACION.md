@@ -284,3 +284,10 @@ Araceli acepta la ampliación de 36 looks y 90 segundos, con cadencia más lenta
 - `npm run check:production`, correcto sobre el build real: cinco rutas SPA, tres recursos referenciados por el HTML (favicon, JS y CSS), healthcheck, catálogo, una imagen y 404 de recurso inexistente. Utiliza datos temporales y HTTP de loopback con configuración de producción; no acredita HTTPS público ni configuración de proxy.
 - `npm test`: 42 correctas (33 backend, 6 cliente HTTP, 3 bolsa). `git diff --check`, correcto. El build utilizado es el compilado en la revisión de accesibilidad del mismo día; no han cambiado fuentes del frontend en este bloque.
 - Se añade el chequeo del build al flujo de CI y un `HEALTHCHECK` al Dockerfile. No se ha ejecutado todavía ese flujo remoto con estos cambios, ni Docker, que no está instalado. Persistencia en alojamiento, reinicio del proveedor, dominio y TLS siguen pendientes.
+
+
+## Evidencias publicadas · 18 de octubre de 2026
+
+Se amplía el [índice de capturas](evidencias/produccion-2026-10-18/README.md) hasta dieciséis imágenes originales de Chrome. Desde la sesión existente de Team Maison se cambia a inglés, se añade una unidad M · Champagne de Enchanted a la bolsa y se crea el pedido de demostración `29e9f091-8106-41cc-8ccb-0f596dbfe229` por 1.850 €. Desde Team se confirma y cancela. Se observan los tres mensajes internos en la cuenta y la recuperación de las ocho unidades iniciales de esa variante. Se conserva el pedido cancelado como demostración; la bolsa termina vacía. No se ha enviado correo ni realizado un cobro.
+
+Se abre el editor existente y se capturan sus campos ES/EN sin guardar modificaciones. Se observa la portada publicada y se abre y cierra su menú en el perfil iPhone SE de Chrome DevTools (375 × 667 CSS, sin limitación de red). Se restaura escritorio y castellano, conservando la sesión. Esta revisión no equivale a una prueba en teléfono físico ni a una validación completa de todos los tamaños. No se cambia código de la aplicación.

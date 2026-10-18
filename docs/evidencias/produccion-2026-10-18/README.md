@@ -1,6 +1,6 @@
 # Capturas de la web publicada · 18 de octubre de 2026
 
-Capturas originales de Chrome en escritorio sobre https://kelsets-maison.vercel.app, realizadas el 18 de octubre de 2026. Se conserva la ventana del navegador y la dirección pública; no se han reconstruido ni retocado las pantallas. Son vistas parciales de la interfaz, no pruebas de todos los comportamientos del sistema. No se han modificado productos ni creado pedidos para obtenerlas.
+Capturas originales de Chrome en escritorio sobre https://kelsets-maison.vercel.app, realizadas el 18 de octubre de 2026. Se conserva la ventana del navegador y la dirección pública; no se han reconstruido ni retocado las pantallas. Son vistas parciales de la interfaz, no pruebas de todos los comportamientos del sistema. Las capturas 1–5 se tomaron sin modificar productos ni crear pedidos. La ampliación 6–16 documenta después un pedido de demostración creado, confirmado y cancelado para esta revisión; se conserva cancelado en el historial de Team Maison. No se han guardado cambios del editor.
 
 ## 1. Portada en castellano
 
@@ -32,6 +32,64 @@ Saludo a Team Maison y espacios de pedidos y comunicaciones vacíos. Esta captur
 
 Panel de Team accesible con la sesión existente: 190 piezas, búsqueda, filtro de visibilidad, existencias y acceso al editor. La captura no demuestra una operación de guardado ni una subida de imagen.
 
+## 6. Cuenta en inglés
+
+![Cuenta en inglés antes del pedido](06-cuenta-en.jpg)
+
+Misma cuenta y sesión, con interfaz inglesa y todavía sin pedidos antes de comenzar la simulación.
+
+## 7. Bolsa en inglés
+
+![Bolsa con una pieza](07-bolsa-en.jpg)
+
+Una unidad de Dress · Enchanted, M · Champagne, por 1.850 €. Se muestran cantidad, total y aviso de simulación sin datos de pago ni envío.
+
+## 8. Pedido creado
+
+![Pedido pendiente](08-pedido-pendiente-en.jpg)
+
+Pedido `29e9f091-8106-41cc-8ccb-0f596dbfe229`, creado desde la bolsa y observado en estado pendiente, con una unidad y total de 1.850 €. No hay cobro ni envío.
+
+## 9. Confirmación desde Team
+
+![Pedido confirmado](09-team-confirmado-en.jpg)
+
+El mismo pedido aparece confirmado después de la acción de Team. El botón de expedición simulada se muestra disponible; no se ha utilizado.
+
+## 10. Cancelación desde Team
+
+![Pedido cancelado](10-team-cancelado-en.jpg)
+
+Estado final cancelado tras la acción de Team. Se mantiene el registro de demostración para poder relacionarlo con estas evidencias.
+
+## 11. Comunicaciones internas
+
+![Historial y comunicaciones](11-comunicaciones-en.jpg)
+
+La cuenta muestra el pedido cancelado y las tres comunicaciones de creación, confirmación y cancelación. Son mensajes internos de Maison; esta captura no acredita entrega de correo electrónico mediante Mailtrap.
+
+## 12. Stock después de cancelar
+
+![Talla M con ocho unidades](12-stock-restaurado-en.jpg)
+
+La ficha vuelve a mostrar ocho unidades en M · Champagne, el mismo valor observado antes del pedido. La bolsa queda vacía.
+
+## 13–14. Editor bilingüe
+
+![Editor con campos ingleses](13-editor-en.jpg)
+
+![Editor con campos castellanos](14-editor-traduccion-es.jpg)
+
+Editor del producto existente, con fotografía, pestañas de idioma, variantes, precios y existencias. Se revisan ambos idiomas y se sale sin guardar cambios. Se ve el control de subida, pero estas imágenes no prueban una nueva subida ni un guardado.
+
+## 15–16. Portada y menú en móvil emulado
+
+![Portada en emulación móvil](15-portada-movil-emulado-en.jpg)
+
+![Menú abierto en emulación móvil](16-menu-movil-emulado-en.jpg)
+
+Chrome DevTools, perfil iPhone SE de 375 × 667 píxeles CSS, sin limitación de red. Se observa la portada vertical y se abre y cierra el menú con acceso a cuenta y Team. Son capturas de emulación en escritorio, no de un iPhone físico. Al terminar se restaura la vista de escritorio en castellano con la sesión iniciada.
+
 ## Evidencias que quedan por ampliar
 
-Bolsa, pedido y sus cambios de estado en la versión publicada; editor y subida de imagen; inglés; móvil físico. El asistente de IA de outfits y la app nativa siguen pendientes de implementación y no se presentan como funcionalidades capturadas. Las verificaciones técnicas realizadas se detallan en [VALIDACION.md](../../VALIDACION.md).
+Nueva subida de imagen y guardado con su secuencia visual; teléfono físico y más tamaños y recorridos responsive. El asistente de IA de outfits y la app nativa siguen pendientes de implementación y no se presentan como funcionalidades capturadas. Las verificaciones técnicas realizadas se detallan en [VALIDACION.md](../../VALIDACION.md).
