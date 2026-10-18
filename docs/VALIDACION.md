@@ -351,3 +351,8 @@ Dos pruebas comprueban el caso de cuatro cifras, límites desde cero hasta millo
 ### Formato europeo en ambos idiomas
 
 Araceli aclara que el formato requerido es europeo también al navegar en inglés. Se elimina la selección de locale por idioma del formateador compartido: ES y EN muestran siempre `1.850,00 €`, con punto de miles, coma decimal y dos decimales. Las pruebas de límites se aplican ahora a ambos idiomas tanto en web como en el adaptador móvil. La comprobación anterior de formato anglosajón queda sustituida por este criterio.
+
+
+### Miniaturas de producto en la bolsa móvil
+
+Se añade la imagen del producto a cada línea de la bolsa nativa, junto con nombre, variante, cantidad e importe europeo. Imagen y datos abren la ficha. Se reutiliza el componente de foto y su alternativa si la imagen no carga; los productos retirados mantienen su aviso de indisponibilidad. Exportación iOS/Android correcta; comprobación visual en dispositivo pendiente. No cambia la lógica ni los datos de la bolsa.

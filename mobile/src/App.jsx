@@ -134,7 +134,7 @@ function Button({ children, onPress, disabled, secondary, selected, ...props }) 
     </Pressable>
   );
 }
-function Photo({ product, language, large = false }) {
+function Photo({ product, language, large = false, style }) {
   const [failed, setFailed] = useState(false);
   const uri = imageUrl(product?.image);
   return uri && !failed ? (
@@ -144,10 +144,10 @@ function Photo({ product, language, large = false }) {
       source={{ uri }}
       onError={() => setFailed(true)}
       resizeMode="cover"
-      style={large ? s.largePhoto : s.photo}
+      style={[large ? s.largePhoto : s.photo, style]}
     />
   ) : (
-    <View style={large ? s.largePhoto : s.photo}>
+    <View style={[large ? s.largePhoto : s.photo, style]}>
       <Text>{product?.name[language]}</Text>
     </View>
   );
@@ -375,15 +375,32 @@ function Bag({ lines, change, language, t, open }) {
         {!lines.length && <Text style={s.body}>{t.emptyBag}</Text>}
         {state.data?.map((line) => (
           <View key={line.variantId} style={s.bagLine}>
-            {line.product && (
-              <Pressable accessibilityRole="button" onPress={() => open(line.productId)}>
-                <Text style={s.name}>{line.product.name[language]}</Text>
+            {line.product ? (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel={`${line.product.name[language]}, ${line.variant?.label[language] || line.variantId}, ${line.quantity}, ${line.variant ? money(line.totalCents, language) : ''}`}
+                onPress={() => open(line.productId)}
+                style={s.bagProduct}
+              >
+                <Photo
+                  key={line.product.image}
+                  product={line.product}
+                  language={language}
+                  style={s.bagPhoto}
+                />
+                <View style={s.bagInfo}>
+                  <Text style={s.name}>{line.product.name[language]}</Text>
+                  <Text>
+                    {line.variant?.label[language] || line.variantId} · × {line.quantity}
+                  </Text>
+                  {line.variant && <Text style={s.price}>{money(line.totalCents, language)}</Text>}
+                </View>
               </Pressable>
+            ) : (
+              <Text>
+                {line.variant?.label[language] || line.variantId} · × {line.quantity}
+              </Text>
             )}
-            <Text>
-              {line.variant?.label[language] || line.variantId} · × {line.quantity}
-            </Text>
-            {line.variant && <Text style={s.price}>{money(line.totalCents, language)}</Text>}
             {!line.valid && <Text style={s.error}>{t.invalid}</Text>}
             <View style={s.row}>
               <Button
@@ -720,6 +737,15 @@ const s = StyleSheet.create({
   error: { color: '#b3152b', padding: 12 },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   pagination: { paddingVertical: 16, gap: 14, alignItems: 'center' },
+  bagProduct: { flexDirection: 'row', alignItems: 'center', gap: 16 },
+  bagPhoto: {
+    width: 88,
+    height: 110,
+    aspectRatio: undefined,
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
+  bagInfo: { flex: 1, gap: 8 },
   bagLine: { paddingVertical: 16, gap: 8, borderBottomWidth: 1, borderColor: '#d9d4ca' },
   tab: {
     flex: 1,
