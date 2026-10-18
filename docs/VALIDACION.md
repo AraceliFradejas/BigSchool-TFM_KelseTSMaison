@@ -291,3 +291,10 @@ Araceli acepta la ampliación de 36 looks y 90 segundos, con cadencia más lenta
 Se amplía el [índice de capturas](evidencias/produccion-2026-10-18/README.md) hasta dieciséis imágenes originales de Chrome. Desde la sesión existente de Team Maison se cambia a inglés, se añade una unidad M · Champagne de Enchanted a la bolsa y se crea el pedido de demostración `29e9f091-8106-41cc-8ccb-0f596dbfe229` por 1.850 €. Desde Team se confirma y cancela. Se observan los tres mensajes internos en la cuenta y la recuperación de las ocho unidades iniciales de esa variante. Se conserva el pedido cancelado como demostración; la bolsa termina vacía. No se ha enviado correo ni realizado un cobro.
 
 Se abre el editor existente y se capturan sus campos ES/EN sin guardar modificaciones. Se observa la portada publicada y se abre y cierra su menú en el perfil iPhone SE de Chrome DevTools (375 × 667 CSS, sin limitación de red). Se restaura escritorio y castellano, conservando la sesión. Esta revisión no equivale a una prueba en teléfono físico ni a una validación completa de todos los tamaños. No se cambia código de la aplicación.
+
+
+### Secuencia visual de subida y guardado en Team
+
+Se añaden las capturas 17–19: subida mediante selector nativo de una copia del recurso propio `satin-story.webp`; creación desde la interfaz de `evidencia-daylight-20261018`, archivada, con traducciones ES/EN, una variante, precio 10 € y stock cero; búsqueda y reapertura con la referencia de imagen conservada. La entrada automatizada pierde una vocal acentuada en la etiqueta castellana («M · Champn»); la evidencia conserva ese estado real. No se modifican piezas existentes.
+
+Tras comprobar ausencia de referencias en pedidos y de uso compartido de la imagen, se limpian exclusivamente el producto, variante y referencia temporales de Atlas y su imagen de Cloudinary. Resultado: 190 productos; cero productos, variantes o referencias de esa prueba. Las capturas se conservan en el índice y el pedido cancelado anterior permanece en el historial.

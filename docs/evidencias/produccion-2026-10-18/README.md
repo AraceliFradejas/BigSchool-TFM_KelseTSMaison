@@ -1,6 +1,6 @@
 # Capturas de la web publicada · 18 de octubre de 2026
 
-Capturas originales de Chrome en escritorio sobre https://kelsets-maison.vercel.app, realizadas el 18 de octubre de 2026. Se conserva la ventana del navegador y la dirección pública; no se han reconstruido ni retocado las pantallas. Son vistas parciales de la interfaz, no pruebas de todos los comportamientos del sistema. Las capturas 1–5 se tomaron sin modificar productos ni crear pedidos. La ampliación 6–16 documenta después un pedido de demostración creado, confirmado y cancelado para esta revisión; se conserva cancelado en el historial de Team Maison. No se han guardado cambios del editor.
+Capturas originales de Chrome en escritorio sobre https://kelsets-maison.vercel.app, realizadas el 18 de octubre de 2026. Se conserva la ventana del navegador y la dirección pública; no se han reconstruido ni retocado las pantallas. Son vistas parciales de la interfaz, no pruebas de todos los comportamientos del sistema. Las capturas 1–5 se tomaron sin modificar productos ni crear pedidos. La ampliación 6–16 documenta después un pedido de demostración creado, confirmado y cancelado para esta revisión; se conserva cancelado en el historial de Team Maison. En las capturas 13–14 no se guardaron cambios. La secuencia 17–19 documenta después una creación temporal archivada y su limpieza.
 
 ## 1. Portada en castellano
 
@@ -90,6 +90,22 @@ Editor del producto existente, con fotografía, pestañas de idioma, variantes, 
 
 Chrome DevTools, perfil iPhone SE de 375 × 667 píxeles CSS, sin limitación de red. Se observa la portada vertical y se abre y cierra el menú con acceso a cuenta y Team. Son capturas de emulación en escritorio, no de un iPhone físico. Al terminar se restaura la vista de escritorio en castellano con la sesión iniciada.
 
+## 17–19. Subida, guardado y reapertura desde Team
+
+![Imagen subida desde el selector de archivos](17-imagen-subida-team.jpg)
+
+La pieza temporal `evidencia-daylight-20261018` utiliza una copia del recurso de Maison `satin-story.webp`, seleccionada desde el equipo. El campo de imagen pasa a una ruta `/api/v1/images/` y la vista previa muestra la imagen servida por la API publicada. El formulario contiene nombre, descripción y variante en ES/EN, precio de demostración de 10 € y stock cero. La pieza permanece archivada durante toda la prueba.
+
+![Producto temporal guardado y encontrado en Team](18-producto-guardado-archivado.jpg)
+
+Después de pulsar Guardar producto, la búsqueda encuentra la pieza archivada con su miniatura. El contador filtrado muestra una coincidencia; durante la prueba el total de Team fue de 191 productos, incluidos los 190 anteriores.
+
+![Producto reabierto con sus datos guardados](19-producto-reabierto-team.jpg)
+
+Al reabrir el editor se recuperan nombre, descripción, referencia de imagen, variante, precio y stock. El selector local vuelve a estar vacío, mientras la referencia y la vista previa se conservan. La etiqueta castellana de la variante quedó como «M · Champn» por la entrada automatizada; se mantiene la captura original y no se presenta como una revisión editorial de ese texto.
+
+Tras guardar las evidencias se comprueba que la pieza no está referenciada por pedidos ni comparte su imagen con otros productos. Se retiran únicamente el producto temporal, su variante, su referencia de imagen y la copia de Cloudinary. La comprobación final en Atlas devuelve 190 productos y cero registros de esa pieza, variante e imagen de prueba. Los productos originales y el pedido cancelado de la secuencia anterior se conservan.
+
 ## Evidencias que quedan por ampliar
 
-Nueva subida de imagen y guardado con su secuencia visual; teléfono físico y más tamaños y recorridos responsive. El asistente de IA de outfits y la app nativa siguen pendientes de implementación y no se presentan como funcionalidades capturadas. Las verificaciones técnicas realizadas se detallan en [VALIDACION.md](../../VALIDACION.md).
+Teléfono físico y más tamaños y recorridos responsive. El asistente de IA de outfits y la app nativa siguen pendientes de implementación y no se presentan como funcionalidades capturadas. Las verificaciones técnicas realizadas se detallan en [VALIDACION.md](../../VALIDACION.md).

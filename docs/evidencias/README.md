@@ -1,6 +1,6 @@
 # Evidencias de Maison
 
-La selección de la versión publicada está en [Capturas de producción del 18 de octubre de 2026](produccion-2026-10-18/README.md): dieciséis capturas de portada, catálogo, ficha, cuenta, bolsa, pedido, Team, comunicaciones, editor bilingüe y móvil emulado, con pies y límites de cada evidencia.
+La selección de la versión publicada está en [Capturas de producción del 18 de octubre de 2026](produccion-2026-10-18/README.md): diecinueve capturas de portada, catálogo, ficha, cuenta, bolsa, pedido, Team, comunicaciones, editor bilingüe y móvil emulado, con pies y límites de cada evidencia.
 
 ## Archivo histórico · Safari local
 
@@ -20,7 +20,7 @@ Team muestra el mismo pedido confirmado, su detalle y las acciones permitidas de
 
 ## Pendiente de ampliar
 
-La nueva selección publicada incorpora portada, catálogo, ficha, cuenta y Team en castellano. La ampliación añade bolsa, pedido y sus estados, comunicaciones, editor bilingüe e inglés y móvil emulado. Quedan por ampliar la secuencia visual de una nueva subida y guardado y dispositivo real. La relación de pruebas ejecutadas y sus límites está en [Validación](../VALIDACION.md).
+La nueva selección publicada incorpora portada, catálogo, ficha, cuenta y Team en castellano. La ampliación añade bolsa, pedido y sus estados, comunicaciones, editor bilingüe e inglés y móvil emulado. La secuencia 17–19 documenta además subida, guardado y reapertura de una pieza temporal archivada, retirada después de la revisión. Queda pendiente el dispositivo real. La relación de pruebas ejecutadas y sus límites está en [Validación](../VALIDACION.md).
 
 ## Láminas de catálogo · 17 de octubre
 
