@@ -34,7 +34,7 @@ Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS 
 - Gestionar productos, textos ES/EN, imágenes, variantes y stock desde Team; buscar por nombre o identificador, filtrar visibles y archivados y avanzar o cancelar pedidos según las transiciones permitidas.
 - Cambiar entre castellano e inglés conservando la ruta y la bolsa.
 
-«Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. Está identificado como **modo editorial, sin IA**. Maison Stylist con un proveedor de IA sigue pendiente. La [app nativa](mobile/README.md) incorpora catálogo, variantes, outfits musicales y bolsa local. Araceli confirma apertura en iPhone, iPad y Android; el recorrido privado sigue pendiente.
+«Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. Está identificado como **modo editorial, sin IA**. Maison Stylist con un proveedor de IA sigue pendiente. La [app nativa](mobile/README.md) incorpora catálogo, variantes, outfits musicales y bolsa local. He probado la apertura en iPhone, iPad y Android; el recorrido privado sigue pendiente.
 
 ### Estructura y tecnologías
 
@@ -183,7 +183,7 @@ After the AFM Moda Oceánica landing page and the full stack journey of KelseTS 
 - Manage products, ES/EN text, images, variants and stock in Team; search by name or identifier, filter visible and archived products, and advance or cancel orders through allowed transitions.
 - Switch between Spanish and English while keeping your route and bag.
 
-“Complete your look” uses manual selections and actual catalogue availability. It is labelled **editorial mode, without AI**. Maison Stylist with an AI provider remains pending. The [native app](mobile/README.md) includes catalogue, variants, musical outfits and a local bag; Araceli has confirmed opening it on iPhone, iPad and Android. Native authentication and ordering remain pending.
+“Complete your look” uses manual selections and actual catalogue availability. It is labelled **editorial mode, without AI**. Maison Stylist with an AI provider remains pending. The [native app](mobile/README.md) includes catalogue, variants, musical outfits and a local bag; I have opened it on iPhone, iPad and Android. Native authentication and ordering remain pending.
 
 ### Structure and technologies
 
@@ -330,7 +330,7 @@ npm run mobile
 
 Abre el QR en Expo Go con móvil/tablet y ordenador en la misma Wi-Fi. En iPhone/iPad utiliza la misma cuenta Expo en la app y en la CLI (`npx expo login`). La [guía móvil](mobile/README.md) recoge instalación, descarga oficial Android y límites de Expo Go.
 
-**Comprobación física comunicada por Araceli · 18 de octubre de 2026**
+**Pruebas en mis dispositivos · 18 de octubre de 2026**
 
 | Plataforma | Estado observado | Modelo, versión del sistema y Expo Go |
 | --- | --- | --- |
@@ -338,9 +338,9 @@ Abre el QR en Expo Go con móvil/tablet y ordenador en la misma Wi-Fi. En iPhone
 | iPad · iPadOS | Apertura e interfaz/entrada corregida confirmadas | iPad de 6.ª generación · sistema 17.7.0 · Expo Go 57.0.9 |
 | Android | Apertura confirmada; vuelve a cargar tras reiniciar Metro con caché limpia | Samsung Galaxy A34 · Android 16 · Expo Go 57.0.9 |
 
-Los modelos y versiones son los comunicados por Araceli; no se ha realizado una lectura independiente de los Ajustes. Las confirmaciones de apertura no equivalen a verificar todo el recorrido de compra. Quedan por registrar capturas nativas y comprobar de principio a fin selección de outfits, conservación de bolsa, accesibilidad y cambios de conexión en cada dispositivo. Acceso, favoritos, pedidos e historial de cuenta, Team e IA aún no están integrados en la app; no hay publicación en tiendas ni binario de distribución.
+He comprobado la apertura en estos tres dispositivos. Me queda completar el recorrido de outfits y bolsa, registrar capturas nativas y revisar la conservación de la bolsa, la accesibilidad y los cambios de conexión en cada uno. Acceso, favoritos, pedidos e historial de cuenta, Team e IA aún no están integrados en la app; no hay publicación en tiendas ni binario de distribución.
 
-**Versiones del proyecto comprobadas en el lockfile:** Maison móvil 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10. Son versiones de desarrollo; no sustituyen las versiones del sistema ni la de Expo Go instalada en cada dispositivo. Exportación iOS/Android y Expo Doctor 21/21 correctos. Los detalles de las verificaciones y los avisos de dependencias están en [Validación](docs/VALIDACION.md) y en la guía móvil.
+**Versiones del proyecto comprobadas en el lockfile:** Maison móvil 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10. He registrado estas versiones para reproducir el entorno de desarrollo. Exportación iOS/Android y Expo Doctor 21/21 correctos. Los detalles de las verificaciones y los avisos de dependencias están en [Validación](docs/VALIDACION.md) y en la guía móvil.
 
 ### Native app · iPhone, iPad and Android
 
@@ -348,6 +348,6 @@ Los modelos y versiones son los comunicados por Araceli; no se ha realizado una 
 
 Run `npm ci` and `npm run mobile`, then open the QR in Expo Go on the same Wi-Fi network. iPhone/iPad requires the same Expo account in Expo Go and the CLI. See the [mobile guide](mobile/README.md).
 
-On 18 October 2026, Araceli confirmed opening the app on **iPhone, iPad and Android**, including the corrected iOS/iPadOS introduction and Android recovery after clearing Metro's cache. She reports **iPhone 13 / iOS 26.6.1**, **iPad (6th generation) / system version 17.7.0**, and **Samsung Galaxy A34 / Android 16**, using **Expo Go 57.0.9**. These are user-reported versions, not an independent reading of device settings. These reports do not establish a complete end-to-end test. Native authentication, favourites, account orders/history, Team, AI, distribution binaries and app-store publication remain pending.
+On 18 October 2026, I opened the app on **iPhone, iPad and Android**. I checked the corrected introduction and interface on iPhone and iPad, and Android loaded again after clearing Metro's cache. I used an **iPhone 13 / iOS 26.6.1**, an **iPad (6th generation) / system version 17.7.0**, and a **Samsung Galaxy A34 / Android 16**, with **Expo Go 57.0.9**. I still need to complete the outfit and bag flow on each device. Native authentication, favourites, account orders/history, Team, AI, distribution binaries and app-store publication remain pending.
 
 Project versions: mobile app 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 and expo-splash-screen 57.0.10. iOS/Android bundle exports and 21/21 Expo Doctor checks passed; these are separate from physical-device verification.

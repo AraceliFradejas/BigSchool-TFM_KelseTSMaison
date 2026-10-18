@@ -2,7 +2,7 @@
 
 ### Editor y subida desde Team publicado · 18 de octubre de 2026
 
-- Araceli confirma que accede sin error con su nueva contraseña. Después se revisa la sesión ya abierta en Chrome de escritorio sobre la web publicada, sin volver a introducir credenciales ni cerrar su sesión.
+- He accedido sin error con mi nueva contraseña. Después se revisa la sesión ya abierta en Chrome de escritorio sobre la web publicada, sin volver a introducir credenciales ni cerrar mi sesión.
 - Desde «Nuevo producto» se crea `ui-daylight-20261018`, «Vestido · Daylight (prueba)», con nombre, descripción y etiqueta de variante ES/EN, colección Golden Hour, precio de 125 € y dos unidades. Se conserva archivado durante toda la prueba para no aparecer en el catálogo público.
 - Imagen WebP sintética propia de 600 × 750, seleccionada desde el diálogo de archivos de Team. Subida completada, ruta `/api/v1/images/…` asignada y miniatura visible. Lectura por HTTPS y decodificación WebP comprobadas contra el servicio real.
 - Guardado y búsqueda por identificador desde Team correctos. Reapertura del editor: textos ES/EN, imagen, precio y stock conservados. Se edita a 130 € y 23 unidades, se guarda y se comprueba la revisión 2 y esos valores en Atlas y en el listado de Team.
@@ -23,7 +23,7 @@
 - Publicados web y API independientes desde `be67431`: https://kelsets-maison.vercel.app y https://kelsets-maison-api.vercel.app. Los dos builds completan en Vercel. No se activan planes de pago.
 - API pública: healthcheck HTTP 200 con `database: mongodb`, catálogo de 190 piezas y Team sin sesión HTTP 401.
 - `npm run check:deployment -- https://kelsets-maison.vercel.app`: correcto. Cinco rutas SPA, tres recursos HTML, cabeceras, catálogo e imagen, rechazo de pedidos y Team sin sesión y archivo ausente HTTP 404.
-- Cuenta permanente Team creada con el correo ficticio indicado por Araceli y contraseña propia privada. Se comprueba acceso, subida y lectura de imagen por el proxy, ficha temporal ES/EN, favorito y pedido de demostración. El pedido conserva nombre y precio después de editar la ficha; se confirma y cancela, recuperando stock y generando tres comunicaciones. Cookie con `Secure`, `HttpOnly`, `SameSite=Lax` y `Path=/api`; logout revoca la sesión.
+- Cuenta permanente Team creada con el correo ficticio elegido para Maison y contraseña propia privada. Se comprueba acceso, subida y lectura de imagen por el proxy, ficha temporal ES/EN, favorito y pedido de demostración. El pedido conserva nombre y precio después de editar la ficha; se confirma y cancela, recuperando stock y generando tres comunicaciones. Cookie con `Secure`, `HttpOnly`, `SameSite=Lax` y `Path=/api`; logout revoca la sesión.
 - El recorrido se ejecuta primero contra Express local conectado a los servicios reales y después por HTTP sobre el dominio HTTPS público. Solo se utilizan una imagen, producto y pedido temporales nuevos; se retiran sus registros y archivo de Cloudinary al terminar y se conserva la cuenta Team. No se modifican productos originales, cuentas ni datos de Cars.
 - Chrome de escritorio: portada pública y navegación al catálogo, con imágenes y 190 piezas después de retirar los datos de prueba; selector de idioma activado con Return, catálogo en inglés y retorno al castellano. No acredita subida desde la interfaz de Team, compra completa desde navegador, dispositivos físicos, restauración ni persistencia tras un nuevo redeploy.
 - Tras añadir el comando explícito `team:create`, las 53 pruebas siguen correctas. El comando no modifica cuentas existentes ni se ejecuta al arrancar. Las credenciales administrativas no se envían a Vercel.
@@ -31,19 +31,19 @@
 
 ### Publicación del bloque de persistencia en GitHub · 18 de octubre de 2026
 
-- Commit `be67431`, «Adapta Maison a MongoDB y Cloudinary y prepara Vercel», publicado en `main` del repositorio independiente de Maison con la identidad Git configurada de Araceli, sin coautorías añadidas.
+- Commit `be67431`, «Adapta Maison a MongoDB y Cloudinary y prepara Vercel», publicado en `main` del repositorio independiente de Maison con mi identidad Git configurada, sin coautorías añadidas.
 - Verificación previa: 53 pruebas correctas, build, chequeo local de producción y revisión de diferencias correctos. Revisión de los 483 archivos versionados o candidatos a Git sin coincidencias con la URI MongoDB y claves Cloudinary configuradas ni inclusión de `.env`, `docbase` o runtime privado.
 - [GitHub Actions, ejecución 16](https://github.com/AraceliFradejas/BigSchool-TFM_KelseTSMaison/actions/runs/39135119340): completada correctamente en 48 segundos, comprobada desde la interfaz de GitHub. Esto acredita CI remoto, no el despliegue en Vercel.
 
 ### Conexión real con Cloudinary · 18 de octubre de 2026
 
-- Comprobadas las credenciales guardadas por Araceli en `backend/.env`, sin mostrarlas. Subida autenticada mediante `createCloudinaryStorage` de una imagen WebP ficticia de 16 × 16 píxeles con identificador aleatorio dentro de la carpeta configurada de Maison.
+- Comprobadas las credenciales de Maison guardadas en `backend/.env`, sin mostrarlas. Subida autenticada mediante `createCloudinaryStorage` de una imagen WebP ficticia de 16 × 16 píxeles con identificador aleatorio dentro de la carpeta configurada de Maison.
 - Lectura real mediante `fetchCloudinaryImage`, con destino restringido y timeout; Sharp confirma WebP y dimensiones 16 × 16. Eliminación de la imagen temporal completada al finalizar.
 - No se han cambiado imágenes de catálogo, cuentas, pedidos ni datos de Cars. `backend/.env` continúa ignorado por Git. Esta prueba acredita el adaptador contra Cloudinary real; no equivale a una subida desde la interfaz de Team ni a una prueba del proxy publicado en Vercel.
 
 ### Conexión y catálogo en Atlas · 18 de octubre de 2026
 
-- Comprobadas las credenciales guardadas por Araceli en `backend/.env` sin mostrarlas: conexión y `ping` correctos, topología compatible con transacciones y base inicialmente vacía. La conexión necesitó acceso de red fuera del sandbox.
+- Comprobadas las credenciales de Maison guardadas en `backend/.env` sin mostrarlas: conexión y `ping` correctos, topología compatible con transacciones y base inicialmente vacía. La conexión necesitó acceso de red fuera del sandbox.
 - Carga en la base propia `kelsets_maison`: 190 productos, 996 variantes, 16 colecciones y 57 looks. Una segunda ejecución inserta cero productos; no duplica el catálogo. La base conserva cero usuarios y cero pedidos: no se han trasladado cuentas, sesiones ni pedidos locales o de Cars.
 - Ajustado `seed:mongo` para que la carga de MongoDB no dependa de tener Cloudinary configurado. Comprobación de sintaxis y `git diff --check` correctos.
 - Cloudinary todavía tiene sus tres campos de credenciales vacíos en esta comprobación. No se acredita subida externa, recorrido con sesión en Atlas ni despliegue Vercel. Las comprobaciones previas descritas debajo conservan su alcance temporal.
@@ -176,8 +176,8 @@ Catálogo local y respuestas HTTP comprobados: 51 artículos, 140 variantes, 15 
 ## Película final con música · 11 de octubre de 2026
 
 - Duración final: 82,958333 segundos, catorce looks, formato 16:9 y 24 fps, comprobados con FFprobe. Máster privado 3840×2160; copias web H.264 1920×1080 y 2560×1440 con audio AAC. Ambas copias se decodifican completas con FFmpeg sin errores.
-- Música «Runway Pulse», creada en Suno y aportada por Araceli; duración original 192,8535 segundos. Se utiliza su inicio, ganancia 0,7 y fundidos de dos segundos.
-- Londres, esmoquin y burdeos se sustituyen por nuevas tomas completas de cinco segundos, revisadas y aceptadas por Araceli en el montaje previo de un minuto. El lago conserva la nueva toma con una sola protagonista y un bolso.
+- Música «Runway Pulse», que creé en Suno; duración original 192,8535 segundos. Se utiliza su inicio, ganancia 0,7 y fundidos de dos segundos.
+- Londres, esmoquin y burdeos se sustituyen por nuevas tomas completas de cinco segundos, que revisé y acepté en el montaje previo de un minuto. El lago conserva la nueva toma con una sola protagonista y un bolso.
 - Los cuatro looks de cierre se revisan mediante fotogramas repartidos por cada clip, antes y después de la mejora 4K. Revisión adicional del montaje completo cada dos segundos para comprobar secuencia, continuidad y transiciones. Esta revisión por muestreo no garantiza la ausencia de todos los artefactos generativos.
 - Safari reproduce directamente la copia final de 1440p, con duración nativa mostrada como un minuto y veintidós segundos y sonido. Controles de música y pausa comprobados en la portada, en castellano e inglés.
 - Mejora del cierre: 37 créditos; generaciones: 100. Total 137 dentro del máximo autorizado de 140; saldo 7.013. El reescalado anterior de pasarela consumió otros 47 créditos, registrado por separado.
@@ -187,7 +187,7 @@ Catálogo local y respuestas HTTP comprobados: 51 artículos, 140 variantes, 15 
 
 - Chrome con emulación responsive de 390 píxeles, iPhone SE 375×667 e iPad Mini 768×1024. Encuadre panorámico en tablet y vertical a toda la altura disponible bajo la cabecera en móvil; textos y navegación revisados visualmente. La emulación no sustituye una prueba en teléfono físico.
 - Corregida la selección de la fuente de vídeo: una URL explícita que responde a cambios de anchura, versión vertical para móvil y panorámica 1080p o 1440p para pantallas mayores. Comprobada la reproducción y activación de música en móvil.
-- Tras la revisión de Araceli, el hero móvil ocupa la altura disponible de pantalla. Usa un reencuadre vertical por escena, con música y pausa superpuestas y título grande; castellano e inglés revisados. Menú hamburguesa hasta 1000 píxeles; incluye Mi cuenta y mantiene idioma, favoritos y bolsa en la cabecera.
+- Tras mi revisión, el hero móvil ocupa la altura disponible de pantalla. Usa un reencuadre vertical por escena, con música y pausa superpuestas y título grande; castellano e inglés revisados. Menú hamburguesa hasta 1000 píxeles; incluye Mi cuenta y mantiene idioma, favoritos y bolsa en la cabecera.
 - Comprobadas apertura y cierre del menú, cierre con Escape en tablet y cierre al navegar a Moda. Referencia de interacción consultada en Cars, sin modificar ese proyecto.
 - Evidencias: [móvil](evidencias/maison-film-mobile.png), [menú](evidencias/maison-menu-mobile.png) y [tablet](evidencias/maison-film-tablet.png).
 
@@ -195,8 +195,8 @@ Catálogo local y respuestas HTTP comprobados: 51 artículos, 140 variantes, 15 
 
 - Nueve animaciones de diez segundos, 36 outfits en composiciones de cuatro paneles; coste 450 créditos. Montajes de 86,75 s en 1280×720 y 85,625 s en 1080×1440, con música de Suno. Decodificación completa de ambas copias con FFmpeg sin errores.
 - Revisión de fotogramas y reproducción en Chrome; controles de música y pausa comprobados, incluida emulación iPhone SE. Compilación de producción correcta.
-- Araceli rechaza el movimiento: las prendas apenas se mueven y predomina un pequeño zoom. Estos montajes no se consideran una pasarela validada.
-- Se cambia a una única prenda por toma: prueba de cinco segundos con cámara fija y pasos alternos, coste adicional de 25 créditos. Revisión de diez fotogramas: los zapatos se levantan y apoyan alternativamente y los pantalones cambian de posición. Araceli acepta esta prueba y autoriza hasta 875 créditos adicionales para los otros 35 outfits.
+- Descarté el movimiento: las prendas apenas se mueven y predomina un pequeño zoom. Estos montajes no se consideran una pasarela validada.
+- Se cambia a una única prenda por toma: prueba de cinco segundos con cámara fija y pasos alternos, coste adicional de 25 créditos. Revisión de diez fotogramas: los zapatos se levantan y apoyan alternativamente y los pantalones cambian de posición. Acepté esta prueba y fijé un máximo de 875 créditos adicionales para los otros 35 outfits.
 - Subtotal antes de la ampliación: 475 créditos; saldo 6.538. La prueba está en `/pruebas/pasarela-caminata.html`, en bucle y con controles.
 
 ### Ampliación individual tras aprobar la caminata
@@ -211,13 +211,13 @@ Catálogo local y respuestas HTTP comprobados: 51 artículos, 140 variantes, 15 
 
 ### Nueva dirección: pasarela lateral
 
-Araceli rechaza el montaje de 36 looks por movimientos insuficientes y extraños y propone una vista lateral con avance de izquierda a derecha sobre escenarios que se desplazan. Se prepara una prueba independiente de veinte segundos: dos outfits, cuatro pasadas, un fondo continuo y la pista Runway Pulse. Las imágenes y cuatro poses por prenda se generan con la herramienta integrada de imágenes de OpenAI. La composición se realiza con FFmpeg, sin nuevas generaciones de Runway y sin créditos adicionales.
+Descarté el montaje de 36 looks porque los movimientos eran insuficientes o extraños y propuse una vista lateral de izquierda a derecha sobre escenarios que se desplazan. Se prepara una prueba independiente de veinte segundos: dos outfits, cuatro pasadas, un fondo continuo y la pista Runway Pulse. Las imágenes y cuatro poses por prenda se generan con la herramienta integrada de imágenes de OpenAI. La composición se realiza con FFmpeg, sin nuevas generaciones de Runway y sin créditos adicionales.
 
 La hoja de poses se extrae y se alinea mediante `scripts/prepare-maison-lateral-frames.mjs`; `scripts/render-maison-lateral-pilot.py` reproduce las poses a 5 fps y compone el vídeo H.264 a 24 fps. La revisión de veinte fotogramas durante los dos primeros segundos muestra alternancia de poses de piernas y avance horizontal; otra hoja cada dos segundos revisa el recorrido y el escenario. Decodificación completa sin errores y página de prueba local con HTTP 200. Es una animación ilustrada de poses discretas, pendiente de aceptación; aún no incluye los 36 looks ni dura un minuto. Fuentes y prompts privados en `docbase/hero-lateral-v1`.
 
 ### Cierre de la pasarela lateral
 
-Araceli acepta la ampliación de 36 looks y 90 segundos, con cadencia más lenta. Ambas exportaciones finales se decodifican completas sin errores; FFprobe confirma duración, dimensiones y audio. Se revisan visualmente 18 muestras de escritorio y una muestra por cada uno de los 36 looks móviles, con prendas y calzado dentro del encuadre. La portada se comprueba en Edge de escritorio y la compilación de producción termina correctamente. La copia móvil es 1080×1920 y se selecciona hasta 700 px. La emulación responsive no puede completarse porque la organización bloquea DevTools en Edge; no se ha probado esta versión en un teléfono físico. No se ha realizado commit, push ni despliegue remoto de esta revisión.
+Acepté la ampliación de 36 looks y 90 segundos, con una cadencia más lenta. Ambas exportaciones finales se decodifican completas sin errores; FFprobe confirma duración, dimensiones y audio. Se revisan visualmente 18 muestras de escritorio y una muestra por cada uno de los 36 looks móviles, con prendas y calzado dentro del encuadre. La portada se comprueba en Edge de escritorio y la compilación de producción termina correctamente. La copia móvil es 1080×1920 y se selecciona hasta 700 px. La emulación responsive no puede completarse porque la organización bloquea DevTools en Edge; no se ha probado esta versión en un teléfono físico. No se ha realizado commit, push ni despliegue remoto de esta revisión.
 
 ### Catálogo de los 36 outfits · 12 de octubre
 
@@ -308,19 +308,19 @@ Tras comprobar ausencia de referencias en pedidos y de uso compartido de la imag
 - `npm run mobile:export`: paquetes Hermes de iOS y Android generados correctamente. `expo install --check`: dependencias compatibles. `expo-doctor`: 21/21 después de retirar una opción de splash ya no admitida y resolver la duplicación de React.
 - `npm run build` y `npm run check:production` correctos tras unificar React. La primera ejecución de tests encontró EPERM al abrir loopback en el sandbox; la repetición con permisos de puertos pasa. No fue un fallo de lógica de la aplicación.
 - La auditoría del árbol de dependencias informa 22 avisos (7 moderados y 15 altos) en Expo/React Native y sus dependencias; se documentan en la guía móvil. No se aplica una corrección forzada incompatible.
-- Metro arranca para Expo Go. No hay Xcode ni emulador Android instalados en este entorno y todavía no se ha ejecutado esta app en un móvil: Araceli ofrece probar ambos sistemas. Exportar no acredita un recorrido nativo ni genera un IPA/APK de distribución. No se publica en App Store ni Google Play.
+- Metro arranca para Expo Go. No hay Xcode ni emulador Android instalados en este entorno y todavía no se ha ejecutado esta app en un móvil: La prueba física de ambos sistemas se recoge en los apartados posteriores. Exportar no acredita un recorrido nativo ni genera un IPA/APK de distribución. No se publica en App Store ni Google Play.
 
 El recorrido privado (sesión, pedidos, favoritos y Team), la prueba física y el asistente IA quedan pendientes. Véase [guía móvil](../mobile/README.md).
 
 
 ### Incidencia inicial de acceso a Expo Go
 
-Araceli informa que Expo Go no aparece en Play Store y de contenido no válido en iOS. Se comprueba Metro activo y un manifiesto JSON válido para iOS con SDK 57 por HTTP local. Se corrige la guía: descarga Android desde la página oficial de Expo y requisito de iniciar sesión con la misma cuenta en CLI y Expo Go de iOS. Estas comprobaciones no prueban que el teléfono alcance la red local ni resuelven por sí solas el mensaje de Cámara; la ejecución física continúa pendiente.
+Al preparar la prueba, no encontraba Expo Go en Play Store y el iPhone mostraba un mensaje de contenido no válido. Se comprueba Metro activo y un manifiesto JSON válido para iOS con SDK 57 por HTTP local. Se corrige la guía: descarga Android desde la página oficial de Expo y requisito de iniciar sesión con la misma cuenta en CLI y Expo Go de iOS. Estas comprobaciones no prueban que el teléfono alcance la red local ni resuelven por sí solas el mensaje de Cámara; la ejecución física continúa pendiente.
 
 
-### Primer arranque físico comunicado y adaptación visual
+### Primer arranque físico y adaptación visual
 
-Araceli confirma que Maison abre en iPhone y Android a través de Expo Go. No se ha recibido todavía evidencia del recorrido completo ni modelos/versiones de los dispositivos. Su primera observación es que los controles resultan demasiado cuadrados.
+He abierto Maison en iPhone y Android con Expo Go. En esta primera revisión vi que los controles resultaban demasiado cuadrados. Todavía tenía que completar el recorrido y registrar los modelos y versiones, que se recogen más adelante.
 
 Se ajustan botones de marca, imágenes, selección y navegación inferior; se incorporan botones del sistema para volver/reintentar y selección de idioma con ActionSheetIOS/Alert. Android utiliza `android_ripple`; iOS, opacidad y escala al pulsar. La barra inferior sigue siendo personalizada, con roles de pestaña, iconos y contador de bolsa. Exportación iOS/Android y tres pruebas del modelo correctas; revisión visual física de estos cambios pendiente. No se modifica la web ni la lógica de stock/pedidos.
 
@@ -329,28 +329,28 @@ Se ajustan botones de marca, imágenes, selección y navegación inferior; se in
 
 Se añade la pestaña Outfits, conectada a las selecciones `sourceId` de `/looks`: galería de títulos musicales, filtro de era y detalle con todas las piezas y variantes. La selección es explícita y el conjunto se combina de forma atómica con la bolsa mediante la regla compartida. Una cuarta prueba móvil comprueba variantes incompletas, selección completa y rechazo sin adiciones parciales cuando una cantidad acumulada supera stock.
 
-La entrada con logo utiliza Animated, respeta reducción de movimiento y se puede saltar. Araceli comunica que la primera versión solo aparece en la zona inferior; se sustituye la superposición por un Modal nativo `fullScreen`, con contenido flex y margen seguro inferior, para independizar su tamaño del layout. Logo con ancho adaptable. Esta corrección todavía requiere confirmación visual en los teléfonos. El logo PNG del arranque estático deriva del SVG de BrandLogo de la web y se configura con `expo-splash-screen`; el splash distribuido no se valida en Expo Go.
+La entrada con logo utiliza Animated, respeta reducción de movimiento y se puede saltar. Al probarla vi que la primera versión solo aparecía en la zona inferior; se sustituye la superposición por un Modal nativo `fullScreen`, con contenido flex y margen seguro inferior, para independizar su tamaño del layout. Logo con ancho adaptable. Esta corrección todavía requiere confirmación visual en los teléfonos. El logo PNG del arranque estático deriva del SVG de BrandLogo de la web y se configura con `expo-splash-screen`; el splash distribuido no se valida en Expo Go.
 
 Exportación iOS/Android correcta después del ajuste, cuatro pruebas del modelo correctas y Expo Doctor 21/21. No se afirma comprobado el recorrido físico de selección de outfits ni el splash de distribución.
 
 
 ### Android tras actualización en caliente · 18 de octubre
 
-Araceli confirma funcionamiento en iPhone y iPad tras el ajuste de entrada y comunica un SyntaxError en Android. Metro registra `Unable to resolve ./Outfits` durante la incorporación de archivos, antes de terminar la actualización; no se ha recibido aún el texto exacto del error del teléfono. Se reinicia Metro con `--clear`, manteniendo puerto y dirección de desarrollo. Los bundles de desarrollo Android e iOS responden HTTP 200 como JavaScript y ambos superan una comprobación de sintaxis con esbuild. Esto acredita el servidor limpio, no confirma todavía la recuperación del dispositivo Android. Se solicita reabrir Maison desde Expo Go; si persiste, falta la captura o el texto exacto del error.
+He comprobado la entrada corregida en iPhone e iPad; en Android apareció un SyntaxError. Metro registra `Unable to resolve ./Outfits` durante la incorporación de archivos, antes de terminar la actualización; en ese momento todavía no había registrado el texto completo del error del teléfono. Se reinicia Metro con `--clear`, manteniendo puerto y dirección de desarrollo. Los bundles de desarrollo Android e iOS responden HTTP 200 como JavaScript y ambos superan una comprobación de sintaxis con esbuild. Esto acredita el servidor limpio, no confirma todavía la recuperación del dispositivo Android. El siguiente paso fue volver a abrir Maison desde Expo Go y comprobar si el error continuaba.
 
 
-Araceli confirma después que Android vuelve a cargar tras el reinicio con caché limpia. La recuperación queda confirmada por la usuaria; no implica que el recorrido de outfits completo esté verificado.
+Después del reinicio con caché limpia pude volver a cargar la app en Android. El recorrido completo de outfits seguía pendiente de revisar.
 
 ### Separación de miles en todos los importes
 
-Araceli detecta `1850,00` en la app y solicita `1.850,00`. La web ya utilizaba agrupación forzada; el formateador móvil omitía esa opción. Se unifica web y app en `@maison/contracts/money`, con agrupación siempre y dos decimales. Se aplica a precios de catálogo/ficha, filtros de presupuesto, líneas y totales de bolsa, outfits, historial, detalle y Team mediante los componentes existentes. Los campos HTML numéricos conservan el valor editable sin separadores y muestran al lado su lectura monetaria formateada en el editor de Team y en el presupuesto editorial. No cambian céntimos almacenados ni precios históricos.
+Al revisar los importes encontré `1850,00` en la app y decidí mostrar `1.850,00`. La web ya utilizaba agrupación forzada; el formateador móvil omitía esa opción. Se unifica web y app en `@maison/contracts/money`, con agrupación siempre y dos decimales. Se aplica a precios de catálogo/ficha, filtros de presupuesto, líneas y totales de bolsa, outfits, historial, detalle y Team mediante los componentes existentes. Los campos HTML numéricos conservan el valor editable sin separadores y muestran al lado su lectura monetaria formateada en el editor de Team y en el presupuesto editorial. No cambian céntimos almacenados ni precios históricos.
 
 Dos pruebas comprueban el caso de cuatro cifras, límites desde cero hasta millones, inglés y las 996 variantes de la semilla; las nueve pruebas de bolsa/modelo/formato pasan. Build web, chequeo local de producción y exportación iOS/Android correctos. El bundle de desarrollo Android responde HTTP 200 como JavaScript con el nuevo módulo compartido. Revisión visual del formato en los teléfonos pendiente.
 
 
 ### Formato europeo en ambos idiomas
 
-Araceli aclara que el formato requerido es europeo también al navegar en inglés. Se elimina la selección de locale por idioma del formateador compartido: ES y EN muestran siempre `1.850,00 €`, con punto de miles, coma decimal y dos decimales. Las pruebas de límites se aplican ahora a ambos idiomas tanto en web como en el adaptador móvil. La comprobación anterior de formato anglosajón queda sustituida por este criterio.
+He elegido mantener el formato europeo también al navegar en inglés. Se elimina la selección de locale por idioma del formateador compartido: ES y EN muestran siempre `1.850,00 €`, con punto de miles, coma decimal y dos decimales. Las pruebas de límites se aplican ahora a ambos idiomas tanto en web como en el adaptador móvil. La comprobación anterior de formato anglosajón queda sustituida por este criterio.
 
 
 ### Miniaturas de producto en la bolsa móvil
@@ -358,6 +358,6 @@ Araceli aclara que el formato requerido es europeo también al navegar en inglé
 Se añade la imagen del producto a cada línea de la bolsa nativa, junto con nombre, variante, cantidad e importe europeo. Imagen y datos abren la ficha. Se reutiliza el componente de foto y su alternativa si la imagen no carga; los productos retirados mantienen su aviso de indisponibilidad. Exportación iOS/Android correcta; comprobación visual en dispositivo pendiente. No cambia la lógica ni los datos de la bolsa.
 
 
-### Modelos y versiones comunicados por Araceli
+### Dispositivos y versiones de mis pruebas
 
-El 18 de octubre de 2026 Araceli facilita los equipos de la revisión física: iPhone 13 con iOS 26.6.1; iPad de 6.ª generación con sistema 17.7.0 (comunicado como iOS); Samsung Galaxy A34 con Android 16; Expo Go 57.0.9. Se registran en README ES/EN, memoria y guía móvil como datos proporcionados por la autora, sin comprobar independientemente los Ajustes ni deducir compatibilidad oficial a partir de ellos. Se mantienen los límites de la prueba y los recorridos todavía pendientes.
+Para la revisión del 18 de octubre de 2026 he utilizado un iPhone 13 con iOS 26.6.1, un iPad de 6.ª generación con sistema 17.7.0 y un Samsung Galaxy A34 con Android 16, con Expo Go 57.0.9. He registrado estos equipos en el README, la memoria y la guía móvil. Queda pendiente completar los recorridos indicados para cada dispositivo.

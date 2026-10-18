@@ -34,7 +34,7 @@ npx expo-doctor
 
 Exportación de los paquetes de iOS y Android correcta y 21/21 comprobaciones de Expo Doctor correctas. Esto comprueba el empaquetado y la configuración, no una ejecución en un teléfono ni un IPA/APK instalable. No se ha generado un binario de distribución ni publicado en tiendas. `mobile/dist/` queda fuera de Git.
 
-Araceli confirma que la app abre en **iPhone, iPad y Android**. Falta completar y registrar el recorrido siguiente:
+He abierto la app en **iPhone, iPad y Android**. Falta completar y registrar el recorrido siguiente:
 
 1. Abrir el QR, comprobar logo, imágenes, scroll y zonas seguras.
 2. Buscar una pieza, cambiar categoría y pasar de página.
@@ -54,7 +54,7 @@ La revisión inicial de `npm audit --omit=dev` señala 22 avisos en el árbol Ex
 
 ## Adaptación de controles a iOS y Android
 
-Tras el primer arranque, Araceli señala que la interfaz resulta demasiado rectangular en ambos dispositivos. Se incorpora el botón del sistema de React Native para volver y reintentar; el idioma utiliza ActionSheetIOS en iOS y un diálogo Alert en Android. Las acciones de marca mantienen componentes Pressable personalizados con esquinas suaves, selección rellena, respuesta de opacidad en iOS y onda nativa de Android. El campo de búsqueda ofrece el borrado integrado de iOS.
+Tras el primer arranque, vi que la interfaz resultaba demasiado rectangular en ambos dispositivos. Se incorpora el botón del sistema de React Native para volver y reintentar; el idioma utiliza ActionSheetIOS en iOS y un diálogo Alert en Android. Las acciones de marca mantienen componentes Pressable personalizados con esquinas suaves, selección rellena, respuesta de opacidad en iOS y onda nativa de Android. El campo de búsqueda ofrece el borrado integrado de iOS.
 
 La navegación inferior es una barra personalizada accesible con iconos y contador de bolsa; no se presenta como UITabBar o una barra Material nativa. Se mantienen los componentes de sistema de teclado, scroll, zonas seguras y alertas. Esta revisión pasa exportación iOS/Android y las tres pruebas del modelo móvil; la comprobación visual del ajuste en teléfonos sigue pendiente. Referencia: [Pressable de React Native](https://reactnative.dev/docs/pressable).
 
@@ -67,7 +67,7 @@ Al abrir de nuevo la app aparece una entrada animada del mismo logo de Maison, s
 
 Se prepara además el arranque estático de una futura app independiente mediante el plugin oficial `expo-splash-screen` y `assets/splash-logo.png`, rasterizado desde el SVG del logo web existente. El arranque estático y la animación dentro de la app son pasos distintos. [Expo Go no permite comprobar fielmente el splash de la app distribuida](https://docs.expo.dev/versions/v57.0.0/sdk/splash-screen/); esa comprobación requiere un binario de distribución. La animación de logo no es el vídeo de 90 segundos de la pasarela.
 
-Comprobado: exportación iOS/Android, configuración Expo Doctor 21/21 y cuatro pruebas del modelo móvil. Araceli confirma que la entrada corregida funciona en iPhone e iPad. Android comunica un error durante la actualización en caliente: se reinicia Metro con caché limpia y se comprueban los bundles de desarrollo de ambas plataformas. Araceli confirma después que Android vuelve a cargar. El recorrido completo de outfits sigue pendiente de confirmar.
+Comprobado: exportación iOS/Android, configuración Expo Doctor 21/21 y cuatro pruebas del modelo móvil. He comprobado la entrada corregida en iPhone e iPad. En Android apareció un error durante la actualización en caliente: se reinicia Metro con caché limpia y se comprueban los bundles de desarrollo de ambas plataformas. Después pude volver a cargarla en Android. El recorrido completo de outfits sigue pendiente de confirmar.
 
 
 Los importes usan el mismo formateador compartido que la web: en castellano y en inglés, `1.850,00 €`, `10.000,00 €`, siempre con punto de miles y coma decimal. Esta presentación no modifica los valores en céntimos.
@@ -75,12 +75,12 @@ Los importes usan el mismo formateador compartido que la web: en castellano y en
 
 ## Registro físico · 18 de octubre de 2026
 
-| Plataforma | Confirmación recibida | Modelo / sistema / Expo Go |
+| Plataforma | Resultado observado | Modelo / sistema / Expo Go |
 | --- | --- | --- |
 | iPhone · iOS | Apertura y entrada/interfaz corregidas correctas | iPhone 13 / iOS 26.6.1 / Expo Go 57.0.9 |
 | iPad · iPadOS | Apertura y entrada/interfaz corregidas correctas | iPad de 6.ª generación / sistema 17.7.0 / Expo Go 57.0.9 |
 | Android | Apertura y recuperación después de limpiar Metro correctas | Samsung Galaxy A34 / Android 16 / Expo Go 57.0.9 |
 
-Las versiones del proyecto son app 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10. No se deduce de ellas la versión del sistema o Expo Go del dispositivo. Las observaciones son confirmaciones de Araceli, no un recorrido completo automatizado. Se conservan como pendientes los pasos de prueba anteriores que todavía no se han confirmado.
+Las versiones del proyecto son app 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10. No se deduce de ellas la versión del sistema o Expo Go del dispositivo. He comprobado la apertura; todavía tengo que completar el recorrido manual de prueba. Se conservan como pendientes los pasos de prueba anteriores que todavía no se han confirmado.
 
-Modelos y versiones comunicados por Araceli el 18 de octubre de 2026; transcripción de su información, sin lectura independiente de los Ajustes.
+He registrado los modelos y versiones utilizados en mis pruebas del 18 de octubre de 2026.

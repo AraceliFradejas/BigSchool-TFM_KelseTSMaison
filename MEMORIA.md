@@ -22,7 +22,7 @@ El recorrido principal conecta portada, catálogo, ficha, elección de variante,
 
 La diferencia editorial está en «Completa tu look»: dieciséis colecciones reúnen prendas, calzado, bolsos, joyería y propuestas de belleza en veintiuna selecciones manuales y los treinta y seis looks de la pasarela. El buscador de combinaciones comprueba ocasión, paleta, presupuesto y stock. Esta primera versión utiliza reglas y selecciones manuales; no hace peticiones a un modelo de IA.
 
-La web tiene textos en castellano e inglés y CSS responsive. La app nativa, la integración con un proveedor de IA, las boutiques y las citas continúan fuera del alcance implementado. La web ya está publicada en [Vercel](https://kelsets-maison.vercel.app); las slides finales y las ampliaciones siguen pendientes de cierre.
+La web tiene textos en castellano e inglés y CSS responsive. La app nativa ya tiene una primera versión con catálogo, outfits y bolsa local, descrita más adelante. La integración con un proveedor de IA, las boutiques y las citas siguen pendientes. La web ya está publicada en [Vercel](https://kelsets-maison.vercel.app); las slides finales y las ampliaciones siguen pendientes de cierre.
 
 ## 3 Organización técnica
 
@@ -34,7 +34,7 @@ El cliente HTTP parte del transporte de KelseTS Cars, revisado y adaptado a Mais
 
 ## 4 Catálogo e identidad visual
 
-El catálogo actual contiene ciento noventa productos ficticios, incluidos los conjuntos y las piezas de los treinta y seis looks de pasarela,, repartidos entre Moda, Accesorios y Belleza. Cada producto tiene nombre y descripción ES/EN, colección, imagen y variantes. Las tallas, tonos o formatos pertenecen a cada variante, junto con su precio y existencias. Algunas tallas empiezan agotadas para hacer visible ese estado.
+El catálogo actual contiene ciento noventa productos ficticios, incluidos los conjuntos y las piezas de los treinta y seis looks de pasarela, repartidos entre Moda, Accesorios y Belleza. Cada producto tiene nombre y descripción ES/EN, colección, imagen y variantes. Las tallas, tonos o formatos pertenecen a cada variante, junto con su precio y existencias. Algunas tallas empiezan agotadas para hacer visible ese estado.
 
 La primera propuesta visual utiliza marfil, negro suave y el rojo KelseTS `#b3152b`. El logo mantiene el dibujo vectorial utilizado en Cars con el subtítulo Maison. La portada presenta una escena de boutique y las colecciones se diferencian con colores de apoyo. DM Sans se utiliza en la interfaz y Playfair Display en los títulos. Las fuentes se sirven desde la propia aplicación.
 
@@ -64,7 +64,7 @@ Team puede crear y editar productos, ocultarlos del catálogo, cambiar variantes
 
 La [validación](docs/VALIDACION.md) recoge el entorno y las comprobaciones efectivamente ejecutadas. Las pruebas de API cubren permisos, privacidad, cálculos, pedidos duplicados, competencia por stock, cancelaciones, estados, edición con datos desactualizados y archivos de imagen.
 
-En Safari se ha recorrido la ficha, una talla agotada, la bolsa, el cambio de idioma, el acceso, la creación de un pedido, el historial, su comunicación y la confirmación desde Team. Las [evidencias](docs/evidencias/README.md) identifican las capturas y sus límites. Quedan por comprobar dispositivos reales, accesibilidad con lector de pantalla, el despliegue y el contenedor Docker.
+En Safari se ha recorrido la ficha, una talla agotada, la bolsa, el cambio de idioma, el acceso, la creación de un pedido, el historial, su comunicación y la confirmación desde Team. Las [evidencias](docs/evidencias/README.md) identifican las capturas y sus límites. Las comprobaciones posteriores del despliegue y de la app en dispositivos reales se recogen en las secciones siguientes. Siguen pendientes el lector de pantalla, el contenedor Docker y completar los recorridos indicados en la validación.
 
 ## 9 Dificultades y decisiones pendientes
 
@@ -72,7 +72,7 @@ La primera decisión ha sido mantener la aplicación utilizable sin servicios co
 
 La disponibilidad afecta a varias pantallas, aunque se decide en un único lugar: el servidor. Un producto visto hace unos minutos puede haberse agotado y una pantalla de Team puede tener datos antiguos. Las transacciones, las respuestas de conflicto y la revisión del producto cubren esas situaciones.
 
-Antes de cerrar el TFM habrá que revisar la dirección visual, configurar los servicios de Maison en Vercel, repetir el recorrido en dispositivos reales y preparar las slides sobre lo realmente construido. Solo después de medir ese progreso se decidirá si cabe una ampliación con IA o una app sencilla.
+Antes de cerrar el TFM quiero completar la revisión en dispositivos reales y preparar las slides sobre lo que he construido. Los servicios de Maison ya están configurados en Vercel y la app nativa tiene una primera versión. La integración de IA sigue pendiente.
 
 La ampliación swiftie añade vestidos de gala, sastrería, cuadros, botas, denim y punto. La selección de lujo incluye gabardinas, cachemir, lana, tul, terciopelo, piel, satén y joyería. Los looks se exploran por eventos, entrevistas y TV, estilo de calle o día a día. El buscador contempla verdes y plateados y mantiene la comprobación de presupuesto y existencias. Los precios y materiales describen artículos ficticios; no acreditan mercancía real.
 
@@ -86,7 +86,7 @@ La película panorámica evoluciona desde un tráiler de quince segundos a un mo
 
 La revisión de movimiento detectó figuras secundarias, duplicación y levitación de bolsos, una torsión de cuello y una pisada poco natural. Las tomas de lago y esmoquin se sustituyeron primero; después se rehacen Londres, esmoquin y gala burdeos con fotogramas de postura neutral y prompts de pasos cortos, brazos relajados y cabeza alineada. Se revisan los resultados antes de incorporarlos. La última ronda utiliza tres clips de cinco segundos y consume los setenta y cinco créditos autorizados. El montaje previo no se considera una entrega validada.
 
-Araceli aporta «Runway Pulse», creada en Suno, para la música. La portada comienza silenciada y permite activar o silenciar el sonido y pausar la película. FFmpeg permite reproducir el montaje con fundidos, velocidad de reproducción configurable y audio con entrada y salida suaves. Topaz AI mediante la App de Runway mejora las fuentes; los másteres grandes se mantienen fuera de Git. El guion de casi dos minutos continúa como ampliación pendiente.
+Para la música he utilizado «Runway Pulse», que creé en Suno. La portada comienza silenciada y permite activar o silenciar el sonido y pausar la película. FFmpeg permite reproducir el montaje con fundidos, velocidad de reproducción configurable y audio con entrada y salida suaves. Topaz AI mediante la App de Runway mejora las fuentes; los másteres grandes se mantienen fuera de Git. El guion de casi dos minutos continúa como ampliación pendiente.
 
 El cierre añade cuatro looks: sastrería de raya diplomática en Milán, cachemir en los Alpes, estilo Oxford junto al Mediterráneo y terciopelo negro de noche. Sus cuatro animaciones consumen 100 créditos y la mejora de resolución 37, dentro del máximo de 140 autorizado. El montaje reúne catorce looks en aproximadamente un minuto y veintitrés segundos, con la música de Suno. Se exporta un máster 4K privado y versiones de 1080p y 1440p para la web.
 
@@ -120,32 +120,32 @@ Las capturas conservan la dirección pública y describen el estado observado. L
 
 ## 15 Primer paso hacia la app nativa
 
-Después de publicar la boutique, Araceli prioriza la app móvil antes del asistente de outfits. Se inicia una aplicación React Native con Expo SDK 57, conectada a la misma API HTTPS y sin incrustar la web. La primera etapa reúne catálogo, búsqueda, categorías, ficha, variantes y bolsa local en castellano e inglés. La bolsa conserva identificadores y cantidades, y vuelve a consultar precios y existencias al abrirse. Las reglas de cantidades pasan a un módulo compartido con la web.
+Después de publicar la boutique, decidí continuar con la app móvil antes de abordar el asistente de outfits. He mantenido React y JavaScript, esta vez con React Native y Expo SDK 57. La app consulta la misma API HTTPS de Maison, sin incrustar la web. La primera etapa incluye catálogo, búsqueda, categorías, ficha, variantes y bolsa local en castellano e inglés.
 
-Se generan los paquetes de JavaScript/Hermes de iOS y Android y se superan las 21 comprobaciones de Expo Doctor. Se unifica React en web y móvil para evitar dependencias duplicadas. En ese momento todavía no se había probado en dispositivos ni distribuido un binario; las confirmaciones físicas posteriores se recogen en el cierre de esta sección. Acceso, pedidos nativos, Team e IA siguen pendientes. La [documentación móvil](mobile/README.md) detalla el arranque y el recorrido de prueba.
+La bolsa guarda identificadores y cantidades, y consulta de nuevo los precios y las existencias al abrirse. Las reglas para añadir cantidades son compartidas con la web. Así mantengo el mismo comportamiento en las dos interfaces sin duplicar el inventario.
 
+### Outfits y bienvenida
 
-### Outfits y bienvenida en la app
+Al abrir Maison en iPhone y Android vi que los controles resultaban demasiado cuadrados y se parecían demasiado a los de la web. He ajustado las acciones, los estados de selección y el cambio de idioma para cada plataforma. La barra inferior sigue siendo personalizada y conserva la identidad de Maison.
 
-La primera observación de Araceli tras abrir Maison en iPhone y Android lleva a adaptar los controles y a añadir los outfits musicales que ya existían en la web. La app incorpora una pestaña Outfits con filtro por era y detalle de las piezas, donde se elige cada variante antes de añadir el conjunto completo a la bolsa. Reutiliza catálogo, selecciones editoriales y reglas de cantidades existentes.
+También quería encontrar en la app los conjuntos completos de la pasarela. La pestaña Outfits reúne los 36 looks con títulos de canciones, filtro por era y detalle de sus piezas. Para añadir un conjunto hay que elegir una variante disponible de cada pieza. La selección se combina completa con la bolsa; si supera el stock, no se añaden piezas sueltas. La cesta incorpora las fotos y permite volver a la ficha de cada producto.
 
-La bienvenida utiliza el logo de Maison con una animación breve y saltable, respetando reducción de movimiento. Se prepara también el logo estático del arranque para una futura distribución. Tras comunicar Araceli que la entrada no cubría la pantalla, se cambia a una pantalla modal nativa completa. Araceli confirma después que la entrada y la interfaz corregidas funcionan en iPhone e iPad. Android vuelve a cargar tras limpiar la caché de Metro. El recorrido completo de outfits en los dispositivos sigue pendiente; la exportación iOS/Android, las cuatro pruebas del modelo y Expo Doctor son correctos.
+He unificado la presentación de los importes en castellano e inglés: **1.850,00 €**, con punto de miles, coma decimal y dos decimales. El idioma de la interfaz cambia los textos, pero no este criterio de presentación. Los valores se siguen guardando en céntimos.
 
+Para la entrada he elegido una animación breve del logo, que se puede saltar y respeta la reducción de movimiento. La primera versión solo ocupaba el área inferior; al revisarla, se cambió a una pantalla modal completa. Después comprobé la entrada y la interfaz corregidas en iPhone e iPad. He preparado además el logo estático para el arranque de una futura distribución, aunque ese splash requiere comprobarse en un binario propio y no en Expo Go.
 
-### Cierre móvil · iPhone, iPad y Android · 18 de octubre de 2026
+### Pruebas en mis dispositivos · 18 de octubre de 2026
 
-Poder abrir Maison en los dispositivos cambia la revisión: aparecen diferencias de uso que el empaquetado por sí solo no muestra. Araceli confirma la apertura en iPhone y Android y señala que los controles resultan demasiado cuadrados. Se adaptan las acciones y la selección de idioma a cada plataforma, manteniendo el lenguaje visual de Maison. La navegación inferior sigue siendo personalizada; no se describe como una barra nativa del sistema.
+He abierto la app con Expo Go en iPhone, iPad y Android. En Android apareció un error durante la actualización en caliente, cuando Metro todavía estaba resolviendo los archivos nuevos de Outfits. Tras reiniciar Metro con la caché limpia, pude volver a cargarla. Esta revisión me ha permitido comprobar el arranque y detectar ajustes visuales, pero todavía tengo que completar el recorrido de outfits y bolsa en cada dispositivo.
 
-Después se incorpora la pestaña Outfits con los 36 conjuntos musicales, filtro por era, piezas y variantes. Añadir un conjunto exige seleccionar una variante disponible de cada pieza y combinarlo completo con la bolsa existente; si no cabe por stock, no se añade parcialmente. La cesta incorpora miniaturas y permite abrir la ficha de cada producto. Los precios se presentan con **punto de miles, coma decimal y dos decimales tanto en castellano como en inglés**: 1.850,00 €. Esta decisión solo cambia la presentación, no los valores guardados en céntimos.
-
-La entrada animada con logo pasa a una pantalla modal completa tras observarse que ocupaba únicamente el área inferior. Araceli confirma entonces el resultado en iPhone e iPad. Android presenta un error durante la actualización en caliente; Metro había registrado una referencia a Outfits mientras se estaban incorporando sus archivos. Se reinicia con caché limpia, se comprueban los bundles de desarrollo y Araceli confirma que vuelve a cargar. No se atribuye a estos pasos una prueba completa de compra ni de todos los controles.
-
-| Dispositivo/plataforma | Confirmación de Araceli | Modelo y versión del sistema | Versión instalada de Expo Go |
+| Plataforma | Dispositivo y sistema | Expo Go | Resultado de esta revisión |
 | --- | --- | --- | --- |
-| iPhone · iOS | La app abre y la entrada/interfaz corregidas funcionan | iPhone 13 · iOS 26.6.1 | 57.0.9 |
-| iPad · iPadOS | La app abre y la entrada/interfaz corregidas funcionan | iPad de 6.ª generación · sistema 17.7.0 | 57.0.9 |
-| Android | La app abre y recupera la carga tras limpiar la caché de Metro | Samsung Galaxy A34 · Android 16 | 57.0.9 |
+| iPhone · iOS | iPhone 13 · iOS 26.6.1 | 57.0.9 | Apertura y entrada/interfaz corregidas correctas |
+| iPad · iPadOS | iPad de 6.ª generación · sistema 17.7.0 | 57.0.9 | Apertura y entrada/interfaz corregidas correctas |
+| Android | Samsung Galaxy A34 · Android 16 | 57.0.9 | Apertura y recuperación después de limpiar la caché de Metro |
 
-Araceli comunica estos modelos y versiones el 18 de octubre de 2026, incluida Expo Go 57.0.9. Se transcriben sus datos sin deducirlos del SDK ni presentarlos como una lectura independiente de los Ajustes. La app de desarrollo está identificada como **0.1.0** y el lockfile recoge **Expo 57.0.30, SDK 57; React Native 0.86.3; React 19.2.3; expo-splash-screen 57.0.10**. No son versiones de iOS, iPadOS, Android ni de Expo Go. Los paquetes Hermes de iOS y Android se generan y Expo Doctor supera 21/21 comprobaciones. Las pruebas de formato recorren las 996 variantes del catálogo y cantidades desde cero hasta millones en ambos idiomas.
+Para estas pruebas he utilizado **Expo Go 57.0.9**. La app está en la versión **0.1.0**, con **Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10**. He dejado estas versiones registradas para poder reproducir el entorno de desarrollo.
 
-La ejecución física se realiza con Expo Go y Metro, no mediante una app publicada en tiendas. El splash estático de distribución requiere un binario propio para su validación; en Expo Go se comprueba la animación posterior dentro de Maison. Quedan pendientes las capturas nativas y completar el recorrido de outfits y bolsa, persistencia local, conexión y accesibilidad en cada dispositivo. Acceso, favoritos, pedidos e historial de cuenta, Team e IA siguen pendientes en la app. La [guía móvil](mobile/README.md) recoge las instrucciones y la [validación](docs/VALIDACION.md) conserva los resultados y límites de cada paso.
+La exportación genera los paquetes Hermes de iOS y Android y Expo Doctor supera sus 21 comprobaciones. Las pruebas automáticas de formato recorren las 996 variantes del catálogo y cantidades desde cero hasta millones en ambos idiomas. Estas comprobaciones técnicas complementan la revisión en los dispositivos; no sustituyen el recorrido manual completo.
+
+Por ahora ejecuto la app con Expo Go y Metro. Quiero completar las capturas nativas, comprobar la conservación de la bolsa al cerrar y abrir, los cambios de conexión y la accesibilidad en cada dispositivo. Acceso, favoritos, pedidos e historial de cuenta, Team e IA siguen pendientes en la app, al igual que la distribución en tiendas. La [guía móvil](mobile/README.md) recoge el arranque y la [validación](docs/VALIDACION.md) conserva el detalle de las comprobaciones.
