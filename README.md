@@ -34,7 +34,7 @@ Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS 
 - Gestionar productos, textos ES/EN, imágenes, variantes y stock desde Team; buscar por nombre o identificador, filtrar visibles y archivados y avanzar o cancelar pedidos según las transiciones permitidas.
 - Cambiar entre castellano e inglés conservando la ruta y la bolsa.
 
-«Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. Está identificado como **modo editorial, sin IA**. Maison Stylist con un proveedor de IA sigue pendiente. La [app nativa](mobile/README.md) tiene una primera etapa con catálogo, variantes y bolsa local; su prueba en dispositivos físicos y el recorrido privado siguen pendientes.
+«Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. Está identificado como **modo editorial, sin IA**. Maison Stylist con un proveedor de IA sigue pendiente. La [app nativa](mobile/README.md) incorpora catálogo, variantes, outfits musicales y bolsa local. Araceli confirma apertura en iPhone, iPad y Android; el recorrido privado sigue pendiente.
 
 ### Estructura y tecnologías
 
@@ -183,7 +183,7 @@ After the AFM Moda Oceánica landing page and the full stack journey of KelseTS 
 - Manage products, ES/EN text, images, variants and stock in Team; search by name or identifier, filter visible and archived products, and advance or cancel orders through allowed transitions.
 - Switch between Spanish and English while keeping your route and bag.
 
-“Complete your look” uses manual selections and actual catalogue availability. It is labelled **editorial mode, without AI**. Maison Stylist with an AI provider and a native app remain extensions to evaluate.
+“Complete your look” uses manual selections and actual catalogue availability. It is labelled **editorial mode, without AI**. Maison Stylist with an AI provider remains pending. The [native app](mobile/README.md) includes catalogue, variants, musical outfits and a local bag; Araceli has confirmed opening it on iPhone, iPad and Android. Native authentication and ordering remain pending.
 
 ### Structure and technologies
 
@@ -315,11 +315,39 @@ Para actualizar los 51 nombres de producto anteriores a la selección musical: `
 Run `npm run catalog:names:migrate` to update the 51 earlier product names to the musical selection. It preserves each custom Team translation, IDs, prices, stock and historical orders. New installations include the musical names; the 139 runway pieces keep their song titles.
 
 
-### App móvil · primera etapa
+### App móvil · iPhone, iPad y Android
 
-La carpeta `mobile/` incorpora React Native y Expo: catálogo, búsqueda y categorías, fichas ES/EN, variantes y bolsa local conectados a la API publicada. Arranca con `npm run mobile` y abre el QR en Expo Go. Véanse [instalación y prueba en iPhone y Android](mobile/README.md). Exportación de iOS/Android y configuración verificadas; ejecución física, acceso y pedidos nativos pendientes.
+`mobile/` contiene una aplicación **React Native con Expo**, conectada a la misma API HTTPS de Maison. Incluye catálogo paginado, búsqueda y categorías, ficha con variantes, 36 outfits con títulos de canciones y filtro por era, selección de todas las piezas del conjunto y bolsa local con imágenes de producto. La interfaz es ES/EN y los importes conservan el formato europeo **1.850,00 € en ambos idiomas**.
 
+La entrada muestra el logo animado a pantalla completa, se puede saltar y respeta la reducción de movimiento. Los controles incorporan botones del sistema, selección de idioma propia de cada plataforma y una barra inferior personalizada. No se utiliza un WebView.
 
-### Native app · first stage
+Desde la raíz:
 
-`mobile/` contains an Expo/React Native app with bilingual catalogue, search, categories, product variants and a local bag using the published HTTPS API. Run `npm run mobile` and scan the QR with Expo Go. iOS/Android bundles and Expo configuration have been checked; physical-device testing, authentication and ordering remain pending. See the [mobile guide](mobile/README.md).
+```sh
+npm ci
+npm run mobile
+```
+
+Abre el QR en Expo Go con móvil/tablet y ordenador en la misma Wi-Fi. En iPhone/iPad utiliza la misma cuenta Expo en la app y en la CLI (`npx expo login`). La [guía móvil](mobile/README.md) recoge instalación, descarga oficial Android y límites de Expo Go.
+
+**Comprobación física comunicada por Araceli · 18 de octubre de 2026**
+
+| Plataforma | Estado observado | Modelo, versión del sistema y Expo Go |
+| --- | --- | --- |
+| iPhone · iOS | Apertura e interfaz/entrada corregida confirmadas | Pendientes de registrar |
+| iPad · iPadOS | Apertura e interfaz/entrada corregida confirmadas | Pendientes de registrar |
+| Android | Apertura confirmada; vuelve a cargar tras reiniciar Metro con caché limpia | Pendientes de registrar |
+
+Las confirmaciones de apertura no equivalen a verificar todo el recorrido de compra. Quedan por registrar capturas nativas y comprobar de principio a fin selección de outfits, conservación de bolsa, accesibilidad y cambios de conexión en cada dispositivo. Acceso, favoritos, pedidos e historial de cuenta, Team e IA aún no están integrados en la app; no hay publicación en tiendas ni binario de distribución.
+
+**Versiones del proyecto comprobadas en el lockfile:** Maison móvil 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10. Son versiones de desarrollo; no sustituyen las versiones del sistema ni la de Expo Go instalada en cada dispositivo. Exportación iOS/Android y Expo Doctor 21/21 correctos. Los detalles de las verificaciones y los avisos de dependencias están en [Validación](docs/VALIDACION.md) y en la guía móvil.
+
+### Native app · iPhone, iPad and Android
+
+`mobile/` contains a **React Native/Expo** application using Maison's published HTTPS API: bilingual catalogue, search, categories, product variants, 36 song-named outfits with era filters and complete selections, and a local bag with product images. Both languages use European amounts such as **1.850,00 €**. The full-screen logo introduction is skippable and respects reduced motion.
+
+Run `npm ci` and `npm run mobile`, then open the QR in Expo Go on the same Wi-Fi network. iPhone/iPad requires the same Expo account in Expo Go and the CLI. See the [mobile guide](mobile/README.md).
+
+On 18 October 2026, Araceli confirmed opening the app on **iPhone, iPad and Android**, including the corrected iOS/iPadOS introduction and Android recovery after clearing Metro's cache. Device models, operating system versions and installed Expo Go versions are still to be recorded. These reports do not establish a complete end-to-end test. Native authentication, favourites, account orders/history, Team, AI, distribution binaries and app-store publication remain pending.
+
+Project versions: mobile app 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 and expo-splash-screen 57.0.10. iOS/Android bundle exports and 21/21 Expo Doctor checks passed; these are separate from physical-device verification.

@@ -122,11 +122,30 @@ Las capturas conservan la dirección pública y describen el estado observado. L
 
 Después de publicar la boutique, Araceli prioriza la app móvil antes del asistente de outfits. Se inicia una aplicación React Native con Expo SDK 57, conectada a la misma API HTTPS y sin incrustar la web. La primera etapa reúne catálogo, búsqueda, categorías, ficha, variantes y bolsa local en castellano e inglés. La bolsa conserva identificadores y cantidades, y vuelve a consultar precios y existencias al abrirse. Las reglas de cantidades pasan a un módulo compartido con la web.
 
-Se generan los paquetes de JavaScript/Hermes de iOS y Android y se superan las 21 comprobaciones de Expo Doctor. Se unifica React en web y móvil para evitar dependencias duplicadas. Esto no equivale a probar la app en dispositivos ni a distribuir un binario: Araceli ofrece comprobar iPhone y Android con Expo Go. Acceso, pedidos nativos, Team e IA siguen pendientes. La [documentación móvil](mobile/README.md) detalla el arranque y el recorrido de prueba.
+Se generan los paquetes de JavaScript/Hermes de iOS y Android y se superan las 21 comprobaciones de Expo Doctor. Se unifica React en web y móvil para evitar dependencias duplicadas. En ese momento todavía no se había probado en dispositivos ni distribuido un binario; las confirmaciones físicas posteriores se recogen en el cierre de esta sección. Acceso, pedidos nativos, Team e IA siguen pendientes. La [documentación móvil](mobile/README.md) detalla el arranque y el recorrido de prueba.
 
 
 ### Outfits y bienvenida en la app
 
 La primera observación de Araceli tras abrir Maison en iPhone y Android lleva a adaptar los controles y a añadir los outfits musicales que ya existían en la web. La app incorpora una pestaña Outfits con filtro por era y detalle de las piezas, donde se elige cada variante antes de añadir el conjunto completo a la bolsa. Reutiliza catálogo, selecciones editoriales y reglas de cantidades existentes.
 
-La bienvenida utiliza el logo de Maison con una animación breve y saltable, respetando reducción de movimiento. Se prepara también el logo estático del arranque para una futura distribución. Tras comunicar Araceli que la entrada no cubría la pantalla, se cambia a una pantalla modal nativa completa. La revisión visual de esta corrección y el recorrido de outfits en los dispositivos siguen pendientes; la exportación iOS/Android, las cuatro pruebas del modelo y Expo Doctor son correctos.
+La bienvenida utiliza el logo de Maison con una animación breve y saltable, respetando reducción de movimiento. Se prepara también el logo estático del arranque para una futura distribución. Tras comunicar Araceli que la entrada no cubría la pantalla, se cambia a una pantalla modal nativa completa. Araceli confirma después que la entrada y la interfaz corregidas funcionan en iPhone e iPad. Android vuelve a cargar tras limpiar la caché de Metro. El recorrido completo de outfits en los dispositivos sigue pendiente; la exportación iOS/Android, las cuatro pruebas del modelo y Expo Doctor son correctos.
+
+
+### Cierre móvil · iPhone, iPad y Android · 18 de octubre de 2026
+
+Poder abrir Maison en los dispositivos cambia la revisión: aparecen diferencias de uso que el empaquetado por sí solo no muestra. Araceli confirma la apertura en iPhone y Android y señala que los controles resultan demasiado cuadrados. Se adaptan las acciones y la selección de idioma a cada plataforma, manteniendo el lenguaje visual de Maison. La navegación inferior sigue siendo personalizada; no se describe como una barra nativa del sistema.
+
+Después se incorpora la pestaña Outfits con los 36 conjuntos musicales, filtro por era, piezas y variantes. Añadir un conjunto exige seleccionar una variante disponible de cada pieza y combinarlo completo con la bolsa existente; si no cabe por stock, no se añade parcialmente. La cesta incorpora miniaturas y permite abrir la ficha de cada producto. Los precios se presentan con **punto de miles, coma decimal y dos decimales tanto en castellano como en inglés**: 1.850,00 €. Esta decisión solo cambia la presentación, no los valores guardados en céntimos.
+
+La entrada animada con logo pasa a una pantalla modal completa tras observarse que ocupaba únicamente el área inferior. Araceli confirma entonces el resultado en iPhone e iPad. Android presenta un error durante la actualización en caliente; Metro había registrado una referencia a Outfits mientras se estaban incorporando sus archivos. Se reinicia con caché limpia, se comprueban los bundles de desarrollo y Araceli confirma que vuelve a cargar. No se atribuye a estos pasos una prueba completa de compra ni de todos los controles.
+
+| Dispositivo/plataforma | Confirmación de Araceli | Modelo y versión del sistema | Versión instalada de Expo Go |
+| --- | --- | --- | --- |
+| iPhone · iOS | La app abre y la entrada/interfaz corregidas funcionan | Pendientes de registrar | Pendiente de registrar |
+| iPad · iPadOS | La app abre y la entrada/interfaz corregidas funcionan | Pendientes de registrar | Pendiente de registrar |
+| Android | La app abre y recupera la carga tras limpiar la caché de Metro | Pendientes de registrar | Pendiente de registrar |
+
+Las versiones exactas de los dispositivos se solicitan a Araceli y no se deducen del SDK. La app de desarrollo está identificada como **0.1.0** y el lockfile recoge **Expo 57.0.30, SDK 57; React Native 0.86.3; React 19.2.3; expo-splash-screen 57.0.10**. No son versiones de iOS, iPadOS, Android ni de Expo Go. Los paquetes Hermes de iOS y Android se generan y Expo Doctor supera 21/21 comprobaciones. Las pruebas de formato recorren las 996 variantes del catálogo y cantidades desde cero hasta millones en ambos idiomas.
+
+La ejecución física se realiza con Expo Go y Metro, no mediante una app publicada en tiendas. El splash estático de distribución requiere un binario propio para su validación; en Expo Go se comprueba la animación posterior dentro de Maison. Quedan pendientes las capturas nativas, registrar modelos/versiones y completar el recorrido de outfits y bolsa, persistencia local, conexión y accesibilidad en cada dispositivo. Acceso, favoritos, pedidos e historial de cuenta, Team e IA siguen pendientes en la app. La [guía móvil](mobile/README.md) recoge las instrucciones y la [validación](docs/VALIDACION.md) conserva los resultados y límites de cada paso.

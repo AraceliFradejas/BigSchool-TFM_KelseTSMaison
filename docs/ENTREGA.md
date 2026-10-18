@@ -100,4 +100,9 @@ Exportación de paquetes iOS/Android correcta y Expo Doctor 21/21. Web y API man
 
 ### Continuación móvil: outfits y bienvenida
 
-Apertura en iPhone y Android confirmada por Araceli. Se adaptan controles a plataforma y se incorpora Outfits con títulos musicales, filtro de era, piezas y selección completa de variantes. Se añade bienvenida animada con logo; ante la incidencia de altura comunicada, pasa a Modal nativo de pantalla completa. Prueba visual de la corrección, recorrido físico de outfits e iPad pendientes. El splash estático se prepara para una futura distribución, no se da por validado en Expo Go.
+Apertura en iPhone y Android confirmada por Araceli. Se adaptan controles a plataforma y se incorpora Outfits con títulos musicales, filtro de era, piezas y selección completa de variantes. Se añade bienvenida animada con logo; ante la incidencia de altura comunicada, pasa a Modal nativo de pantalla completa. Araceli confirma el resultado de la entrada/interfaz en iPhone e iPad y la recuperación de Android tras limpiar Metro. Recorrido físico completo de outfits, capturas y registro de modelos/versiones pendientes. El splash estático se prepara para una futura distribución, no se da por validado en Expo Go.
+
+
+### Documentación de plataformas móviles
+
+README ES/EN, memoria y guía móvil actualizados con iPhone/iOS, iPad/iPadOS y Android, las confirmaciones de Araceli y los límites de la revisión. Se registran las versiones comprobadas del proyecto sin confundirlas con las de los dispositivos. Modelos, versiones de los sistemas y Expo Go se solicitan a Araceli y quedan pendientes de registrar hasta recibirlos.

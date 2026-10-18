@@ -34,7 +34,7 @@ npx expo-doctor
 
 Exportación de los paquetes de iOS y Android correcta y 21/21 comprobaciones de Expo Doctor correctas. Esto comprueba el empaquetado y la configuración, no una ejecución en un teléfono ni un IPA/APK instalable. No se ha generado un binario de distribución ni publicado en tiendas. `mobile/dist/` queda fuera de Git.
 
-Araceli confirma que la app abre en **iPhone y Android**. Falta completar y registrar el recorrido siguiente:
+Araceli confirma que la app abre en **iPhone, iPad y Android**. Falta completar y registrar el recorrido siguiente:
 
 1. Abrir el QR, comprobar logo, imágenes, scroll y zonas seguras.
 2. Buscar una pieza, cambiar categoría y pasar de página.
@@ -71,3 +71,14 @@ Comprobado: exportación iOS/Android, configuración Expo Doctor 21/21 y cuatro 
 
 
 Los importes usan el mismo formateador compartido que la web: en castellano y en inglés, `1.850,00 €`, `10.000,00 €`, siempre con punto de miles y coma decimal. Esta presentación no modifica los valores en céntimos.
+
+
+## Registro físico · 18 de octubre de 2026
+
+| Plataforma | Confirmación recibida | Modelo / sistema / Expo Go |
+| --- | --- | --- |
+| iPhone · iOS | Apertura y entrada/interfaz corregidas correctas | Pendientes de registrar |
+| iPad · iPadOS | Apertura y entrada/interfaz corregidas correctas | Pendientes de registrar |
+| Android | Apertura y recuperación después de limpiar Metro correctas | Pendientes de registrar |
+
+Las versiones del proyecto son app 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10. No se deduce de ellas la versión del sistema o Expo Go del dispositivo. Las observaciones son confirmaciones de Araceli, no un recorrido completo automatizado. Se conservan como pendientes los pasos de prueba anteriores que todavía no se han confirmado.
