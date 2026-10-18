@@ -57,3 +57,14 @@ La revisión inicial de `npm audit --omit=dev` señala 22 avisos en el árbol Ex
 Tras el primer arranque, Araceli señala que la interfaz resulta demasiado rectangular en ambos dispositivos. Se incorpora el botón del sistema de React Native para volver y reintentar; el idioma utiliza ActionSheetIOS en iOS y un diálogo Alert en Android. Las acciones de marca mantienen componentes Pressable personalizados con esquinas suaves, selección rellena, respuesta de opacidad en iOS y onda nativa de Android. El campo de búsqueda ofrece el borrado integrado de iOS.
 
 La navegación inferior es una barra personalizada accesible con iconos y contador de bolsa; no se presenta como UITabBar o una barra Material nativa. Se mantienen los componentes de sistema de teclado, scroll, zonas seguras y alertas. Esta revisión pasa exportación iOS/Android y las tres pruebas del modelo móvil; la comprobación visual del ajuste en teléfonos sigue pendiente. Referencia: [Pressable de React Native](https://reactnative.dev/docs/pressable).
+
+
+## Outfits y entrada Maison
+
+La pestaña **Outfits** consulta los 36 conjuntos de la pasarela en `/looks`, con título de canción, era, ilustración y piezas del catálogo. Permite filtrar por era, abrir cada producto y elegir una variante disponible para cada pieza. El conjunto se añade completo a la bolsa mediante la regla compartida: si una pieza falta o supera stock al combinarse con la bolsa existente, no se añade ninguna parte del conjunto. No se reserva stock ni se crean pedidos. El total del conjunto se muestra cuando están elegidas todas las variantes.
+
+Al abrir de nuevo la app aparece una entrada animada del mismo logo de Maison, sin música: opacidad, escala y línea roja durante aproximadamente dos segundos. Se puede saltar con «Entrar en Maison» y se omite si el sistema tiene activada la reducción de movimiento. Una pantalla modal nativa completa evita que quede limitada al área inferior; el logo se adapta al ancho y el botón respeta el margen seguro. No vuelve a reproducirse al cambiar de pestaña. Para revisarla, recarga o abre la app desde cero, no solo mediante Fast Refresh.
+
+Se prepara además el arranque estático de una futura app independiente mediante el plugin oficial `expo-splash-screen` y `assets/splash-logo.png`, rasterizado desde el SVG del logo web existente. El arranque estático y la animación dentro de la app son pasos distintos. [Expo Go no permite comprobar fielmente el splash de la app distribuida](https://docs.expo.dev/versions/v57.0.0/sdk/splash-screen/); esa comprobación requiere un binario de distribución. La animación de logo no es el vídeo de 90 segundos de la pasarela.
+
+Comprobado: exportación iOS/Android, configuración Expo Doctor 21/21 y cuatro pruebas del modelo móvil. Pendiente: revisión visual de esta entrada corregida y del recorrido de outfits en iPhone, Android e iPad.

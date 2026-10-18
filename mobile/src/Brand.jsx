@@ -1,10 +1,10 @@
 // Same vector paths and typography as the web BrandLogo; adapted to native SVG.
 import Svg, { G, Path, Text } from 'react-native-svg';
-export default function Brand() {
+export default function Brand({ width = 145, height = 84 }) {
   return (
     <Svg
-      width={145}
-      height={84}
+      width={width}
+      height={height}
       viewBox="0 0 800 460"
       accessibilityLabel="KelseTS Maison"
       accessible

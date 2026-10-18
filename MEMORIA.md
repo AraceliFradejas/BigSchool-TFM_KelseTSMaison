@@ -123,3 +123,10 @@ Las capturas conservan la dirección pública y describen el estado observado. L
 Después de publicar la boutique, Araceli prioriza la app móvil antes del asistente de outfits. Se inicia una aplicación React Native con Expo SDK 57, conectada a la misma API HTTPS y sin incrustar la web. La primera etapa reúne catálogo, búsqueda, categorías, ficha, variantes y bolsa local en castellano e inglés. La bolsa conserva identificadores y cantidades, y vuelve a consultar precios y existencias al abrirse. Las reglas de cantidades pasan a un módulo compartido con la web.
 
 Se generan los paquetes de JavaScript/Hermes de iOS y Android y se superan las 21 comprobaciones de Expo Doctor. Se unifica React en web y móvil para evitar dependencias duplicadas. Esto no equivale a probar la app en dispositivos ni a distribuir un binario: Araceli ofrece comprobar iPhone y Android con Expo Go. Acceso, pedidos nativos, Team e IA siguen pendientes. La [documentación móvil](mobile/README.md) detalla el arranque y el recorrido de prueba.
+
+
+### Outfits y bienvenida en la app
+
+La primera observación de Araceli tras abrir Maison en iPhone y Android lleva a adaptar los controles y a añadir los outfits musicales que ya existían en la web. La app incorpora una pestaña Outfits con filtro por era y detalle de las piezas, donde se elige cada variante antes de añadir el conjunto completo a la bolsa. Reutiliza catálogo, selecciones editoriales y reglas de cantidades existentes.
+
+La bienvenida utiliza el logo de Maison con una animación breve y saltable, respetando reducción de movimiento. Se prepara también el logo estático del arranque para una futura distribución. Tras comunicar Araceli que la entrada no cubría la pantalla, se cambia a una pantalla modal nativa completa. La revisión visual de esta corrección y el recorrido de outfits en los dispositivos siguen pendientes; la exportación iOS/Android, las cuatro pruebas del modelo y Expo Doctor son correctos.

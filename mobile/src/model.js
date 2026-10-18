@@ -72,3 +72,12 @@ export function money(cents, language) {
     currency: 'EUR',
   }).format(cents / 100);
 }
+
+export function outfitSelection(look, selected) {
+  if (!look?.complete || !look.products?.length) throw new Error('invalid_input');
+  return look.products.map((product) => {
+    const variant = product.variants.find((v) => v.id === selected[product.id]);
+    if (!product.active || !variant || variant.stock <= 0) throw new Error('insufficient_stock');
+    return { product, variant };
+  });
+}

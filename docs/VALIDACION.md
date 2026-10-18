@@ -323,3 +323,12 @@ Araceli informa que Expo Go no aparece en Play Store y de contenido no válido e
 Araceli confirma que Maison abre en iPhone y Android a través de Expo Go. No se ha recibido todavía evidencia del recorrido completo ni modelos/versiones de los dispositivos. Su primera observación es que los controles resultan demasiado cuadrados.
 
 Se ajustan botones de marca, imágenes, selección y navegación inferior; se incorporan botones del sistema para volver/reintentar y selección de idioma con ActionSheetIOS/Alert. Android utiliza `android_ripple`; iOS, opacidad y escala al pulsar. La barra inferior sigue siendo personalizada, con roles de pestaña, iconos y contador de bolsa. Exportación iOS/Android y tres pruebas del modelo correctas; revisión visual física de estos cambios pendiente. No se modifica la web ni la lógica de stock/pedidos.
+
+
+### Outfits nativos y entrada con logo
+
+Se añade la pestaña Outfits, conectada a las selecciones `sourceId` de `/looks`: galería de títulos musicales, filtro de era y detalle con todas las piezas y variantes. La selección es explícita y el conjunto se combina de forma atómica con la bolsa mediante la regla compartida. Una cuarta prueba móvil comprueba variantes incompletas, selección completa y rechazo sin adiciones parciales cuando una cantidad acumulada supera stock.
+
+La entrada con logo utiliza Animated, respeta reducción de movimiento y se puede saltar. Araceli comunica que la primera versión solo aparece en la zona inferior; se sustituye la superposición por un Modal nativo `fullScreen`, con contenido flex y margen seguro inferior, para independizar su tamaño del layout. Logo con ancho adaptable. Esta corrección todavía requiere confirmación visual en los teléfonos. El logo PNG del arranque estático deriva del SVG de BrandLogo de la web y se configura con `expo-splash-screen`; el splash distribuido no se valida en Expo Go.
+
+Exportación iOS/Android correcta después del ajuste, cuatro pruebas del modelo correctas y Expo Doctor 21/21. No se afirma comprobado el recorrido físico de selección de outfits ni el splash de distribución.

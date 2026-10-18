@@ -20,6 +20,10 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Brand from './Brand';
+import { useRemote } from './useRemote';
+import Outfits from './Outfits';
+import Intro from './Intro';
+import { mergeCartSelection } from '@maison/contracts/cart-selection';
 import Svg, { Path } from 'react-native-svg';
 import { api, addToBag, imageUrl, money, resolveBag, restoreBag } from './model';
 
@@ -28,6 +32,7 @@ const words = {
   es: {
     demo: 'Boutique de demostración · Sin cobros reales',
     catalogue: 'Boutique',
+    outfits: 'Outfits',
     bag: 'Bolsa',
     title: 'Tu estilo, tu historia.',
     search: 'Buscar una pieza',
@@ -66,6 +71,7 @@ const words = {
   en: {
     demo: 'Demonstration boutique · No real payments',
     catalogue: 'Boutique',
+    outfits: 'Outfits',
     bag: 'Bag',
     title: 'Your style, your story.',
     search: 'Find a piece',
@@ -145,24 +151,6 @@ function Photo({ product, language, large = false }) {
       <Text>{product?.name[language]}</Text>
     </View>
   );
-}
-function useRemote(path) {
-  const [state, setState] = useState({ loading: true });
-  const [version, setVersion] = useState(0);
-  useEffect(() => {
-    const controller = new AbortController();
-    setState({ loading: true });
-    api
-      .request(path, { signal: controller.signal })
-      .then((data) => {
-        if (!controller.signal.aborted) setState({ data, loading: false });
-      })
-      .catch((error) => {
-        if (!controller.signal.aborted) setState({ error, loading: false });
-      });
-    return () => controller.abort();
-  }, [path, version]);
-  return { ...state, reload: () => setVersion((n) => n + 1) };
 }
 function Resource({ resource, t, children }) {
   if (resource.loading)
@@ -454,6 +442,7 @@ function Bag({ lines, change, language, t, open }) {
 }
 export default function App() {
   const [language, setLanguage] = useState('es');
+  const [intro, setIntro] = useState(true);
   const t = words[language];
   const [route, setRoute] = useState({ screen: 'catalogue' });
   const [lines, setLines] = useState([]);
@@ -482,7 +471,7 @@ export default function App() {
   useEffect(() => {
     const sub = BackHandler.addEventListener('hardwareBackPress', () => {
       if (route.screen === 'catalogue') return false;
-      setRoute({ screen: route.from || 'catalogue' });
+      setRoute(route.returnTo || { screen: route.from || 'catalogue' });
       return true;
     });
     return () => sub.remove();
@@ -524,99 +513,131 @@ export default function App() {
       Alert.alert(t.stock);
     }
   }
+  function addLook(pieces) {
+    try {
+      change(mergeCartSelection(lines, pieces));
+      Alert.alert(t.added, '', [{ text: t.close }]);
+    } catch {
+      Alert.alert(t.stock);
+    }
+  }
   const open = (id) =>
-    setRoute({ screen: 'detail', id, from: route.screen === 'bag' ? 'bag' : 'catalogue' });
+    setRoute({
+      screen: 'detail',
+      id,
+      from: route.screen === 'look' ? 'outfits' : route.screen,
+      returnTo: route,
+    });
   return (
     <SafeAreaProvider>
       <SafeAreaView style={s.app}>
         <StatusBar style="dark" />
-        <Text style={s.banner}>{t.demo}</Text>
-        <View style={s.header}>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={t.catalogue}
-            onPress={() => setRoute({ screen: 'catalogue' })}
-          >
-            <Brand />
-          </Pressable>
-          <Button
-            secondary
-            accessibilityLabel={language === 'es' ? 'Switch to English' : 'Cambiar a castellano'}
-            onPress={chooseLanguage}
-          >
-            {language.toUpperCase()} / {language === 'es' ? 'EN' : 'ES'}
-          </Button>
+        <View
+          style={s.flex}
+          accessibilityElementsHidden={intro}
+          importantForAccessibility={intro ? 'no-hide-descendants' : 'auto'}
+        >
+          <Text style={s.banner}>{t.demo}</Text>
+          <View style={s.header}>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={t.catalogue}
+              onPress={() => setRoute({ screen: 'catalogue' })}
+            >
+              <Brand />
+            </Pressable>
+            <Button
+              secondary
+              accessibilityLabel={language === 'es' ? 'Switch to English' : 'Cambiar a castellano'}
+              onPress={chooseLanguage}
+            >
+              {language.toUpperCase()} / {language === 'es' ? 'EN' : 'ES'}
+            </Button>
+          </View>
+          {storageError && (
+            <Text accessibilityRole="alert" style={s.error}>
+              {t.storage}
+            </Text>
+          )}
+          {!ready ? (
+            <ActivityIndicator color="#b3152b" />
+          ) : route.screen === 'detail' ? (
+            <Detail
+              key={route.id}
+              id={route.id}
+              language={language}
+              t={t}
+              add={add}
+              back={() => setRoute(route.returnTo || { screen: route.from })}
+            />
+          ) : route.screen === 'outfits' || route.screen === 'look' ? (
+            <Outfits
+              language={language}
+              lookId={route.id}
+              openLook={(id) => setRoute({ screen: 'look', id, from: 'outfits' })}
+              back={() => setRoute({ screen: 'outfits' })}
+              openProduct={open}
+              addLook={addLook}
+            />
+          ) : route.screen === 'bag' ? (
+            <Bag lines={lines} change={change} language={language} t={t} open={open} />
+          ) : (
+            <Catalogue language={language} t={t} open={open} />
+          )}
+          <View style={s.tabs} accessibilityRole="tablist">
+            {['catalogue', 'outfits', 'bag'].map((screen) => {
+              const selected =
+                route.screen === screen ||
+                ((route.screen === 'detail' || route.screen === 'look') && route.from === screen);
+              const count = lines.reduce((sum, line) => sum + line.quantity, 0);
+              return (
+                <Pressable
+                  key={screen}
+                  accessibilityRole="tab"
+                  accessibilityLabel={`${t[screen]}${screen === 'bag' ? ` (${count})` : ''}`}
+                  accessibilityState={{ selected }}
+                  onPress={() => setRoute({ screen })}
+                  android_ripple={{ color: '#b3152b22' }}
+                  style={({ pressed }) => [
+                    s.tab,
+                    selected && s.activeTab,
+                    pressed && Platform.OS === 'ios' && s.pressed,
+                  ]}
+                >
+                  <View style={s.tabIcon}>
+                    <Svg
+                      width={24}
+                      height={24}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke={selected ? '#b3152b' : '#777169'}
+                      strokeWidth={1.7}
+                      accessibilityElementsHidden
+                      importantForAccessibility="no-hide-descendants"
+                    >
+                      <Path
+                        d={
+                          screen === 'catalogue'
+                            ? 'M3 9h18L19 3H5L3 9ZM4 9v12h16V9M9 21v-7h6v7M3 9c0 3 4 3 4 0 0 3 5 3 5 0 0 3 5 3 5 0 0 3 4 3 4 0'
+                            : screen === 'outfits'
+                              ? 'M9 5a3 3 0 0 1 6 0c0 2-3 2-3 4v2L3 17v3h18v-3l-9-6'
+                              : 'M5 7h14l2 14H3L5 7ZM8 8V6a4 4 0 0 1 8 0v2'
+                        }
+                      />
+                    </Svg>
+                    {screen === 'bag' && count > 0 && (
+                      <View style={s.badge}>
+                        <Text style={s.badgeText}>{count}</Text>
+                      </View>
+                    )}
+                  </View>
+                  <Text style={[s.tabLabel, selected && s.selectedText]}>{t[screen]}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
         </View>
-        {storageError && (
-          <Text accessibilityRole="alert" style={s.error}>
-            {t.storage}
-          </Text>
-        )}
-        {!ready ? (
-          <ActivityIndicator color="#b3152b" />
-        ) : route.screen === 'detail' ? (
-          <Detail
-            key={route.id}
-            id={route.id}
-            language={language}
-            t={t}
-            add={add}
-            back={() => setRoute({ screen: route.from })}
-          />
-        ) : route.screen === 'bag' ? (
-          <Bag lines={lines} change={change} language={language} t={t} open={open} />
-        ) : (
-          <Catalogue language={language} t={t} open={open} />
-        )}
-        <View style={s.tabs} accessibilityRole="tablist">
-          {['catalogue', 'bag'].map((screen) => {
-            const selected =
-              route.screen === screen || (route.screen === 'detail' && route.from === screen);
-            const count = lines.reduce((sum, line) => sum + line.quantity, 0);
-            return (
-              <Pressable
-                key={screen}
-                accessibilityRole="tab"
-                accessibilityLabel={`${t[screen]}${screen === 'bag' ? ` (${count})` : ''}`}
-                accessibilityState={{ selected }}
-                onPress={() => setRoute({ screen })}
-                android_ripple={{ color: '#b3152b22' }}
-                style={({ pressed }) => [
-                  s.tab,
-                  selected && s.activeTab,
-                  pressed && Platform.OS === 'ios' && s.pressed,
-                ]}
-              >
-                <View style={s.tabIcon}>
-                  <Svg
-                    width={24}
-                    height={24}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke={selected ? '#b3152b' : '#777169'}
-                    strokeWidth={1.7}
-                    accessibilityElementsHidden
-                    importantForAccessibility="no-hide-descendants"
-                  >
-                    <Path
-                      d={
-                        screen === 'catalogue'
-                          ? 'M3 9h18L19 3H5L3 9ZM4 9v12h16V9M9 21v-7h6v7M3 9c0 3 4 3 4 0 0 3 5 3 5 0 0 3 5 3 5 0 0 3 4 3 4 0'
-                          : 'M5 7h14l2 14H3L5 7ZM8 8V6a4 4 0 0 1 8 0v2'
-                      }
-                    />
-                  </Svg>
-                  {screen === 'bag' && count > 0 && (
-                    <View style={s.badge}>
-                      <Text style={s.badgeText}>{count}</Text>
-                    </View>
-                  )}
-                </View>
-                <Text style={[s.tabLabel, selected && s.selectedText]}>{t[screen]}</Text>
-              </Pressable>
-            );
-          })}
-        </View>
+        {intro && <Intro language={language} onDone={() => setIntro(false)} />}
       </SafeAreaView>
     </SafeAreaProvider>
   );

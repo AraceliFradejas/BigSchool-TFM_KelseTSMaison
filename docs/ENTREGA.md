@@ -96,3 +96,8 @@ Araceli quiere ambas ampliaciones: una app nativa y un asistente de IA para outf
 Araceli elige comenzar por la app y ofrece probar en iPhone y Android. Se añade `mobile/` con Expo SDK 57 y React Native: catálogo paginado con búsqueda/categorías, ficha con variantes y bolsa local ES/EN. Reutiliza el cliente HTTP y las reglas de cantidades de la web. No se integra aún acceso, pedidos ni Team.
 
 Exportación de paquetes iOS/Android correcta y Expo Doctor 21/21. Web y API mantienen sus verificaciones. El siguiente paso es la prueba física con Expo Go y el registro de sus resultados; después, sesión y recorrido privado. No se presenta el empaquetado como una ejecución física ni una publicación en tiendas. Instrucciones y limitaciones en [app móvil](../mobile/README.md).
+
+
+### Continuación móvil: outfits y bienvenida
+
+Apertura en iPhone y Android confirmada por Araceli. Se adaptan controles a plataforma y se incorpora Outfits con títulos musicales, filtro de era, piezas y selección completa de variantes. Se añade bienvenida animada con logo; ante la incidencia de altura comunicada, pasa a Modal nativo de pantalla completa. Prueba visual de la corrección, recorrido físico de outfits e iPad pendientes. El splash estático se prepara para una futura distribución, no se da por validado en Expo Go.

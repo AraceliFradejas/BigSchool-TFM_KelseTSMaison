@@ -12,9 +12,17 @@
     "android": {
       "package": "com.kelsets.maison"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "backgroundColor": "#f6f4ee"
+    "assetBundlePatterns": ["**/*"],
+    "backgroundColor": "#f6f4ee",
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#f6f4ee",
+          "image": "./assets/splash-logo.png",
+          "imageWidth": 240
+        }
+      ]
+    ]
   }
 }

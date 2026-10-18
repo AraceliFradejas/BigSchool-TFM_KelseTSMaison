@@ -49,3 +49,23 @@ test('mobile uses public HTTPS API and same-origin image paths', () => {
   assert.ok(imageUrl('/media/satin-story.webp').startsWith('https://kelsets-maison.vercel.app/'));
   assert.equal(imageUrl('https://third-party.example/photo.jpg'), undefined);
 });
+
+test('complete outfits require an explicit available variant for every piece', async () => {
+  const { outfitSelection } = await import('../src/model.js');
+  const look = {
+    complete: true,
+    products: [
+      product,
+      { ...product, id: 'coat', variants: [{ id: 'coat-s', stock: 1, priceCents: 2000 }] },
+    ],
+  };
+  assert.throws(() => outfitSelection(look, { dress: 'dress-m' }), /insufficient_stock/);
+  assert.throws(() => outfitSelection({ ...look, complete: false }, {}), /invalid_input/);
+  const pieces = outfitSelection(look, { dress: 'dress-m', coat: 'coat-s' });
+  const { mergeCartSelection } = await import('@maison/contracts/cart-selection');
+  assert.equal(mergeCartSelection([], pieces).length, 2);
+  const original = [{ productId: 'coat', variantId: 'coat-s', quantity: 1 }];
+  assert.throws(() => mergeCartSelection(original, pieces), /insufficient_stock/);
+  assert.equal(original.length, 1);
+  assert.equal(original[0].quantity, 1);
+});
