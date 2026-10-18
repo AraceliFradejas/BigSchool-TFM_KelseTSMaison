@@ -12,7 +12,7 @@ Proyecto TFM del máster de BigSchool: KelseTS Maison, boutique ficticia de moda
 
 KelseTS Maison es una boutique ficticia de moda, accesorios y belleza. Puedes explorar sus colecciones, elegir una variante, guardar tus piezas favoritas y completar un pedido de demostración. No se realizan ventas, cobros ni envíos reales.
 
-**Estado:** primera versión funcional local. El despliegue público y la presentación final están pendientes.
+**Estado:** primera versión publicada en [Vercel](https://kelsets-maison.vercel.app), con MongoDB y Cloudinary propios. La presentación final y las ampliaciones siguen pendientes.
 
 ### Una historia personal
 
@@ -85,7 +85,7 @@ La instalación descrita utiliza SQLite y almacenamiento local. Para MongoDB y C
 
 Abre **http://127.0.0.1:5173**. La API está en **http://127.0.0.1:3000/api/v1/health**. La primera ejecución crea automáticamente la base y carga los productos que falten. `npm run seed` permite repetir esa carga sin reiniciar existencias ni sobrescribir las ediciones.
 
-Los valores por defecto sirven para el arranque local. Para personalizarlos, copia `backend/.env.example` a `backend/.env`. La base, las sesiones y las imágenes subidas se guardan en `backend/runtime/`, fuera de Git. No elimines esa carpeta si quieres conservar tus pedidos y cuentas.
+Los valores por defecto sirven para el arranque local. Para personalizarlos, copia `backend/.env.example` a `backend/.env`. La plantilla prepara MongoDB y Cloudinary; para seguir sin servicios externos cambia `DATABASE_PROVIDER=sqlite` y `MEDIA_STORAGE=local`. La base, las sesiones y las imágenes subidas se guardan en `backend/runtime/`, fuera de Git. No elimines esa carpeta si quieres conservar tus pedidos y cuentas.
 
 Para revisar el build sin Vite:
 
@@ -97,6 +97,8 @@ npm start
 En ese caso, abre **http://127.0.0.1:3000**. Si vas a modificar datos desde esta dirección, configura previamente `APP_ORIGIN=http://127.0.0.1:3000` en `backend/.env`.
 
 ### Cuenta de prueba y Team
+
+En MongoDB también puedes configurar `ADMIN_EMAIL` y una contraseña propia en `ADMIN_PASSWORD` dentro del `.env` privado y ejecutar `npm run team:create`. Es una acción explícita: no se ejecuta al arrancar ni publica credenciales, y no modifica una cuenta que ya exista.
 
 Puedes registrarte con un correo ficticio y una contraseña propia de al menos diez caracteres. No se envían correos externos. Las cuentas nuevas siempre tienen el rol de cliente; no existen contraseñas ni cuentas administradoras predefinidas en el código.
 
@@ -128,7 +130,7 @@ Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos du
 
 ### Despliegue y entrega
 
-No hay todavía un despliegue público de Maison. El destino elegido es **Vercel, con MongoDB y Cloudinary propios**, siguiendo el patrón de Cars: web y API separadas y proxy de `/api`. La configuración y la integración están preparadas en código; la conexión real a los servicios y la publicación siguen pendientes. El [documento de despliegue](docs/DESPLIEGUE.md) explica variables, semilla y verificaciones. Cuando exista una URL, `npm run check:deployment -- https://dominio-maison` permitirá comprobarla sin crear datos. El Dockerfile conserva la alternativa local con SQLite, pendiente de probar en Docker.
+Maison está publicada en **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, con [API propia](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB y Cloudinary. La web y la API son proyectos separados de Vercel y `/api` se sirve a través del proxy de la web. El 18 de octubre se comprobaron por HTTPS el catálogo, recursos, cabeceras, permisos y un recorrido HTTP de Team con imagen y pedido temporales. Esta prueba no equivale al recorrido completo desde un navegador ni a una prueba en dispositivo físico. El [documento de despliegue](docs/DESPLIEGUE.md) recoge configuración y límites. `npm run check:deployment -- https://kelsets-maison.vercel.app` repite el chequeo de solo lectura. El Dockerfile conserva la alternativa local con SQLite, pendiente de probar en Docker.
 
 La entrega del TFM reunirá código, README, acceso a la aplicación y slides. El [seguimiento de entrega](docs/ENTREGA.md) distingue lo realizado de lo pendiente; la presentación final no está generada todavía.
 
@@ -159,7 +161,7 @@ Full stack project for the **BigSchool final project**, created by **Araceli Fra
 
 KelseTS Maison is a fictional fashion, accessories and beauty boutique. Explore its collections, choose a variant, save favourite pieces and complete a demonstration order. There are no real sales, payments or shipments.
 
-**Status:** first functional local version. Public deployment and the final presentation are pending.
+**Status:** first version published on [Vercel](https://kelsets-maison.vercel.app), with Maison MongoDB and Cloudinary services. The final presentation and extensions are still pending.
 
 ### A personal story
 
@@ -232,7 +234,7 @@ The installation above uses SQLite and local storage. For MongoDB and Cloudinary
 
 Open **http://127.0.0.1:5173**. The API is at **http://127.0.0.1:3000/api/v1/health**. The first run creates the database and inserts missing products automatically. `npm run seed` repeats that process without resetting stock or overwriting edits.
 
-Defaults support local startup. To customise them, copy `backend/.env.example` to `backend/.env`. The database, sessions and uploaded images live in `backend/runtime/`, outside Git. Do not remove that directory if you want to keep orders and accounts.
+Defaults support local startup. To customise them, copy `backend/.env.example` to `backend/.env`. The template targets MongoDB and Cloudinary; for the offline local mode set `DATABASE_PROVIDER=sqlite` and `MEDIA_STORAGE=local`. The database, sessions and uploaded images live in `backend/runtime/`, outside Git. Do not remove that directory if you want to keep orders and accounts.
 
 To check the build without Vite:
 
@@ -244,6 +246,8 @@ npm start
 Then open **http://127.0.0.1:3000**. To change data from that address, first set `APP_ORIGIN=http://127.0.0.1:3000` in `backend/.env`.
 
 ### Test account and Team
+
+For MongoDB, set `ADMIN_EMAIL` and your own `ADMIN_PASSWORD` in the private `.env`, then run `npm run team:create`. This explicit command never runs at startup, exposes no credentials and leaves an existing account unchanged.
 
 Register with a fictional email and your own password of at least ten characters. No external emails are sent. New accounts always have the customer role; the code contains no predefined administrator accounts or passwords.
 
@@ -275,7 +279,7 @@ Priority tests cover permissions, privacy, stock, totals, duplicate orders, stat
 
 ### Deployment and delivery
 
-Maison has no public deployment yet. The selected target is **Vercel with Maison's own MongoDB and Cloudinary services**, following the Cars pattern: separate web and API projects with an `/api` proxy. Configuration and integration code are prepared; live service connections and publication are still pending. The [deployment document](docs/DESPLIEGUE.md) covers variables, seeding and checks. Once a URL exists, `npm run check:deployment -- https://your-maison-host` can check it without creating data. The Dockerfile retains the local SQLite alternative, still untested in Docker.
+Maison is published at **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, with its [own API](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB and Cloudinary. Web and API are separate Vercel projects, with `/api` proxied through the web origin. On 18 October, HTTPS checks covered the catalogue, assets, headers, permissions and an HTTP Team flow with a temporary image and demonstration order. This does not validate the full browser flow or physical devices. The [deployment document](docs/DESPLIEGUE.md) records configuration and limits. Run `npm run check:deployment -- https://kelsets-maison.vercel.app` to repeat read-only checks. The Dockerfile retains the local SQLite alternative, still untested in Docker.
 
 The final project will include code, README, application access and slides. [Delivery tracking](docs/ENTREGA.md) separates completed work from pending work; the final presentation has not been generated yet.
 

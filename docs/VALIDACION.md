@@ -1,5 +1,22 @@
 # Validación de la primera versión de Maison
 
+### Vercel y recorrido HTTP real · 18 de octubre de 2026
+
+- Publicados web y API independientes desde `be67431`: https://kelsets-maison.vercel.app y https://kelsets-maison-api.vercel.app. Los dos builds completan en Vercel. No se activan planes de pago.
+- API pública: healthcheck HTTP 200 con `database: mongodb`, catálogo de 190 piezas y Team sin sesión HTTP 401.
+- `npm run check:deployment -- https://kelsets-maison.vercel.app`: correcto. Cinco rutas SPA, tres recursos HTML, cabeceras, catálogo e imagen, rechazo de pedidos y Team sin sesión y archivo ausente HTTP 404.
+- Cuenta permanente Team creada con el correo ficticio indicado por Araceli y contraseña propia privada. Se comprueba acceso, subida y lectura de imagen por el proxy, ficha temporal ES/EN, favorito y pedido de demostración. El pedido conserva nombre y precio después de editar la ficha; se confirma y cancela, recuperando stock y generando tres comunicaciones. Cookie con `Secure`, `HttpOnly`, `SameSite=Lax` y `Path=/api`; logout revoca la sesión.
+- El recorrido se ejecuta primero contra Express local conectado a los servicios reales y después por HTTP sobre el dominio HTTPS público. Solo se utilizan una imagen, producto y pedido temporales nuevos; se retiran sus registros y archivo de Cloudinary al terminar y se conserva la cuenta Team. No se modifican productos originales, cuentas ni datos de Cars.
+- Chrome de escritorio: portada pública y navegación al catálogo, con imágenes y 190 piezas después de retirar los datos de prueba; selector de idioma activado con Return, catálogo en inglés y retorno al castellano. No acredita subida desde la interfaz de Team, compra completa desde navegador, dispositivos físicos, restauración ni persistencia tras un nuevo redeploy.
+- Tras añadir el comando explícito `team:create`, las 53 pruebas siguen correctas. El comando no modifica cuentas existentes ni se ejecuta al arrancar. Las credenciales administrativas no se envían a Vercel.
+
+
+### Publicación del bloque de persistencia en GitHub · 18 de octubre de 2026
+
+- Commit `be67431`, «Adapta Maison a MongoDB y Cloudinary y prepara Vercel», publicado en `main` del repositorio independiente de Maison con la identidad Git configurada de Araceli, sin coautorías añadidas.
+- Verificación previa: 53 pruebas correctas, build, chequeo local de producción y revisión de diferencias correctos. Revisión de los 483 archivos versionados o candidatos a Git sin coincidencias con la URI MongoDB y claves Cloudinary configuradas ni inclusión de `.env`, `docbase` o runtime privado.
+- [GitHub Actions, ejecución 16](https://github.com/AraceliFradejas/BigSchool-TFM_KelseTSMaison/actions/runs/39135119340): completada correctamente en 48 segundos, comprobada desde la interfaz de GitHub. Esto acredita CI remoto, no el despliegue en Vercel.
+
 ### Conexión real con Cloudinary · 18 de octubre de 2026
 
 - Comprobadas las credenciales guardadas por Araceli en `backend/.env`, sin mostrarlas. Subida autenticada mediante `createCloudinaryStorage` de una imagen WebP ficticia de 16 × 16 píxeles con identificador aleatorio dentro de la carpeta configurada de Maison.

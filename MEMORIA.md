@@ -6,7 +6,7 @@
 | Formación   | TFM BigSchool                                                     |
 | Autora      | Araceli Fradejas Muñoz                                            |
 | Tecnologías | JavaScript, React, Node.js, Express, MongoDB y Cloudinary; SQLite local                      |
-| Estado      | Primera versión funcional local, pendiente de cierre y despliegue |
+| Estado      | Primera versión publicada en Vercel, pendiente de cierre final |
 
 ## 1 Contexto y motivación
 
@@ -22,13 +22,13 @@ El recorrido principal conecta portada, catálogo, ficha, elección de variante,
 
 La diferencia editorial está en «Completa tu look»: dieciséis colecciones reúnen prendas, calzado, bolsos, joyería y propuestas de belleza en veintiuna selecciones manuales y los treinta y seis looks de la pasarela. El buscador de combinaciones comprueba ocasión, paleta, presupuesto y stock. Esta primera versión utiliza reglas y selecciones manuales; no hace peticiones a un modelo de IA.
 
-La web tiene textos en castellano e inglés y CSS responsive. La app nativa, la integración con un proveedor de IA, las boutiques y las citas continúan fuera del alcance implementado. El despliegue y las slides finales siguen pendientes de cierre.
+La web tiene textos en castellano e inglés y CSS responsive. La app nativa, la integración con un proveedor de IA, las boutiques y las citas continúan fuera del alcance implementado. La web ya está publicada en [Vercel](https://kelsets-maison.vercel.app); las slides finales y las ampliaciones siguen pendientes de cierre.
 
 ## 3 Organización técnica
 
 He mantenido JavaScript y React por continuidad con los proyectos anteriores. El backend se organiza por acceso, catálogo, pedidos e imágenes. En la web, cada funcionalidad tiene sus páginas y los elementos comunes se encuentran en `shared`. Dos paquetes reúnen los contratos y el transporte HTTP.
 
-SQLite permite arrancar la demostración con una base independiente sin configurar servicios externos. Esta elección facilita la prueba local. Para publicar mantengo la continuidad con Cars: Vercel, MongoDB y Cloudinary propios de Maison. He preparado la adaptación con transacciones y sesiones persistentes; la conexión a los servicios reales sigue pendiente. No sirve guardar la base en un sistema temporal y esperar que los pedidos se conserven entre ejecuciones. La [arquitectura](docs/ARQUITECTURA.md) recoge esta decisión y sus límites.
+SQLite permite arrancar la demostración con una base independiente sin configurar servicios externos. Esta elección facilita la prueba local. Para publicar mantengo la continuidad con Cars: Vercel, MongoDB y Cloudinary propios de Maison. He preparado la adaptación con transacciones y sesiones persistentes; la conexión a Atlas y Cloudinary y un recorrido HTTP de gestión y pedido ya se han comprobado. La web y la API están publicadas en Vercel. No sirve guardar la base en un sistema temporal y esperar que los pedidos se conserven entre ejecuciones. La [arquitectura](docs/ARQUITECTURA.md) recoge esta decisión y sus límites.
 
 El cliente HTTP parte del transporte de KelseTS Cars, revisado y adaptado a Maison. Las rutas de vehículos y citas se han sustituido por las necesidades de la boutique. No se ha trasladado el historial del repositorio, sus datos de producción, sus cuentas ni sus secretos.
 

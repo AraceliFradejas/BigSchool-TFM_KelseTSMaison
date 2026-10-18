@@ -18,6 +18,7 @@
     "test": "npm test -w backend && npm test -w packages/api-client && node --test frontend/test/*.test.js",
     "seed": "npm run seed -w backend",
     "team:grant": "node --env-file-if-exists=backend/.env backend/scripts/grant-team.js",
+    "team:create": "node --env-file-if-exists=backend/.env backend/scripts/create-team.js",
     "media:migrate": "node --env-file-if-exists=backend/.env backend/scripts/migrate-catalog-images.js",
     "media:prepare": "node scripts/prepare-catalog-media.mjs",
     "prices:migrate": "node --env-file-if-exists=backend/.env backend/scripts/migrate-catalog-prices.js",

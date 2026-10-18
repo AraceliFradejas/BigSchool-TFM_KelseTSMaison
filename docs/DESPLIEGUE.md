@@ -1,6 +1,6 @@
 # Despliegue de Maison · Vercel, MongoDB y Cloudinary
 
-La publicación se prepara siguiendo el patrón revisado de KelseTS Cars: web React y API Express en dos proyectos de Vercel, MongoDB para datos y Cloudinary para imágenes subidas desde Team. Maison tiene su propia base, permisos y carpeta de imágenes. El 18 de octubre se comprueban conexión y carga de catálogo en Atlas propio, con repetición sin duplicados, y subida, lectura y eliminación de una imagen temporal en Cloudinary real. No hay todavía URL pública; el recorrido completo sobre Atlas y la subida desde Team siguen pendientes.
+Maison está publicada en [https://kelsets-maison.vercel.app](https://kelsets-maison.vercel.app), con [API propia](https://kelsets-maison-api.vercel.app/api/v1/health), siguiendo el patrón revisado de Cars: dos proyectos Vercel, MongoDB para datos y Cloudinary para las subidas. El 18 de octubre se verifican por HTTPS rutas públicas, recursos, permisos y el recorrido HTTP de Team, imagen y pedido de demostración con datos temporales. La revisión de interfaz privada en navegador y dispositivos físicos sigue pendiente.
 
 ## Configuración preparada
 
@@ -9,7 +9,7 @@ La publicación se prepara siguiendo el patrón revisado de KelseTS Cars: web Re
 - `backend/src/storage/mongo.js`: índices únicos, sesiones persistentes y transacciones para pedidos, stock, comunicaciones y ediciones de Team.
 - `backend/src/storage/cloudinary.js`: subida de WebP normalizado y entrega mediante la API desde un destino Cloudinary restringido. Sigue el patrón de Cars para evitar depender del acceso directo al CDN desde el navegador.
 
-Vercel no utiliza la base SQLite ni escribe imágenes en su disco temporal. Los archivos de catálogo y vídeo ya incluidos en `frontend/public/media` se publican como estáticos del frontend, fuera de la función. Cloudinary guarda las nuevas subidas. No hace falta volver a subir todo el catálogo para preparar esta primera publicación.
+Vercel no utiliza la base SQLite ni escribe imágenes en su disco temporal. Los archivos de catálogo y vídeo ya incluidos en `frontend/public/media` se publican como estáticos del frontend, fuera de la función. Cloudinary guarda las nuevas subidas. No ha sido necesario volver a subir todo el catálogo para esta primera publicación.
 
 ## Servicios propios de Maison
 
@@ -36,8 +36,8 @@ No se necesitan secretos `VITE_*` ni JWT: Maison conserva sus sesiones opacas. N
 
 1. Configurar `backend/.env` de Maison, cambiando los proveedores a MongoDB y Cloudinary. Conservar origen local durante el desarrollo.
 2. Ejecutar `npm run seed:mongo`. Es una operación explícita sobre la base seleccionada: inserta artículos ausentes y conserva nombres, precios y stock existentes. No copia cuentas, pedidos ni sesiones de SQLite ni de Cars. Requiere conectividad a MongoDB y una base de Maison elegida conscientemente.
-3. Ejecutar `npm run dev`. Registrar una cuenta propia y conceder Team con `npm run team:grant -- correo-registrado`.
-4. Comprobar compra, administración y subidas antes de publicar. Las pruebas automatizadas usan MongoDB temporal y un doble de Cloudinary; no acreditan una subida real al proveedor.
+3. Ejecutar `npm run dev`. Registrar una cuenta propia y conceder Team con `npm run team:grant -- correo-registrado`, o configurar `ADMIN_EMAIL` y `ADMIN_PASSWORD` privados y ejecutar `npm run team:create`. Este comando crea una cuenta Team nueva; nunca cambia una cuenta existente ni se ejecuta desde una ruta pública o al arrancar. No necesita enviar esas variables administrativas a Vercel.
+4. Comprobar compra, administración y subidas antes de publicar. Las pruebas automatizadas usan MongoDB temporal y un doble de Cloudinary; la comprobación externa adicional del 18 de octubre verifica la subida real y su lectura a través de la API.
 
 No hay migración automática de la base SQLite local a Atlas. La publicación puede comenzar con la semilla ficticia y cuentas nuevas. Si se necesita trasladar personalizaciones locales de Team o pedidos, preparar una migración explícita y verificar sus copias históricas antes de utilizarla.
 
@@ -45,9 +45,9 @@ No hay migración automática de la base SQLite local a Atlas. La publicación p
 
 1. Crear la API con raíz `backend`, Node 22 y el framework de la configuración (`null`, función Node). Habilitar acceso a archivos fuera de la raíz: los contratos y la semilla están en el monorepo. Instalar dependencias desde el lockfile del workspace; no copiar `node_modules` locales. No ejecutar semilla durante cada petición ni durante un arranque de función.
 2. Configurar las variables privadas y `APP_ORIGIN` con la URL elegida para la web. `VERCEL=1` activa MongoDB y Cloudinary obligatorios y un salto de proxy confiable, como en Cars; no hay retorno automático a SQLite si falta configuración.
-3. Comprobar la URL real asignada a la API. `frontend/vercel.json` contiene **`https://kelsets-maison-api.vercel.app` como destino propuesto**, no una URL existente o garantizada. Sustituirlo si Vercel asigna otro nombre, antes de publicar la web.
+3. Comprobar la URL real asignada a la API. `frontend/vercel.json` contiene `https://kelsets-maison-api.vercel.app`, ya asignado y comprobado. Si se crea otra instalación, sustituirlo por su API propia antes de publicar la web.
 4. Crear la web con raíz `frontend`, framework Vite y acceso a los paquetes compartidos fuera de la raíz. El build genera `dist`.
-5. Revisar los artefactos: la función debe contener código, contratos, semilla y manifiesto de imágenes, sin los vídeos ni la biblioteca estática completa. Los estáticos se sirven desde la web. El empaquetado remoto sigue pendiente de comprobar en Vercel.
+5. Revisar los artefactos: la función debe contener código, contratos, semilla y manifiesto de imágenes, sin los vídeos ni la biblioteca estática completa. Los estáticos se sirven desde la web. Ambos builds remotos se han completado y la API funciona; no se ha medido aquí el tamaño exacto de su bundle.
 6. Usar la web como origen de los recorridos con sesión. Su proxy mantiene `/api` bajo el mismo dominio para las cookies HttpOnly, Secure y SameSite=Lax. Un dominio preview distinto necesita su propio `APP_ORIGIN` y entorno aislado; no se permiten previews arbitrarias mediante comodines.
 
 El límite de subida se fija en 4 MiB, con margen para multipart bajo el límite de petición de Vercel. Sharp comprueba firma, decodifica y convierte a WebP antes de enviar al proveedor. No se admiten destinos arbitrarios ni identificadores de Cars. La imagen anterior se conserva al editar un producto para respetar las imágenes copiadas en pedidos históricos. La limpieza de subidas sin asignar sigue pendiente.
@@ -71,7 +71,7 @@ Después, comprobar registro, acceso, recarga de sesión, favoritos, variantes, 
 
 MongoDB y Cloudinary se respaldan con mecanismos propios del servicio. No presentar la prueba anterior de copiar un runtime SQLite cerrado como backup de Atlas. Probar una restauración en una base independiente y verificar las referencias de Cloudinary antes de dar este bloque por cerrado.
 
-El limitador por IP actual vive en memoria por instancia; no es una cuota distribuida entre funciones de Vercel. No se han medido carga ni escalado. La integración externa, el empaquetado remoto, las cookies a través del proxy publicado y la restauración en los proveedores siguen pendientes.
+El limitador por IP actual vive en memoria por instancia; no es una cuota distribuida entre funciones de Vercel. No se han medido carga ni escalado. La conexión externa y las cookies a través del proxy publicado se han comprobado. Siguen pendientes la restauración en los proveedores, medición de carga y verificación de persistencia tras un nuevo redeploy.
 
 SQLite se conserva para la demostración local y sus migraciones previas. Ese modo sí requiere disco persistente si se ejecuta en un servidor tradicional. Su copia coherente exige cerrar el proceso y copiar base y uploads juntos, o utilizar un backup SQLite validado. El Dockerfile corresponde a ese modo local y sigue sin ejecutarse en Docker. Render no es el destino elegido.
 

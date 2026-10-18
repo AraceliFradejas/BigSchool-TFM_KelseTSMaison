@@ -8,7 +8,7 @@ La primera versión cubre el recorrido de tienda en local. El objetivo de trabaj
 | ------------------------------------------------------------------------ | -------------------------------------------------------- |
 | Código y control de versiones                                            | Proyecto independiente preparado en este repositorio     |
 | README con descripción, stack, instalación, estructura y funcionalidades | Redactado en ES/EN para la primera versión local         |
-| Despliegue o publicación funcional                                       | Pendiente; el enunciado lo recomienda cuando sea posible |
+| Despliegue o publicación funcional                                       | Publicado en Vercel; comprobaciones de cierre en curso |
 | Slides y acceso desde el código o documentación                          | Presentación final pendiente                             |
 | Formulario de entrega                                                    | Lo cumplimenta Araceli manualmente en el campus          |
 
@@ -27,7 +27,7 @@ Fuente académica: `Documentacion-TFM.pdf`, conservado como referencia privada. 
 ## Cierre pendiente
 
 1. Completar los detalles editoriales que surjan de la revisión a resolución completa y de las pruebas de dispositivo. El 17 de octubre se revisaron las 190 imágenes en láminas de contacto y se comprobaron fichas de muestra con los nombres musicales; la pasarela ilustrada de 90 segundos ya está aceptada.
-2. Configurar Vercel, MongoDB y Cloudinary propios, desplegar y repetir las pruebas en ese entorno. El 17 de octubre se verificó en local el build con configuración de producción y la restauración independiente de datos ficticios; no acredita despliegue público ni Docker.
+2. Completar la validación de la versión publicada en Vercel con MongoDB y Cloudinary propios, incluida persistencia tras redeploy. El 17 de octubre se verificó en local el build con configuración de producción y la restauración independiente de datos ficticios; no acredita despliegue público ni Docker.
 3. Comprobar iPhone, iPad y Android; revisar teclado y lector de pantalla.
 4. Completar la auditoría de teclado y lector de pantalla. El 17 de octubre se revisaron el foco entre páginas, filtros, salto al contenido y cierre del menú con Escape; se corrigieron los problemas encontrados. Alta desde el formulario, acceso, redirección y recuperación de conexión comprobados en una base temporal aislada el 17 de octubre. Creación de producto bilingüe y subida de imagen desde Team comprobadas en una copia local aislada el 12 de octubre.
 5. Preparar slides y demostración sobre la versión desplegada; actualizar memoria y evidencias.
@@ -68,7 +68,7 @@ Este guion no sustituye las slides exigidas para la entrega.
 
 ## Continuación · 18 de octubre de 2026
 
-- Destino elegido por Araceli: Vercel, MongoDB y Cloudinary, siguiendo Cars. Retirada la propuesta de Render. No se han contratado servicios ni publicado Maison.
+- Destino elegido por Araceli: Vercel, MongoDB y Cloudinary, siguiendo Cars. Retirada la propuesta de Render. No se han contratado planes de pago. La publicación se completa en este bloque; véase el avance siguiente.
 - Revisadas las configuraciones, conexión y entrega de imágenes de Cars, sin leer secretos ni modificar ese proyecto. Preparadas API y web separadas, persistencia MongoDB con transacciones y subida/entrega Cloudinary.
 - Se conserva SQLite para demostración local. `seed:mongo` inserta el catálogo ficticio sin trasladar automáticamente cuentas, pedidos o personalizaciones de la instalación local.
 - Añadido `check:deployment` para la futura URL, de solo lectura. Verificación con MongoDB temporal y dobles de Cloudinary; los resultados y límites están en `docs/VALIDACION.md`.
@@ -79,3 +79,11 @@ Este guion no sustituye las slides exigidas para la entrega.
 ## App y asistente de outfits · objetivos confirmados el 18 de octubre
 
 Araceli quiere ambas ampliaciones: una app nativa y un asistente de IA para outfits. No se consideran terminadas por disponer de web responsive o del selector editorial actual. La app reutilizará la API y los contratos de Maison; Expo/React Native es una opción a evaluar. El asistente deberá consultar el catálogo real, respetar variantes, presupuesto y stock, y conservar el modo editorial si el proveedor falla. No creará pedidos ni cambiará la bolsa sin una acción explícita. El proveedor y el modelo aún no están elegidos; no hay claves ni consumo de IA configurados. La distribución nativa y el acceso para evaluación siguen por concretar.
+
+## Publicación y Team · 18 de octubre de 2026
+
+- Web publicada en https://kelsets-maison.vercel.app y API en https://kelsets-maison-api.vercel.app, con configuración privada solo en backend. Primer despliegue del commit `be67431`.
+- Cuenta permanente Team Maison creada a petición de Araceli, con contraseña nueva guardada únicamente en el `.env` privado. Se incorpora `team:create` como comando explícito, sin alta privilegiada desde la API pública ni cambios automáticos de cuentas existentes.
+- Chequeo público de solo lectura correcto. Recorrido HTTP real por la web HTTPS: acceso Team, flags de cookie segura, subida/lectura de imagen, creación/edición de pieza temporal, favorito, pedido de demostración, copia histórica de nombre/precio, confirmación, cancelación y devolución de stock. Cierre de sesión y retirada de todos los datos temporales; se conserva la cuenta permanente.
+- Revisadas portada y catálogo publicados en Chrome de escritorio. No equivale a validar todo el recorrido privado desde navegador ni a dispositivos físicos.
+- Siguiente bloque: verificar persistencia tras redeploy y recorrido privado en navegador, completar evidencias; después continuar con las ampliaciones solicitadas. Mailtrap queda para más adelante.

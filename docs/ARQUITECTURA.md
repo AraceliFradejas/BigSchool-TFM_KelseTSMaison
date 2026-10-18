@@ -1,6 +1,6 @@
 # Arquitectura y reglas de KelseTS Maison
 
-Maison tiene una web React y una API Express. El destino elegido es Vercel con MongoDB y Cloudinary propios, siguiendo el patrón de Cars. SQLite permanece como modo local independiente. La integración externa y la publicación siguen pendientes; MongoDB se ha comprobado con un replica set temporal. Los cambios de stock, pedidos y comunicaciones comparten una transacción. El objetivo es conservar un recorrido de demostración consistente incluso cuando se repite una petición o cambia el catálogo.
+Maison tiene una web React y una API Express. El destino elegido es Vercel con MongoDB y Cloudinary propios, siguiendo el patrón de Cars. SQLite permanece como modo local independiente. La web y la API están publicadas en Vercel; se han comprobado Atlas y Cloudinary reales y un recorrido HTTP de Team y pedido por HTTPS. Los tests aislados utilizan un replica set temporal de MongoDB. Los cambios de stock, pedidos y comunicaciones comparten una transacción. El objetivo es conservar un recorrido de demostración consistente incluso cuando se repite una petición o cambia el catálogo.
 
 ## Recorrido de datos
 
@@ -95,7 +95,7 @@ En MongoDB, `withTransaction` permite reintentar conflictos transitorios; la uni
 
 La API síncrona de SQLite encaja con una demostración pequeña y una sola instancia. No se han medido concurrencia de varios procesos ni cargas grandes. El almacenamiento exige disco persistente y copias coherentes de SQLite; copiar solo el archivo principal durante una escritura en WAL no basta.
 
-No hay recuperación de contraseña, verificación de correo, pagos, envíos reales, impuestos desglosados ni tarifas de transporte. El pedido usa únicamente precios ficticios finales. Tampoco hay correo externo, integración de IA ni app nativa. Cloudinary está integrado en código y probado con dobles; su conexión real sigue pendiente.
+No hay recuperación de contraseña, verificación de correo, pagos, envíos reales, impuestos desglosados ni tarifas de transporte. El pedido usa únicamente precios ficticios finales. Tampoco hay correo externo, integración de IA ni app nativa. Cloudinary está probado con dobles y también con subida y lectura reales a través de la API de Maison.
 
 ## Referencias técnicas
 

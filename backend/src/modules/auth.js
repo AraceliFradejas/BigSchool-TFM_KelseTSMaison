@@ -7,7 +7,7 @@ const deriveKey = promisify(scrypt);
 const SESSION_DURATION_MS = 7 * 24 * 60 * 60 * 1000;
 const hashToken = (token) => createHash('sha256').update(token).digest('hex');
 const publicUser = (user) => ({ id: user.id, name: user.name, email: user.email, role: user.role });
-async function hashPassword(password) {
+export async function hashPassword(password) {
   const salt = randomBytes(16).toString('hex');
   const key = await deriveKey(password, salt, 64);
   return `${salt}:${key.toString('hex')}`;
