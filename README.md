@@ -12,6 +12,8 @@ Proyecto TFM del máster de BigSchool: KelseTS Maison, boutique ficticia de moda
 
 KelseTS Maison es una boutique ficticia de moda, accesorios y belleza. Puedes explorar sus colecciones, elegir una variante, guardar tus piezas favoritas y completar un pedido de demostración. No se realizan ventas, cobros ni envíos reales.
 
+**Web:** [Abrir KelseTS Maison](https://kelsets-maison.vercel.app) · **API:** [Comprobar el servicio](https://kelsets-maison-api.vercel.app/api/v1/health).
+
 **Estado:** primera versión publicada en [Vercel](https://kelsets-maison.vercel.app), con MongoDB y Cloudinary propios. La presentación final y las ampliaciones siguen pendientes.
 
 ### Una historia personal
@@ -38,9 +40,44 @@ El pago es una simulación académica: puedo elegir una cuenta bancaria ficticia
 
 «Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. Está identificado como **modo editorial, sin IA**. Maison Stylist con un proveedor de IA sigue pendiente. La [app nativa](mobile/README.md) incorpora catálogo, variantes, outfits musicales, bolsa por cuenta, acceso, historial y comunicaciones. He probado la apertura en iPhone, iPad y Android; todavía tengo que validar el nuevo recorrido privado en los dispositivos.
 
+### Entrega y boutiques de demostración
+
+He ampliado el checkout de web y app con destinatario, envío a domicilio o recogida y revisión de entrega antes del pago simulado. Por el momento limito el domicilio a la Comunidad de Madrid, Barcelona ciudad y Marbella, con validación del código postal según la zona elegida. No se comprueba que exista una dirección real y solicito datos ficticios.
+
+Las boutiques son **Maison · Milla de Oro** (entorno de Serrano, Madrid), **Maison · Passeig de Gràcia** (Barcelona) y **Maison · Puerto Banús** (Marbella). Son espacios ficticios, sin locales ni acuerdos con tiendas reales. La portada presenta «Nuestras primeras boutiques» y enlaza a `/boutiques`, también disponible en el menú; la app incorpora una pestaña Boutiques, con mapa, fotos acreditadas del entorno y enlaces a Street View. La distancia se calcula en línea recta en el dispositivo, con ubicación opcional o un punto elegido en el mapa; no se guarda en la cuenta ni en el pedido.
+
+El pedido conserva el destinatario, la dirección o boutique elegida y fechas estimadas calculadas por el servidor: 3–5 días laborables para domicilio y 1–2 para recogida, usando el calendario de Madrid, de lunes a viernes y sin ajustar festivos. Son estimaciones de demostración; envío, recogida y cargo real siguen siendo 0,00 €. Los pedidos anteriores permanecen sin datos de entrega añadidos retrospectivamente.
+
+### App móvil · iPhone, iPad y Android
+
+`mobile/` contiene una aplicación **React Native con Expo**, conectada a la misma API HTTPS de Maison. Incluye catálogo paginado, búsqueda y categorías, ficha con variantes, 36 outfits con títulos de canciones y filtro por era, selección de todas las piezas del conjunto y bolsa local con imágenes de producto. La interfaz es ES/EN y los importes conservan el formato europeo **1.850,00 € en ambos idiomas**.
+
+La entrada muestra el logo animado a pantalla completa, se puede saltar y respeta la reducción de movimiento. Los controles incorporan botones del sistema, selección de idioma propia de cada plataforma y una barra inferior personalizada. No se utiliza un WebView.
+
+Desde la raíz:
+
+```sh
+npm ci
+npm run mobile
+```
+
+Abre el QR en Expo Go con móvil/tablet y ordenador en la misma Wi-Fi. En iPhone/iPad utiliza la misma cuenta Expo en la app y en la CLI (`npx expo login`). La [guía móvil](mobile/README.md) recoge instalación, descarga oficial Android y límites de Expo Go.
+
+**Pruebas en mis dispositivos · 18 de octubre de 2026**
+
+| Plataforma    | Estado observado                                                           | Modelo, versión del sistema y Expo Go                    |
+| ------------- | -------------------------------------------------------------------------- | -------------------------------------------------------- |
+| iPhone · iOS  | Apertura e interfaz/entrada corregida confirmadas                          | iPhone 13 · iOS 26.6.1 · Expo Go 57.0.9                  |
+| iPad · iPadOS | Apertura e interfaz/entrada corregida confirmadas                          | iPad de 6.ª generación · sistema 17.7.0 · Expo Go 57.0.9 |
+| Android       | Apertura confirmada; vuelve a cargar tras reiniciar Metro con caché limpia | Samsung Galaxy A34 · Android 16 · Expo Go 57.0.9         |
+
+He comprobado la apertura en estos tres dispositivos. Me queda completar el recorrido de outfits y bolsa, registrar capturas nativas y revisar la conservación de la bolsa, la accesibilidad y los cambios de conexión en cada uno. El acceso, registro, historial y comunicaciones ya están implementados, junto con el checkout simulado y las boutiques; tengo pendiente probar estas ampliaciones en los tres dispositivos. Favoritos, gestión Team e IA siguen pendientes en la app. No hay publicación en tiendas ni binario de distribución.
+
+**Versiones del proyecto comprobadas en el lockfile:** Maison móvil 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10. He registrado estas versiones para reproducir el entorno de desarrollo. Exportación iOS/Android y Expo Doctor 21/21 correctos. Los detalles de las verificaciones y los avisos de dependencias están en [Validación](docs/VALIDACION.md) y en la guía móvil.
+
 ### Estructura y tecnologías
 
-La web utiliza React, React Router, Vite y CSS. La API utiliza Node.js, Express, Zod y cookies de sesión. La publicación se prepara con MongoDB y Cloudinary siguiendo el patrón de Cars; SQLite mediante `node:sqlite` conserva el modo local sin servicios externos. Sharp valida y optimiza las imágenes subidas desde Team. Los esquemas y las reglas de pedidos están en un paquete compartido; las peticiones pasan por un cliente HTTP independiente de React.
+La web utiliza React, React Router, Vite y CSS. La API utiliza Node.js, Express, Zod y cookies de sesión. La publicación utiliza MongoDB y Cloudinary propios, siguiendo el patrón de Cars; SQLite mediante `node:sqlite` conserva el modo local sin servicios externos. Sharp valida y optimiza las imágenes subidas desde Team. Los esquemas y las reglas de pedidos están en un paquete compartido; las peticiones pasan por un cliente HTTP independiente de React.
 
 ```text
 backend/
@@ -54,6 +91,7 @@ frontend/
   src/shared/        # Estado, idiomas, componentes y peticiones
   src/styles/        # Diseño y responsive
   public/media/      # Imágenes de catálogo WebP y SVG históricos
+mobile/              # App nativa React Native y Expo
 packages/
   contracts/         # Esquemas y transiciones de pedidos
   api-client/        # Transporte HTTP y sus pruebas
@@ -98,6 +136,17 @@ npm start
 
 En ese caso, abre **http://127.0.0.1:3000**. Si vas a modificar datos desde esta dirección, configura previamente `APP_ORIGIN=http://127.0.0.1:3000` en `backend/.env`.
 
+### Actualizar una instalación anterior
+
+Las instalaciones nuevas ya incluyen el catálogo actual. Para una base local anterior, estos comandos actualizan los valores originales sin sobrescribir las personalizaciones de Team ni los pedidos históricos.
+
+| Comando                         | Actualización                                                                                |
+| ------------------------------- | -------------------------------------------------------------------------------------------- |
+| `npm run media:migrate`         | Recursos de catálogo; conserva imágenes personalizadas, stock y pedidos.                     |
+| `npm run prices:migrate`        | Precios iniciales de lujo; conserva precios personalizados y pedidos.                        |
+| `npm run runway:names:migrate`  | Títulos musicales de pasarela; conserva personalizaciones e históricos.                      |
+| `npm run catalog:names:migrate` | Los 51 nombres iniciales de producto; conserva traducciones personalizadas, stock y pedidos. |
+
 ### Cuenta de prueba y Team
 
 En MongoDB también puedes configurar `ADMIN_EMAIL` y una contraseña propia en `ADMIN_PASSWORD` dentro del `.env` privado y ejecutar `npm run team:create`. Es una acción explícita: no se ejecuta al arrancar ni publica credenciales, y no modifica una cuenta que ya exista.
@@ -128,11 +177,47 @@ npm run build
 npm run check:production
 ```
 
-Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. Las comprobaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md); las capturas de Safari, en [Evidencias](docs/evidencias/README.md).
+Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. Las últimas 67 comprobaciones automáticas han pasado. Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
+
+### Capturas de la web publicada
+
+Esta selección muestra la web publicada y el recorrido de compra. Puedes abrir cada captura a tamaño completo. El [índice de producción](docs/evidencias/produccion-2026-10-18/README.md) conserva las 39 capturas y explica sus límites. Son capturas de escritorio de Chrome y Safari, no capturas nativas del móvil. He cancelado los pedidos de prueba para reponer el stock.
+
+**Portada en castellano**
+
+<a href="docs/evidencias/produccion-2026-10-18/01-portada-es.jpg"><img src="docs/evidencias/produccion-2026-10-18/01-portada-es.jpg" alt="Portada en castellano" width="640"></a>
+
+**Catálogo de la boutique**
+
+<a href="docs/evidencias/produccion-2026-10-18/02-catalogo-es.jpg"><img src="docs/evidencias/produccion-2026-10-18/02-catalogo-es.jpg" alt="Catálogo de la boutique" width="640"></a>
+
+**Boutiques ficticias, mapa y distancias**
+
+<a href="docs/evidencias/produccion-2026-10-18/24-boutiques-mapa-distancias-safari.jpg"><img src="docs/evidencias/produccion-2026-10-18/24-boutiques-mapa-distancias-safari.jpg" alt="Boutiques ficticias, mapa y distancias" width="640"></a>
+
+**Bolsa con imagen y variante**
+
+<a href="docs/evidencias/produccion-2026-10-18/29-compra-bolsa-chrome.jpg"><img src="docs/evidencias/produccion-2026-10-18/29-compra-bolsa-chrome.jpg" alt="Bolsa con imagen y variante" width="640"></a>
+
+**Destinatario y domicilio ficticios**
+
+<a href="docs/evidencias/produccion-2026-10-18/31-compra-domicilio-ficticio-chrome.jpg"><img src="docs/evidencias/produccion-2026-10-18/31-compra-domicilio-ficticio-chrome.jpg" alt="Destinatario y domicilio ficticios" width="640"></a>
+
+**Revisión del pago simulado**
+
+<a href="docs/evidencias/produccion-2026-10-18/32-compra-revision-pago-ficticio-chrome.jpg"><img src="docs/evidencias/produccion-2026-10-18/32-compra-revision-pago-ficticio-chrome.jpg" alt="Revisión del pago simulado" width="640"></a>
+
+**Confirmación del pedido de demostración**
+
+<a href="docs/evidencias/produccion-2026-10-18/33-compra-confirmacion-chrome.jpg"><img src="docs/evidencias/produccion-2026-10-18/33-compra-confirmacion-chrome.jpg" alt="Confirmación del pedido de demostración" width="640"></a>
+
+**Justificante con cargo real cero**
+
+<a href="docs/evidencias/produccion-2026-10-18/35-compra-referencia-cargo-cero-chrome.jpg"><img src="docs/evidencias/produccion-2026-10-18/35-compra-referencia-cargo-cero-chrome.jpg" alt="Justificante con cargo real cero" width="640"></a>
 
 ### Despliegue y entrega
 
-Maison está publicada en **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, con [API propia](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB y Cloudinary. La web y la API son proyectos separados de Vercel y `/api` se sirve a través del proxy de la web. El 18 de octubre se comprobaron por HTTPS el catálogo, recursos, cabeceras, permisos y un recorrido HTTP de Team con imagen y pedido temporales. Esta prueba no equivale al recorrido completo desde un navegador ni a una prueba en dispositivo físico. El [documento de despliegue](docs/DESPLIEGUE.md) recoge configuración y límites. `npm run check:deployment -- https://kelsets-maison.vercel.app` repite el chequeo de solo lectura. El Dockerfile conserva la alternativa local con SQLite, pendiente de probar en Docker.
+Maison está publicada en **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, con [API propia](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB y Cloudinary. La web y la API son proyectos separados de Vercel y `/api` se sirve a través del proxy de la web. El 18 de octubre se comprobaron por HTTPS el catálogo, recursos, cabeceras, permisos y un recorrido HTTP de Team con imagen y pedido temporales. Además he completado recorridos de compra simulada desde Chrome y Safari, documentados en las capturas. La apertura de la app está comprobada en mis dispositivos; el nuevo recorrido privado móvil sigue pendiente. El [documento de despliegue](docs/DESPLIEGUE.md) recoge configuración y límites. `npm run check:deployment -- https://kelsets-maison.vercel.app` repite el chequeo de solo lectura. El Dockerfile conserva la alternativa local con SQLite, pendiente de probar en Docker.
 
 La entrega del TFM reunirá código, README, acceso a la aplicación y slides. El [seguimiento de entrega](docs/ENTREGA.md) distingue lo realizado de lo pendiente; la presentación final no está generada todavía.
 
@@ -155,6 +240,8 @@ La entrega del TFM reunirá código, README, acceso a la aplicación y slides. E
 
 KelseTS es una marca ficticia de **Araceli Fradejas Muñoz**. Maison es un proyecto educativo y de portfolio, sin actividad comercial, afiliación, patrocinio ni respaldo de celebridades, marcas o entidades deportivas. Sus productos, colecciones, precios y operaciones son ficticios. Las imágenes fotorrealistas del catálogo son representaciones generadas de productos ficticios, no fotografías de mercancía real. Los créditos y licencias de las tipografías están en [Recursos](docs/RECURSOS.md).
 
+---
+
 ## English version
 
 Full stack project for the **BigSchool final project**, created by **Araceli Fradejas Muñoz**.
@@ -162,6 +249,8 @@ Full stack project for the **BigSchool final project**, created by **Araceli Fra
 > **Your style tells a story.**
 
 KelseTS Maison is a fictional fashion, accessories and beauty boutique. Explore its collections, choose a variant, save favourite pieces and complete a demonstration order. There are no real sales, payments or shipments.
+
+**Website:** [Open KelseTS Maison](https://kelsets-maison.vercel.app) · **API:** [Check the service](https://kelsets-maison-api.vercel.app/api/v1/health).
 
 **Status:** first version published on [Vercel](https://kelsets-maison.vercel.app), with Maison MongoDB and Cloudinary services. The final presentation and extensions are still pending.
 
@@ -189,9 +278,44 @@ Payment is an academic simulation: fictional bank account, fictional card or sim
 
 “Complete your look” uses manual selections and actual catalogue availability. It is labelled **editorial mode, without AI**. Maison Stylist with an AI provider remains pending. The [native app](mobile/README.md) includes catalogue, variants, musical outfits, a bag per account, sign-in, order history and messages. I have opened it on iPhone, iPad and Android; I still need to validate the new private flow on physical devices.
 
+### Demonstration delivery and boutiques
+
+I have extended web and native checkout with a recipient, home delivery or boutique collection, and a delivery review before simulated payment. Home delivery is currently limited to the Community of Madrid, Barcelona city and Marbella, using postcode rules for the selected area. The form requests fictional data and does not verify whether an address actually exists.
+
+The boutiques are **Maison · Milla de Oro** (Serrano surroundings, Madrid), **Maison · Passeig de Gràcia** (Barcelona) and **Maison · Puerto Banús** (Marbella). They are fictional spaces with no physical premises or agreements with real shops. The homepage introduces “Our first boutiques” and links to `/boutiques`, also available in the menu. The app includes a Boutiques tab with maps, credited neighbourhood photographs and Street View links. Optional location or a manually selected map point is used locally for straight-line distances; it is not saved in an account or order.
+
+The order preserves the recipient, address or boutique and server-calculated estimates: 3–5 working days for home delivery and 1–2 for collection, using Madrid’s calendar, Monday to Friday without holiday adjustments. Delivery, collection and the real charge remain **0,00 €**. Earlier orders are not retroactively assigned delivery details.
+
+### Native app · iPhone, iPad and Android
+
+`mobile/` contains a **React Native/Expo** app using Maison’s published HTTPS API. It includes catalogue search, categories, variants, 36 song-named outfits with era filters, complete outfit selections, product images in the bag, sign-in, registration, a bag per account, simulated checkout, order history, messages and boutiques. Both languages use European amounts such as **1.850,00 €**.
+
+The full-screen animated logo introduction is skippable and respects reduced motion. Platform controls and a custom bottom navigation support iOS and Android. The app does not use a WebView.
+
+From the repository root:
+
+```bash
+npm ci
+npm run mobile
+```
+
+Open the QR in Expo Go with the device and computer on the same Wi-Fi. On iPhone/iPad, use the same Expo account in the app and CLI (`npx expo login`). The [mobile guide](mobile/README.md) covers setup, the official Android download and Expo Go limitations.
+
+**My device checks · 18 October 2026**
+
+| Platform      | Observed result                                          | Device, system and Expo Go                             |
+| ------------- | -------------------------------------------------------- | ------------------------------------------------------ |
+| iPhone · iOS  | App opened; corrected introduction and interface checked | iPhone 13 · iOS 26.6.1 · Expo Go 57.0.9                |
+| iPad · iPadOS | App opened; corrected introduction and interface checked | iPad (6th generation) · system 17.7.0 · Expo Go 57.0.9 |
+| Android       | App opened and loaded again after clearing Metro’s cache | Samsung Galaxy A34 · Android 16 · Expo Go 57.0.9       |
+
+I still need to complete outfit and bag checks, capture native screenshots, and test persistence, accessibility and connection changes on each device. Sign-in, registration, history, messages, simulated checkout and boutiques are implemented, but these extensions still need physical-device checks. Native favourites, Team management and AI remain pending. There are no distribution binaries or app-store releases.
+
+**Project versions recorded in the lockfile:** mobile app 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 and expo-splash-screen 57.0.10. iOS/Android exports and Expo Doctor 21/21 passed. These checks are separate from physical-device testing; see [Validation](docs/VALIDACION.md).
+
 ### Structure and technologies
 
-The web uses React, React Router, Vite and CSS. The API uses Node.js, Express, Zod and session cookies. Deployment is being prepared with MongoDB and Cloudinary following the Cars pattern; SQLite through `node:sqlite` retains the local mode without external services. Sharp validates and optimises Team image uploads. Schemas and order rules live in a shared package; requests use an HTTP client independent of React.
+The web uses React, React Router, Vite and CSS. The API uses Node.js, Express, Zod and session cookies. Deployment uses Maison’s own MongoDB and Cloudinary services, following the Cars pattern; SQLite through `node:sqlite` retains the local mode without external services. Sharp validates and optimises Team image uploads. Schemas and order rules live in a shared package; requests use an HTTP client independent of React.
 
 ```text
 backend/
@@ -205,6 +329,7 @@ frontend/
   src/shared/        # State, languages, components and requests
   src/styles/        # Design and responsive layout
   public/media/      # WebP catalog images and historical SVGs
+mobile/              # React Native and Expo app
 packages/
   contracts/         # Schemas and order transitions
   api-client/        # HTTP transport and its tests
@@ -213,7 +338,7 @@ docs/                # Architecture, resources, validation and delivery
 scripts/             # Startup, assets and image migration
 ```
 
-The installation above uses SQLite and local storage. For MongoDB and Cloudinary, configure Maison services and run `npm run seed:mongo` following [Deployment](docs/DESPLIEGUE.md). The local database lets you try Maison without external service accounts. It is independent of Cars and contains none of its users, data or credentials. On Node 22, `node:sqlite` emits an experimental-feature warning; the checked environment is recorded in [Validation](docs/VALIDACION.md).
+The local installation uses SQLite and local storage. For MongoDB and Cloudinary, configure Maison services and run `npm run seed:mongo` following [Deployment](docs/DESPLIEGUE.md). The local database lets you try Maison without external service accounts. It is independent of Cars and contains none of its users, data or credentials. On Node 22, `node:sqlite` emits an experimental-feature warning; the checked environment is recorded in [Validation](docs/VALIDACION.md).
 
 ### Local installation
 
@@ -249,6 +374,17 @@ npm start
 
 Then open **http://127.0.0.1:3000**. To change data from that address, first set `APP_ORIGIN=http://127.0.0.1:3000` in `backend/.env`.
 
+### Updating an earlier installation
+
+New installations already include the current catalogue. For an earlier local database, these commands update original values without overwriting Team customisations or historical orders.
+
+| Command                         | Update                                                                          |
+| ------------------------------- | ------------------------------------------------------------------------------- |
+| `npm run media:migrate`         | Catalogue assets; preserves custom images, stock and orders.                    |
+| `npm run prices:migrate`        | Initial luxury prices; preserves custom prices and orders.                      |
+| `npm run runway:names:migrate`  | Musical runway titles; preserves custom edits and history.                      |
+| `npm run catalog:names:migrate` | The 51 original product names; preserves custom translations, stock and orders. |
+
 ### Test account and Team
 
 For MongoDB, set `ADMIN_EMAIL` and your own `ADMIN_PASSWORD` in the private `.env`, then run `npm run team:create`. This explicit command never runs at startup, exposes no credentials and leaves an existing account unchanged.
@@ -279,11 +415,47 @@ npm run build
 npm run check:production
 ```
 
-Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. Executed checks and their limits are in [Validation](docs/VALIDACION.md); Safari screenshots are in [Evidence](docs/evidencias/README.md).
+Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. The latest 67 automated checks passed. Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
+
+### Published website screenshots
+
+This selection shows the published website and checkout flow. Open each screenshot at full size. The [production index](docs/evidencias/produccion-2026-10-18/README.md) contains all 39 screenshots and their limits. These are Chrome and Safari desktop screenshots, not native mobile captures. I cancelled the test orders to restore stock.
+
+**Spanish homepage**
+
+<a href="docs/evidencias/produccion-2026-10-18/01-portada-es.jpg"><img src="docs/evidencias/produccion-2026-10-18/01-portada-es.jpg" alt="Spanish homepage" width="640"></a>
+
+**Boutique catalogue**
+
+<a href="docs/evidencias/produccion-2026-10-18/02-catalogo-es.jpg"><img src="docs/evidencias/produccion-2026-10-18/02-catalogo-es.jpg" alt="Boutique catalogue" width="640"></a>
+
+**Fictional boutiques, map and distances**
+
+<a href="docs/evidencias/produccion-2026-10-18/24-boutiques-mapa-distancias-safari.jpg"><img src="docs/evidencias/produccion-2026-10-18/24-boutiques-mapa-distancias-safari.jpg" alt="Fictional boutiques, map and distances" width="640"></a>
+
+**Bag with product image and variant**
+
+<a href="docs/evidencias/produccion-2026-10-18/29-compra-bolsa-chrome.jpg"><img src="docs/evidencias/produccion-2026-10-18/29-compra-bolsa-chrome.jpg" alt="Bag with product image and variant" width="640"></a>
+
+**Fictional recipient and address**
+
+<a href="docs/evidencias/produccion-2026-10-18/31-compra-domicilio-ficticio-chrome.jpg"><img src="docs/evidencias/produccion-2026-10-18/31-compra-domicilio-ficticio-chrome.jpg" alt="Fictional recipient and address" width="640"></a>
+
+**Simulated payment review**
+
+<a href="docs/evidencias/produccion-2026-10-18/32-compra-revision-pago-ficticio-chrome.jpg"><img src="docs/evidencias/produccion-2026-10-18/32-compra-revision-pago-ficticio-chrome.jpg" alt="Simulated payment review" width="640"></a>
+
+**Demonstration order confirmation**
+
+<a href="docs/evidencias/produccion-2026-10-18/33-compra-confirmacion-chrome.jpg"><img src="docs/evidencias/produccion-2026-10-18/33-compra-confirmacion-chrome.jpg" alt="Demonstration order confirmation" width="640"></a>
+
+**Receipt showing zero real charge**
+
+<a href="docs/evidencias/produccion-2026-10-18/35-compra-referencia-cargo-cero-chrome.jpg"><img src="docs/evidencias/produccion-2026-10-18/35-compra-referencia-cargo-cero-chrome.jpg" alt="Receipt showing zero real charge" width="640"></a>
 
 ### Deployment and delivery
 
-Maison is published at **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, with its [own API](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB and Cloudinary. Web and API are separate Vercel projects, with `/api` proxied through the web origin. On 18 October, HTTPS checks covered the catalogue, assets, headers, permissions and an HTTP Team flow with a temporary image and demonstration order. This does not validate the full browser flow or physical devices. The [deployment document](docs/DESPLIEGUE.md) records configuration and limits. Run `npm run check:deployment -- https://kelsets-maison.vercel.app` to repeat read-only checks. The Dockerfile retains the local SQLite alternative, still untested in Docker.
+Maison is published at **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, with its [own API](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB and Cloudinary. Web and API are separate Vercel projects, with `/api` proxied through the web origin. On 18 October, HTTPS checks covered the catalogue, assets, headers, permissions and an HTTP Team flow with a temporary image and demonstration order. I have also completed simulated checkout flows in Chrome and Safari, recorded in the screenshots. I have opened the native app on my devices; its new private flow still needs physical-device validation. The [deployment document](docs/DESPLIEGUE.md) records configuration and limits. Run `npm run check:deployment -- https://kelsets-maison.vercel.app` to repeat read-only checks. The Dockerfile retains the local SQLite alternative, still untested in Docker.
 
 The final project will include code, README, application access and slides. [Delivery tracking](docs/ENTREGA.md) separates completed work from pending work; the final presentation has not been generated yet.
 
@@ -305,62 +477,3 @@ The final project will include code, README, application access and slides. [Del
 ### Academic notice and author
 
 KelseTS is a fictional brand by **Araceli Fradejas Muñoz**. Maison is an educational and portfolio project without commercial activity, affiliation, sponsorship or endorsement by celebrities, brands or sporting organisations. Its products, collections, prices and operations are fictional. Photorealistic catalogue images are generated representations of fictional products, not photographs of real merchandise. Font credits and licences are in [Resources](docs/RECURSOS.md).
-
-Para actualizar una base local anterior con los nuevos recursos de catálogo: `npm run media:migrate`. Sustituye las imágenes SVG originales y las fotos de conjunto usadas provisionalmente en las fichas de pasarela; conserva stock, imágenes personalizadas y pedidos. Las instalaciones nuevas utilizan WebP desde el inicio.
-
-Para aplicar los precios de lujo a una base local anterior: `npm run prices:migrate`. Conserva precios personalizados por Team, stock y pedidos anteriores. Las instalaciones nuevas incorporan los precios actualizados.
-
-Para actualizar los nombres editoriales anteriores de la pasarela: `npm run runway:names:migrate`. Solo cambia los nombres originales; respeta los nombres personalizados por Team, el stock y las líneas históricas de pedidos. Las instalaciones nuevas ya incluyen los títulos de canciones.
-
-Existing local databases can run `npm run media:migrate` for individual runway photographs and `npm run runway:names:migrate` for song titles. Both preserve managed stock, custom Team edits and historical orders. New installations include the current catalogue directly.
-
-Para actualizar los 51 nombres de producto anteriores a la selección musical: `npm run catalog:names:migrate`. Conserva cada traducción personalizada por Team, identificadores, precios, existencias y pedidos históricos. Las instalaciones nuevas incluyen los nombres musicales; las 139 piezas de pasarela mantienen sus títulos de canciones.
-
-Run `npm run catalog:names:migrate` to update the 51 earlier product names to the musical selection. It preserves each custom Team translation, IDs, prices, stock and historical orders. New installations include the musical names; the 139 runway pieces keep their song titles.
-
-### App móvil · iPhone, iPad y Android
-
-`mobile/` contiene una aplicación **React Native con Expo**, conectada a la misma API HTTPS de Maison. Incluye catálogo paginado, búsqueda y categorías, ficha con variantes, 36 outfits con títulos de canciones y filtro por era, selección de todas las piezas del conjunto y bolsa local con imágenes de producto. La interfaz es ES/EN y los importes conservan el formato europeo **1.850,00 € en ambos idiomas**.
-
-La entrada muestra el logo animado a pantalla completa, se puede saltar y respeta la reducción de movimiento. Los controles incorporan botones del sistema, selección de idioma propia de cada plataforma y una barra inferior personalizada. No se utiliza un WebView.
-
-Desde la raíz:
-
-```sh
-npm ci
-npm run mobile
-```
-
-Abre el QR en Expo Go con móvil/tablet y ordenador en la misma Wi-Fi. En iPhone/iPad utiliza la misma cuenta Expo en la app y en la CLI (`npx expo login`). La [guía móvil](mobile/README.md) recoge instalación, descarga oficial Android y límites de Expo Go.
-
-**Pruebas en mis dispositivos · 18 de octubre de 2026**
-
-| Plataforma    | Estado observado                                                           | Modelo, versión del sistema y Expo Go                    |
-| ------------- | -------------------------------------------------------------------------- | -------------------------------------------------------- |
-| iPhone · iOS  | Apertura e interfaz/entrada corregida confirmadas                          | iPhone 13 · iOS 26.6.1 · Expo Go 57.0.9                  |
-| iPad · iPadOS | Apertura e interfaz/entrada corregida confirmadas                          | iPad de 6.ª generación · sistema 17.7.0 · Expo Go 57.0.9 |
-| Android       | Apertura confirmada; vuelve a cargar tras reiniciar Metro con caché limpia | Samsung Galaxy A34 · Android 16 · Expo Go 57.0.9         |
-
-He comprobado la apertura en estos tres dispositivos. Me queda completar el recorrido de outfits y bolsa, registrar capturas nativas y revisar la conservación de la bolsa, la accesibilidad y los cambios de conexión en cada uno. Acceso, favoritos, pedidos e historial de cuenta, Team e IA aún no están integrados en la app; no hay publicación en tiendas ni binario de distribución.
-
-**Versiones del proyecto comprobadas en el lockfile:** Maison móvil 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10. He registrado estas versiones para reproducir el entorno de desarrollo. Exportación iOS/Android y Expo Doctor 21/21 correctos. Los detalles de las verificaciones y los avisos de dependencias están en [Validación](docs/VALIDACION.md) y en la guía móvil.
-
-### Native app · iPhone, iPad and Android
-
-`mobile/` contains a **React Native/Expo** application using Maison's published HTTPS API: bilingual catalogue, search, categories, product variants, 36 song-named outfits with era filters and complete selections, and a local bag with product images. Both languages use European amounts such as **1.850,00 €**. The full-screen logo introduction is skippable and respects reduced motion.
-
-Run `npm ci` and `npm run mobile`, then open the QR in Expo Go on the same Wi-Fi network. iPhone/iPad requires the same Expo account in Expo Go and the CLI. See the [mobile guide](mobile/README.md).
-
-On 18 October 2026, I opened the app on **iPhone, iPad and Android**. I checked the corrected introduction and interface on iPhone and iPad, and Android loaded again after clearing Metro's cache. I used an **iPhone 13 / iOS 26.6.1**, an **iPad (6th generation) / system version 17.7.0**, and a **Samsung Galaxy A34 / Android 16**, with **Expo Go 57.0.9**. I still need to complete the outfit and bag flow on each device. Native authentication, favourites, account orders/history, Team, AI, distribution binaries and app-store publication remain pending.
-
-Project versions: mobile app 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 and expo-splash-screen 57.0.10. iOS/Android bundle exports and 21/21 Expo Doctor checks passed; these are separate from physical-device verification.
-
-### Entrega y boutiques de demostración
-
-He ampliado el checkout de web y app con destinatario, envío a domicilio o recogida y revisión de entrega antes del pago simulado. Por el momento limito el domicilio a la Comunidad de Madrid, Barcelona ciudad y Marbella, con validación del código postal según la zona elegida. No se comprueba que exista una dirección real y solicito datos ficticios.
-
-Las boutiques son **Maison · Milla de Oro** (entorno de Serrano, Madrid), **Maison · Passeig de Gràcia** (Barcelona) y **Maison · Puerto Banús** (Marbella). Son espacios ficticios, sin locales ni acuerdos con tiendas reales. La portada presenta «Nuestras primeras boutiques» y enlaza a `/boutiques`, también disponible en el menú; la app incorpora una pestaña Boutiques, con mapa, fotos acreditadas del entorno y enlaces a Street View. La distancia se calcula en línea recta en el dispositivo, con ubicación opcional o un punto elegido en el mapa; no se guarda en la cuenta ni en el pedido.
-
-El pedido conserva el destinatario, la dirección o boutique elegida y fechas estimadas calculadas por el servidor: 3–5 días laborables para domicilio y 1–2 para recogida, usando el calendario de Madrid, de lunes a viernes y sin ajustar festivos. Son estimaciones de demostración; envío, recogida y cargo real siguen siendo 0,00 €. Los pedidos anteriores permanecen sin datos de entrega añadidos retrospectivamente.
-
-I have extended web and native checkout with a recipient, home delivery or boutique collection, and a delivery review before simulated payment. Home delivery is currently limited to the Community of Madrid, Barcelona city and Marbella, using postcode rules for the selected area. The three Maison boutiques are fictional. Maps, credited neighbourhood photos and Street View links show their approximate surroundings. Optional location is used locally for straight-line distances and is not saved in an account or order. The server records estimated delivery dates in the order; all deliveries, collections and payments remain simulations.
