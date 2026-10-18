@@ -1,8 +1,15 @@
+import { useState } from 'react';
 import Boutiques from './Boutiques';
 import { Text, TextInput, Button, View, StyleSheet } from 'react-native';
-import { deliveryAreas, fulfillmentCopy, fulfillmentLines } from '@maison/contracts/fulfillment';
+import {
+  demoBoutiques,
+  deliveryAreas,
+  fulfillmentCopy,
+  fulfillmentLines,
+} from '@maison/contracts/fulfillment';
 export function DeliveryForm({ value, onChange, language, busy }) {
   const t = fulfillmentCopy[language];
+  const [explore, setExplore] = useState(false);
   const change = (key, next) => onChange({ ...value, [key]: next });
   return (
     <View style={s.form}>
@@ -58,12 +65,30 @@ export function DeliveryForm({ value, onChange, language, busy }) {
       ) : (
         <>
           <Text>{t.network}</Text>
-          <Boutiques
-            language={language}
-            selectedId={value.boutiqueId}
-            onChoose={(id) => change('boutiqueId', id)}
+          {demoBoutiques.map((b) => (
+            <Button
+              key={b.id}
+              disabled={busy}
+              color={value.boutiqueId === b.id ? '#b3152b' : '#686159'}
+              title={`${value.boutiqueId === b.id ? '✓ ' : ''}${b.name}`}
+              onPress={() => change('boutiqueId', b.id)}
+            />
+          ))}
+          <Text>{demoBoutiques.find((b) => b.id === value.boutiqueId)?.location[language]}</Text>
+          <Button
             disabled={busy}
+            color="#b3152b"
+            title={explore ? t.hideExplore : t.explore}
+            onPress={() => setExplore(!explore)}
           />
+          {explore && (
+            <Boutiques
+              language={language}
+              selectedId={value.boutiqueId}
+              onChoose={(id) => change('boutiqueId', id)}
+              disabled={busy}
+            />
+          )}
         </>
       )}
       <Text>{t[value.method === 'home' ? 'homeEstimate' : 'pickupEstimate']}</Text>

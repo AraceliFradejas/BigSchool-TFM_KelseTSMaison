@@ -124,6 +124,7 @@ export default function Boutiques({ language, selectedId, onChoose, disabled = f
             pinColor="#b3152b"
           />
         ))}
+        {origin && <Marker coordinate={origin} title={t.origin} pinColor="#246ea8" />}
       </MapView>
       {mapFailed && <Text>{t.tileError}</Text>}
       {demoBoutiques.map((b) => (

@@ -97,6 +97,7 @@ export function BoutiqueExplorer({ language, selectedId, onChoose, disabled = fa
       {picking && <p role="status">{t.picking}</p>}
       <Suspense fallback={<p role="status">{t.mapLabel}…</p>}>
         <BoutiqueMap
+          origin={origin}
           language={language}
           selected={selected}
           picking={picking}

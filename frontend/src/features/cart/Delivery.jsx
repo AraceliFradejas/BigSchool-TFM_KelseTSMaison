@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BoutiqueExplorer } from '../boutiques/Boutiques';
 import {
   demoBoutiques,
@@ -7,11 +8,13 @@ import {
 } from '@maison/contracts/fulfillment';
 export function DeliveryForm({ value, onChange, language, busy }) {
   const t = fulfillmentCopy[language];
+  const [explore, setExplore] = useState(false);
   const change = (key, next) => onChange({ ...value, [key]: next });
   return (
     <fieldset disabled={busy}>
       <legend>{t.title}</legend>
       <p className="fine-print">{t.notice}</p>
+      <p className="fine-print">{t.country}</p>
       <label>
         {t.recipient}
         <input
@@ -65,7 +68,6 @@ export function DeliveryForm({ value, onChange, language, busy }) {
               />
             </label>
           ))}
-          <p>{t.country}</p>
         </>
       ) : (
         <>
@@ -80,12 +82,17 @@ export function DeliveryForm({ value, onChange, language, busy }) {
               ))}
             </select>
           </label>
-          <BoutiqueExplorer
-            language={language}
-            selectedId={value.boutiqueId}
-            onChoose={(id) => change('boutiqueId', id)}
-            disabled={busy}
-          />
+          <details onToggle={(event) => setExplore(event.currentTarget.open)}>
+            <summary>{t.explore}</summary>
+            {explore && (
+              <BoutiqueExplorer
+                language={language}
+                selectedId={value.boutiqueId}
+                onChoose={(id) => change('boutiqueId', id)}
+                disabled={busy}
+              />
+            )}
+          </details>
         </>
       )}
       <p className="fine-print">{t[value.method === 'home' ? 'homeEstimate' : 'pickupEstimate']}</p>

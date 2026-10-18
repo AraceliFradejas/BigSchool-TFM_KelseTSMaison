@@ -107,7 +107,7 @@ export const words = {
     orderNotice:
       'Pedido de demostración: sin cobros ni envíos reales. Las piezas y sus precios se conservan tal como estaban al crear el pedido.',
     checkoutNotice:
-      'Este pedido es una simulación. No te pediremos datos de pago ni de envío. El stock se comprobará al confirmar.',
+      'Este pedido es una simulación. Indica un destinatario y un destino ficticios; no introduzcas datos bancarios. El stock se comprobará al confirmar.',
     signInCheckout: 'Accede para crear tu pedido',
     unavailableCart:
       'Una pieza ha cambiado o ya no está disponible. Quítala de la bolsa para continuar.',
@@ -310,7 +310,7 @@ export const words = {
     orderNotice:
       'Demonstration order: no real payments or shipments. Pieces and prices are preserved as they were when the order was created.',
     checkoutNotice:
-      'This order is a simulation. No payment or shipping details are needed. Stock will be checked when you confirm.',
+      'This order is a simulation. Use a fictional recipient and destination; do not enter banking details. Stock will be checked when you confirm.',
     signInCheckout: 'Sign in to create your order',
     unavailableCart:
       'A piece has changed or is no longer available. Remove it from your bag to continue.',

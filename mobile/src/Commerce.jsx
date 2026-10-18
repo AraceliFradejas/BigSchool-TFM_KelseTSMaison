@@ -56,13 +56,14 @@ export function Checkout({ language, rows, total, busy, error, back, confirm, cu
         {d.customer}: {customer?.name}
       </Text>
       <Text style={s.notice}>{t.warning}</Text>
-      <Text>{t.details}</Text>
-      {rows.map((row) => (
-        <Text key={row.variantId}>
-          {row.product.name[language]} · {row.variant.label[language]} × {row.quantity} ·{' '}
-          {money(row.totalCents, language)}
-        </Text>
-      ))}
+      {step === 2 && <Text>{t.details}</Text>}
+      {step === 2 &&
+        rows.map((row) => (
+          <Text key={row.variantId}>
+            {row.product.name[language]} · {row.variant.label[language]} × {row.quantity} ·{' '}
+            {money(row.totalCents, language)}
+          </Text>
+        ))}
       <Text style={s.title}>{money(total, language)}</Text>
       {step === 1 ? (
         <DeliveryForm value={delivery} onChange={setDelivery} language={language} busy={busy} />

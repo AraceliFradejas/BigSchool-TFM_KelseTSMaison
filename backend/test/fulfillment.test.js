@@ -9,6 +9,7 @@ import {
 import {
   demoBoutiques,
   distanceKm,
+  distanceLabel,
   streetViewUrl,
   boutiqueMapUrl,
 } from '@maison/contracts/boutiques';
@@ -77,6 +78,11 @@ test('distances are geodesic and street links carry only the public boutique poi
   const madrid = demoBoutiques[0],
     barcelona = demoBoutiques[1];
   assert.equal(distanceKm(madrid, madrid), 0);
+  assert.equal(
+    distanceLabel({ latitude: 0, longitude: 0 }, madrid, 'en'),
+    distanceLabel({ latitude: 0, longitude: 0 }, madrid, 'es'),
+  );
+  assert.match(distanceLabel({ latitude: 0, longitude: 0 }, madrid, 'en'), /\d\.\d{3}/);
   const km = distanceKm(madrid, barcelona);
   assert.ok(km > 490 && km < 520);
   assert.ok(Math.abs(km - distanceKm(barcelona, madrid)) < 0.000001);

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { demoBoutiques, boutiqueCopy } from '@maison/contracts/boutiques';
-export default function BoutiqueMap({ language, selected, picking, onPoint, onSelect }) {
+export default function BoutiqueMap({ language, selected, picking, onPoint, onSelect, origin }) {
   const element = useRef(null);
   const map = useRef(null);
   const [failed, setFailed] = useState(false);
@@ -43,6 +43,19 @@ export default function BoutiqueMap({ language, selected, picking, onPoint, onSe
       map.current = null;
     };
   }, []);
+  useEffect(() => {
+    if (!origin) return;
+    const point = L.circleMarker([origin.latitude, origin.longitude], {
+      radius: 8,
+      color: '#fff',
+      fillColor: '#246ea8',
+      fillOpacity: 1,
+      weight: 2,
+    })
+      .bindTooltip(t.origin)
+      .addTo(map.current);
+    return () => point.remove();
+  }, [origin, language]);
   useEffect(() => {
     const instance = map.current;
     if (selected) {

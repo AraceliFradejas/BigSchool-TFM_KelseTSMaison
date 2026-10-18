@@ -1,6 +1,6 @@
 # Capturas de la web publicada · 18 de octubre de 2026
 
-Capturas originales de Chrome en escritorio sobre https://kelsets-maison.vercel.app, realizadas el 18 de octubre de 2026. Se conserva la ventana del navegador y la dirección pública; no se han reconstruido ni retocado las pantallas. Son vistas parciales de la interfaz, no pruebas de todos los comportamientos del sistema. Las capturas 1–5 se tomaron sin modificar productos ni crear pedidos. La ampliación 6–16 documenta después un pedido de demostración creado, confirmado y cancelado para esta revisión; se conserva cancelado en el historial de Team Maison. En las capturas 13–14 no se guardaron cambios. La secuencia 17–19 documenta después una creación temporal archivada y su limpieza. Las capturas 20–23 recogen la ampliación del pago simulado, su rechazo y el justificante del pedido de prueba.
+Capturas originales de Chrome y, en la ampliación 24–26, Safari de escritorio sobre https://kelsets-maison.vercel.app, realizadas el 18 de octubre de 2026. Se conserva la ventana del navegador y la dirección pública; no se han reconstruido ni retocado las pantallas. Son vistas parciales de la interfaz, no pruebas de todos los comportamientos del sistema. Las capturas 1–5 se tomaron sin modificar productos ni crear pedidos. La ampliación 6–16 documenta después un pedido de demostración creado, confirmado y cancelado para esta revisión; se conserva cancelado en el historial de Team Maison. En las capturas 13–14 no se guardaron cambios. La secuencia 17–19 documenta después una creación temporal archivada y su limpieza. Las capturas 20–23 recogen la ampliación del pago simulado, su rechazo y el justificante del pedido de prueba.
 
 ## 1. Portada en castellano
 
@@ -127,3 +127,19 @@ Después he escogido PayPal simulado y un resultado aceptado. El pedido `111d84b
 ![Pedido cancelado conservando el justificante](23-justificante-tras-cancelacion.jpg)
 
 He cancelado el pedido desde Team para reponer sus dos unidades. Conservo el pedido cancelado y sus comunicaciones en el historial; el justificante sigue indicando el método simulado y cargo real cero. No se ha realizado ningún pago ni envío real.
+
+## 24–26. Boutiques, distancias y recogida · Safari
+
+![Boutiques, mapa y distancias desde un punto manual](24-boutiques-mapa-distancias-safari.jpg)
+
+He abierto la sección pública `/boutiques` en Safari. Veo las tres boutiques ficticias, fotografías del entorno real, créditos y licencias. El mapa conserva la atribución de Leaflet y OpenStreetMap. Para probar las distancias he elegido un punto manual en el mapa; no he solicitado mi ubicación real. La pantalla muestra 266 km, 342,6 km y 479,5 km en línea recta, sin presentarlos como rutas por carretera.
+
+![Revisión del destinatario y la recogida](25-revision-destinatario-recogida-safari.jpg)
+
+He accedido con la cuenta Team Maison existente, sin guardar la contraseña en Safari, y añadido una unidad de Enchanted M. Indico «Alex Maison» como destinatario ficticio y selecciono recogida en Maison · Milla de Oro. Antes de confirmar reviso ese destino junto con el aviso académico y el importe simulado de 1.850,00 €.
+
+![Justificante con destinatario y fechas estimadas](26-justificante-recogida-fechas-safari.jpg)
+
+El pedido `1c275c89-cef5-4bdf-848a-072c7cf2ead7` conserva el destinatario, la boutique y el intervalo estimado del 19 al 20 de octubre de 2026. La recogida es una simulación y su importe es cero. He abierto también el detalle desde Team y cancelado el pedido para reponer la unidad; conservo su histórico y sus comunicaciones. No se ha reservado una recogida física ni se ha realizado ningún cobro.
+
+Después de estas capturas simplifico el primer paso: el explorador de mapas se abre de forma opcional para que no sea necesario recorrer las tres fichas antes de continuar al pago. Las capturas conservan la versión que he comprobado, sin reconstruirla.

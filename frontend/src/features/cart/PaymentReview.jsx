@@ -1,6 +1,6 @@
 import { fulfillmentSchema, fulfillmentCopy } from '@maison/contracts/fulfillment';
 import { DeliveryForm, DeliverySummary } from './Delivery';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useId } from 'react';
 import { paymentCopy } from '@maison/contracts/demo-payment';
 import { useMaison } from '../../shared/state';
 import { Money } from '../../shared/components';
@@ -62,21 +62,23 @@ export default function PaymentReview({ lines, totalCents, busy, error, onCancel
           {deliveryCopy.customer}: {user?.name}
         </p>
         <p className="demo-notice">{copy.warning}</p>
-        <p className="fine-print">{copy.details}</p>
-        <div className="payment-lines">
-          {lines.map((line) => (
-            <div key={line.variantId} className="payment-line">
-              <img src={line.product.image} width="52" height="65" alt="" />
-              <span>
-                {line.product.name[language]}
-                <small>
-                  {line.variant.label[language]} · × {line.quantity}
-                </small>
-              </span>
-              <Money cents={line.variant.priceCents * line.quantity} />
-            </div>
-          ))}
-        </div>
+        {step === 2 && <p className="fine-print">{copy.details}</p>}
+        {step === 2 && (
+          <div className="payment-lines">
+            {lines.map((line) => (
+              <div key={line.variantId} className="payment-line">
+                <img src={line.product.image} width="52" height="65" alt="" />
+                <span>
+                  {line.product.name[language]}
+                  <small>
+                    {line.variant.label[language]} · × {line.quantity}
+                  </small>
+                </span>
+                <Money cents={line.variant.priceCents * line.quantity} />
+              </div>
+            ))}
+          </div>
+        )}
         <p className="summary-total">
           {copy.amount}
           <strong>
@@ -161,11 +163,12 @@ export default function PaymentReview({ lines, totalCents, busy, error, onCancel
 }
 export function PaymentReceipt({ payment, cancelled }) {
   const { language } = useMaison();
+  const receiptId = useId();
   if (!payment || payment.mode !== 'demo') return null;
   const copy = paymentCopy[language];
   return (
-    <section className="payment-receipt" aria-labelledby="receipt-title">
-      <h2 id="receipt-title">{copy.receipt}</h2>
+    <section className="payment-receipt" aria-labelledby={receiptId}>
+      <h2 id={receiptId}>{copy.receipt}</h2>
       <p className="demo-notice">{copy.warning}</p>
       <DeliverySummary value={payment.fulfillment} language={language} cancelled={cancelled} />
       <dl>

@@ -55,6 +55,7 @@ export const demoBoutiques = [
 export const boutiqueCopy = {
   es: {
     title: 'Nuestras primeras boutiques',
+    origin: 'Punto de partida aproximado',
     intro: 'Tres destinos para una misma historia.',
     fiction:
       'Boutiques ficticias y ubicaciones aproximadas para un proyecto académico. No existen locales de Maison ni acuerdos con comercios de estas calles.',
@@ -83,6 +84,7 @@ export const boutiqueCopy = {
   },
   en: {
     title: 'Our first boutiques',
+    origin: 'Approximate starting point',
     intro: 'Three destinations, one shared story.',
     fiction:
       'Fictional boutiques and approximate locations for an academic project. There are no Maison premises or agreements with shops on these streets.',
@@ -134,7 +136,8 @@ export function distanceKm(origin, destination) {
   return 6371 * 2 * Math.atan2(Math.sqrt(Math.min(1, a)), Math.sqrt(Math.max(0, 1 - a)));
 }
 export function distanceLabel(origin, b, language) {
-  return new Intl.NumberFormat(language === 'es' ? 'es-ES' : 'en-GB', {
+  return new Intl.NumberFormat('es-ES', {
+    useGrouping: 'always',
     maximumFractionDigits: 1,
   }).format(distanceKm(origin, b));
 }
