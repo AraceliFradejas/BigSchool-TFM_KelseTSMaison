@@ -77,8 +77,10 @@ Los importes usan el mismo formateador compartido que la web: en castellano y en
 
 | Plataforma | Confirmación recibida | Modelo / sistema / Expo Go |
 | --- | --- | --- |
-| iPhone · iOS | Apertura y entrada/interfaz corregidas correctas | Pendientes de registrar |
-| iPad · iPadOS | Apertura y entrada/interfaz corregidas correctas | Pendientes de registrar |
-| Android | Apertura y recuperación después de limpiar Metro correctas | Pendientes de registrar |
+| iPhone · iOS | Apertura y entrada/interfaz corregidas correctas | iPhone 13 / iOS 26.6.1 / Expo Go 57.0.9 |
+| iPad · iPadOS | Apertura y entrada/interfaz corregidas correctas | iPad de 6.ª generación / sistema 17.7.0 / Expo Go 57.0.9 |
+| Android | Apertura y recuperación después de limpiar Metro correctas | Samsung Galaxy A34 / Android 16 / Expo Go 57.0.9 |
 
 Las versiones del proyecto son app 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10. No se deduce de ellas la versión del sistema o Expo Go del dispositivo. Las observaciones son confirmaciones de Araceli, no un recorrido completo automatizado. Se conservan como pendientes los pasos de prueba anteriores que todavía no se han confirmado.
+
+Modelos y versiones comunicados por Araceli el 18 de octubre de 2026; transcripción de su información, sin lectura independiente de los Ajustes.

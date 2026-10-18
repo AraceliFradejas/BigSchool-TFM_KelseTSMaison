@@ -334,11 +334,11 @@ Abre el QR en Expo Go con móvil/tablet y ordenador en la misma Wi-Fi. En iPhone
 
 | Plataforma | Estado observado | Modelo, versión del sistema y Expo Go |
 | --- | --- | --- |
-| iPhone · iOS | Apertura e interfaz/entrada corregida confirmadas | Pendientes de registrar |
-| iPad · iPadOS | Apertura e interfaz/entrada corregida confirmadas | Pendientes de registrar |
-| Android | Apertura confirmada; vuelve a cargar tras reiniciar Metro con caché limpia | Pendientes de registrar |
+| iPhone · iOS | Apertura e interfaz/entrada corregida confirmadas | iPhone 13 · iOS 26.6.1 · Expo Go 57.0.9 |
+| iPad · iPadOS | Apertura e interfaz/entrada corregida confirmadas | iPad de 6.ª generación · sistema 17.7.0 · Expo Go 57.0.9 |
+| Android | Apertura confirmada; vuelve a cargar tras reiniciar Metro con caché limpia | Samsung Galaxy A34 · Android 16 · Expo Go 57.0.9 |
 
-Las confirmaciones de apertura no equivalen a verificar todo el recorrido de compra. Quedan por registrar capturas nativas y comprobar de principio a fin selección de outfits, conservación de bolsa, accesibilidad y cambios de conexión en cada dispositivo. Acceso, favoritos, pedidos e historial de cuenta, Team e IA aún no están integrados en la app; no hay publicación en tiendas ni binario de distribución.
+Los modelos y versiones son los comunicados por Araceli; no se ha realizado una lectura independiente de los Ajustes. Las confirmaciones de apertura no equivalen a verificar todo el recorrido de compra. Quedan por registrar capturas nativas y comprobar de principio a fin selección de outfits, conservación de bolsa, accesibilidad y cambios de conexión en cada dispositivo. Acceso, favoritos, pedidos e historial de cuenta, Team e IA aún no están integrados en la app; no hay publicación en tiendas ni binario de distribución.
 
 **Versiones del proyecto comprobadas en el lockfile:** Maison móvil 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10. Son versiones de desarrollo; no sustituyen las versiones del sistema ni la de Expo Go instalada en cada dispositivo. Exportación iOS/Android y Expo Doctor 21/21 correctos. Los detalles de las verificaciones y los avisos de dependencias están en [Validación](docs/VALIDACION.md) y en la guía móvil.
 
@@ -348,6 +348,6 @@ Las confirmaciones de apertura no equivalen a verificar todo el recorrido de com
 
 Run `npm ci` and `npm run mobile`, then open the QR in Expo Go on the same Wi-Fi network. iPhone/iPad requires the same Expo account in Expo Go and the CLI. See the [mobile guide](mobile/README.md).
 
-On 18 October 2026, Araceli confirmed opening the app on **iPhone, iPad and Android**, including the corrected iOS/iPadOS introduction and Android recovery after clearing Metro's cache. Device models, operating system versions and installed Expo Go versions are still to be recorded. These reports do not establish a complete end-to-end test. Native authentication, favourites, account orders/history, Team, AI, distribution binaries and app-store publication remain pending.
+On 18 October 2026, Araceli confirmed opening the app on **iPhone, iPad and Android**, including the corrected iOS/iPadOS introduction and Android recovery after clearing Metro's cache. She reports **iPhone 13 / iOS 26.6.1**, **iPad (6th generation) / system version 17.7.0**, and **Samsung Galaxy A34 / Android 16**, using **Expo Go 57.0.9**. These are user-reported versions, not an independent reading of device settings. These reports do not establish a complete end-to-end test. Native authentication, favourites, account orders/history, Team, AI, distribution binaries and app-store publication remain pending.
 
 Project versions: mobile app 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 and expo-splash-screen 57.0.10. iOS/Android bundle exports and 21/21 Expo Doctor checks passed; these are separate from physical-device verification.

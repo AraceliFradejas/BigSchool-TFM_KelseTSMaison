@@ -356,3 +356,8 @@ Araceli aclara que el formato requerido es europeo también al navegar en inglé
 ### Miniaturas de producto en la bolsa móvil
 
 Se añade la imagen del producto a cada línea de la bolsa nativa, junto con nombre, variante, cantidad e importe europeo. Imagen y datos abren la ficha. Se reutiliza el componente de foto y su alternativa si la imagen no carga; los productos retirados mantienen su aviso de indisponibilidad. Exportación iOS/Android correcta; comprobación visual en dispositivo pendiente. No cambia la lógica ni los datos de la bolsa.
+
+
+### Modelos y versiones comunicados por Araceli
+
+El 18 de octubre de 2026 Araceli facilita los equipos de la revisión física: iPhone 13 con iOS 26.6.1; iPad de 6.ª generación con sistema 17.7.0 (comunicado como iOS); Samsung Galaxy A34 con Android 16; Expo Go 57.0.9. Se registran en README ES/EN, memoria y guía móvil como datos proporcionados por la autora, sin comprobar independientemente los Ajustes ni deducir compatibilidad oficial a partir de ellos. Se mantienen los límites de la prueba y los recorridos todavía pendientes.

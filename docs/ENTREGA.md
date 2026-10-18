@@ -100,9 +100,9 @@ Exportación de paquetes iOS/Android correcta y Expo Doctor 21/21. Web y API man
 
 ### Continuación móvil: outfits y bienvenida
 
-Apertura en iPhone y Android confirmada por Araceli. Se adaptan controles a plataforma y se incorpora Outfits con títulos musicales, filtro de era, piezas y selección completa de variantes. Se añade bienvenida animada con logo; ante la incidencia de altura comunicada, pasa a Modal nativo de pantalla completa. Araceli confirma el resultado de la entrada/interfaz en iPhone e iPad y la recuperación de Android tras limpiar Metro. Recorrido físico completo de outfits, capturas y registro de modelos/versiones pendientes. El splash estático se prepara para una futura distribución, no se da por validado en Expo Go.
+Apertura en iPhone y Android confirmada por Araceli. Se adaptan controles a plataforma y se incorpora Outfits con títulos musicales, filtro de era, piezas y selección completa de variantes. Se añade bienvenida animada con logo; ante la incidencia de altura comunicada, pasa a Modal nativo de pantalla completa. Araceli confirma el resultado de la entrada/interfaz en iPhone e iPad y la recuperación de Android tras limpiar Metro. Recorrido físico completo de outfits y capturas pendientes; modelos y versiones comunicados por Araceli e incorporados al registro. El splash estático se prepara para una futura distribución, no se da por validado en Expo Go.
 
 
 ### Documentación de plataformas móviles
 
-README ES/EN, memoria y guía móvil actualizados con iPhone/iOS, iPad/iPadOS y Android, las confirmaciones de Araceli y los límites de la revisión. Se registran las versiones comprobadas del proyecto sin confundirlas con las de los dispositivos. Modelos, versiones de los sistemas y Expo Go se solicitan a Araceli y quedan pendientes de registrar hasta recibirlos.
+README ES/EN, memoria y guía móvil actualizados con iPhone/iOS, iPad/iPadOS y Android, las confirmaciones de Araceli y los límites de la revisión. Se registran las versiones comprobadas del proyecto sin confundirlas con las de los dispositivos. Araceli comunica iPhone 13 con iOS 26.6.1, iPad de 6.ª generación con sistema 17.7.0 y Samsung Galaxy A34 con Android 16; Expo Go 57.0.9. Se incorporan como datos proporcionados por la autora, sin lectura independiente de los Ajustes.
