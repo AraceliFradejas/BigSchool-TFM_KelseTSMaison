@@ -9,14 +9,12 @@
 - Se retiran únicamente esa pieza, su variante, la referencia de imagen y el recurso temporal de Cloudinary. Quedan los 190 productos originales. La lectura de la misma URL puede conservar la respuesta anterior por su caché de cinco minutos; la retirada no implica invalidación instantánea de copias cacheadas. Las peticiones nuevas con una URL sin caché devuelven 404 tanto en API como en web. Al recargar Team se conserva la sesión y el listado muestra 190 piezas.
 - No se modifican artículos originales ni se crean pedidos en esta revisión. No acredita todavía compra e historial completos desde navegador, dispositivo físico ni persistencia de imagen/pedido durante un redeploy. No hay cambios de código; la comprobación se añade a la documentación.
 
-
 ### Continuidad después de redesplegar la API · 18 de octubre de 2026
 
 - Segundo avance publicado: `86c7d82`, «Publica Maison en Vercel y verifica el recorrido real de Team». [GitHub Actions, ejecución 17](https://github.com/AraceliFradejas/BigSchool-TFM_KelseTSMaison/actions/runs/39135881861), completada correctamente.
 - Vercel recibe el push y completa un nuevo despliegue de producción de la API con esa revisión. Una sesión Team iniciada antes del cambio sigue identificando a la misma cuenta y el catálogo público conserva 190 productos después del cambio. Se cierra esa sesión y se comprueba su revocación.
 - Chequeo público de solo lectura repetido tras el redeploy: correcto. Eliminados el archivo temporal usado para trasladar variables a Vercel y el archivo privado con la cookie de esta comprobación. El `.env` local permanece ignorado por Git.
 - Esta comprobación acredita continuidad de cuenta, sesión y catálogo. No sustituye la comprobación específica de un pedido y una imagen conservados durante otro redeploy, ni una restauración de backups.
-
 
 ### Vercel y recorrido HTTP real · 18 de octubre de 2026
 
@@ -27,7 +25,6 @@
 - El recorrido se ejecuta primero contra Express local conectado a los servicios reales y después por HTTP sobre el dominio HTTPS público. Solo se utilizan una imagen, producto y pedido temporales nuevos; se retiran sus registros y archivo de Cloudinary al terminar y se conserva la cuenta Team. No se modifican productos originales, cuentas ni datos de Cars.
 - Chrome de escritorio: portada pública y navegación al catálogo, con imágenes y 190 piezas después de retirar los datos de prueba; selector de idioma activado con Return, catálogo en inglés y retorno al castellano. No acredita subida desde la interfaz de Team, compra completa desde navegador, dispositivos físicos, restauración ni persistencia tras un nuevo redeploy.
 - Tras añadir el comando explícito `team:create`, las 53 pruebas siguen correctas. El comando no modifica cuentas existentes ni se ejecuta al arrancar. Las credenciales administrativas no se envían a Vercel.
-
 
 ### Publicación del bloque de persistencia en GitHub · 18 de octubre de 2026
 
@@ -285,20 +282,17 @@ Acepté la ampliación de 36 looks y 90 segundos, con una cadencia más lenta. A
 - `npm test`: 42 correctas (33 backend, 6 cliente HTTP, 3 bolsa). `git diff --check`, correcto. El build utilizado es el compilado en la revisión de accesibilidad del mismo día; no han cambiado fuentes del frontend en este bloque.
 - Se añade el chequeo del build al flujo de CI y un `HEALTHCHECK` al Dockerfile. No se ha ejecutado todavía ese flujo remoto con estos cambios, ni Docker, que no está instalado. Persistencia en alojamiento, reinicio del proveedor, dominio y TLS siguen pendientes.
 
-
 ## Evidencias publicadas · 18 de octubre de 2026
 
 Se amplía el [índice de capturas](evidencias/produccion-2026-10-18/README.md) hasta dieciséis imágenes originales de Chrome. Desde la sesión existente de Team Maison se cambia a inglés, se añade una unidad M · Champagne de Enchanted a la bolsa y se crea el pedido de demostración `29e9f091-8106-41cc-8ccb-0f596dbfe229` por 1.850 €. Desde Team se confirma y cancela. Se observan los tres mensajes internos en la cuenta y la recuperación de las ocho unidades iniciales de esa variante. Se conserva el pedido cancelado como demostración; la bolsa termina vacía. No se ha enviado correo ni realizado un cobro.
 
 Se abre el editor existente y se capturan sus campos ES/EN sin guardar modificaciones. Se observa la portada publicada y se abre y cierra su menú en el perfil iPhone SE de Chrome DevTools (375 × 667 CSS, sin limitación de red). Se restaura escritorio y castellano, conservando la sesión. Esta revisión no equivale a una prueba en teléfono físico ni a una validación completa de todos los tamaños. No se cambia código de la aplicación.
 
-
 ### Secuencia visual de subida y guardado en Team
 
 Se añaden las capturas 17–19: subida mediante selector nativo de una copia del recurso propio `satin-story.webp`; creación desde la interfaz de `evidencia-daylight-20261018`, archivada, con traducciones ES/EN, una variante, precio 10 € y stock cero; búsqueda y reapertura con la referencia de imagen conservada. La entrada automatizada pierde una vocal acentuada en la etiqueta castellana («M · Champn»); la evidencia conserva ese estado real. No se modifican piezas existentes.
 
 Tras comprobar ausencia de referencias en pedidos y de uso compartido de la imagen, se limpian exclusivamente el producto, variante y referencia temporales de Atlas y su imagen de Cloudinary. Resultado: 190 productos; cero productos, variantes o referencias de esa prueba. Las capturas se conservan en el índice y el pedido cancelado anterior permanece en el historial.
-
 
 ## Primera etapa móvil nativa · 18 de octubre de 2026
 
@@ -312,18 +306,15 @@ Tras comprobar ausencia de referencias en pedidos y de uso compartido de la imag
 
 El recorrido privado (sesión, pedidos, favoritos y Team), la prueba física y el asistente IA quedan pendientes. Véase [guía móvil](../mobile/README.md).
 
-
 ### Incidencia inicial de acceso a Expo Go
 
 Al preparar la prueba, no encontraba Expo Go en Play Store y el iPhone mostraba un mensaje de contenido no válido. Se comprueba Metro activo y un manifiesto JSON válido para iOS con SDK 57 por HTTP local. Se corrige la guía: descarga Android desde la página oficial de Expo y requisito de iniciar sesión con la misma cuenta en CLI y Expo Go de iOS. Estas comprobaciones no prueban que el teléfono alcance la red local ni resuelven por sí solas el mensaje de Cámara; la ejecución física continúa pendiente.
-
 
 ### Primer arranque físico y adaptación visual
 
 He abierto Maison en iPhone y Android con Expo Go. En esta primera revisión vi que los controles resultaban demasiado cuadrados. Todavía tenía que completar el recorrido y registrar los modelos y versiones, que se recogen más adelante.
 
 Se ajustan botones de marca, imágenes, selección y navegación inferior; se incorporan botones del sistema para volver/reintentar y selección de idioma con ActionSheetIOS/Alert. Android utiliza `android_ripple`; iOS, opacidad y escala al pulsar. La barra inferior sigue siendo personalizada, con roles de pestaña, iconos y contador de bolsa. Exportación iOS/Android y tres pruebas del modelo correctas; revisión visual física de estos cambios pendiente. No se modifica la web ni la lógica de stock/pedidos.
-
 
 ### Outfits nativos y entrada con logo
 
@@ -333,11 +324,9 @@ La entrada con logo utiliza Animated, respeta reducción de movimiento y se pued
 
 Exportación iOS/Android correcta después del ajuste, cuatro pruebas del modelo correctas y Expo Doctor 21/21. No se afirma comprobado el recorrido físico de selección de outfits ni el splash de distribución.
 
-
 ### Android tras actualización en caliente · 18 de octubre
 
 He comprobado la entrada corregida en iPhone e iPad; en Android apareció un SyntaxError. Metro registra `Unable to resolve ./Outfits` durante la incorporación de archivos, antes de terminar la actualización; en ese momento todavía no había registrado el texto completo del error del teléfono. Se reinicia Metro con `--clear`, manteniendo puerto y dirección de desarrollo. Los bundles de desarrollo Android e iOS responden HTTP 200 como JavaScript y ambos superan una comprobación de sintaxis con esbuild. Esto acredita el servidor limpio, no confirma todavía la recuperación del dispositivo Android. El siguiente paso fue volver a abrir Maison desde Expo Go y comprobar si el error continuaba.
-
 
 Después del reinicio con caché limpia pude volver a cargar la app en Android. El recorrido completo de outfits seguía pendiente de revisar.
 
@@ -347,17 +336,20 @@ Al revisar los importes encontré `1850,00` en la app y decidí mostrar `1.850,0
 
 Dos pruebas comprueban el caso de cuatro cifras, límites desde cero hasta millones, inglés y las 996 variantes de la semilla; las nueve pruebas de bolsa/modelo/formato pasan. Build web, chequeo local de producción y exportación iOS/Android correctos. El bundle de desarrollo Android responde HTTP 200 como JavaScript con el nuevo módulo compartido. Revisión visual del formato en los teléfonos pendiente.
 
-
 ### Formato europeo en ambos idiomas
 
 He elegido mantener el formato europeo también al navegar en inglés. Se elimina la selección de locale por idioma del formateador compartido: ES y EN muestran siempre `1.850,00 €`, con punto de miles, coma decimal y dos decimales. Las pruebas de límites se aplican ahora a ambos idiomas tanto en web como en el adaptador móvil. La comprobación anterior de formato anglosajón queda sustituida por este criterio.
-
 
 ### Miniaturas de producto en la bolsa móvil
 
 Se añade la imagen del producto a cada línea de la bolsa nativa, junto con nombre, variante, cantidad e importe europeo. Imagen y datos abren la ficha. Se reutiliza el componente de foto y su alternativa si la imagen no carga; los productos retirados mantienen su aviso de indisponibilidad. Exportación iOS/Android correcta; comprobación visual en dispositivo pendiente. No cambia la lógica ni los datos de la bolsa.
 
-
 ### Dispositivos y versiones de mis pruebas
 
 Para la revisión del 18 de octubre de 2026 he utilizado un iPhone 13 con iOS 26.6.1, un iPad de 6.ª generación con sistema 17.7.0 y un Samsung Galaxy A34 con Android 16, con Expo Go 57.0.9. He registrado estos equipos en el README, la memoria y la guía móvil. Queda pendiente completar los recorridos indicados para cada dispositivo.
+
+## Pago simulado · 18 de octubre de 2026
+
+He ejecutado `npm test`: 63 comprobaciones correctas (46 de backend, 6 del cliente HTTP, 5 de frontend y 6 móviles). Las nuevas pruebas cubren consentimiento obligatorio, rechazo de datos de tarjeta ajenos al esquema, comparación del importe revisado con el calculado, rollback sin pedido/stock/comunicación en rechazos, confirmación concurrente sin duplicados, cinco métodos ficticios y justificante con cargo real cero. En MongoDB temporal compruebo además la conservación del justificante tras cancelar y la reposición del stock.
+
+El build web, su chequeo local de producción, la exportación Hermes de iOS y Android y Expo Doctor 21/21 son correctos. Estas comprobaciones automatizadas no acreditan el nuevo acceso, sesión y pago en teléfonos físicos. No se conecta ninguna pasarela ni se envían correos externos.

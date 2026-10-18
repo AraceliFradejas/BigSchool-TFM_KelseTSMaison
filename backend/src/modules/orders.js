@@ -1,13 +1,14 @@
+import { checkoutHash, demoReceipt } from './demo-payment.js';
 import { Router } from 'express';
-import { randomUUID, createHash } from 'node:crypto';
+import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
-import { checkoutSchema, orderStatuses, transitions } from '@maison/contracts';
+import { checkoutSchema, demoCheckoutSchema, orderStatuses, transitions } from '@maison/contracts';
 import { HttpError, parse, send } from '../http.js';
 import { transaction } from '../db.js';
 import { getProduct } from './catalog.js';
 import { requireUser, requireTeam } from './auth.js';
 
-export const publicOrder = (row) => ({
+export const publicOrder = (row, db) => ({
   id: row.id,
   lines: JSON.parse(row.lines),
   totalCents: row.total_cents,
@@ -15,6 +16,11 @@ export const publicOrder = (row) => ({
   createdAt: row.created_at,
   updatedAt: row.updated_at,
   demo: true,
+  payment: db
+    ? JSON.parse(
+        db.prepare('SELECT data FROM demo_payments WHERE order_id=?').get(row.id)?.data || 'null',
+      )
+    : null,
 });
 export function orderMessage(status) {
   const titles = {
@@ -60,18 +66,14 @@ function message(db, userId, orderId, status) {
 export function createOrder(db, userId, input) {
   if (db.kind === 'mongo') return db.createOrder(userId, input);
   const checkout = parse(checkoutSchema, input);
-  const requestHash = createHash('sha256')
-    .update(
-      JSON.stringify([...checkout.lines].sort((a, b) => a.variantId.localeCompare(b.variantId))),
-    )
-    .digest('hex');
+  const requestHash = checkoutHash(checkout);
   return transaction(db, () => {
     const existing = db
       .prepare('SELECT * FROM orders WHERE user_id=? AND idempotency_key=?')
       .get(userId, checkout.idempotencyKey);
     if (existing) {
       if (existing.request_hash !== requestHash) throw new HttpError(409, 'idempotency_conflict');
-      return { order: publicOrder(existing), replay: true };
+      return { order: publicOrder(existing, db), replay: true };
     }
     const lines = checkout.lines.map((line) => {
       const variant = db.prepare('SELECT * FROM variants WHERE id=?').get(line.variantId);
@@ -107,9 +109,12 @@ export function createOrder(db, userId, input) {
       now,
       now,
     );
+    const payment = demoReceipt(checkout, id, totalCents, now);
+    if (payment)
+      db.prepare('INSERT INTO demo_payments VALUES (?,?)').run(id, JSON.stringify(payment));
     message(db, userId, id, 'pending');
     return {
-      order: publicOrder(db.prepare('SELECT * FROM orders WHERE id=?').get(id)),
+      order: publicOrder(db.prepare('SELECT * FROM orders WHERE id=?').get(id), db),
       replay: false,
     };
   });
@@ -135,12 +140,17 @@ export function transitionOrder(db, id, status) {
       id,
     );
     message(db, order.user_id, id, status);
-    return publicOrder(db.prepare('SELECT * FROM orders WHERE id=?').get(id));
+    return publicOrder(db.prepare('SELECT * FROM orders WHERE id=?').get(id), db);
   });
 }
 export function ordersRouter(db) {
   const router = Router();
   router.use(requireUser);
+  router.post('/checkout/demo', async (req, res) => {
+    const input = parse(demoCheckoutSchema, req.body);
+    const result = await createOrder(db, req.user.id, input);
+    send(res, result.order, result.replay ? 200 : 201);
+  });
   router.post('/orders', async (req, res) => {
     const result = await createOrder(db, req.user.id, req.body);
     send(res, result.order, result.replay ? 200 : 201);
@@ -153,7 +163,7 @@ export function ordersRouter(db) {
         : db
             .prepare('SELECT * FROM orders WHERE user_id=? ORDER BY created_at DESC')
             .all(req.user.id)
-            .map(publicOrder),
+            .map((row) => publicOrder(row, db)),
     ),
   );
   router.get('/orders/:id', async (req, res) => {
@@ -166,7 +176,7 @@ export function ordersRouter(db) {
       .prepare('SELECT * FROM orders WHERE id=? AND user_id=?')
       .get(req.params.id, req.user.id);
     if (!row) throw new HttpError(404, 'not_found');
-    send(res, publicOrder(row));
+    send(res, publicOrder(row, db));
   });
   router.get('/messages', async (req, res) =>
     send(
@@ -199,7 +209,7 @@ export function teamOrdersRouter(db) {
               'SELECT o.*,u.name AS customer_name FROM orders o JOIN users u ON u.id=o.user_id ORDER BY o.created_at DESC',
             )
             .all()
-            .map((row) => ({ ...publicOrder(row), customerName: row.customer_name })),
+            .map((row) => ({ ...publicOrder(row, db), customerName: row.customer_name })),
     ),
   );
   router.patch('/orders/:id', async (req, res) => {

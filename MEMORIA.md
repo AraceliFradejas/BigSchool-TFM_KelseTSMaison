@@ -1,12 +1,12 @@
 # Memoria del proyecto KelseTS Maison
 
-| Dato        | Información                                                       |
-| ----------- | ----------------------------------------------------------------- |
-| Proyecto    | Boutique ficticia de moda, accesorios y belleza                   |
-| Formación   | TFM BigSchool                                                     |
-| Autora      | Araceli Fradejas Muñoz                                            |
-| Tecnologías | JavaScript, React, Node.js, Express, MongoDB y Cloudinary; SQLite local                      |
-| Estado      | Primera versión publicada en Vercel, pendiente de cierre final |
+| Dato        | Información                                                             |
+| ----------- | ----------------------------------------------------------------------- |
+| Proyecto    | Boutique ficticia de moda, accesorios y belleza                         |
+| Formación   | TFM BigSchool                                                           |
+| Autora      | Araceli Fradejas Muñoz                                                  |
+| Tecnologías | JavaScript, React, Node.js, Express, MongoDB y Cloudinary; SQLite local |
+| Estado      | Primera versión publicada en Vercel, pendiente de cierre final          |
 
 ## 1 Contexto y motivación
 
@@ -110,13 +110,11 @@ La bolsa identifica qué pieza necesita una corrección de cantidad y permite ac
 
 El recorrido se ha comprobado en Edge sobre una copia aislada: acceso, favoritos, elección de talla, ajuste por cambio de stock, pedido, historial, comunicaciones y confirmación y cancelación desde Team. También se ha creado un producto bilingüe y subido su fotografía desde la interfaz. Los datos de esa revisión no alteran las cuentas ni las existencias de la instalación principal. Los detalles y límites de la revisión responsive están en la validación.
 
-
 ## 14 Evidencias de la versión publicada
 
 El 18 de octubre de 2026 se guardan diecinueve capturas originales de Chrome sobre la web publicada en Vercel: portada, catálogo de 190 piezas, ficha con variantes, cuenta con sesión iniciada y gestión de productos de Team. El [índice de capturas](docs/evidencias/produccion-2026-10-18/README.md) reúne las imágenes y los pies para incorporarlos a la memoria final.
 
 Las capturas conservan la dirección pública y describen el estado observado. La cuenta aparece sin pedidos ni comunicaciones; no se utiliza esa imagen como prueba de un pedido o de envío de correo. La ampliación posterior incorpora cuenta y bolsa en inglés, creación de un pedido, confirmación y cancelación desde Team, tres comunicaciones internas, devolución del stock, editor en ambos idiomas y portada y menú en emulación de iPhone SE (375 × 667). El pedido queda cancelado en el historial; la talla M recupera sus ocho unidades. Se sale del editor sin guardar cambios. La secuencia posterior documenta además la subida de una imagen, la creación de una pieza temporal archivada y su reapertura con los datos guardados. Se retiran después esa pieza, su variante y su imagen de prueba, conservando los 190 productos anteriores. La prueba en teléfono físico queda pendiente.
-
 
 ## 15 Primer paso hacia la app nativa
 
@@ -138,14 +136,24 @@ Para la entrada he elegido una animación breve del logo, que se puede saltar y 
 
 He abierto la app con Expo Go en iPhone, iPad y Android. En Android apareció un error durante la actualización en caliente, cuando Metro todavía estaba resolviendo los archivos nuevos de Outfits. Tras reiniciar Metro con la caché limpia, pude volver a cargarla. Esta revisión me ha permitido comprobar el arranque y detectar ajustes visuales, pero todavía tengo que completar el recorrido de outfits y bolsa en cada dispositivo.
 
-| Plataforma | Dispositivo y sistema | Expo Go | Resultado de esta revisión |
-| --- | --- | --- | --- |
-| iPhone · iOS | iPhone 13 · iOS 26.6.1 | 57.0.9 | Apertura y entrada/interfaz corregidas correctas |
-| iPad · iPadOS | iPad de 6.ª generación · sistema 17.7.0 | 57.0.9 | Apertura y entrada/interfaz corregidas correctas |
-| Android | Samsung Galaxy A34 · Android 16 | 57.0.9 | Apertura y recuperación después de limpiar la caché de Metro |
+| Plataforma    | Dispositivo y sistema                   | Expo Go | Resultado de esta revisión                                   |
+| ------------- | --------------------------------------- | ------- | ------------------------------------------------------------ |
+| iPhone · iOS  | iPhone 13 · iOS 26.6.1                  | 57.0.9  | Apertura y entrada/interfaz corregidas correctas             |
+| iPad · iPadOS | iPad de 6.ª generación · sistema 17.7.0 | 57.0.9  | Apertura y entrada/interfaz corregidas correctas             |
+| Android       | Samsung Galaxy A34 · Android 16         | 57.0.9  | Apertura y recuperación después de limpiar la caché de Metro |
 
 Para estas pruebas he utilizado **Expo Go 57.0.9**. La app está en la versión **0.1.0**, con **Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10**. He dejado estas versiones registradas para poder reproducir el entorno de desarrollo.
 
 La exportación genera los paquetes Hermes de iOS y Android y Expo Doctor supera sus 21 comprobaciones. Las pruebas automáticas de formato recorren las 996 variantes del catálogo y cantidades desde cero hasta millones en ambos idiomas. Estas comprobaciones técnicas complementan la revisión en los dispositivos; no sustituyen el recorrido manual completo.
 
 Por ahora ejecuto la app con Expo Go y Metro. Quiero completar las capturas nativas, comprobar la conservación de la bolsa al cerrar y abrir, los cambios de conexión y la accesibilidad en cada dispositivo. Acceso, favoritos, pedidos e historial de cuenta, Team e IA siguen pendientes en la app, al igual que la distribución en tiendas. La [guía móvil](mobile/README.md) recoge el arranque y la [validación](docs/VALIDACION.md) conserva el detalle de las comprobaciones.
+
+## Ampliación: pago académico simulado en web y app
+
+He preparado una revisión final del pedido para acercar la experiencia a una boutique sin realizar ninguna compra. Puedo escoger cuenta bancaria ficticia, tarjeta ficticia o PayPal simulado; la app añade Apple Pay simulado en iOS y Samsung Pay simulado en Android. Estas opciones no se conectan a ningún proveedor y no recogen datos bancarios. Antes de confirmar acepto expresamente que se trata de una simulación académica. El botón indica «Confirmar pago simulado».
+
+El resultado aceptado registra un pedido de demostración pendiente y genera su comunicación interna. El justificante conserva el método elegido, una referencia DEMO y el importe simulado; muestra siempre un cargo real de 0,00 €. También puedo elegir un resultado rechazado: no crea el pedido ni descuenta stock. No hay pasarela de pago, cobros, devoluciones monetarias ni envíos reales.
+
+La API calcula el importe a partir del catálogo, comprueba que coincide con el total revisado y aplica pedido, stock y comunicación dentro de una transacción. La clave del intento evita duplicados si repito la confirmación. He comprobado estas reglas con SQLite y una réplica temporal de MongoDB, incluidos rechazo, cambio de importe, concurrencia y conservación del justificante al cancelar. Las pruebas no realizan operaciones en un banco ni en servicios de pago.
+
+Para consultar los resultados desde la app he incorporado acceso, registro, historial y comunicaciones. La bolsa se separa por cuenta y no guardo contraseñas en el almacenamiento local. La app verifica la sesión contra la API después de acceder y salir. Queda pendiente comprobar este nuevo recorrido privado en mis tres dispositivos; las pruebas anteriores de apertura y la generación de bundles no sustituyen esa comprobación.

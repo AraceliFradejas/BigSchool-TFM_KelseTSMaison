@@ -620,3 +620,62 @@ test('song-title migration preserves Team names and stock and is idempotent', (t
   assert.deepEqual(getProduct(db, custom.id).name, customData.name);
   assert.deepEqual(migrateRunwayNames(db), { products: 0, looks: 0 });
 });
+
+test('demo checkout validates consent and totals, rolls back declines and preserves one zero-charge receipt per attempt', async (t) => {
+  const { db, agent, app } = setup(t);
+  const payment = { mode: 'demo', method: 'card', acknowledged: true, outcome: 'approved' };
+  const body = { ...checkout(), payment, expectedTotalCents: 185000 };
+  assert.equal((await post(request(app), '/checkout/demo', body)).status, 401);
+  await register(agent);
+  const initial = getProduct(db, 'satin-story').variants[0].stock;
+  for (const invalid of [
+    { ...payment, acknowledged: false },
+    { ...payment, number: '4111111111111111' },
+  ]) {
+    assert.equal((await post(agent, '/checkout/demo', { ...body, payment: invalid })).status, 400);
+  }
+  const stale = await post(agent, '/checkout/demo', { ...body, expectedTotalCents: 1 });
+  assert.equal(stale.status, 409);
+  assert.equal(stale.body.error, 'price_changed');
+  const declined = await post(agent, '/checkout/demo', {
+    ...body,
+    payment: { ...payment, outcome: 'declined' },
+  });
+  assert.equal(declined.status, 409);
+  assert.equal(declined.body.error, 'demo_payment_declined');
+  assert.equal(db.prepare('SELECT count(*) AS n FROM orders').get().n, 0);
+  assert.equal(db.prepare('SELECT count(*) AS n FROM messages').get().n, 0);
+  assert.equal(getProduct(db, 'satin-story').variants[0].stock, initial);
+  const attempts = await Promise.all([
+    post(agent, '/checkout/demo', body),
+    post(agent, '/checkout/demo', body),
+  ]);
+  assert.deepEqual(attempts.map((r) => r.status).sort(), [200, 201]);
+  const order = attempts[0].body.data;
+  assert.deepEqual(attempts[1].body.data, order);
+  assert.equal(order.payment.chargedCents, 0);
+  assert.equal(order.payment.amountCents, 185000);
+  assert.equal(order.payment.mode, 'demo');
+  assert.match(order.payment.reference, /^DEMO-/);
+  assert.equal(getProduct(db, 'satin-story').variants[0].stock, initial - 1);
+  assert.equal(db.prepare('SELECT count(*) AS n FROM messages').get().n, 1);
+  assert.equal(
+    (await post(agent, '/checkout/demo', { ...body, payment: { ...payment, method: 'paypal' } }))
+      .status,
+    409,
+  );
+  assert.deepEqual(
+    (await agent.get(`/api/v1/orders/${order.id}`)).body.data.payment,
+    order.payment,
+  );
+  for (const method of ['bank', 'paypal', 'apple_pay', 'samsung_pay']) {
+    const response = await post(agent, '/checkout/demo', {
+      ...body,
+      idempotencyKey: randomUUID(),
+      payment: { ...payment, method },
+    });
+    assert.equal(response.status, 201, JSON.stringify(response.body));
+    assert.equal(response.body.data.payment.method, method);
+    assert.equal(response.body.data.payment.chargedCents, 0);
+  }
+});

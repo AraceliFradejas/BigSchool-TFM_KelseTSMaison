@@ -18,22 +18,25 @@ import {
 } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useCommerce } from './useCommerce';
+import { Account, Checkout, Order } from './Commerce';
+import { accountCopy, commerceError } from './commerce-copy';
+import { paymentCopy } from '@maison/contracts/demo-payment';
 import Brand from './Brand';
 import { useRemote } from './useRemote';
 import Outfits from './Outfits';
 import Intro from './Intro';
 import { mergeCartSelection } from '@maison/contracts/cart-selection';
 import Svg, { Path } from 'react-native-svg';
-import { api, addToBag, imageUrl, money, resolveBag, restoreBag } from './model';
+import { api, addToBag, imageUrl, money, resolveBag } from './model';
 
-const BAG_KEY = '@kelsets-maison/bag/v1';
 const words = {
   es: {
     demo: 'Boutique de demostración · Sin cobros reales',
     catalogue: 'Boutique',
     outfits: 'Outfits',
     bag: 'Bolsa',
+    account: 'Mi cuenta',
     title: 'Tu estilo, tu historia.',
     search: 'Buscar una pieza',
     all: 'Todo',
@@ -57,7 +60,7 @@ const words = {
     update: 'Actualizar precios y existencias',
     emptyBag: 'Tu bolsa espera una historia.',
     bagNotice:
-      'Los precios y existencias se consultan de nuevo al abrir la bolsa. Los pedidos desde la app estarán disponibles en una próxima etapa.',
+      'Los precios y existencias se consultan de nuevo al abrir la bolsa. Al confirmar se registra un pedido de demostración, sin realizar ningún cobro.',
     invalid: 'Revisa esta pieza: ya no está disponible en esa cantidad.',
     storage: 'No hemos podido guardar la bolsa en este dispositivo.',
     previous: 'Anterior',
@@ -73,6 +76,7 @@ const words = {
     catalogue: 'Boutique',
     outfits: 'Outfits',
     bag: 'Bag',
+    account: 'My account',
     title: 'Your style, your story.',
     search: 'Find a piece',
     all: 'All',
@@ -96,7 +100,7 @@ const words = {
     update: 'Refresh prices and availability',
     emptyBag: 'Your bag is waiting for a story.',
     bagNotice:
-      'Prices and availability are refreshed when you open your bag. Ordering in the app will be available in a future stage.',
+      'Prices and availability are refreshed when you open your bag. Confirmation records a demonstration order without any charge.',
     invalid: 'Review this piece: this quantity is no longer available.',
     storage: 'We could not save your bag on this device.',
     previous: 'Previous',
@@ -340,7 +344,7 @@ function Detail({ id, language, t, add, back }) {
     </ScrollView>
   );
 }
-function Bag({ lines, change, language, t, open }) {
+function Bag({ lines, change, language, t, open, user, onCheckout, onLogin }) {
   const [state, setState] = useState({ loading: true });
   const [version, setVersion] = useState(0);
   useEffect(() => {
@@ -448,6 +452,19 @@ function Bag({ lines, change, language, t, open }) {
                 ? money(state.data?.reduce((sum, line) => sum + line.totalCents, 0) || 0, language)
                 : '—'}
             </Text>
+            <Button
+              disabled={!allValid}
+              onPress={() =>
+                user
+                  ? onCheckout(
+                      state.data,
+                      state.data.reduce((sum, line) => sum + line.totalCents, 0),
+                    )
+                  : onLogin()
+              }
+            >
+              {user ? paymentCopy[language].review : accountCopy[language].continue}
+            </Button>
             <Button secondary onPress={reload}>
               {t.update}
             </Button>
@@ -462,37 +479,29 @@ export default function App() {
   const [intro, setIntro] = useState(true);
   const t = words[language];
   const [route, setRoute] = useState({ screen: 'catalogue' });
-  const [lines, setLines] = useState([]);
-  const [ready, setReady] = useState(false);
-  const [storageError, setStorageError] = useState(false);
-  const writes = useRef(Promise.resolve());
-  useEffect(() => {
-    let mounted = true;
-    AsyncStorage.getItem(BAG_KEY)
-      .then((value) => {
-        if (mounted) {
-          setLines(restoreBag(value));
-          setReady(true);
-        }
-      })
-      .catch(() => {
-        if (mounted) {
-          setStorageError(true);
-          setReady(true);
-        }
-      });
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  const commerce = useCommerce();
+  const { user, ready, storageError, busy } = commerce;
+  const lines = commerce.cart.lines;
+  const change = commerce.change;
+  const [paymentError, setPaymentError] = useState(null);
+  async function confirmPayment(payment) {
+    setPaymentError(null);
+    try {
+      const order = await commerce.checkout(payment, route.total);
+      setRoute({ screen: 'order', id: order.id, completed: true });
+    } catch (error) {
+      setPaymentError(error);
+    }
+  }
   useEffect(() => {
     const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (busy) return true;
       if (route.screen === 'catalogue') return false;
       setRoute(route.returnTo || { screen: route.from || 'catalogue' });
       return true;
     });
     return () => sub.remove();
-  }, [route]);
+  }, [route, busy]);
   function chooseLanguage() {
     if (Platform.OS === 'ios') {
       ActionSheetIOS.showActionSheetWithOptions(
@@ -513,14 +522,6 @@ export default function App() {
         { text: language === 'es' ? 'Cancelar' : 'Cancel', style: 'cancel' },
       ]);
     }
-  }
-  function change(next) {
-    setLines(next);
-    writes.current = writes.current
-      .catch(() => {})
-      .then(() => AsyncStorage.setItem(BAG_KEY, JSON.stringify(next)))
-      .then(() => setStorageError(false))
-      .catch(() => setStorageError(true));
   }
   function add(product, variantId) {
     try {
@@ -577,7 +578,16 @@ export default function App() {
             </Text>
           )}
           {!ready ? (
-            <ActivityIndicator color="#b3152b" />
+            <View style={s.message}>
+              {commerce.authError ? (
+                <>
+                  <Text style={s.error}>{commerceError(commerce.authError, language)}</Text>
+                  <NativeButton title={t.retry} onPress={commerce.refreshSession} />
+                </>
+              ) : (
+                <ActivityIndicator color="#b3152b" />
+              )}
+            </View>
           ) : route.screen === 'detail' ? (
             <Detail
               key={route.id}
@@ -596,13 +606,50 @@ export default function App() {
               openProduct={open}
               addLook={addLook}
             />
+          ) : route.screen === 'account' ||
+            (!user && ['checkout', 'order'].includes(route.screen)) ? (
+            <Account
+              commerce={commerce}
+              language={language}
+              open={(id) => setRoute({ screen: 'order', id, from: 'account' })}
+            />
+          ) : route.screen === 'checkout' ? (
+            <Checkout
+              language={language}
+              rows={route.rows}
+              total={route.total}
+              busy={busy}
+              error={paymentError}
+              back={() => setRoute({ screen: 'bag' })}
+              confirm={confirmPayment}
+            />
+          ) : route.screen === 'order' ? (
+            <Order
+              key={route.id}
+              id={route.id}
+              completed={route.completed}
+              language={language}
+              back={() => setRoute({ screen: 'account' })}
+            />
           ) : route.screen === 'bag' ? (
-            <Bag lines={lines} change={change} language={language} t={t} open={open} />
+            <Bag
+              lines={lines}
+              change={change}
+              language={language}
+              t={t}
+              open={open}
+              user={user}
+              onLogin={() => setRoute({ screen: 'account' })}
+              onCheckout={(rows, total) => {
+                setPaymentError(null);
+                setRoute({ screen: 'checkout', rows, total });
+              }}
+            />
           ) : (
             <Catalogue language={language} t={t} open={open} />
           )}
           <View style={s.tabs} accessibilityRole="tablist">
-            {['catalogue', 'outfits', 'bag'].map((screen) => {
+            {['catalogue', 'outfits', 'bag', 'account'].map((screen) => {
               const selected =
                 route.screen === screen ||
                 ((route.screen === 'detail' || route.screen === 'look') && route.from === screen);
@@ -612,7 +659,8 @@ export default function App() {
                   key={screen}
                   accessibilityRole="tab"
                   accessibilityLabel={`${t[screen]}${screen === 'bag' ? ` (${count})` : ''}`}
-                  accessibilityState={{ selected }}
+                  disabled={busy}
+                  accessibilityState={{ selected, disabled: busy }}
                   onPress={() => setRoute({ screen })}
                   android_ripple={{ color: '#b3152b22' }}
                   style={({ pressed }) => [
@@ -638,7 +686,9 @@ export default function App() {
                             ? 'M3 9h18L19 3H5L3 9ZM4 9v12h16V9M9 21v-7h6v7M3 9c0 3 4 3 4 0 0 3 5 3 5 0 0 3 5 3 5 0 0 3 4 3 4 0'
                             : screen === 'outfits'
                               ? 'M9 5a3 3 0 0 1 6 0c0 2-3 2-3 4v2L3 17v3h18v-3l-9-6'
-                              : 'M5 7h14l2 14H3L5 7ZM8 8V6a4 4 0 0 1 8 0v2'
+                              : screen === 'account'
+                                ? 'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM4 21v-2a8 8 0 0 1 16 0v2'
+                                : 'M5 7h14l2 14H3L5 7ZM8 8V6a4 4 0 0 1 8 0v2'
                         }
                       />
                     </Svg>

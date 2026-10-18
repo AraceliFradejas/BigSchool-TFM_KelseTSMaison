@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { demoPaymentSchema } from './demo-payment.js';
 
 import { categories, orderStatuses, transitions } from './rules.js';
 export { categories, orderStatuses, transitions };
@@ -20,6 +21,8 @@ export const loginSchema = registerSchema.pick({ email: true, password: true });
 export const checkoutSchema = z
   .object({
     idempotencyKey: z.uuid(),
+    payment: demoPaymentSchema.optional(),
+    expectedTotalCents: z.number().int().min(1).max(300000000).optional(),
     lines: z
       .array(z.object({ variantId: text, quantity: z.number().int().min(1).max(10) }).strict())
       .min(1)
@@ -29,7 +32,13 @@ export const checkoutSchema = z
   .refine(
     (value) => new Set(value.lines.map((line) => line.variantId)).size === value.lines.length,
     { message: 'Duplicate variant' },
-  );
+  )
+  .refine((value) => !value.payment || value.expectedTotalCents !== undefined, {
+    message: 'A simulated payment requires a reviewed total',
+  });
+export const demoCheckoutSchema = checkoutSchema.refine((value) => Boolean(value.payment), {
+  message: 'A simulated payment must be acknowledged',
+});
 export const variantSchema = z
   .object({
     id: z.string().regex(/^[a-z0-9-]{1,80}$/),

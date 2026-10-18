@@ -47,17 +47,15 @@ He abierto la app en **iPhone, iPad y Android**. Falta completar y registrar el 
 
 ## Límites de esta etapa
 
-Acceso, registro, favoritos, pedidos, historial, Team y asistente de IA todavía no están integrados en la app. El siguiente bloque deberá comprobar la sesión nativa contra la API antes de añadir el recorrido privado. No se guardan credenciales ni se trasladan las cookies del navegador.
+He incorporado acceso y registro, bolsa separada por cuenta, pago simulado, historial y comunicaciones. Tras acceder, la app vuelve a consultar la sesión en la API antes de mostrar la cuenta. No guardo contraseñas ni traslado las cookies del navegador. Tengo pendiente verificar este recorrido completo en los dispositivos; la apertura anterior no valida la sesión nativa. Favoritos, Team y asistente de IA siguen pendientes en la app.
 
 La revisión inicial de `npm audit --omit=dev` señala 22 avisos en el árbol Expo/React Native (7 moderados, 15 altos), con avisos base en braces, node-forge y uuid y propagación al resto del árbol. La corrección automática propone versiones mayores incompatibles o retrocesos de SDK: no se aplica `--force`. Debe revisarse la ruta de actualización compatible antes de preparar una distribución. No equivale a afirmar que cada aviso afecte al código empaquetado de la app.
-
 
 ## Adaptación de controles a iOS y Android
 
 Tras el primer arranque, vi que la interfaz resultaba demasiado rectangular en ambos dispositivos. Se incorpora el botón del sistema de React Native para volver y reintentar; el idioma utiliza ActionSheetIOS en iOS y un diálogo Alert en Android. Las acciones de marca mantienen componentes Pressable personalizados con esquinas suaves, selección rellena, respuesta de opacidad en iOS y onda nativa de Android. El campo de búsqueda ofrece el borrado integrado de iOS.
 
 La navegación inferior es una barra personalizada accesible con iconos y contador de bolsa; no se presenta como UITabBar o una barra Material nativa. Se mantienen los componentes de sistema de teclado, scroll, zonas seguras y alertas. Esta revisión pasa exportación iOS/Android y las tres pruebas del modelo móvil; la comprobación visual del ajuste en teléfonos sigue pendiente. Referencia: [Pressable de React Native](https://reactnative.dev/docs/pressable).
-
 
 ## Outfits y entrada Maison
 
@@ -69,18 +67,24 @@ Se prepara además el arranque estático de una futura app independiente mediant
 
 Comprobado: exportación iOS/Android, configuración Expo Doctor 21/21 y cuatro pruebas del modelo móvil. He comprobado la entrada corregida en iPhone e iPad. En Android apareció un error durante la actualización en caliente: se reinicia Metro con caché limpia y se comprueban los bundles de desarrollo de ambas plataformas. Después pude volver a cargarla en Android. El recorrido completo de outfits sigue pendiente de confirmar.
 
-
 Los importes usan el mismo formateador compartido que la web: en castellano y en inglés, `1.850,00 €`, `10.000,00 €`, siempre con punto de miles y coma decimal. Esta presentación no modifica los valores en céntimos.
-
 
 ## Registro físico · 18 de octubre de 2026
 
-| Plataforma | Resultado observado | Modelo / sistema / Expo Go |
-| --- | --- | --- |
-| iPhone · iOS | Apertura y entrada/interfaz corregidas correctas | iPhone 13 / iOS 26.6.1 / Expo Go 57.0.9 |
-| iPad · iPadOS | Apertura y entrada/interfaz corregidas correctas | iPad de 6.ª generación / sistema 17.7.0 / Expo Go 57.0.9 |
-| Android | Apertura y recuperación después de limpiar Metro correctas | Samsung Galaxy A34 / Android 16 / Expo Go 57.0.9 |
+| Plataforma    | Resultado observado                                        | Modelo / sistema / Expo Go                               |
+| ------------- | ---------------------------------------------------------- | -------------------------------------------------------- |
+| iPhone · iOS  | Apertura y entrada/interfaz corregidas correctas           | iPhone 13 / iOS 26.6.1 / Expo Go 57.0.9                  |
+| iPad · iPadOS | Apertura y entrada/interfaz corregidas correctas           | iPad de 6.ª generación / sistema 17.7.0 / Expo Go 57.0.9 |
+| Android       | Apertura y recuperación después de limpiar Metro correctas | Samsung Galaxy A34 / Android 16 / Expo Go 57.0.9         |
 
 Las versiones del proyecto son app 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10. No se deduce de ellas la versión del sistema o Expo Go del dispositivo. He comprobado la apertura; todavía tengo que completar el recorrido manual de prueba. Se conservan como pendientes los pasos de prueba anteriores que todavía no se han confirmado.
 
 He registrado los modelos y versiones utilizados en mis pruebas del 18 de octubre de 2026.
+
+## Pago simulado y cuenta
+
+He añadido una revisión del pedido con cuenta bancaria ficticia, tarjeta ficticia y PayPal simulado. En iPhone e iPad aparece además Apple Pay simulado; en Android, Samsung Pay simulado. Son opciones internas de la demostración: no abren esas aplicaciones, no usan sus SDK y no tienen conexión con una pasarela ni con cuentas bancarias. No solicito números de tarjeta, IBAN ni credenciales de esos servicios.
+
+Antes de confirmar debo aceptar que es un proyecto académico y que no estoy comprando nada. Puedo elegir un resultado aceptado o rechazado para probar el recorrido. Un resultado aceptado registra el pedido pendiente y su comunicación interna; el justificante conserva el método, la referencia DEMO y el importe simulado, con cargo real de 0,00 €. El rechazo conserva la bolsa y no crea pedidos ni descuenta existencias. Los precios y el stock se validan en la API.
+
+La bolsa guarda identificadores, cantidades y la clave del intento por cuenta. Antes de confirmar compruebo que se puede guardar esa clave en el dispositivo; los reintentos usan la misma para evitar duplicados. La cuenta permite consultar historial, detalle y comunicaciones y cerrar sesión. La sesión utiliza las cookies de la API y se comprueba después de acceder y salir; tengo que confirmar su comportamiento en iPhone, iPad y Android. No se han enviado correos externos.

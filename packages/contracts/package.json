@@ -7,7 +7,8 @@
     ".": "./src/index.js",
     "./rules": "./src/rules.js",
     "./cart-selection": "./src/cart-selection.js",
-    "./money": "./src/money.js"
+    "./money": "./src/money.js",
+    "./demo-payment": "./src/demo-payment.js"
   },
   "dependencies": {
     "zod": "^4.1.11"

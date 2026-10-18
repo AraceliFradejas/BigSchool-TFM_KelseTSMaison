@@ -2237,3 +2237,78 @@ main:focus {
   min-width: 0;
   width: 100%;
 }
+
+/* Academic checkout: no bank data fields or external payment integrations. */
+.payment-review {
+  width: min(94vw, 640px);
+  max-height: 90dvh;
+  border: 1px solid var(--line, #d9d4ca);
+  padding: clamp(20px, 4vw, 38px);
+  background: #f6f4ee;
+  color: #242320;
+}
+.payment-review::backdrop {
+  background: #24232099;
+}
+.payment-review form {
+  display: grid;
+  gap: 18px;
+}
+.payment-review h2 {
+  margin: 0;
+}
+.payment-review fieldset {
+  border: 1px solid #d9d4ca;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+}
+.payment-lines {
+  display: grid;
+  gap: 12px;
+}
+.payment-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+.payment-line img {
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.payment-line span {
+  flex: 1;
+}
+.payment-line small {
+  display: block;
+  margin-top: 6px;
+  color: #6c665e;
+}
+.payment-receipt {
+  border: 1px solid #d9d4ca;
+  padding: 24px;
+  margin-block: 24px;
+}
+.payment-receipt dl div {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-block: 12px;
+}
+.payment-receipt dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.payment-success {
+  border-left: 3px solid #256348;
+  padding: 18px;
+  background: #edf4ef;
+}

@@ -8,7 +8,9 @@ import {
   ProductGrid,
   OrderLines,
 } from '../../shared/components';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { PaymentReceipt } from '../cart/PaymentReview';
+import { paymentCopy } from '@maison/contracts/demo-payment';
 export default function Account() {
   const { user, t, language, logout } = useMaison();
   const orders = useResource('/orders');
@@ -95,6 +97,7 @@ export function Favorites() {
 }
 export function OrderDetail() {
   const { id } = useParams();
+  const [params] = useSearchParams();
   const { t, language } = useMaison();
   const resource = useResource(`/orders/${encodeURIComponent(id)}`);
   const order = resource.data;
@@ -107,6 +110,11 @@ export function OrderDetail() {
       <ResourceState resource={resource}>
         {order && (
           <>
+            {params.get('completed') === '1' && order.payment?.mode === 'demo' && (
+              <p className="payment-success" role="status">
+                {paymentCopy[language].success}
+              </p>
+            )}
             <div className="order-meta">
               <span className={`status ${order.status}`}>{t[order.status]}</span>
               <span>
@@ -121,6 +129,7 @@ export function OrderDetail() {
                 <Money cents={order.totalCents} />
               </strong>
             </p>
+            <PaymentReceipt payment={order.payment} />
             <p className="demo-notice">{t.orderNotice}</p>
           </>
         )}

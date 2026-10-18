@@ -304,6 +304,58 @@ test(
         );
       },
     );
+    await t.test(
+      'simulated checkout rolls back rejection and price changes and keeps receipts idempotent',
+      async () => {
+        const before = await db.getProduct('satin-story');
+        const count = await db.collection('orders').countDocuments();
+        const messages = (await db.getMessages(user.id)).length;
+        const payload = {
+          idempotencyKey: randomUUID(),
+          lines: [{ variantId: 'satin-story-1', quantity: 1 }],
+          expectedTotalCents: before.variants[0].priceCents,
+          payment: { mode: 'demo', method: 'apple_pay', acknowledged: true, outcome: 'approved' },
+        };
+        for (const invalid of [
+          { ...payload, expectedTotalCents: 1 },
+          { ...payload, payment: { ...payload.payment, outcome: 'declined' } },
+        ]) {
+          const response = await mutation(app, 'post', '/checkout/demo', invalid, cookie);
+          assert.equal(response.status, 409);
+        }
+        assert.equal(await db.collection('orders').countDocuments(), count);
+        assert.equal((await db.getMessages(user.id)).length, messages);
+        assert.equal(
+          (await db.getProduct('satin-story')).variants[0].stock,
+          before.variants[0].stock,
+        );
+        const results = await Promise.all([
+          mutation(app, 'post', '/checkout/demo', payload, cookie),
+          mutation(app, 'post', '/checkout/demo', payload, cookie),
+        ]);
+        assert.deepEqual(results.map((r) => r.status).sort(), [200, 201]);
+        assert.deepEqual(results[0].body.data, results[1].body.data);
+        const receipt = results[0].body.data.payment;
+        assert.equal(receipt.chargedCents, 0);
+        assert.equal(receipt.amountCents, payload.expectedTotalCents);
+        assert.equal(receipt.method, 'apple_pay');
+        assert.equal(await db.collection('orders').countDocuments(), count + 1);
+        assert.equal((await db.getMessages(user.id)).length, messages + 1);
+        const cancelled = await mutation(
+          app,
+          'patch',
+          `/team/orders/${results[0].body.data.id}`,
+          { status: 'cancelled' },
+          cookie,
+        );
+        assert.equal(cancelled.status, 200);
+        assert.deepEqual(cancelled.body.data.payment, receipt);
+        assert.equal(
+          (await db.getProduct('satin-story')).variants[0].stock,
+          before.variants[0].stock,
+        );
+      },
+    );
     await t.test('logout revokes the persisted session', async () => {
       assert.equal((await mutation(app, 'post', '/auth/logout', {}, cookie)).status, 200);
       assert.equal(

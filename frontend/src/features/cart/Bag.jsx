@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import PaymentReview from './PaymentReview';
+import { paymentCopy } from '@maison/contracts/demo-payment';
+import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMaison, api } from '../../shared/state';
 import { Empty, Money, PageHeading, ResourceState } from '../../shared/components';
@@ -9,6 +11,9 @@ export default function Bag() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [review, setReview] = useState(false);
+  const inFlight = useRef(false);
+  const copy = paymentCopy[language];
   const productIds = [...new Set(cart.lines.map((line) => line.productId))].sort().join(',');
   useEffect(() => {
     const controller = new AbortController();
@@ -51,26 +56,36 @@ export default function Bag() {
     (sum, line) => sum + (line.variant?.priceCents || 0) * line.quantity,
     0,
   );
-  async function checkout() {
-    if (busy) return;
+  async function checkout(payment) {
+    if (inFlight.current) return;
+    inFlight.current = true;
     setBusy(true);
     setError('');
     try {
-      const order = await api.request('/orders', {
+      const order = await api.request('/checkout/demo', {
         method: 'POST',
         body: {
           idempotencyKey: cart.key,
+          payment,
+          expectedTotalCents: total,
           lines: cart.lines.map(({ variantId, quantity }) => ({ variantId, quantity })),
         },
       });
       clearCart();
-      notify(t.orderSuccess);
-      navigate(`/orders/${order.id}`);
+      notify(copy.success);
+      navigate(`/orders/${order.id}?completed=1`);
     } catch (error) {
-      setError(errorText(error));
+      setError(copy[error.code] || errorText(error));
+      if (
+        error.code === 'price_changed' ||
+        error.code === 'insufficient_stock' ||
+        error.code === 'product_unavailable'
+      )
+        setReview(false);
       setVersion((value) => value + 1);
     } finally {
       setBusy(false);
+      inFlight.current = false;
     }
   }
   return (
@@ -185,9 +200,12 @@ export default function Bag() {
                 <button
                   className="button full"
                   disabled={busy || unavailable || insufficient}
-                  onClick={checkout}
+                  onClick={() => {
+                    setError('');
+                    setReview(true);
+                  }}
                 >
-                  {busy ? t.working : t.checkout}
+                  {copy.review}
                 </button>
               ) : (
                 <Link className="button full" to="/access?next=%2Fbag">
@@ -197,6 +215,19 @@ export default function Bag() {
             </aside>
           </div>
         </ResourceState>
+      )}
+      {review && user && !unavailable && !insufficient && cart.lines.length > 0 && (
+        <PaymentReview
+          lines={resolved}
+          totalCents={total}
+          busy={busy}
+          error={error}
+          onCancel={() => {
+            setReview(false);
+            setError('');
+          }}
+          onConfirm={checkout}
+        />
       )}
     </div>
   );

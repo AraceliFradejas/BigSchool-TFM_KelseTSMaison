@@ -1,3 +1,4 @@
+import { checkoutHash, demoReceipt } from '../modules/demo-payment.js';
 import { MongoClient } from 'mongodb';
 import { randomUUID, createHash } from 'node:crypto';
 import { products, collections, looks } from '../../../data/catalog.js';
@@ -19,6 +20,7 @@ const publicOrder = (row) =>
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
     demo: true,
+    payment: row.payment || null,
   };
 
 export async function openMongo({ mongoUri, mongoDatabase }) {
@@ -92,20 +94,18 @@ export class MongoStore {
       const product = productSchema.parse(input);
       inserted += await this.transaction(async (tx) => {
         const { variants, ...data } = product;
-        const result = await tx
-          .collection('products')
-          .updateOne(
-            { id: product.id },
-            {
-              $setOnInsert: {
-                ...data,
-                variantIds: variants.map((v) => v.id),
-                revision: 1,
-                position,
-              },
+        const result = await tx.collection('products').updateOne(
+          { id: product.id },
+          {
+            $setOnInsert: {
+              ...data,
+              variantIds: variants.map((v) => v.id),
+              revision: 1,
+              position,
             },
-            { ...tx.options(), upsert: true },
-          );
+          },
+          { ...tx.options(), upsert: true },
+        );
         if (!result.upsertedCount) return 0;
         for (const variant of variants)
           await tx
@@ -243,15 +243,13 @@ export class MongoStore {
         );
         if (
           removed.length &&
-          (await tx
-            .collection('orders')
-            .findOne(
-              {
-                status: { $in: ['pending', 'confirmed'] },
-                'lines.variantId': { $in: removed.map((v) => v.id) },
-              },
-              tx.options(),
-            ))
+          (await tx.collection('orders').findOne(
+            {
+              status: { $in: ['pending', 'confirmed'] },
+              'lines.variantId': { $in: removed.map((v) => v.id) },
+            },
+            tx.options(),
+          ))
         )
           throw new HttpError(409, 'variant_in_order');
         const { variants, ...data } = product;
@@ -305,11 +303,7 @@ export class MongoStore {
   }
   async createOrder(userId, input) {
     const checkout = parse(checkoutSchema, input);
-    const requestHash = createHash('sha256')
-      .update(
-        JSON.stringify([...checkout.lines].sort((a, b) => a.variantId.localeCompare(b.variantId))),
-      )
-      .digest('hex');
+    const requestHash = checkoutHash(checkout);
     const replay = (row) => {
       if (row.requestHash !== requestHash) throw new HttpError(409, 'idempotency_conflict');
       return { order: publicOrder(row), replay: true };
@@ -361,6 +355,7 @@ export class MongoStore {
           createdAt: now,
           updatedAt: now,
         };
+        order.payment = demoReceipt(checkout, order.id, order.totalCents, now);
         await tx.collection('orders').insertOne(order, tx.options());
         await tx.message(userId, order.id, 'pending');
         return { order: publicOrder(order), replay: false };
