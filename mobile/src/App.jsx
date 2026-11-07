@@ -729,6 +729,7 @@ export default function App() {
         </View>
         {intro && <Intro language={language} onDone={() => setIntro(false)} />}
         <Stylist
+          key={`${language}:${user?.id ?? 'guest'}`}
           visible={stylistOpen}
           onClose={() => setStylistOpen(false)}
           language={language}

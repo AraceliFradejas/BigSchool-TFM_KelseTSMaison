@@ -5,21 +5,17 @@ import { chatPreferences, stylistFeedback } from '@maison/contracts/stylist-chat
 import { useMaison, useResource, api } from '../../shared/state';
 import { Money, ProductGrid } from '../../shared/components';
 
-export default function StylistChat() {
+export default function StylistChat({ conversation }) {
   const { language, user, errorText } = useMaison();
   const es = language === 'es';
   const availability = useResource('/stylist/status');
-  const [messages, setMessages] = useState([]);
-  const [draft, setDraft] = useState('');
-  const [preferences, setPreferences] = useState({});
+  const { messages, setMessages, draft, setDraft, preferences, setPreferences } = conversation;
   const [busy, setBusy] = useState(false);
   const pending = useRef(null);
   const end = useRef(null);
   useEffect(() => () => pending.current?.abort(), []);
   useEffect(() => {
     pending.current?.abort();
-    setMessages([]);
-    setPreferences({});
     setBusy(false);
   }, [language, user?.id]);
   useEffect(

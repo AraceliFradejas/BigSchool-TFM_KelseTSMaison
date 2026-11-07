@@ -445,3 +445,8 @@ Tras esta corrección pasan las 121 pruebas de la suite completa: 72 backend, 10
 ### Guardarraíles · pruebas sin consumo real de IA
 
 125 pruebas correctas: 75 backend, 10 cliente HTTP, 7 frontend y 33 móvil. Se comprueba rechazo de temas excluidos e instrucciones maliciosas antes de catálogo/cuota/proveedor; descarte de explicaciones monetarias o ajenas al ámbito sin continuar la cadena; catálogo sin cambios tras esas respuestas; y rechazo de campos de precio, total, stock o rol enviados por el cliente. La política compartida permite los ejemplos válidos de presupuesto, tallas y ropa para una boda. Build, exportaciones iOS/Android y comprobación local de producción correctos. Las pruebas de guardarraíles no realizan nuevas llamadas a proveedores reales y no prueban todos los ataques posibles.
+
+
+### Continuidad del chat al abrir productos · 7 de noviembre
+
+En Safari local y modo editorial se envió una petición de cena, presupuesto 3.000 €, talla M y sin maquillaje. Tras abrir Enchanted desde la respuesta y reabrir el asesor se conservaron petición, propuestas y filtros. También se conservó un borrador al cerrar y abrir el panel. El estado se mantiene en el componente que contiene el chat en web y app y se reinicia al cambiar de cuenta o idioma; no se guarda en disco ni se promete restauración tras recarga o reinicio. Build y exportaciones nativas correctos. La comprobación física de continuidad en Expo Go queda pendiente.

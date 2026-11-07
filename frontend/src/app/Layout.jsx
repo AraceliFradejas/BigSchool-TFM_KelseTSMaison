@@ -118,7 +118,7 @@ export default function Layout() {
       <main ref={mainRef} id="main" tabIndex={-1}>
         <Outlet />
       </main>
-      <StylistLauncher />
+      <StylistLauncher key={`${language}:${user?.id ?? 'guest'}`} />
       <footer className="site-footer">
         <div className="footer-top">
           <div>

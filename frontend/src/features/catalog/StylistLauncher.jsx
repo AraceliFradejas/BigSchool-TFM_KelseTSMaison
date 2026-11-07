@@ -5,8 +5,16 @@ import { useMaison } from '../../shared/state';
 import { Icon } from '../../shared/components';
 
 export default function StylistLauncher() {
-  const { language } = useMaison();
+  const { language, user } = useMaison();
   const [open, setOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [draft, setDraft] = useState('');
+  const [preferences, setPreferences] = useState({});
+  useEffect(() => {
+    setMessages([]);
+    setDraft('');
+    setPreferences({});
+  }, [language, user?.id]);
   const dialog = useRef(null);
   const trigger = useRef(null);
   const title = useId();
@@ -73,7 +81,9 @@ export default function StylistLauncher() {
                 <Icon name="close" />
               </button>
             </header>
-            <StylistChat />
+            <StylistChat
+              conversation={{ messages, setMessages, draft, setDraft, preferences, setPreferences }}
+            />
           </div>
         </dialog>
       )}

@@ -126,6 +126,6 @@ Las acciones de acceso, pago, entrega, recogida y exploración de boutiques util
 
 ### Chat Maison Stylist
 
-Un botón flotante sobre las cinco pestañas abre el chat con texto libre, aclaración de presupuesto y tarjetas con fotos, precios y acceso a cada ficha. No aparece durante cuenta, ficha ni pago para no tapar acciones principales. Con IA desactivada se identifica como selección editorial. El cierre cancela peticiones y elimina la conversación de memoria.
+Un botón flotante sobre las cinco pestañas abre el chat con texto libre, aclaración de presupuesto y tarjetas con fotos, precios y acceso a cada ficha. No aparece durante cuenta, ficha ni pago para no tapar acciones principales. Con IA desactivada se identifica como selección editorial. El cierre cancela peticiones en curso y conserva mensajes, preferencias y borrador en memoria durante la navegación; se limpian al cambiar de cuenta o idioma o reiniciar la app.
 
 Las exportaciones nativas se han comprobado. La autora confirmó en Expo Go la apertura del chat y sus fotos, sin concretar el dispositivo; queda pendiente completar los enlaces y filtros en cada plataforma. Los despliegues Vercel actualizan web/API, no el código nativo de Expo Go: durante el desarrollo hay que recargar el proyecto conectado a Metro.

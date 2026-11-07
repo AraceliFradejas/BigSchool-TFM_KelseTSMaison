@@ -24,6 +24,14 @@ import { commerceError } from './commerce-copy';
 const names = { gemini: 'Gemini', anthropic: 'Claude', openai: 'OpenAI' };
 export default function Stylist({ visible, onClose, language, user, openAccount, openProduct }) {
   const es = language === 'es';
+  const [messages, setMessages] = useState([]);
+  const [draft, setDraft] = useState('');
+  const [preferences, setPreferences] = useState({});
+  useEffect(() => {
+    setMessages([]);
+    setDraft('');
+    setPreferences({});
+  }, [language, user?.id]);
   return (
     <Modal
       visible={visible}
@@ -43,6 +51,7 @@ export default function Stylist({ visible, onClose, language, user, openAccount,
         {visible && (
           <Chat
             language={language}
+            conversation={{ messages, setMessages, draft, setDraft, preferences, setPreferences }}
             user={user}
             openAccount={openAccount}
             openProduct={openProduct}
@@ -52,20 +61,16 @@ export default function Stylist({ visible, onClose, language, user, openAccount,
     </Modal>
   );
 }
-function Chat({ language, user, openAccount, openProduct }) {
+function Chat({ language, user, openAccount, openProduct, conversation }) {
   const es = language === 'es';
   const status = useRemote('/stylist/status');
-  const [messages, setMessages] = useState([]);
-  const [draft, setDraft] = useState('');
-  const [preferences, setPreferences] = useState({});
+  const { messages, setMessages, draft, setDraft, preferences, setPreferences } = conversation;
   const [busy, setBusy] = useState(false);
   const pending = useRef(null);
   const scroll = useRef(null);
   useEffect(() => () => pending.current?.abort(), []);
   useEffect(() => {
     pending.current?.abort();
-    setMessages([]);
-    setPreferences({});
     setBusy(false);
   }, [language, user?.id]);
   const say = (message) => setMessages((old) => [...old.slice(-15), message]);
