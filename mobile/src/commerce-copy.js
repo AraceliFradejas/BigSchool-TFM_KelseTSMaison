@@ -31,6 +31,8 @@ export const accountCopy = {
       invalid_email: 'Introduce un correo válido, por ejemplo alex@example.test.',
       invalid_name: 'El nombre debe tener entre 2 y 80 caracteres.',
       invalid_password: 'La contraseña debe tener entre 10 y 128 caracteres.',
+      session_storage_unavailable:
+        'No se puede guardar o recuperar la sesión segura en este dispositivo. Vuelve a intentarlo.',
       storage_unavailable:
         'No se puede guardar el intento en este dispositivo. Reintenta antes de confirmar.',
       invalid_credentials:
@@ -80,6 +82,8 @@ export const accountCopy = {
       invalid_email: 'Enter a valid email, for example alex@example.test.',
       invalid_name: 'Your name must have between 2 and 80 characters.',
       invalid_password: 'Your password must have between 10 and 128 characters.',
+      session_storage_unavailable:
+        'Cannot save or restore the secure session on this device. Please try again.',
       storage_unavailable: 'Cannot save this attempt on your device. Retry before confirming.',
       invalid_credentials:
         'The email or password does not match a Maison account. If you have not created one, choose “I need an account: register”.',

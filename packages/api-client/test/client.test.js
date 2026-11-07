@@ -2,6 +2,32 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { ApiError, createApiClient } from '../src/index.js';
 const response = (data) => new Response(JSON.stringify({ success: true, data }), { status: 200 });
+
+test('native authorization reads the current opaque token while web remains cookie-only', async () => {
+  let token;
+  const headers = [];
+  const client = createApiClient({
+    getAccessToken: () => token,
+    fetchImpl: async (url, options) => {
+      headers.push(options.headers);
+      return response(null);
+    },
+  });
+  await client.request('/auth/me');
+  assert.equal(headers[0].Authorization, undefined);
+  token = 'a'.repeat(64);
+  await client.request('/auth/me');
+  assert.equal(headers[1].Authorization, `Bearer ${token}`);
+  token = 'b'.repeat(64);
+  await client.request('/auth/me');
+  assert.equal(headers[2].Authorization, `Bearer ${token}`);
+  token = null;
+  await client.request('/auth/me');
+  assert.equal(headers[3].Authorization, undefined);
+  token = 'bad\r\nheader';
+  await assert.rejects(client.request('/auth/me'), (error) => error.code === 'invalid_session');
+  assert.equal(headers.length, 4);
+});
 test('transport preserves cancellation, session cookies and the CSRF header', async () => {
   const controller = new AbortController();
   let call;

@@ -8,6 +8,7 @@ import request from 'supertest';
 import sharp from 'sharp';
 import { openMongo } from '../src/storage/mongo.js';
 import { createApp } from '../src/app.js';
+import { verifyNativeSessions } from '../test-support/native-sessions.js';
 import {
   createCloudinaryStorage,
   cloudinaryImageUrl,
@@ -68,6 +69,14 @@ test(
     });
     let cookie;
     let user;
+    await t.test('native session guarantees also hold with MongoDB', async () => {
+      await verifyNativeSessions({
+        app,
+        db,
+        config,
+        recreate: () => createApp({ db, config, limits: false }),
+      });
+    });
     await t.test(
       'seed is idempotent and public catalogue keeps filters, names and variants',
       async () => {

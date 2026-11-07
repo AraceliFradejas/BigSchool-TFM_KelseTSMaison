@@ -5,8 +5,12 @@ import { registerSchema, loginSchema } from '@maison/contracts';
 import { HttpError, parse, send } from '../http.js';
 const deriveKey = promisify(scrypt);
 const SESSION_DURATION_MS = 7 * 24 * 60 * 60 * 1000;
-// cookie-parser may decode JSON cookies into objects; only our opaque token is valid.
+// Web uses an HttpOnly cookie; native uses an opaque Bearer token.
+// A malformed Authorization header never falls back to a different cookie identity.
 const sessionToken = (req) => {
+  const authorization = req.get('Authorization');
+  if (authorization !== undefined)
+    return /^Bearer ([a-f0-9]{64})$/.exec(authorization)?.[1] || null;
   const value = req.cookies.maison_session;
   return typeof value === 'string' && /^[a-f0-9]{64}$/.test(value) ? value : null;
 };
@@ -61,65 +65,77 @@ export function authRouter(db, config, limiter) {
     path: '/api',
     maxAge: SESSION_DURATION_MS,
   };
-  async function startSession(req, res, user) {
+  async function startSession(req, res, user, native = false) {
     const oldToken = sessionToken(req);
+    const token = randomBytes(32).toString('hex');
     if (db.kind === 'mongo') {
-      const token = randomBytes(32).toString('hex');
       await db.startSession(
         oldToken && hashToken(oldToken),
         hashToken(token),
         user.id,
         Date.now() + SESSION_DURATION_MS,
       );
-      res.cookie('maison_session', token, options);
-      return publicUser(user);
+    } else {
+      if (oldToken) db.prepare('DELETE FROM sessions WHERE token_hash=?').run(hashToken(oldToken));
+      db.prepare('DELETE FROM sessions WHERE expires_at<=?').run(Date.now());
+      db.prepare('INSERT INTO sessions VALUES (?,?,?)').run(
+        hashToken(token),
+        user.id,
+        Date.now() + SESSION_DURATION_MS,
+      );
     }
-    if (oldToken) db.prepare('DELETE FROM sessions WHERE token_hash=?').run(hashToken(oldToken));
-    db.prepare('DELETE FROM sessions WHERE expires_at<=?').run(Date.now());
-    const token = randomBytes(32).toString('hex');
-    db.prepare('INSERT INTO sessions VALUES (?,?,?)').run(
-      hashToken(token),
-      user.id,
-      Date.now() + SESSION_DURATION_MS,
-    );
+    if (native) {
+      // Password-verified native login only: never export an existing HttpOnly cookie.
+      const { maxAge, ...clearOptions } = options;
+      res.clearCookie('maison_session', clearOptions);
+      return { user: publicUser(user), token };
+    }
     res.cookie('maison_session', token, options);
     return publicUser(user);
   }
   router.get('/me', (req, res) => send(res, req.user || null));
-  router.post('/register', limiter, async (req, res) => {
-    const input = parse(registerSchema, req.body);
-    if (await findUser(input.email)) throw new HttpError(409, 'email_exists');
-    const user = { id: randomUUID(), ...input, role: 'customer' };
-    const passwordHash = await hashPassword(input.password);
-    // Recheck after password hashing: another request may have registered this email.
-    if (await findUser(input.email)) throw new HttpError(409, 'email_exists');
-    if (db.kind === 'mongo')
-      await db.insertUser({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        password_hash: passwordHash,
-        role: user.role,
-        created_at: new Date().toISOString(),
-      });
-    else
-      db.prepare('INSERT INTO users VALUES (?,?,?,?,?,?)').run(
-        user.id,
-        user.name,
-        user.email,
-        passwordHash,
-        user.role,
-        new Date().toISOString(),
-      );
-    send(res, await startSession(req, res, user), 201);
-  });
-  router.post('/login', limiter, async (req, res) => {
-    const input = parse(loginSchema, req.body);
-    const user = await findUser(input.email);
-    const valid = await verifyPassword(input.password, user?.password_hash);
-    if (!user || !valid) throw new HttpError(401, 'invalid_credentials');
-    send(res, await startSession(req, res, user));
-  });
+  const register =
+    (native = false) =>
+    async (req, res) => {
+      const input = parse(registerSchema, req.body);
+      if (await findUser(input.email)) throw new HttpError(409, 'email_exists');
+      const user = { id: randomUUID(), ...input, role: 'customer' };
+      const passwordHash = await hashPassword(input.password);
+      // Recheck after password hashing: another request may have registered this email.
+      if (await findUser(input.email)) throw new HttpError(409, 'email_exists');
+      if (db.kind === 'mongo')
+        await db.insertUser({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          password_hash: passwordHash,
+          role: user.role,
+          created_at: new Date().toISOString(),
+        });
+      else
+        db.prepare('INSERT INTO users VALUES (?,?,?,?,?,?)').run(
+          user.id,
+          user.name,
+          user.email,
+          passwordHash,
+          user.role,
+          new Date().toISOString(),
+        );
+      send(res, await startSession(req, res, user, native), 201);
+    };
+  const login =
+    (native = false) =>
+    async (req, res) => {
+      const input = parse(loginSchema, req.body);
+      const user = await findUser(input.email);
+      const valid = await verifyPassword(input.password, user?.password_hash);
+      if (!user || !valid) throw new HttpError(401, 'invalid_credentials');
+      send(res, await startSession(req, res, user, native));
+    };
+  router.post('/register', limiter, register());
+  router.post('/login', limiter, login());
+  router.post('/native/register', limiter, register(true));
+  router.post('/native/login', limiter, login(true));
   router.post('/logout', async (req, res) => {
     const token = sessionToken(req);
     if (db.kind === 'mongo' && token) await db.deleteSession(hashToken(token));

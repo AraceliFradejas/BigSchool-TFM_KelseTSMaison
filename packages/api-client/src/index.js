@@ -7,13 +7,21 @@ export class ApiError extends Error {
     this.status = status;
   }
 }
-export function createApiClient({ baseUrl = '/api/v1', fetchImpl = globalThis.fetch } = {}) {
+export function createApiClient({
+  baseUrl = '/api/v1',
+  fetchImpl = globalThis.fetch,
+  getAccessToken,
+} = {}) {
   async function request(path, { body, method = 'GET', signal, multipart = false } = {}) {
+    const token = getAccessToken?.();
+    if (token && (typeof token !== 'string' || !/^[a-f0-9]{64}$/.test(token)))
+      throw new ApiError('invalid_session', 0);
     const response = await fetchImpl(`${baseUrl.replace(/\/$/, '')}${path}`, {
       method,
       signal,
       credentials: 'include',
       headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...(!multipart && body !== undefined ? { 'Content-Type': 'application/json' } : {}),
         ...(method !== 'GET' ? { 'X-Maison-Request': '1' } : {}),
       },

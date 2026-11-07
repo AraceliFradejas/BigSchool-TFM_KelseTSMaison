@@ -1,4 +1,4 @@
-import MaisonButton from './Button';
+import Button from './Button';
 import { fulfillmentSchema, fulfillmentCopy } from '@maison/contracts/fulfillment';
 import { DeliveryForm, DeliverySummary } from './Delivery';
 import { useRef, useState } from 'react';
@@ -6,7 +6,6 @@ import {
   ScrollView,
   Text,
   TextInput,
-  Button,
   View,
   Switch,
   Platform,
@@ -247,13 +246,13 @@ export function Account({ commerce, language, open }) {
             maxLength={128}
             editable={!commerce.busy}
           />
-          <MaisonButton
+          <Button
             disabled={commerce.busy || !email || !password || (register && !name)}
             onPress={submit}
           >
             {register ? t.register : t.login}
-          </MaisonButton>
-          <MaisonButton
+          </Button>
+          <Button
             secondary
             disabled={commerce.busy}
             onPress={() => {
@@ -262,7 +261,7 @@ export function Account({ commerce, language, open }) {
             }}
           >
             {register ? t.switchToLogin : t.switchToRegister}
-          </MaisonButton>
+          </Button>
         </>
       )}
       {error && (

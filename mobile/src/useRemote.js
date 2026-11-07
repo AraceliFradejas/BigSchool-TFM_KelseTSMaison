@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { api } from './model';
+import { api } from './api';
 export function useRemote(path) {
   const [state, setState] = useState({ loading: true });
   const [version, setVersion] = useState(0);

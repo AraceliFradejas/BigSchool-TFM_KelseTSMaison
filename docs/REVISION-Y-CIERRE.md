@@ -40,7 +40,7 @@ Las referencias son a clases revisadas y a su aplicación en Maison. No signific
 
 ## Verificaciones del 7 de noviembre
 
-- `MONGOMS_RUNTIME_DOWNLOAD=false npm test`: **79 comprobaciones correctas**, sin fallos ni omisiones: backend 55, cliente HTTP 9, frontend 7 y modelos móviles 8. MongoDB temporal utiliza el binario existente; no se usa Atlas ni una pasarela real. Las pruebas de Cloudinary emplean dobles.
+- `MONGOMS_RUNTIME_DOWNLOAD=false npm test`: **86 comprobaciones correctas**, sin fallos ni omisiones: backend 58, cliente HTTP 10, frontend 7 y modelos móviles 11. MongoDB temporal utiliza el binario existente; no se usa Atlas ni una pasarela real. Las pruebas de Cloudinary emplean dobles.
 - `npm run build`: correcto.
 - `CI=1 npm run mobile:export`: exportación Hermes iOS/Android correcta. No es un IPA/APK de distribución ni una prueba física.
 - `npm run check:production`: repetido después de las correcciones, correcto; cinco rutas SPA, tres assets, cabeceras, salud, catálogo, imagen, acceso privado y recurso inexistente. No comprueba HTTPS público ni Docker.
@@ -82,3 +82,12 @@ El chequeo público de solo lectura del 7/11 pasa sobre la versión que ya estab
 6. Decidir explícitamente qué alcance del asesor IA puede incluirse con pruebas; sigue pendiente como objetivo personal.
 
 El lunes 9 es el objetivo personal de entrega, no una garantía de finalización o calificación. Araceli realiza el envío manual al campus. Los materiales restantes del curso y la selección de lecciones para el portfolio se registran por separado.
+
+
+## Segundo bloque: sesión nativa y botones de pago
+
+Araceli autoriza persistencia segura de sesión con Expo SecureStore. Se implementan login/registro nativos con token opaco, guardado protegido por plataforma, restauración y verificación de identidad al arrancar, eliminación local y revocación en servidor. La web conserva su cookie HttpOnly. Las pruebas comprueban hash sin token en la base, ausencia de token en login web o `/me`, imposibilidad de intercambiar una cookie por token sin contraseña, roles, precedencia de Authorization, rotación, caducidad y límite compartido. El mismo contrato se ejecuta con SQLite y MongoDB. Los dobles del almacén prueban reapertura, datos corruptos, errores y escrituras serializadas.
+
+Resultado local: 86 comprobaciones correctas, build web, chequeo local de producción y exportaciones iOS/Android correctos; Expo Doctor 20/20. La instalación limpia anterior (79 comprobaciones) corresponde al primer bloque; no se presenta como una instalación limpia de este segundo bloque.
+
+Los botones de acceso, pago, entrega, recogida y exploración de boutiques pasan al componente Maison con fondo/borde y estados accesibles; el aviso de bolsa utiliza modal con Aceptar rojo. La prueba física final de estos ajustes y de persistencia queda pendiente de publicar la API actualizada. No se ha hecho push ni desplegado este bloque todavía.

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Boutiques from './Boutiques';
-import { Text, TextInput, Button, View, StyleSheet } from 'react-native';
+import { Text, TextInput, View, StyleSheet } from 'react-native';
+import Button from './Button';
 import {
   demoBoutiques,
   deliveryAreas,

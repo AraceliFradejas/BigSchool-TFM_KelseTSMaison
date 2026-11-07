@@ -31,7 +31,8 @@ import Outfits from './Outfits';
 import Intro from './Intro';
 import { mergeCartSelection } from '@maison/contracts/cart-selection';
 import Svg, { Path } from 'react-native-svg';
-import { api, addToBag, imageUrl, money, resolveBag } from './model';
+import { addToBag, imageUrl, money, resolveBag } from './model';
+import { api } from './api';
 
 const words = {
   es: {

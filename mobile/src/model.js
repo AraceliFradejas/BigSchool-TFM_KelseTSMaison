@@ -1,4 +1,3 @@
-import { createApiClient } from '@maison/api-client';
 import { mergeCartSelection } from '@maison/contracts/cart-selection';
 
 export function serviceLocation(value = 'https://kelsets-maison.vercel.app/api/v1') {
@@ -15,7 +14,6 @@ export function serviceLocation(value = 'https://kelsets-maison.vercel.app/api/v
   return { baseUrl: url.href.replace(/\/$/, ''), origin: url.origin };
 }
 export const service = serviceLocation(process.env.EXPO_PUBLIC_API_URL);
-export const api = createApiClient({ baseUrl: service.baseUrl });
 export function imageUrl(path) {
   return /^\/(?:media|uploads|api\/v1\/images)\/[a-zA-Z0-9._-]+\.(?:webp|png|jpg|jpeg|svg)$/.test(
     path || '',

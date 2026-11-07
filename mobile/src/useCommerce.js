@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { randomUUID } from 'expo-crypto';
-import { api } from './model';
+import { api, nativeSession, revokeUnstoredSession } from './api';
 import { cartStorageKey, combineGuestBag, restoreCart } from './cart-state';
 const empty = () => ({ key: randomUUID(), lines: [] });
 export function useCommerce() {
@@ -51,11 +51,13 @@ export function useCommerce() {
     setReady(false);
     setAuthError(null);
     try {
+      const token = await nativeSession.restore();
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), 12000);
       let nextUser;
       try {
-        nextUser = await api.request('/auth/me', { signal: controller.signal });
+        nextUser = token ? await api.request('/auth/me', { signal: controller.signal }) : null;
+        if (token && !nextUser) await nativeSession.clear();
       } finally {
         clearTimeout(timer);
       }
@@ -82,13 +84,26 @@ export function useCommerce() {
     pending.current = true;
     setBusy(true);
     try {
-      const nextUser = await api.request(register ? '/auth/register' : '/auth/login', {
+      const session = await api.request(register ? '/auth/native/register' : '/auth/native/login', {
         method: 'POST',
         body,
       });
+      const nextUser = session?.user;
+      if (!nextUser?.id)
+        throw Object.assign(new Error('invalid_response'), { code: 'invalid_response' });
+      try {
+        await nativeSession.save(session.token);
+      } catch (error) {
+        if (/^[a-f0-9]{64}$/.test(session?.token || ''))
+          await revokeUnstoredSession(session.token).catch(() => {});
+        throw error;
+      }
       const verified = await api.request('/auth/me');
-      if (verified?.id !== nextUser.id)
+      if (verified?.id !== nextUser.id) {
+        await api.request('/auth/logout', { method: 'POST' }).catch(() => {});
+        await nativeSession.clear().catch(() => {});
         throw Object.assign(new Error('session_unavailable'), { code: 'session_unavailable' });
+      }
       const own = await read(nextUser.id);
       const next = current.current.user
         ? own
@@ -111,10 +126,14 @@ export function useCommerce() {
     setBusy(true);
     try {
       await api.request('/auth/logout', { method: 'POST' });
-      const verified = await api.request('/auth/me');
-      if (verified)
-        throw Object.assign(new Error('session_unavailable'), { code: 'session_unavailable' });
+      let storageFailure;
+      try {
+        await nativeSession.clear();
+      } catch (error) {
+        storageFailure = error;
+      }
       publish(null, await read(null));
+      if (storageFailure) throw storageFailure;
     } finally {
       pending.current = false;
       setBusy(false);

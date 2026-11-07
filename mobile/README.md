@@ -114,3 +114,12 @@ Guía oficial consultada: [actualizar SDK de Expo](https://docs.expo.dev/workflo
 ### Registro de cuenta durante la prueba
 
 Para una cuenta nueva hay que pulsar «Crear cuenta», completar nombre (2–80 caracteres), correo ficticio y contraseña nueva (10–128), y pulsar «Crear cuenta» para enviarlo. «Acceder» corresponde a una cuenta de Maison ya creada, no a las credenciales de BigSchool o Expo. El formulario utiliza los mismos esquemas de validación que la API y explica los errores por campo en ES/EN; no se necesita comunicar la contraseña a nadie. La bolsa continúa disponible en su pestaña tras entrar.
+
+
+## Sesión nativa · cambio pendiente de publicación y prueba física
+
+Tras detectar que Expo Go pedía acceso al cerrarlo, se ha incorporado `expo-secure-store` y acceso nativo explícito de la API. No se guarda la contraseña: se conserva un token opaco revocable y se verifica con el servidor al arrancar. AsyncStorage no contiene credenciales. Es necesario publicar la API con `/auth/native/login` y `/auth/native/register` antes de usar este flujo; los endpoints web de cookie siguen funcionando.
+
+La primera entrada tras la actualización requiere acceder una vez con la cuenta Maison existente para emitir su token nativo. Después se debe comprobar cierre completo de Expo Go y reapertura, identidad y bolsa por cuenta, cierre de sesión y nueva reapertura anónima. La caducidad la decide el servidor (siete días), no una promesa indefinida del dispositivo.
+
+Las acciones de acceso, pago, entrega, recogida y exploración de boutiques utilizan el botón Maison compartido, con fondo/borde, estado desactivado y etiquetas accesibles. La confirmación de añadir piezas utiliza una modal nativa con Aceptar rojo y fondo no accesible mientras está abierta. Compilación comprobada; revisar también el resultado físico y VoiceOver/TalkBack antes de acreditar accesibilidad completa.

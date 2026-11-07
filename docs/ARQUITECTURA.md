@@ -139,3 +139,18 @@ sequenceDiagram
   end
   UI-->>Cliente: Justificante e historial
 ```
+
+
+## Sesión nativa persistente · implementación local del 7/11
+
+La prueba física detectó pérdida de autenticación al cerrar Expo Go completamente. Se incorpora un transporte nativo explícito para el mismo token opaco y la misma tabla de sesiones, sin introducir JWT ni guardar contraseñas.
+
+`POST /api/v1/auth/native/register` y `/auth/native/login` validan los mismos datos, permisos y límite de intentos que el acceso web. Devuelven `{ user, token }` solo después de verificar el registro o la contraseña. No existe un endpoint para convertir una cookie HttpOnly activa en un token legible. Las respuestas llevan `Cache-Control: no-store` y el servidor conserva únicamente el hash del token.
+
+El cliente móvil almacena solo el token en Expo SecureStore, con accesibilidad iOS `WHEN_UNLOCKED_THIS_DEVICE_ONLY`; la app no utiliza biometría para este flujo. Al arrancar, restaura el token y consulta `/auth/me` antes de mostrar la cuenta. No acepta una cookie de navegador como sustituto de ese token en la restauración. Las peticiones incluyen `Authorization: Bearer …` por cabecera, nunca por URL. El servidor consulta identidad, rol y caducidad vigentes; un Authorization malformado no cae en otra identidad de cookie.
+
+Cerrar sesión revoca el token en servidor y retira la copia local. Una sesión caducada se descarta al consultar identidad. Las operaciones de almacenamiento están serializadas; una escritura fallida no publica una identidad como autenticada y se intenta revocar el token recién emitido que no pudo guardarse. Los errores del almacén se presentan sin valores privados. AsyncStorage continúa guardando solo identificadores y cantidades de bolsa, nunca token o contraseña.
+
+La web conserva la cookie HttpOnly, Secure en producción y SameSite=Lax. Se comprueban ambos adaptadores, permisos, expiración, rotación/revocación y límite compartido entre login web y nativo. Los dobles de almacenamiento prueban restauración y errores; no sustituyen el cierre y reapertura en teléfono. Esta implementación debe publicarse y verificarse físicamente antes de declararla cerrada.
+
+Fuentes oficiales consultadas el 7/11: [SecureStore](https://docs.expo.dev/versions/v58.0.0/sdk/securestore/) y [limitaciones de cookies en React Native](https://reactnative.dev/docs/network#known-issues-with-fetch-and-cookie-based-authentication). SecureStore está incluido en Expo Go y usa almacenamiento protegido por plataforma; sus límites no equivalen a una garantía contra un dispositivo comprometido.

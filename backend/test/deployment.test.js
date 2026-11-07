@@ -6,6 +6,7 @@ import path from 'node:path';
 import request from 'supertest';
 import { openDatabase, seedDatabase } from '../src/db.js';
 import { createApp } from '../src/app.js';
+import { verifyNativeSessions } from '../test-support/native-sessions.js';
 
 const origin = 'https://maison.example.test';
 function setup(t) {
@@ -54,6 +55,35 @@ const registration = {
   email: 'deployment@example.test',
   password: 'Deployment-Demo-2026',
 };
+
+test('native sessions preserve cookie security, permissions, revocation and expiry with SQLite', async (t) => {
+  const { app, db, config } = setup(t);
+  await verifyNativeSessions({
+    app,
+    db,
+    config,
+    recreate: () => createApp({ db, config, limits: false }),
+  });
+});
+
+test('web and native login share the same attempt limit', async (t) => {
+  const { db, config } = setup(t);
+  const app = createApp({ db, config });
+  for (let attempt = 0; attempt < 20; attempt++) {
+    const route = attempt % 2 ? '/auth/native/login' : '/auth/login';
+    const response = await post(app, route, {
+      email: 'absent@example.test',
+      password: 'Wrong-Maison-2026',
+    });
+    assert.equal(response.status, 401);
+  }
+  const blocked = await post(app, '/auth/native/login', {
+    email: 'absent@example.test',
+    password: 'Wrong-Maison-2026',
+  });
+  assert.equal(blocked.status, 429);
+  assert.equal(blocked.body.error, 'rate_limited');
+});
 
 test('production serves SPA routes and assets, keeping missing files and API routes as 404s', async (t) => {
   const { app } = setup(t);

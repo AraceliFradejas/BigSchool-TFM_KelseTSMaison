@@ -1,6 +1,15 @@
 import { Platform, Pressable, StyleSheet, Text } from 'react-native';
 
-export default function Button({ children, onPress, disabled, secondary, selected, ...props }) {
+export default function Button({
+  children,
+  title,
+  color,
+  onPress,
+  disabled,
+  secondary,
+  selected,
+  ...props
+}) {
   return (
     <Pressable
       accessibilityRole="button"
@@ -13,6 +22,7 @@ export default function Button({ children, onPress, disabled, secondary, selecte
       onPress={onPress}
       style={({ pressed }) => [
         s.button,
+        color && { backgroundColor: color, borderColor: color },
         secondary && s.secondary,
         selected && s.selected,
         disabled && s.dim,
@@ -21,7 +31,7 @@ export default function Button({ children, onPress, disabled, secondary, selecte
       {...props}
     >
       <Text style={[s.buttonText, secondary && s.secondaryText, selected && s.selectedText]}>
-        {children}
+        {children ?? title}
       </Text>
     </Pressable>
   );
