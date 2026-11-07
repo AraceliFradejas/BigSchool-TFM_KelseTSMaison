@@ -14,7 +14,7 @@ KelseTS Maison es una boutique ficticia de moda, accesorios y belleza. Puedes ex
 
 **Web:** [Abrir KelseTS Maison](https://kelsets-maison.vercel.app) · **API:** [Comprobar el servicio](https://kelsets-maison-api.vercel.app/api/v1/health).
 
-**Estado:** primera versión publicada en [Vercel](https://kelsets-maison.vercel.app), con MongoDB y Cloudinary propios. Maison Stylist tiene una prueba de IA activada para cuentas registradas, con un límite global de tres intentos de proveedor al día. Quedan parte de las pruebas físicas, una evaluación más amplia del asesor y el ajuste de la presentación.
+**Estado:** primera versión publicada en [Vercel](https://kelsets-maison.vercel.app), con MongoDB y Cloudinary propios. Maison Stylist tiene una prueba de IA activada también para visitantes, con un límite global de tres intentos de proveedor al día. Quedan parte de las pruebas físicas, una evaluación más amplia del asesor y el ajuste de la presentación.
 
 ### Una historia personal
 
@@ -41,7 +41,7 @@ El pago es una simulación académica: puedo elegir una cuenta bancaria ficticia
 
 «Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. El chat de [Maison Stylist](docs/MAISON-STYLIST.md), accesible desde un botón flotante en web y app, añade una conversación con burbujas y un campo de escritura fijo. Pide presupuesto cuando falta y muestra fotografías del catálogo, totales y enlaces a las fichas para elegir variantes. Después pregunta si gusta la elección; las valoraciones breves se responden localmente, sin consumir IA. El formulario de filtros detallados sigue disponible. El asesor limita la conversación a outfits y aplica controles de ámbito e intentos de manipular instrucciones o precios, también en el servidor.
 
-El servicio tiene preparada la integración **Gemini → Claude → OpenAI**, probada individualmente con tres consultas autorizadas sobre datos ficticios. La prueba de IA está **activada en producción para cuentas registradas**, con un máximo global de tres intentos de proveedor al día, incluidos fallos y respaldos. Cuando no se obtiene una respuesta válida o se agota la cuota, se muestran selecciones editoriales identificadas como tales. La evaluación conversacional en producción sigue en curso. El backend valida disponibilidad, tallas y presupuesto y no añade piezas a la bolsa automáticamente. La [guía del asesor](docs/MAISON-STYLIST.md) explica configuración, referencias y límites.
+El servicio tiene preparada la integración **Gemini → Claude → OpenAI**, probada individualmente con tres consultas autorizadas sobre datos ficticios. La prueba de IA está **activada en producción también para visitantes**, con un máximo global de tres intentos de proveedor al día, incluidos fallos y respaldos. La prueba termina al finalizar el 31/12/2026, en horario de Madrid; después continúa el modo editorial. Cuando no se obtiene una respuesta válida o se agota la cuota, se muestran selecciones editoriales identificadas como tales. La evaluación conversacional en producción sigue en curso. El backend valida disponibilidad, tallas y presupuesto y no añade piezas a la bolsa automáticamente. La [guía del asesor](docs/MAISON-STYLIST.md) explica configuración, referencias y límites.
 
 ### Entrega y boutiques de demostración
 
@@ -184,7 +184,7 @@ npm run build
 npm run check:production
 ```
 
-Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. Las últimas 127 comprobaciones automáticas han pasado (7 de noviembre de 2026). Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
+Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. Las últimas 129 comprobaciones automáticas han pasado (7 de noviembre de 2026). Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
 
 ### Capturas de la web publicada
 
@@ -260,7 +260,7 @@ KelseTS Maison is a fictional fashion, accessories and beauty boutique. Explore 
 
 **Website:** [Open KelseTS Maison](https://kelsets-maison.vercel.app) · **API:** [Check the service](https://kelsets-maison-api.vercel.app/api/v1/health).
 
-**Status:** first version published on [Vercel](https://kelsets-maison.vercel.app), with Maison MongoDB and Cloudinary services. Maison Stylist has an AI trial enabled for registered accounts, with a global limit of three provider attempts per day. Some physical-device checks, broader stylist evaluation and presentation revisions remain pending.
+**Status:** first version published on [Vercel](https://kelsets-maison.vercel.app), with Maison MongoDB and Cloudinary services. Maison Stylist has an AI trial enabled for visitors as well, with a global limit of three provider attempts per day. Some physical-device checks, broader stylist evaluation and presentation revisions remain pending.
 
 ### A personal story
 
@@ -287,7 +287,7 @@ Payment is an academic simulation: fictional bank account, fictional card or sim
 
 “Complete your look” uses manual selections and actual catalogue availability. The [Maison Stylist](docs/MAISON-STYLIST.md) chat, available from a floating button on web and native app, adds message bubbles and a fixed composer. It asks for a missing budget and displays catalogue photos, totals and product links for choosing variants. It then asks for feedback; short reactions receive local replies without consuming AI calls. Detailed filters remain available. The adviser limits conversation to outfits and checks scope and attempts to manipulate instructions or prices, including on the server.
 
-The service includes a prepared **Gemini → Claude → OpenAI** integration, tested individually through three authorised queries using fictional data. The AI trial is **enabled in production for registered accounts**, with a global maximum of three provider attempts per day, including failures and fallback attempts. Invalid responses or exhausted quota return explicitly labelled editorial selections. Production conversation evaluation remains in progress. The backend validates availability, sizes and budget, and never adds products to the bag automatically. The [stylist guide](docs/MAISON-STYLIST.md) records configuration, references and limitations.
+The service includes a prepared **Gemini → Claude → OpenAI** integration, tested individually through three authorised queries using fictional data. The AI trial is **enabled in production for visitors as well**, with a global maximum of three provider attempts per day, including failures and fallback attempts. The trial ends after 31 December 2026 in Madrid time; editorial mode remains available afterwards. Invalid responses or exhausted quota return explicitly labelled editorial selections. Production conversation evaluation remains in progress. The backend validates availability, sizes and budget, and never adds products to the bag automatically. The [stylist guide](docs/MAISON-STYLIST.md) records configuration, references and limitations.
 
 ### Demonstration delivery and boutiques
 
@@ -430,7 +430,7 @@ npm run build
 npm run check:production
 ```
 
-Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. The latest 127 automated checks passed (7 November 2026). Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
+Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. The latest 129 automated checks passed (7 November 2026). Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
 
 ### Published website screenshots
 

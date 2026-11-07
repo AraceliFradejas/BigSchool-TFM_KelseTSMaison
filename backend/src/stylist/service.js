@@ -1,3 +1,4 @@
+import { isStylistAvailable } from './config.js';
 import {
   stylistScopeViolation,
   stylistUnsafeText,
@@ -36,12 +37,14 @@ export async function recommendLooks({
     preferences,
   });
   if (preferences.mode !== 'ai') return editorial(null, candidates);
-  if (!config?.enabled) return editorial('not_configured', candidates);
+  if (!isStylistAvailable(config))
+    return editorial(config?.enabled ? 'expired' : 'not_configured', candidates);
   if (!candidates.length) return editorial('no_candidates', candidates);
   const shortlist = candidates.slice(0, 12);
   const prompt = stylistPrompt(shortlist, preferences);
   if (Buffer.byteLength(prompt.input, 'utf8') > 24576) return editorial('input_limit');
   for (const settings of config.chain) {
+    if (!isStylistAvailable(config)) return editorial('expired');
     if (signal?.aborted) return editorial('unavailable');
     if (!(await claimStylistCall(db, config.dailyLimit))) return editorial('daily_limit');
     let selection;

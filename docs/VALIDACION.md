@@ -460,3 +460,8 @@ Una nueva llamada autorizada a Gemini devolvió tres looks válidos para presupu
 ## Activación autorizada para pruebas de la autora
 
 7 de noviembre: secretos guardados únicamente en Production de `kelsets-maison-api`, redespliegue listo en Vercel. Estado HTTPS del asesor: disponible, cuenta obligatoria y orden Gemini/Anthropic/OpenAI. Se verificó HTTP 401 sin sesión, sin llamada a modelos. Cuota global de tres intentos diarios UTC, incluidos fallos y respaldos; límite de salida 512 tokens y timeout 10 segundos. No se han consumido llamadas de validación después de activar: se reservan para Araceli. La prueba conversacional autenticada y la revisión física siguen pendientes.
+
+
+## Visitantes y vencimiento · 7 de noviembre
+
+129 pruebas correctas (78 backend, 10 cliente HTTP, 7 frontend y 34 móvil). Con proveedor simulado se verifican tres consultas anónimas con IA y una cuarta editorial por cuota global, sin exceder tres llamadas. El modo que exige cuenta sigue cubierto. Se comprueba el instante de caducidad exacto y que un servicio ya arrancado no llama al proveedor ni reserva cuota después de vencer. La fecha configurada equivale al final del 31/12/2026 en Madrid. Build web, exportaciones iOS/Android y comprobación local de producción correctos. No se han usado llamadas reales para estas pruebas. Los importes de las cuentas de proveedores proceden de la autora y no son topes monetarios auditados por la aplicación.

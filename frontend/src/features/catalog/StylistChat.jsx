@@ -58,7 +58,7 @@ export default function StylistChat({ conversation }) {
       return;
     }
     const ai = Boolean(availability.data?.available);
-    if (ai && !user) {
+    if (ai && !user && availability.data?.requiresAccount !== false) {
       say({
         role: 'assistant',
         text: es

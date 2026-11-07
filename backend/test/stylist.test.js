@@ -8,7 +8,7 @@ import { getLooks } from '../src/modules/catalog.js';
 import { stylistSchema } from '@maison/contracts';
 import { eligibleLooks } from '../src/stylist/editorial.js';
 import { recommendLooks } from '../src/stylist/service.js';
-import { readStylistConfig } from '../src/stylist/config.js';
+import { readStylistConfig, isStylistAvailable } from '../src/stylist/config.js';
 import { claimStylistCall } from '../src/stylist/quota.js';
 import { requestStylistProvider, StylistProviderError } from '../src/stylist/providers.js';
 
@@ -378,4 +378,61 @@ test('job interview prompt does not replace the requested context with televisio
     language: 'es',
   });
   assert.equal(JSON.parse(tv.input).preferences.occasion, 'television');
+});
+
+test('guest AI requests remain bounded by the persistent global quota', async (t) => {
+  const db = setup(t);
+  let calls = 0;
+  const app = createApp({
+    db,
+    limits: false,
+    config: {
+      origin: 'http://127.0.0.1:5173',
+      frontendDir: '/absent',
+      uploadDir: '/tmp',
+      stylist: { ...config, requireAccount: false, dailyLimit: 3 },
+    },
+    stylistRequest: async (s, p) => {
+      calls++;
+      return chosen(p);
+    },
+  });
+  const status = await request(app).get('/api/v1/stylist/status');
+  assert.equal(status.body.data.requiresAccount, false);
+  for (let i = 0; i < 4; i++) {
+    const result = await request(app)
+      .post('/api/v1/stylist')
+      .set('X-Maison-Request', '1')
+      .send(preferences);
+    assert.equal(result.status, 200);
+    assert.equal(result.body.data.mode, i < 3 ? 'ai' : 'editorial');
+    if (i === 3) assert.equal(result.body.data.reason, 'daily_limit');
+  }
+  assert.equal(calls, 3);
+});
+test('expiration switches a warm service to editorial without provider calls', async (t) => {
+  const end = Date.parse('2026-12-31T23:00:00Z');
+  const setting = { ...config, expiresAt: end };
+  assert.equal(isStylistAvailable(setting, end - 1), true);
+  assert.equal(isStylistAvailable(setting, end), false);
+  assert.equal(isStylistAvailable(setting, end + 1), false);
+  assert.equal(
+    readStylistConfig({ STYLIST_REQUIRE_ACCOUNT: '0', STYLIST_EXPIRES_AT: '2026-12-31T23:00:00Z' })
+      .requireAccount,
+    false,
+  );
+  assert.throws(() => readStylistConfig({ STYLIST_EXPIRES_AT: '31/12' }));
+  assert.throws(() => readStylistConfig({ STYLIST_REQUIRE_ACCOUNT: 'no' }));
+  const db = setup(t);
+  let calls = 0;
+  const result = await run(db, {
+    config: { ...setting, expiresAt: Date.now() - 1 },
+    requestProvider: async () => {
+      calls++;
+    },
+  });
+  assert.equal(result.reason, 'expired');
+  assert.equal(result.mode, 'editorial');
+  assert.equal(calls, 0);
+  assert.equal(db.prepare('SELECT count(*) AS n FROM stylist_usage').get().n, 0);
 });

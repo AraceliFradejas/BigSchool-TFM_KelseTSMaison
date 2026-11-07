@@ -109,7 +109,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
       return;
     }
     const ai = Boolean(status.data?.available);
-    if (ai && !user) {
+    if (ai && !user && status.data?.requiresAccount !== false) {
       say({
         role: 'assistant',
         text: es

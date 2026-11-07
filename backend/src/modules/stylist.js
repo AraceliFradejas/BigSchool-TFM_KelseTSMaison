@@ -1,3 +1,4 @@
+import { isStylistAvailable } from '../stylist/config.js';
 import { Router } from 'express';
 import { stylistSchema } from '@maison/contracts';
 import { parse, send, HttpError } from '../http.js';
@@ -8,14 +9,21 @@ export function stylistRouter(db, config, limiter, requestProvider) {
   const router = Router();
   router.get('/stylist/status', (req, res) =>
     send(res, {
-      available: Boolean(config.stylist?.enabled),
-      requiresAccount: true,
-      providers: config.stylist?.enabled ? config.stylist.chain.map((item) => item.provider) : [],
+      available: isStylistAvailable(config.stylist),
+      requiresAccount: config.stylist?.requireAccount !== false,
+      providers: isStylistAvailable(config.stylist)
+        ? config.stylist.chain.map((item) => item.provider)
+        : [],
     }),
   );
   router.post('/stylist', limiter, async (req, res) => {
     const preferences = parse(stylistSchema, req.body);
-    if (preferences.mode === 'ai' && config.stylist?.enabled && !req.user)
+    if (
+      preferences.mode === 'ai' &&
+      isStylistAvailable(config.stylist) &&
+      config.stylist?.requireAccount !== false &&
+      !req.user
+    )
       throw new HttpError(401, 'unauthorized');
     const controller = new AbortController();
     const disconnected = () => {

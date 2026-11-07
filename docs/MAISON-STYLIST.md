@@ -92,3 +92,12 @@ Con autorización expresa de Araceli, las tres claves específicas de Maison y s
 Configuración de la prueba: Gemini → Claude → OpenAI, máximo global de **3 intentos por día UTC**, timeout de 10 segundos por proveedor y 512 tokens de salida como máximo por respuesta. Los intentos fallidos y los respaldos consumen esa misma cuota; no son tres conversaciones por usuario. Los agradecimientos, preguntas de identidad y bloqueos locales no usan modelos. No se compró saldo ni se activó facturación. Al agotarse la cuota, el servicio devuelve el modo editorial y lo identifica en la respuesta. El límite de intentos no equivale a un presupuesto monetario medido.
 
 Se verificó por HTTPS `available: true`, la exigencia de cuenta y el orden de proveedores. Una petición sin sesión devolvió HTTP 401 antes de contactar con modelos. Estas verificaciones no consumieron intentos de proveedor: se reservaron para la prueba manual de Araceli. La activación no acredita todavía una conversación completa con cuenta en producción ni un fallback real.
+
+
+## Acceso de visitantes y cierre automático de la prueba
+
+La autora autorizó abrir también el asesor a personas sin cuenta. `STYLIST_REQUIRE_ACCOUNT=0` permite la recomendación sin sesión; el valor por defecto sigue siendo `1` para instalaciones nuevas. Web y app consultan `requiresAccount` antes de exigir acceso. La compra y las áreas privadas conservan sus permisos. El límite global sigue siendo tres intentos de proveedor por día UTC; no se ha aumentado. El limitador adicional por IP vive en cada instancia y no se presenta como una cuota distribuida por visitante.
+
+`STYLIST_EXPIRES_AT=2026-12-31T23:00:00Z` cierra el acceso a modelos al terminar el 31 de diciembre de 2026 en Madrid. La disponibilidad se calcula en cada petición y antes de cada respaldo, sin depender de reiniciar la función. Tras el vencimiento se conserva el modo editorial sin llamadas a proveedores. Esta fecha limita el servicio de Maison; no modifica ni verifica la caducidad real de las claves en los proveedores.
+
+Importes indicados por Araceli: Gemini gratuito, Claude 15 € y OpenAI 10 €. No se han aumentado saldos ni activado facturación. Esos importes no se han contrastado en sus paneles y la aplicación no lleva una contabilidad monetaria de esos presupuestos: su control comprobado es el número de intentos, la longitud de salida y el vencimiento. No se presentan avisos o presupuestos de terceros como bloqueos de gasto verificados.
