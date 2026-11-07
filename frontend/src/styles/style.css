@@ -2726,3 +2726,28 @@ main:focus {
 .stylist-form > .button {
   align-self: end;
 }
+/* Explicit control geometry also normalises Safari's native select sizing. */
+.stylist-form select,
+.stylist-form input:not([type='checkbox']) {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 48px;
+  min-height: 48px;
+  margin: 0;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  font: inherit;
+  line-height: 1.4;
+  color: var(--ink);
+  background-color: var(--paper);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.stylist-form select {
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b625c' stroke-width='1.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}

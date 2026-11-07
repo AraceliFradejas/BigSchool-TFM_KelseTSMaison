@@ -36,9 +36,9 @@ Para el primer ensayo se recomienda configurar solo `STYLIST_PROVIDERS=gemini`. 
 
 ## Evidencias y pendientes
 
-Las pruebas automatizadas utilizan datos ficticios y proveedores simulados. Cubren orden de respaldo, rechazo de selecciones inventadas, negativas, agotados durante la espera, tallas, presupuesto, privacidad del payload y cuota persistente. Las pruebas de MongoDB comprueban concurrencia sobre su contador real temporal. No acreditan acceso a los modelos, calidad de estilo, latencia real, coste observado ni aceptación real de cada esquema por el proveedor.
+Las pruebas automatizadas utilizan datos ficticios y proveedores simulados. Después se completó un [ensayo real autorizado](evidencias/stylist-2026-11-07.md): una consulta por proveedor, las tres correctas, con catálogo sintético y sin activar la web. Cubren orden de respaldo, rechazo de selecciones inventadas, negativas, agotados durante la espera, tallas, presupuesto, privacidad del payload y cuota persistente. Las pruebas de MongoDB comprueban concurrencia sobre su contador real temporal. No acreditan acceso a los modelos, calidad de estilo, latencia real, coste observado ni aceptación real de cada esquema por el proveedor.
 
-Pendientes antes de describirlo como asesor IA verificado: claves y modelos propios, ensayo real autorizado por proveedor, evaluación ES/EN de recomendaciones, errores reales controlados, cuota/saldo, comprobación web y adaptación nativa si se decide incluirla. Documentar los resultados reales y actualizar memoria/slides después. Las lecciones de IA y evaluación se relacionarán con esas evidencias, sin atribuir prácticas no realizadas.
+Pendientes antes de describirlo como asesor IA verificado en producción: variables privadas y activación pública autorizada, evaluación ES/EN más amplia, errores reales controlados, cuota/saldo, comprobación web y adaptación nativa si se decide incluirla. Claves propias y un ensayo real por proveedor ya se han comprobado. Documentar los resultados reales y actualizar memoria/slides después. Las lecciones de IA y evaluación se relacionarán con esas evidencias, sin atribuir prácticas no realizadas.
 
 ## Documentación oficial consultada
 

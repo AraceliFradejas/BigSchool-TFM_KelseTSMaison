@@ -1,0 +1,266 @@
+{
+  "date": "2026-11-07",
+  "scope": "Three real provider attempts authorized, max 1 USD; synthetic seeded catalogue; public AI stays disabled",
+  "results": [
+    {
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "httpStatus": 200,
+      "category": "ok",
+      "usage": {
+        "total_tokens": 1126,
+        "total_input_tokens": 898,
+        "total_output_tokens": 228,
+        "total_thought_tokens": 0
+      },
+      "elapsedMs": 1684,
+      "mode": "ai",
+      "reason": null,
+      "looks": [
+        {
+          "id": "look-golden-hour",
+          "name": "Golden Hour",
+          "totalCents": 230000,
+          "explanation": "El vestido Enchanted aporta una silueta fluida ideal para una cena romántica. Al combinarlo con los pendientes Daylight, logras un equilibrio entre sencillez y destello luminoso perfecto para la velada.",
+          "variants": [
+            {
+              "id": "satin-story-2",
+              "label": "M · Champán",
+              "stock": 8
+            },
+            {
+              "id": "sunlit-hoops-1",
+              "label": "Dorado · Par",
+              "stock": 6
+            }
+          ]
+        },
+        {
+          "id": "look-runway-boceto-disenador-2",
+          "name": "ivy",
+          "totalCents": 544000,
+          "explanation": "Este conjunto destaca por la suavidad del vestido cruzado en tono salvia junto al abrigo marfil, creando un aire sofisticado y delicado que resulta muy apropiado para una cena relajada.",
+          "variants": [
+            {
+              "id": "runway-boceto-disenador-2-1-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-boceto-disenador-2-2-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-boceto-disenador-2-3-38",
+              "label": "38",
+              "stock": 5
+            }
+          ]
+        },
+        {
+          "id": "look-runway-elegancia-4",
+          "name": "Maroon",
+          "totalCents": 463000,
+          "explanation": "La blusa drapeada en color burdeos añade el toque romántico necesario. Se complementa con el pantalón azul noche y el abrigo camel, ofreciendo una apariencia pulida y muy equilibrada para salir a cenar.",
+          "variants": [
+            {
+              "id": "runway-elegancia-4-1-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-elegancia-4-2-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-elegancia-4-3-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-elegancia-4-4-38",
+              "label": "38",
+              "stock": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-haiku-5-5",
+      "httpStatus": 200,
+      "category": "ok",
+      "usage": {
+        "input_tokens": 2121,
+        "output_tokens": 653
+      },
+      "elapsedMs": 4567,
+      "mode": "ai",
+      "reason": null,
+      "looks": [
+        {
+          "id": "look-golden-hour",
+          "name": "Golden Hour",
+          "totalCents": 230000,
+          "explanation": "Un vestido Enchanted con unos pendientes Daylight crea una combinación sencilla y favorecedora para una cena relajada con toque romántico. Deja que el vestido marque el estilo y usa los pendientes como detalle luminoso cerca del rostro.",
+          "variants": [
+            {
+              "id": "satin-story-2",
+              "label": "M · Champán",
+              "stock": 8
+            },
+            {
+              "id": "sunlit-hoops-1",
+              "label": "Dorado · Par",
+              "stock": 6
+            }
+          ]
+        },
+        {
+          "id": "look-runway-boceto-disenador-2",
+          "name": "ivy",
+          "totalCents": 544000,
+          "explanation": "El abrigo marfil ivy se puede llevar sobre el vestido cruzado salvia para una capa suave y elegante. Completa el conjunto con los zapatos marfil ivy, que mantienen la paleta delicada y un aire romántico para la cena.",
+          "variants": [
+            {
+              "id": "runway-boceto-disenador-2-1-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-boceto-disenador-2-2-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-boceto-disenador-2-3-38",
+              "label": "38",
+              "stock": 5
+            }
+          ]
+        },
+        {
+          "id": "look-runway-elegancia-4",
+          "name": "Maroon",
+          "totalCents": 463000,
+          "explanation": "El abrigo camel Maroon aporta calidez y el pantalón azul noche sostiene un contraste sobrio. La blusa drapeada burdeos añade movimiento y un punto romántico, y los zapatos burdeos cierran el look con coherencia de color.",
+          "variants": [
+            {
+              "id": "runway-elegancia-4-1-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-elegancia-4-2-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-elegancia-4-3-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-elegancia-4-4-38",
+              "label": "38",
+              "stock": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "httpStatus": 200,
+      "category": "ok",
+      "usage": {
+        "input_tokens": 1073,
+        "output_tokens": 181,
+        "total_tokens": 1254
+      },
+      "elapsedMs": 5409,
+      "mode": "ai",
+      "reason": null,
+      "looks": [
+        {
+          "id": "look-golden-hour",
+          "name": "Golden Hour",
+          "totalCents": 230000,
+          "explanation": "El vestido Enchanted crea una base femenina y sencilla para una cena relajada; combínalo con los pendientes Daylight para añadir un toque romántico sin recargar el conjunto.",
+          "variants": [
+            {
+              "id": "satin-story-2",
+              "label": "M · Champán",
+              "stock": 8
+            },
+            {
+              "id": "sunlit-hoops-1",
+              "label": "Dorado · Par",
+              "stock": 6
+            }
+          ]
+        },
+        {
+          "id": "look-runway-boceto-disenador-2",
+          "name": "ivy",
+          "totalCents": 544000,
+          "explanation": "El vestido cruzado salvia aporta un aire romántico y relajado. Añade el abrigo marfil y los zapatos marfil para mantener una combinación suave y cohesionada.",
+          "variants": [
+            {
+              "id": "runway-boceto-disenador-2-1-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-boceto-disenador-2-2-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-boceto-disenador-2-3-38",
+              "label": "38",
+              "stock": 5
+            }
+          ]
+        },
+        {
+          "id": "look-runway-eras-01-3",
+          "name": "Sparks Fly",
+          "totalCents": 330500,
+          "explanation": "Combina el cárdigan lavanda con la camiseta marfil y la falda plisada ciruela para un resultado dulce y desenfadado; completa el conjunto con las medias ciruela y los zapatos burdeos.",
+          "variants": [
+            {
+              "id": "runway-eras-01-3-1-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-eras-01-3-2-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-eras-01-3-3-m",
+              "label": "M",
+              "stock": 7
+            },
+            {
+              "id": "runway-eras-01-3-4-one",
+              "label": "Única",
+              "stock": 5
+            },
+            {
+              "id": "runway-eras-01-3-5-38",
+              "label": "38",
+              "stock": 5
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
