@@ -399,3 +399,9 @@ He completado en Chrome el recorrido de producto, variante, bolsa, destinatario,
 La segunda revisión añade once comprobaciones sobre fallos de lectura/escritura de bolsa, verificación de identidad antes de persistir sesión y limpieza del token tras errores. Suite completa: 97 correctas. Build, exportaciones Hermes iOS/Android y chequeo local de producción correctos.
 
 La portada sustituye la cuadrícula de dieciséis colecciones por una fila horizontal. Se generan dieciséis portadas nuevas para este carrusel, sin reutilizar imágenes de los vídeos; los 32 WebP (dos tamaños por imagen) son distintos y suman 3,40 MiB. Prompts y rutas en [recursos](recursos/collection-carousel.json). En Safari local se revisan imágenes y encuadres, ES/EN, avance de 01/16 a 02/16 y enlace Wildflower: abre el filtro correcto y muestra tres piezas. No se acredita con ello una auditoría completa de accesibilidad ni una prueba física del carrusel en tablet o teléfono.
+
+## Adelanto editorial de pasarela · 7 de noviembre de 2026
+
+Se sustituye la franja textual «Del cuaderno a tu armario» por un bloque burdeos con tres conjuntos existentes, enlaces a sus fichas y accesos a los 36 looks y al catálogo de pasarela. Se retira la firma personal aislada al pie de las campañas; la autoría y las redes permanecen en los espacios de historia, créditos y pie de página. No se generan imágenes nuevas para este bloque ni se reutilizan las portadas del carrusel de colecciones.
+
+En Safari local se revisan el escritorio y una ventana estrecha de aproximadamente 560 píxeles: tarjetas completas, texto y accesos visibles sin desbordamiento. La tarjeta Style abre `/runway/look-runway-elegancia-1` y muestra las piezas de ese conjunto. Build, comprobación local de producción y siete pruebas frontend existentes correctas; esas pruebas de reglas no se presentan como tests de la nueva composición visual. Prueba táctil física pendiente.

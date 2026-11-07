@@ -192,7 +192,6 @@ export default function CampaignHero() {
             />
           ))}
         </div>
-        <div className="campaign-signature">EST. 2026 · ARACELI FRADEJAS MUÑOZ</div>
       </section>
     </>
   );
