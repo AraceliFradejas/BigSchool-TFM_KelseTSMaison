@@ -87,8 +87,8 @@ export function stylistFeedback(message, hasSuggestion, language = 'es', suggest
     )
   )
     return es
-      ? 'Soy tu tAIlor ✨, tu estilista personal virtual de Maison. No coso botones, ¡pero sí te ayudo a encontrar un look a tu medida! ¿Qué tienes planeado?'
-      : 'I’m your tAIlor ✨, your personal virtual stylist at Maison. I don’t sew buttons, but I can help you find an outfit that suits you! What are you planning?';
+      ? 'Soy tu tAIlor ✨, tu estilista personal virtual de KelseTS Maison. No coso botones, ¡pero sí te ayudo a encontrar un look a tu medida! ¿Qué tienes planeado?'
+      : 'I’m your tAIlor ✨, your personal virtual stylist at KelseTS Maison. I don’t sew buttons, but I can help you find an outfit that suits you! What are you planning?';
   if (
     /^(?:(?:hola|buenas|buenos dias|buenas tardes|buenas noches|hello|hi|hey|good morning|good afternoon|good evening)(?:\s+|$))+$/.test(
       text,
@@ -112,8 +112,8 @@ export function stylistFeedback(message, hasSuggestion, language = 'es', suggest
               ? 'Hi!'
               : 'Hello!';
     return es
-      ? `${greeting} Soy tAIlor, tu estilista personal virtual de Maison. ¿En qué te puedo ayudar? ✨`
-      : `${greeting} I’m tAIlor, your personal virtual stylist at Maison. How can I help? ✨`;
+      ? `${greeting} Soy tAIlor, tu estilista personal virtual de KelseTS Maison. ¿En qué te puedo ayudar? ✨`
+      : `${greeting} I’m tAIlor, your personal virtual stylist at KelseTS Maison. How can I help? ✨`;
   }
   if (
     /^(?:(?:adios|hasta luego|hasta pronto|nos vemos|chao|chau|bye|goodbye|see you|gracias|muchas gracias|thank you|thanks)(?:\s+|$))+$/.test(
