@@ -1,6 +1,6 @@
 # Guion de presentación de KelseTS Maison
 
-Borrador de contenido del 7 de noviembre de 2026. **Este documento no sustituye las slides finales.** Antes de grabar o presentar hay que contrastar el alcance con la versión publicada y actualizar los resultados físicos. Duración orientativa: 8–10 minutos, más demostración si el formato de entrega lo permite.
+Borrador de contenido del 7 de noviembre de 2026. Presentación PDF disponible en [output/pdf](../output/pdf/KelseTS-Maison-Presentacion-TFM.pdf); este guion conserva las notas para la narración. Antes de grabar o presentar hay que contrastar el alcance con la versión publicada y actualizar los resultados físicos. Duración orientativa: 8–10 minutos, más demostración si el formato de entrega lo permite.
 
 ## 1 · KelseTS Maison
 
@@ -46,7 +46,7 @@ La confirmación conserva justificante DEMO y cargo real cero. No mostrar datos 
 
 En pantalla: cookie malformada → prueba que falla → validación del token → prueba correcta. Como segundo ejemplo breve: respuesta JSON incompleta → error controlado del cliente compartido.
 
-Qué explicar: primero se reprodujo el comportamiento, después se corrigió y se ejecutó la regresión. El resultado actual es de **86 comprobaciones**, con su desglose y límites en [Validación](VALIDACION.md). No confundir cantidad de pruebas con porcentaje de cobertura o ausencia de fallos.
+Qué explicar: primero se reprodujo el comportamiento, después se corrigió y se ejecutó la regresión. El resultado actual es de **97 comprobaciones**, con su desglose y límites en [Validación](VALIDACION.md). No confundir cantidad de pruebas con porcentaje de cobertura o ausencia de fallos.
 
 Referencia académica: [TDD con IA](https://campus.thebigschool.com/cursos/master-en-desarrollo-con-ia/modulos/testing/leccion/tdd-con-ia/) y [mapa de pruebas](https://campus.thebigschool.com/cursos/master-en-desarrollo-con-ia/modulos/testing/leccion/setup-mapa-de-pruebas-front-vs-back/).
 

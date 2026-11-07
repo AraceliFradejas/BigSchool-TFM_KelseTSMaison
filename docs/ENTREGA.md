@@ -4,13 +4,13 @@ La web y la API están publicadas; existe además una app nativa en desarrollo c
 
 ## Requisitos de entrega
 
-| Material                                                                 | Estado                                                   |
-| ------------------------------------------------------------------------ | -------------------------------------------------------- |
-| Código y control de versiones                                            | Proyecto independiente preparado en este repositorio     |
-| README con descripción, stack, instalación, estructura y funcionalidades | Redactado en ES/EN; revisión final de coherencia en curso         |
-| Despliegue o publicación funcional                                       | Publicado en Vercel; comprobaciones de cierre en curso |
-| Slides y acceso desde el código o documentación                          | Presentación final pendiente                             |
-| Formulario de entrega                                                    | Lo cumplimentaré manualmente en el campus          |
+| Material                                                                 | Estado                                                                                                          |
+| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| Código y control de versiones                                            | Proyecto independiente preparado en este repositorio                                                            |
+| README con descripción, stack, instalación, estructura y funcionalidades | Redactado en ES/EN; revisión final de coherencia en curso                                                       |
+| Despliegue o publicación funcional                                       | Publicado en Vercel; comprobaciones de cierre en curso                                                          |
+| Slides y acceso desde el código o documentación                          | [PDF de diez diapositivas](../output/pdf/KelseTS-Maison-Presentacion-TFM.pdf); ensayo y ajuste final pendientes |
+| Formulario de entrega                                                    | Lo cumplimentaré manualmente en el campus                                                                       |
 
 Fuente académica: `Documentacion-TFM.pdf`, conservado como referencia privada. El enunciado no impone tecnología, app móvil ni IA. Admite entregas posteriores al plazo de la edición, con posibles diferencias en los tiempos de corrección.
 
@@ -98,18 +98,15 @@ Quiero incorporar ambas ampliaciones: una app nativa y un asistente de IA para o
 - Editor de Team y subida desde Chrome publicados comprobados: creación bilingüe de pieza archivada, imagen desde el selector, guardado, búsqueda, reapertura y cambios de precio/stock. Datos temporales retirados; se conserva mi sesión y el catálogo original.
 - Compra e historial desde navegador y 19 capturas completados; se conserva un pedido cancelado de demostración. Siguen pendientes las comprobaciones restantes de persistencia y backups, y las ampliaciones solicitadas. Mailtrap queda para más adelante.
 
-
 ## Inicio de app nativa · 18 de octubre de 2026
 
 He decidido comenzar por la app y probarla en iPhone y Android. Se añade `mobile/` con Expo SDK 57 y React Native: catálogo paginado con búsqueda/categorías, ficha con variantes y bolsa local ES/EN. Reutiliza el cliente HTTP y las reglas de cantidades de la web. No se integra aún acceso, pedidos ni Team.
 
 Exportación de paquetes iOS/Android correcta y Expo Doctor 21/21. Web y API mantienen sus verificaciones. El siguiente paso es la prueba física con Expo Go y el registro de sus resultados; después, sesión y recorrido privado. No se presenta el empaquetado como una ejecución física ni una publicación en tiendas. Instrucciones y limitaciones en [app móvil](../mobile/README.md).
 
-
 ### Continuación móvil: outfits y bienvenida
 
 He abierto la app en iPhone y Android. Se adaptan controles a plataforma y se incorpora Outfits con títulos musicales, filtro de era, piezas y selección completa de variantes. Se añade bienvenida animada con logo; al detectar que la entrada no cubría la pantalla, pasa a Modal nativo de pantalla completa. He comprobado la entrada y la interfaz en iPhone e iPad, y he vuelto a cargar Android después de limpiar la caché de Metro. Recorrido físico completo de outfits y capturas pendientes; modelos y versiones de mis dispositivos incorporados al registro. El splash estático se prepara para una futura distribución, no se da por validado en Expo Go.
-
 
 ### Documentación de plataformas móviles
 
