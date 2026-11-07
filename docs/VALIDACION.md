@@ -465,3 +465,10 @@ Una nueva llamada autorizada a Gemini devolvió tres looks válidos para presupu
 ## Visitantes y vencimiento · 7 de noviembre
 
 129 pruebas correctas (78 backend, 10 cliente HTTP, 7 frontend y 34 móvil). Con proveedor simulado se verifican tres consultas anónimas con IA y una cuarta editorial por cuota global, sin exceder tres llamadas. El modo que exige cuenta sigue cubierto. Se comprueba el instante de caducidad exacto y que un servicio ya arrancado no llama al proveedor ni reserva cuota después de vencer. La fecha configurada equivale al final del 31/12/2026 en Madrid. Build web, exportaciones iOS/Android y comprobación local de producción correctos. No se han usado llamadas reales para estas pruebas. Los importes de las cuentas de proveedores proceden de la autora y no son topes monetarios auditados por la aplicación.
+
+
+## Saludo, despedida y tallas conversacionales
+
+La autora confirmó una respuesta Gemini desde el chat público para una boda con presupuesto 6.000 €. En su transcripción, «hola» iniciaba la pregunta de presupuesto y «me ha encantado muchas gracias» se redirigía incorrectamente como fuera de ámbito. El resumen tampoco reflejaba «mi talla es la M» ni «calzo un 38».
+
+Se añaden respuestas locales de saludo y despedida y se amplían las expresiones de valoración, talla y calzado, también «nº de pie 40». Las pruebas reproducen el texto completo y comprueban ocasión evento, 600.000 céntimos, M y 38. Los saludos con peticiones de ropa o las valoraciones con nuevas restricciones no se interceptan como conversación social. Suite completa: 131 correctas (78 backend, 10 cliente HTTP, 7 frontend y 36 móvil); build y exportaciones iOS/Android correctos. No se han gastado llamadas reales para verificar esta corrección; la transcripción acredita la prueba de la autora, no una nueva ejecución completa posterior al ajuste.

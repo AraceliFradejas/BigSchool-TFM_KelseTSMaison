@@ -38,9 +38,11 @@ export function chatPreferences(message, previous = {}) {
       delete preferences.budgetCents;
     }
   }
-  const size = normalized.match(/\b(?:talla|size)\s*(xxl|xl|xs|s|m|l)\b/);
+  const size = normalized.match(
+    /\b(?:talla|size)\s*(?:(?:es|is)\s+)?(?:(?:la|una|a)\s+)?(xxl|xl|xs|s|m|l)\b/,
+  );
   const shoes = normalized.match(
-    /\b(?:calzo|calzado|zapatos|shoe size|n[º°o.]?\s*(?:de\s+calzado)?|numero\s*(?:de\s+calzado)?)\s*(?:talla\s*)?(3[5-9]|4[0-2])\b/,
+    /\b(?:calzo|calzado|zapatos|shoe size|n[º°o.]?\s*(?:de\s+(?:calzado|pie|zapatos))?|numero\s*(?:de\s+(?:calzado|pie|zapatos))?)\s*(?:(?:es|un|una|el|la|talla)\s+)*(3[5-9]|4[0-2])\b/,
   );
   if (size) preferences.size = size[1].toUpperCase();
   if (shoes) preferences.shoeSize = shoes[1];
@@ -75,7 +77,8 @@ export function stylistFeedback(message, hasSuggestion, language = 'es') {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
-    .replace(/[¡!¿?.,]/g, '')
+    .replace(/[¡!¿?.,;:]/g, ' ')
+    .replace(/\s+/g, ' ')
     .trim();
   const es = language === 'es';
   if (
@@ -86,6 +89,22 @@ export function stylistFeedback(message, hasSuggestion, language = 'es') {
     return es
       ? 'Soy tu tAIlor ✨, tu estilista personal virtual de Maison. No coso botones, ¡pero sí te ayudo a encontrar un look a tu medida! ¿Qué tienes planeado?'
       : 'I’m your tAIlor ✨, your personal virtual stylist at Maison. I don’t sew buttons, but I can help you find an outfit that suits you! What are you planning?';
+  if (
+    /^(?:(?:hola|buenas|buenos dias|buenas tardes|buenas noches|hello|hi|hey)(?:\s+|$))+$/.test(
+      text,
+    )
+  )
+    return es
+      ? '¡Hola! Soy tu tAIlor ✨. Cuéntame: ¿para qué plan buscamos look y qué estilo te apetece? Si tienes un presupuesto en mente, dímelo también.'
+      : 'Hello! I’m your tAIlor ✨. What are you planning, and what style would you like? Tell me your budget too if you have one in mind.';
+  if (
+    /^(?:(?:adios|hasta luego|hasta pronto|nos vemos|chao|chau|bye|goodbye|see you|gracias|muchas gracias|thank you|thanks)(?:\s+|$))+$/.test(
+      text,
+    )
+  )
+    return es
+      ? '¡Gracias a ti! Aquí estará tu tAIlor cuando quieras volver a inspirarte. ¡Hasta pronto! ✨'
+      : 'Thank you! Your tAIlor will be here whenever you need fresh inspiration. See you soon! ✨';
   if (!hasSuggestion) return null;
   if (/^(no|no me gusta|no me convence|no gracias|i dont like it|not really)$/.test(text))
     return es
@@ -93,7 +112,7 @@ export function stylistFeedback(message, hasSuggestion, language = 'es') {
       : 'Let’s adjust it. What would you change: style, colours, pieces or budget? For example: “something more casual, up to €2,000”.';
   // Accept combinations of acknowledgement phrases, but never swallow added constraints.
   if (
-    /^(?:(?:si|mucho|muchas gracias|gracias|me gusta|me encanta|perfecto|genial|la eleccion|yes|very much|i like it|love it|thanks|thank you)(?:\s+|$))+$/.test(
+    /^(?:(?:si|mucho|muchas gracias|gracias|me gusta|me ha gustado|me encanta|me ha encantado|perfecto|genial|la eleccion|yes|very much|i like it|love it|thanks|thank you)(?:\s+|$))+$/.test(
       text,
     )
   )

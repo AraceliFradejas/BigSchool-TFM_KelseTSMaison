@@ -101,3 +101,6 @@ La autora autorizó abrir también el asesor a personas sin cuenta. `STYLIST_REQ
 `STYLIST_EXPIRES_AT=2026-12-31T23:00:00Z` cierra el acceso a modelos al terminar el 31 de diciembre de 2026 en Madrid. La disponibilidad se calcula en cada petición y antes de cada respaldo, sin depender de reiniciar la función. Tras el vencimiento se conserva el modo editorial sin llamadas a proveedores. Esta fecha limita el servicio de Maison; no modifica ni verifica la caducidad real de las claves en los proveedores.
 
 Importes indicados por Araceli: Gemini gratuito, Claude 15 € y OpenAI 10 €. No se han aumentado saldos ni activado facturación. Esos importes no se han contrastado en sus paneles y la aplicación no lleva una contabilidad monetaria de esos presupuestos: su control comprobado es el número de intentos, la longitud de salida y el vencimiento. No se presentan avisos o presupuestos de terceros como bloqueos de gasto verificados.
+
+
+Los saludos y despedidas breves se responden localmente con el tono de tAIlor; no consumen IA ni alteran filtros. Las valoraciones reconocen también «me ha encantado» y «me ha gustado». Si el mensaje añade una petición de ropa o nuevas restricciones, sigue el recorrido normal. Se reconocen tallas como «mi talla es la M» y calzado como «calzo un 38» o «nº de pie 40».
