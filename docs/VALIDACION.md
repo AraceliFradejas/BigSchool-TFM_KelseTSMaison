@@ -472,3 +472,8 @@ Una nueva llamada autorizada a Gemini devolvió tres looks válidos para presupu
 La autora confirmó una respuesta Gemini desde el chat público para una boda con presupuesto 6.000 €. En su transcripción, «hola» iniciaba la pregunta de presupuesto y «me ha encantado muchas gracias» se redirigía incorrectamente como fuera de ámbito. El resumen tampoco reflejaba «mi talla es la M» ni «calzo un 38».
 
 Se añaden respuestas locales de saludo y despedida y se amplían las expresiones de valoración, talla y calzado, también «nº de pie 40». Las pruebas reproducen el texto completo y comprueban ocasión evento, 600.000 céntimos, M y 38. Los saludos con peticiones de ropa o las valoraciones con nuevas restricciones no se interceptan como conversación social. Suite completa: 131 correctas (78 backend, 10 cliente HTTP, 7 frontend y 36 móvil); build y exportaciones iOS/Android correctos. No se han gastado llamadas reales para verificar esta corrección; la transcripción acredita la prueba de la autora, no una nueva ejecución completa posterior al ajuste.
+
+
+## Saludo reflejado y despedida según las propuestas
+
+133 pruebas correctas (78 backend, 10 cliente HTTP, 7 frontend y 38 móvil). Se comprueban los cuatro saludos ES, presentación y saludo EN; despedidas con nombres de los looks mostrados para boda, cena y entrevista; ausencia de una compra o elección supuesta; cambio de boda a concierto sin arrastrar la ocasión anterior; y respuesta genérica sin propuestas previas. Los mensajes con nuevas restricciones siguen su recorrido de recomendación. Build y exportaciones iOS/Android correctos. No se gastan llamadas de IA para generar ni verificar estas respuestas locales; la comprobación física de esta última revisión en Expo Go queda pendiente.

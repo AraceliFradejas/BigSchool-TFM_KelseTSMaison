@@ -72,7 +72,7 @@ export function chatPreferences(message, previous = {}) {
 }
 
 // Identity questions and short feedback are local: no provider call or filter changes.
-export function stylistFeedback(message, hasSuggestion, language = 'es') {
+export function stylistFeedback(message, hasSuggestion, language = 'es', suggestion = null) {
   const text = message
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
@@ -90,21 +90,37 @@ export function stylistFeedback(message, hasSuggestion, language = 'es') {
       ? 'Soy tu tAIlor ✨, tu estilista personal virtual de Maison. No coso botones, ¡pero sí te ayudo a encontrar un look a tu medida! ¿Qué tienes planeado?'
       : 'I’m your tAIlor ✨, your personal virtual stylist at Maison. I don’t sew buttons, but I can help you find an outfit that suits you! What are you planning?';
   if (
-    /^(?:(?:hola|buenas|buenos dias|buenas tardes|buenas noches|hello|hi|hey)(?:\s+|$))+$/.test(
+    /^(?:(?:hola|buenas|buenos dias|buenas tardes|buenas noches|hello|hi|hey|good morning|good afternoon|good evening)(?:\s+|$))+$/.test(
       text,
     )
-  )
+  ) {
+    const greeting = es
+      ? text.includes('buenos dias')
+        ? '¡Buenos días!'
+        : text.includes('buenas tardes')
+          ? '¡Buenas tardes!'
+          : text.includes('buenas noches')
+            ? '¡Buenas noches!'
+            : '¡Hola!'
+      : text.includes('good morning')
+        ? 'Good morning!'
+        : text.includes('good afternoon')
+          ? 'Good afternoon!'
+          : text.includes('good evening')
+            ? 'Good evening!'
+            : text === 'hi'
+              ? 'Hi!'
+              : 'Hello!';
     return es
-      ? '¡Hola! Soy tu tAIlor ✨. Cuéntame: ¿para qué plan buscamos look y qué estilo te apetece? Si tienes un presupuesto en mente, dímelo también.'
-      : 'Hello! I’m your tAIlor ✨. What are you planning, and what style would you like? Tell me your budget too if you have one in mind.';
+      ? `${greeting} Soy tAIlor, tu estilista personal virtual de Maison. ¿En qué te puedo ayudar? ✨`
+      : `${greeting} I’m tAIlor, your personal virtual stylist at Maison. How can I help? ✨`;
+  }
   if (
     /^(?:(?:adios|hasta luego|hasta pronto|nos vemos|chao|chau|bye|goodbye|see you|gracias|muchas gracias|thank you|thanks)(?:\s+|$))+$/.test(
       text,
     )
   )
-    return es
-      ? '¡Gracias a ti! Aquí estará tu tAIlor cuando quieras volver a inspirarte. ¡Hasta pronto! ✨'
-      : 'Thank you! Your tAIlor will be here whenever you need fresh inspiration. See you soon! ✨';
+    return stylistFarewell(language, suggestion);
   if (!hasSuggestion) return null;
   if (/^(no|no me gusta|no me convence|no gracias|i dont like it|not really)$/.test(text))
     return es
@@ -116,8 +132,44 @@ export function stylistFeedback(message, hasSuggestion, language = 'es') {
       text,
     )
   )
-    return es
-      ? '¡Qué bien! Puedes abrir las piezas del look para elegir tu talla y añadir tus favoritas a la bolsa. Si quieres ajustar algo más, cuéntamelo.'
-      : 'Lovely! Open the outfit pieces to choose your size and add your favourites to your bag. Tell me if you would like any changes.';
+    return /gracias|thanks|thank you/.test(text) && suggestion?.looks?.length
+      ? stylistFarewell(language, suggestion)
+      : es
+        ? '¡Qué bien! Puedes abrir las piezas del look para elegir tu talla y añadir tus favoritas a la bolsa. Si quieres ajustar algo más, cuéntamelo.'
+        : 'Lovely! Open the outfit pieces to choose your size and add your favourites to your bag. Tell me if you would like any changes.';
   return null;
+}
+
+function stylistFarewell(language, suggestion) {
+  const es = language === 'es';
+  if (!suggestion?.looks?.length)
+    return es
+      ? '¡Hasta pronto! Aquí estará tu tAIlor cuando quieras volver a inspirarte. ✨'
+      : 'See you soon! Your tAIlor will be here whenever you need fresh inspiration. ✨';
+  const style = (suggestion.preferences?.style || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+  const occasion = suggestion.preferences?.occasion;
+  let wish = es ? '¡Que disfrutes mucho de tu plan!' : 'Have a wonderful time!';
+  if (occasion === 'event' && /\b(boda|wedding)\b/.test(style))
+    wish = es ? '¡Que disfrutes muchísimo de la boda!' : 'Have a wonderful time at the wedding!';
+  else if (occasion === 'television')
+    wish = es ? '¡Mucha suerte en tu entrevista!' : 'Best of luck with your interview!';
+  else {
+    const wishes = {
+      dinner: ['¡Que disfrutes de esa cena especial!', 'Enjoy your special dinner!'],
+      concert: ['¡Que disfrutes muchísimo del concierto!', 'Have an amazing time at the concert!'],
+      weekend: ['¡Que disfrutes del fin de semana!', 'Have a lovely weekend!'],
+      event: ['¡Que disfrutes mucho de la celebración!', 'Have a lovely celebration!'],
+      everyday: ['¡Que tengas un día estupendo!', 'Have a wonderful day!'],
+    };
+    if (wishes[occasion]) wish = wishes[occasion][es ? 0 : 1];
+  }
+  const names = suggestion.looks.slice(0, 3).map((look) => String(look.name).slice(0, 120));
+  const last = names.pop();
+  const choices = names.length ? `${names.join(', ')} ${es ? 'o' : 'or'} ${last}` : last;
+  return es
+    ? `¡Gracias a ti! ${wish} Puedes revisar las piezas de ${choices} cuando te decidas. Aquí estará tu tAIlor si necesitas otro look. ✨`
+    : `Thank you! ${wish} You can review the pieces in ${choices} when you decide. Your tAIlor is here whenever you need another outfit. ✨`;
 }

@@ -269,3 +269,8 @@ La prueba se cierra automáticamente al terminar el 31 de diciembre de 2026 en h
 ### Ajustes después de probar una recomendación para una boda
 
 He probado el asesor publicado con una boda y presupuesto 6.000 € y he recibido propuestas de Gemini. La conversación detectó dos detalles poco naturales: al saludar pedía directamente presupuesto y al agradecer con «me ha encantado muchas gracias» activaba el mensaje de fuera de ámbito. He añadido respuestas locales para saludo y despedida y ampliado las valoraciones habituales, sin gastar llamadas de IA ni descartar peticiones que añadan cambios. También he corregido «mi talla es la M» y «calzo un 38», que no se reflejaban como filtros. La regresión reproduce la frase completa y comprueba M y 38. Las 131 pruebas pasan y las exportaciones nativas se generan correctamente; la última corrección no se ha vuelto a validar con una llamada real.
+
+
+### Saludo reflejado y despedida con contexto
+
+He adaptado la bienvenida para que tAIlor responda al saludo recibido: hola, buenos días, buenas tardes o buenas noches. Se presenta como mi estilista personal virtual de Maison y pregunta en qué puede ayudar. La despedida toma el plan y los nombres de las últimas propuestas mostradas: desea disfrutar de la boda o la cena, o suerte en una entrevista. No afirma que haya elegido o comprado un conjunto. El contexto procede de la recomendación presentada, para no arrastrar un plan anterior cuando la conversación cambia. Son respuestas locales, sin consumir IA. Las 133 pruebas pasan y se generan las exportaciones nativas; la última interacción física queda pendiente.

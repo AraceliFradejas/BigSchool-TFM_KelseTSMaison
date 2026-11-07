@@ -33,6 +33,10 @@ export default function StylistChat({ conversation }) {
       text,
       messages.some((message) => message.result?.looks.length),
       language,
+      messages
+        .slice()
+        .reverse()
+        .find((message) => message.result?.looks.length)?.result,
     );
     if (feedback) {
       say({ role: 'assistant', text: feedback });

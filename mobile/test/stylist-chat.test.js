@@ -160,3 +160,48 @@ test('reported wedding request applies conversational clothing and footwear size
   for (const text of ['nº de pie 40', 'número de calzado 40', 'calzo el 40'])
     assert.equal(chatPreferences(text).preferences.shoeSize, '40', text);
 });
+
+test('greeting mirrors the users time-of-day expression and introduces tAIlor', () => {
+  for (const [input, greeting] of [
+    ['hola', '¡Hola!'],
+    ['buenos días', '¡Buenos días!'],
+    ['buenas tardes', '¡Buenas tardes!'],
+    ['buenas noches', '¡Buenas noches!'],
+  ]) {
+    const reply = stylistFeedback(input, false);
+    assert.ok(reply.startsWith(greeting));
+    assert.match(reply, /tAIlor, tu estilista personal/);
+    assert.match(reply, /En qué te puedo ayudar/);
+  }
+  assert.ok(stylistFeedback('Good morning!', false, 'en').startsWith('Good morning!'));
+});
+test('farewell uses the displayed occasion and outfit names without assuming a purchase', () => {
+  const suggestion = {
+    preferences: { occasion: 'event', style: 'Una boda de mi mejor amiga' },
+    looks: [{ name: 'Bejeweled' }, { name: 'Enchanted' }],
+  };
+  const reply = stylistFeedback('me ha encantado muchas gracias!', true, 'es', suggestion);
+  assert.match(reply, /boda/);
+  assert.match(reply, /Bejeweled o Enchanted/);
+  assert.doesNotMatch(reply, /comprado|elegido/);
+  const dinner = stylistFeedback('adiós', true, 'es', {
+    ...suggestion,
+    preferences: { occasion: 'dinner', style: 'Una cena' },
+  });
+  assert.match(dinner, /cena/);
+  assert.doesNotMatch(dinner, /boda/);
+  const interview = stylistFeedback('hasta luego', true, 'es', {
+    ...suggestion,
+    preferences: { occasion: 'television', style: 'Una entrevista de trabajo' },
+  });
+  assert.match(interview, /suerte en tu entrevista/);
+  assert.doesNotMatch(interview, /televisión|cámara/);
+  const concert = stylistFeedback('gracias', true, 'es', {
+    ...suggestion,
+    preferences: { occasion: 'concert', style: 'Antes una boda. Ahora un concierto' },
+  });
+  assert.match(concert, /concierto/);
+  assert.doesNotMatch(concert, /boda/);
+  assert.doesNotMatch(stylistFeedback('gracias', false), /Bejeweled|boda/);
+  assert.equal(stylistFeedback('gracias pero otro color', true, 'es', suggestion), null);
+});
