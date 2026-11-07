@@ -2944,3 +2944,103 @@ main:focus {
 .stylist-chat-composer .button {
   justify-self: end;
 }
+
+/* Conversation layout: independent message scroll and a composer always in reach. */
+.stylist-dialog {
+  overflow: hidden;
+}
+.stylist-dialog-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.stylist-dialog-heading {
+  flex: 0 0 auto;
+  background: #fffaf3;
+}
+.stylist-chat {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 18px 14px;
+  background: #eee8df;
+}
+.stylist-chat-intro {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+.stylist-chat > .mode-badge {
+  align-self: flex-start;
+  margin-bottom: 12px;
+  font-size: 0.65rem;
+}
+.stylist-chat-messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 4px 6px;
+}
+.stylist-chat-message {
+  width: fit-content;
+  max-width: calc(100% - 12px);
+  margin-right: 12px;
+  background: #fffcf7;
+  border-radius: 18px;
+  border-top-left-radius: 4px;
+  box-shadow: 0 1px 2px #3420180d;
+}
+.stylist-chat-message.is-user {
+  margin-left: auto;
+  margin-right: 0;
+  max-width: 88%;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 4px;
+}
+.stylist-chat-look h3 {
+  font-size: 1.3rem;
+}
+.stylist-chat-look .product-card h3 {
+  font-size: 1rem;
+  line-height: 1.35;
+}
+.stylist-chat-followup {
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: #6b1930;
+}
+.stylist-chat-composer {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin: 10px 0 6px;
+}
+.stylist-chat-composer textarea {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  max-height: 120px;
+  resize: vertical;
+  border-radius: 24px;
+  background: #fffcf7;
+  padding: 13px 16px;
+}
+.stylist-chat-composer .button {
+  min-height: 48px;
+  padding-inline: 18px;
+  border-radius: 24px;
+}
+.stylist-chat > .fine-print {
+  flex: 0 0 auto;
+  margin: 3px 0;
+  font-size: 0.6rem;
+  line-height: 1.4;
+}
+.stylist-chat > .text-link {
+  align-self: flex-start;
+  font-size: 0.65rem;
+  margin-top: 4px;
+}

@@ -64,3 +64,7 @@ El botón flotante Maison Stylist abre un chat: panel lateral en web y modal en 
 Las respuestas muestran fotografías reales del catálogo, precios y enlaces a las fichas. El usuario elige allí las variantes y añade cada pieza a la bolsa. No se generan fotografías ni se ejecutan compras desde el chat. El formulario detallado sigue disponible en `/looks`. Cerrar el chat cancela la solicitud y reinicia la conversación.
 
 La revisión local en Safari confirmó petición de presupuesto, respuesta editorial con talla M y sin belleza, dos conjuntos dentro de 3.000 €, fotografías y navegación a la ficha de Enchanted. Esta comprobación no consumió servicios de IA. Las tres consultas reales previas verificaron proveedores individuales, no el nuevo chat completo contra IA en producción. La activación pública y la transferencia de claves a Vercel siguen pendientes.
+
+
+### Conversación y valoración del outfit
+La interfaz utiliza burbujas de mensaje, respuestas alineadas a cada interlocutor y un campo de escritura fijo en web y app, con colores Maison. Tras las propuestas pregunta si gusta la elección y ofrece continuar con cambios. Las valoraciones breves positivas o negativas se responden localmente, sin consumir una consulta a proveedores; las nuevas preferencias siguen el recorrido de recomendación. Safari local confirmó la pregunta y la respuesta a «me gusta». No se ha verificado físicamente esta última revisión visual en la app.

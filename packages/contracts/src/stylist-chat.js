@@ -64,3 +64,26 @@ export function chatPreferences(message, previous = {}) {
     ).slice(-400);
   return { preferences, needsBudget: !preferences.budgetCents || invalidBudget, invalidBudget };
 }
+
+// Short feedback is handled locally: it must not spend a provider call or change filters.
+export function stylistFeedback(message, hasSuggestion, language = 'es') {
+  if (!hasSuggestion) return null;
+  const text = message
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[¡!¿?.,]/g, '')
+    .trim();
+  const es = language === 'es';
+  if (
+    /^(si|si gracias|me gusta|me encanta|perfecto|genial|yes|i like it|love it|thanks)$/.test(text)
+  )
+    return es
+      ? '¡Qué bien! Puedes abrir las piezas del look para elegir tu talla y añadir tus favoritas a la bolsa. Si quieres ajustar algo más, cuéntamelo.'
+      : 'Lovely! Open the outfit pieces to choose your size and add your favourites to your bag. Tell me if you would like any changes.';
+  if (/^(no|no me gusta|no me convence|no gracias|i dont like it|not really)$/.test(text))
+    return es
+      ? 'Lo ajustamos. ¿Qué cambiarías: el estilo, los colores, las piezas o el presupuesto? Por ejemplo: «algo más informal, máximo 2.000 €».'
+      : 'Let’s adjust it. What would you change: style, colours, pieces or budget? For example: “something more casual, up to €2,000”.';
+  return null;
+}

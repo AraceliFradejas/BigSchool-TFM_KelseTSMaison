@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { chatPreferences } from '@maison/contracts/stylist-chat';
+import { chatPreferences, stylistFeedback } from '@maison/contracts/stylist-chat';
 import { stylistSchema } from '@maison/contracts';
 
 test('chat asks for a budget and does not mistake age or shoe size for money', () => {
@@ -46,4 +46,15 @@ test('follow-up style context is bounded and can update occasion without changin
   assert.equal(next.preferences.occasion, 'concert');
   assert.equal(next.preferences.budgetCents, 300000);
   assert.ok(next.preferences.style.length <= 400);
+});
+
+test('short feedback receives a local response only after an outfit suggestion', () => {
+  assert.equal(stylistFeedback('sí', false), null);
+  assert.match(stylistFeedback('¡Sí, gracias!', true), /abrir las piezas/);
+  assert.match(stylistFeedback('no me gusta', true), /Qué cambiarías/);
+});
+test('feedback does not swallow a new preference or budget request', () => {
+  assert.equal(stylistFeedback('sí, pero máximo 500 €', true), null);
+  assert.equal(stylistFeedback('no, prefiero algo informal', true), null);
+  assert.match(stylistFeedback('Love it!', true, 'en'), /Open the outfit/);
 });

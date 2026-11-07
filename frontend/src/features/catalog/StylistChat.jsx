@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { chatPreferences } from '@maison/contracts/stylist-chat';
+import { chatPreferences, stylistFeedback } from '@maison/contracts/stylist-chat';
 import { useMaison, useResource, api } from '../../shared/state';
 import { Money, ProductGrid } from '../../shared/components';
 
@@ -32,6 +32,15 @@ export default function StylistChat() {
     if (!text || busy) return;
     setDraft('');
     say({ role: 'user', text });
+    const feedback = stylistFeedback(
+      text,
+      messages.some((message) => message.result?.looks.length),
+      language,
+    );
+    if (feedback) {
+      say({ role: 'assistant', text: feedback });
+      return;
+    }
     const parsed = chatPreferences(text, preferences);
     setPreferences(parsed.preferences);
     if (parsed.needsBudget) {
@@ -166,6 +175,13 @@ export default function StylistChat() {
                     />
                   </section>
                 ))}
+                {message.result.looks.length > 0 && (
+                  <p className="stylist-chat-followup">
+                    {es
+                      ? '¿Te ha gustado la elección? Cuéntame qué mantendrías o qué cambiarías y seguimos buscando tu look.'
+                      : 'Do you like the selection? Tell me what you would keep or change and we can refine your outfit.'}
+                  </p>
+                )}
               </>
             )}
           </article>
@@ -183,11 +199,11 @@ export default function StylistChat() {
         <textarea
           id="stylist-chat-message"
           maxLength={400}
-          rows={3}
+          rows={1}
           value={draft}
           disabled={busy}
           onChange={(event) => setDraft(event.target.value)}
-          placeholder={es ? '¿Qué tienes planeado?' : 'What are you planning?'}
+          placeholder={es ? 'Escribe a Maison Stylist…' : 'Message Maison Stylist…'}
         />
         <button className="button" disabled={busy || !draft.trim()}>
           {es ? 'Enviar' : 'Send'}

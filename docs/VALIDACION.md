@@ -427,3 +427,7 @@ Se corrige la geometría de los controles de «Completa tu look»: campos y desp
 116 pruebas automáticas superadas: backend 72, cliente 10, frontend 7 y app 27. Build web, exportaciones nativas y comprobación local de producción correctos. Cinco pruebas nuevas cubren aclaración de presupuesto, importes ES/EN, conservación de preferencias, sustitución de un presupuesto inválido y contexto limitado.
 
 En Safari local, con catálogo ficticio e IA desactivada: solicitud de cena, talla M y sin maquillaje; pregunta de presupuesto; respuesta a 3.000 € con conjuntos de 2.300 € y 1.340 €, fotografías y enlace funcional a la ficha del vestido. No hubo compras ni llamadas a proveedores. La autora confirmó en Expo Go que el botón abre el chat y muestra fotografías. No indicó si esta comprobación fue en iPhone o iPad; no se atribuye a ambos dispositivos ni acredita todavía todos los enlaces y filtros nativos.
+
+
+### Conversación y valoración del outfit
+La interfaz utiliza burbujas de mensaje, respuestas alineadas a cada interlocutor y un campo de escritura fijo en web y app, con colores Maison. Tras las propuestas pregunta si gusta la elección y ofrece continuar con cambios. Las valoraciones breves positivas o negativas se responden localmente, sin consumir una consulta a proveedores; las nuevas preferencias siguen el recorrido de recomendación. Safari local confirmó la pregunta y la respuesta a «me gusta». No se ha verificado físicamente esta última revisión visual en la app.

@@ -14,7 +14,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { chatPreferences } from '@maison/contracts/stylist-chat';
+import { chatPreferences, stylistFeedback } from '@maison/contracts/stylist-chat';
 import Button from './Button';
 import { api } from './api';
 import { useRemote } from './useRemote';
@@ -74,6 +74,15 @@ function Chat({ language, user, openAccount, openProduct }) {
     Keyboard.dismiss();
     setDraft('');
     say({ role: 'user', text });
+    const feedback = stylistFeedback(
+      text,
+      messages.some((message) => message.result?.looks.length),
+      language,
+    );
+    if (feedback) {
+      say({ role: 'assistant', text: feedback });
+      return;
+    }
     const parsed = chatPreferences(text, preferences);
     setPreferences(parsed.preferences);
     if (parsed.needsBudget) {
@@ -226,6 +235,13 @@ function Chat({ language, user, openAccount, openProduct }) {
                     ))}
                   </View>
                 ))}
+                {message.result.looks.length > 0 && (
+                  <Text style={s.followup}>
+                    {es
+                      ? '¿Te ha gustado la elección? Cuéntame qué mantendrías o qué cambiarías y seguimos buscando tu look.'
+                      : 'Do you like the selection? Tell me what you would keep or change and we can refine your outfit.'}
+                  </Text>
+                )}
               </>
             )}
           </View>
@@ -281,11 +297,34 @@ const s = StyleSheet.create({
     color: '#4b1423',
     flexShrink: 1,
   },
-  content: { padding: 18, gap: 18, paddingBottom: 25 },
+  content: { padding: 14, gap: 14, paddingBottom: 25, backgroundColor: '#eee8df' },
   intro: { fontSize: 15, lineHeight: 23, color: '#5e5450' },
   mode: { fontSize: 12, color: '#801d36' },
-  message: { padding: 15, gap: 10, backgroundColor: '#eee8df' },
-  user: { marginLeft: 32, backgroundColor: '#f0dfe3' },
+  message: {
+    padding: 15,
+    gap: 10,
+    backgroundColor: '#fffcf7',
+    borderRadius: 18,
+    borderTopLeftRadius: 4,
+    marginRight: 14,
+  },
+  user: {
+    alignSelf: 'flex-end',
+    maxWidth: '88%',
+    marginLeft: 32,
+    marginRight: 0,
+    borderTopLeftRadius: 18,
+    borderTopRightRadius: 4,
+    backgroundColor: '#f0dfe3',
+  },
+  followup: {
+    fontSize: 15,
+    lineHeight: 23,
+    color: '#6b1930',
+    paddingTop: 14,
+    borderTopWidth: 1,
+    borderColor: '#ded4c9',
+  },
   speaker: { fontSize: 12, color: '#801d36', fontWeight: '500' },
   body: { fontSize: 15, lineHeight: 23, color: '#292320' },
   note: { fontSize: 12, lineHeight: 18, color: '#6c625d' },
@@ -297,11 +336,12 @@ const s = StyleSheet.create({
     backgroundColor: '#f8f4ed',
   },
   input: {
-    minHeight: 60,
+    minHeight: 46,
     maxHeight: 110,
     borderWidth: 1,
     borderColor: '#d5cabe',
     padding: 12,
+    borderRadius: 22,
     fontSize: 16,
     color: '#292320',
     backgroundColor: '#fffcf7',
