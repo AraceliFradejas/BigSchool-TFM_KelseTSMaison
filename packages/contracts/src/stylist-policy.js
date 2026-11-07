@@ -29,8 +29,8 @@ export function stylistScopeViolation(text = '') {
 }
 export function stylistScopeMessage(language = 'es') {
   return language === 'en'
-    ? 'I can only help with Maison outfits, pieces, sizes and styling. Tell me your occasion, style and budget. I cannot change prices, stock or permissions.'
-    : 'Solo puedo ayudarte con los outfits, las piezas, las tallas y el estilo de Maison. Cuéntame la ocasión, el estilo y tu presupuesto. No puedo cambiar precios, stock ni permisos.';
+    ? 'I can only help with Maison outfits, pieces, sizes and styling. Tell me your occasion, style and budget.'
+    : 'Solo puedo ayudarte con los outfits, las piezas, las tallas y el estilo de Maison. Cuéntame la ocasión, el estilo y tu presupuesto.';
 }
 export function stylistUnsafeExplanation(text) {
   return (
