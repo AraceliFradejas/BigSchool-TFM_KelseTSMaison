@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { randomUUID } from 'expo-crypto';
-import { api, nativeSession, revokeUnstoredSession } from './api';
-import { cartStorageKey, combineGuestBag, restoreCart } from './cart-state';
+import { api, nativeSession, revokeUnstoredSession, verifyNativeToken } from './api';
+import { loginNative } from './native-login';
+import { createCartStorage } from './cart-storage';
+import { combineGuestBag } from './cart-state';
 const empty = () => ({ key: randomUUID(), lines: [] });
 export function useCommerce() {
   const [user, setUser] = useState(null);
@@ -13,33 +15,10 @@ export function useCommerce() {
   const [busy, setBusy] = useState(false);
   const current = useRef({ user: null, cart });
   const pending = useRef(false);
-  const writes = useRef(Promise.resolve());
-  function save(scope, value) {
-    writes.current = writes.current
-      .catch(() => {})
-      .then(() => AsyncStorage.setItem(cartStorageKey(scope), JSON.stringify(value)))
-      .then(() => {
-        setStorageError(false);
-        return true;
-      })
-      .catch(() => {
-        setStorageError(true);
-        return false;
-      });
-    return writes.current;
-  }
-  async function read(scope) {
-    await writes.current;
-    try {
-      let value = await AsyncStorage.getItem(cartStorageKey(scope));
-      // Only the guest scope can import the initial public bag.
-      if (!scope && value === null) value = await AsyncStorage.getItem('@kelsets-maison/bag/v1');
-      return restoreCart(value, randomUUID);
-    } catch {
-      setStorageError(true);
-      return empty();
-    }
-  }
+  const cartStore = useRef(null);
+  if (!cartStore.current)
+    cartStore.current = createCartStorage(AsyncStorage, randomUUID, setStorageError);
+  const { read, save } = cartStore.current;
   function publish(nextUser, nextCart) {
     current.current = { user: nextUser, cart: nextCart };
     setUser(nextUser);
@@ -84,33 +63,28 @@ export function useCommerce() {
     pending.current = true;
     setBusy(true);
     try {
-      const session = await api.request(register ? '/auth/native/register' : '/auth/native/login', {
-        method: 'POST',
+      const { user: verified, cart: next } = await loginNative(
+        {
+          request: api.request,
+          verifyToken: verifyNativeToken,
+          revokeToken: revokeUnstoredSession,
+          session: nativeSession,
+          prepareCart: async (nextUser) => {
+            const own = await read(nextUser.id);
+            const next = current.current.user
+              ? own
+              : combineGuestBag(own, current.current.cart, randomUUID);
+            if (!(await save(nextUser.id, next)))
+              throw Object.assign(new Error('storage_unavailable'), {
+                code: 'storage_unavailable',
+              });
+            return next;
+          },
+          clearGuest: () => save(null, empty()),
+        },
         body,
-      });
-      const nextUser = session?.user;
-      if (!nextUser?.id)
-        throw Object.assign(new Error('invalid_response'), { code: 'invalid_response' });
-      try {
-        await nativeSession.save(session.token);
-      } catch (error) {
-        if (/^[a-f0-9]{64}$/.test(session?.token || ''))
-          await revokeUnstoredSession(session.token).catch(() => {});
-        throw error;
-      }
-      const verified = await api.request('/auth/me');
-      if (verified?.id !== nextUser.id) {
-        await api.request('/auth/logout', { method: 'POST' }).catch(() => {});
-        await nativeSession.clear().catch(() => {});
-        throw Object.assign(new Error('session_unavailable'), { code: 'session_unavailable' });
-      }
-      const own = await read(nextUser.id);
-      const next = current.current.user
-        ? own
-        : combineGuestBag(own, current.current.cart, randomUUID);
-      await save(nextUser.id, next);
-      // Replace the legacy guest bag so it cannot be imported into another account.
-      await save(null, empty());
+        register,
+      );
       publish(verified, next);
       setReady(true);
       setAuthError(null);
@@ -132,7 +106,16 @@ export function useCommerce() {
       } catch (error) {
         storageFailure = error;
       }
-      publish(null, await read(null));
+      // Revocation succeeded: hide private identity even if the guest bag cannot be read.
+      publish(null, empty());
+      setReady(false);
+      try {
+        publish(null, await read(null));
+        setReady(true);
+      } catch (error) {
+        setAuthError(error);
+        throw error;
+      }
       if (storageFailure) throw storageFailure;
     } finally {
       pending.current = false;

@@ -15,6 +15,11 @@ export const api = createApiClient({
   getAccessToken: nativeSession.getAccessToken,
 });
 
+export async function verifyNativeToken(token) {
+  const temporary = createApiClient({ baseUrl: service.baseUrl, getAccessToken: () => token });
+  return temporary.request('/auth/me');
+}
+
 // If secure storage fails after issuance, revoke that token without persisting it.
 export async function revokeUnstoredSession(token) {
   const temporary = createApiClient({ baseUrl: service.baseUrl, getAccessToken: () => token });
