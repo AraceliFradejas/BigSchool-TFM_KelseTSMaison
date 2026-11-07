@@ -1,0 +1,104 @@
+{
+  "date": "2026-11-07",
+  "tool": "OpenAI integrated image generation tool",
+  "type": "Generated editorial representations of fictional fashion; not photographs of real merchandise",
+  "derivatives": "WebP 1080x1440 and 600x800, quality 85; resized/cropped for the collection card",
+  "assets": [
+    {
+      "collectionId": "midnight-velvet",
+      "image": "/media/collection-midnight-velvet.webp",
+      "small": "/media/collection-midnight-velvet-small.webp",
+      "prompt": "Use case: photorealistic-natural. One premium fashion campaign photograph for fictional boutique KelseTS Maison collection midnight-velvet. Scene: a woman in a midnight navy velvet tailored blazer and trousers in an intimate dark Parisian hotel corridor, cinematic low evening light. Portrait 3:4 composition, outfit and tactile material clearly visible. Sophisticated restrained European luxury editorial, believable natural human proportions, authentic skin texture, realistic hands, subtle film grain. Photographic realism rather than fantasy or CGI. Balanced composition with room at bottom for a website title overlay. No text, logos, watermarks, collages or typography."
+    },
+    {
+      "collectionId": "wildflower",
+      "image": "/media/collection-wildflower.webp",
+      "small": "/media/collection-wildflower-small.webp",
+      "prompt": "Use case: photorealistic-natural. One premium fashion campaign photograph for fictional boutique KelseTS Maison collection wildflower. Scene: a woman in a flowing sage blouse and ivory linen trousers beside a sunlit wildflower garden, soft morning breeze. Portrait 3:4 composition, outfit and tactile material clearly visible. Sophisticated restrained European luxury editorial, believable natural human proportions, authentic skin texture, realistic hands, subtle film grain. Photographic realism rather than fantasy or CGI. Balanced composition with room at bottom for a website title overlay. No text, logos, watermarks, collages or typography."
+    },
+    {
+      "collectionId": "crimson-letters",
+      "image": "/media/collection-crimson-letters.webp",
+      "small": "/media/collection-crimson-letters-small.webp",
+      "prompt": "Use case: photorealistic-natural. One premium fashion campaign photograph for fictional boutique KelseTS Maison collection crimson-letters. Scene: a close editorial portrait of a woman wearing a burgundy silk blouse, small structured red leather bag on a cafe table, warm stone and crimson palette. Portrait 3:4 composition, outfit and tactile material clearly visible. Sophisticated restrained European luxury editorial, believable natural human proportions, authentic skin texture, realistic hands, subtle film grain. Photographic realism rather than fantasy or CGI. Balanced composition with room at bottom for a website title overlay. No text, logos, watermarks, collages or typography."
+    },
+    {
+      "collectionId": "sunday-together",
+      "image": "/media/collection-sunday-together.webp",
+      "small": "/media/collection-sunday-together-small.webp",
+      "prompt": "Use case: photorealistic-natural. One premium fashion campaign photograph for fictional boutique KelseTS Maison collection sunday-together. Scene: a woman in a cream textured sweater and relaxed trousers in a quiet sunlit apartment, morning coffee, warm soft natural daylight. Portrait 3:4 composition, outfit and tactile material clearly visible. Sophisticated restrained European luxury editorial, believable natural human proportions, authentic skin texture, realistic hands, subtle film grain. Photographic realism rather than fantasy or CGI. Balanced composition with room at bottom for a website title overlay. No text, logos, watermarks, collages or typography."
+    },
+    {
+      "collectionId": "off-duty",
+      "image": "/media/collection-off-duty.webp",
+      "small": "/media/collection-off-duty-small.webp",
+      "prompt": "Use case: photorealistic-natural. One premium fashion campaign photograph for fictional boutique KelseTS Maison collection off-duty. Scene: a woman wearing a cream cable knit cardigan with dark trim, straight blue denim and loafers, relaxed Sunday street scene. Portrait 3:4 composition, outfit and tactile material clearly visible. Sophisticated restrained European luxury editorial, believable natural human proportions, authentic skin texture, realistic hands, subtle film grain. Photographic realism rather than fantasy or CGI. Balanced composition with room at bottom for a website title overlay. No text, logos, watermarks, collages or typography."
+    },
+    {
+      "collectionId": "atelier-days",
+      "image": "/media/collection-atelier-days.webp",
+      "small": "/media/collection-atelier-days-small.webp",
+      "prompt": "Use case: photorealistic-natural. One premium fashion campaign photograph for fictional boutique KelseTS Maison collection atelier-days. Scene: a woman in a beautifully cut camel trench over ivory cashmere walking past a limestone atelier, overcast Paris daylight. Portrait 3:4 composition, outfit and tactile material clearly visible. Sophisticated restrained European luxury editorial, believable natural human proportions, authentic skin texture, realistic hands, subtle film grain. Photographic realism rather than fantasy or CGI. Balanced composition with room at bottom for a website title overlay. No text, logos, watermarks, collages or typography."
+    },
+    {
+      "collectionId": "noir-signature",
+      "image": "/media/collection-noir-signature.webp",
+      "small": "/media/collection-noir-signature-small.webp",
+      "prompt": "Use case: photorealistic-natural. One premium fashion campaign photograph for fictional boutique KelseTS Maison collection noir-signature. Scene: a woman in an impeccably tailored black tuxedo with a small pearl accent, minimalist dark stone staircase, subtle directional light. Portrait 3:4 composition, outfit and tactile material clearly visible. Sophisticated restrained European luxury editorial, believable natural human proportions, authentic skin texture, realistic hands, subtle film grain. Photographic realism rather than fantasy or CGI. Balanced composition with room at bottom for a website title overlay. No text, logos, watermarks, collages or typography."
+    },
+    {
+      "collectionId": "rose-occasion",
+      "image": "/media/collection-rose-occasion.webp",
+      "small": "/media/collection-rose-occasion-small.webp",
+      "prompt": "Use case: photorealistic-natural. One premium fashion campaign photograph for fictional boutique KelseTS Maison collection rose-occasion. Scene: a woman in an elegant blush pink tulle evening gown and delicate pearls on an old stone terrace, soft late afternoon light. Portrait 3:4 composition, outfit and tactile material clearly visible. Sophisticated restrained European luxury editorial, believable natural human proportions, authentic skin texture, realistic hands, subtle film grain. Photographic realism rather than fantasy or CGI. Balanced composition with room at bottom for a website title overlay. No text, logos, watermarks, collages or typography."
+    },
+    {
+      "collectionId": "sapphire-stage",
+      "image": "/media/collection-sapphire-stage.webp",
+      "small": "/media/collection-sapphire-stage-small.webp",
+      "prompt": "Use case: photorealistic-natural. One premium fashion campaign photograph for fictional boutique KelseTS Maison collection sapphire-stage. Scene: a woman in a deep sapphire embellished two-piece evening outfit with a silver clutch in a contemporary concert foyer, subtle stage glow. Portrait 3:4 composition, outfit and tactile material clearly visible. Sophisticated restrained European luxury editorial, believable natural human proportions, authentic skin texture, realistic hands, subtle film grain. Photographic realism rather than fantasy or CGI. Balanced composition with room at bottom for a website title overlay. No text, logos, watermarks, collages or typography."
+    },
+    {
+      "collectionId": "velvet-romance",
+      "image": "/media/collection-velvet-romance.webp",
+      "small": "/media/collection-velvet-romance-small.webp",
+      "prompt": "Use case: photorealistic-natural. One premium fashion campaign photograph for fictional boutique KelseTS Maison collection velvet-romance. Scene: a woman in a burgundy velvet dress with long sleeves and delicate gold earrings, intimate old-world interior, warm candle-like light. Portrait 3:4 composition, outfit and tactile material clearly visible. Sophisticated restrained European luxury editorial, believable natural human proportions, authentic skin texture, realistic hands, subtle film grain. Photographic realism rather than fantasy or CGI. Balanced composition with room at bottom for a website title overlay. No text, logos, watermarks, collages or typography."
+    },
+    {
+      "collectionId": "runway-wardrobe",
+      "image": "/media/collection-runway-wardrobe.webp",
+      "small": "/media/collection-runway-wardrobe-small.webp",
+      "prompt": "Use case: photorealistic-natural. One premium fashion campaign photograph for fictional boutique KelseTS Maison collection runway-wardrobe. Scene: an adult fashion model in an architectural ivory outfit walking in a quiet contemporary fashion runway, sophisticated editorial photography. Portrait 3:4 composition, outfit and tactile material clearly visible. Sophisticated restrained European luxury editorial, believable natural human proportions, authentic skin texture, realistic hands, subtle film grain. Photographic realism rather than fantasy or CGI. Balanced composition with room at bottom for a website title overlay. No text, logos, watermarks, collages or typography."
+    },
+    {
+      "collectionId": "spotlight",
+      "image": "/media/collection-spotlight.webp",
+      "small": "/media/collection-spotlight-small.webp",
+      "prompt": "Use case: photorealistic-natural. One original premium fashion campaign photograph made exclusively for the KelseTS Maison collection carousel, spotlight. Scene: adult woman in an emerald satin evening dress with sculptural sleeves and silver earrings, standing in an elegant limestone courtyard at dusk, discreet warm architectural lighting, no skyline no stage. Portrait 3:4 frame, outfit visible, sophisticated restrained European luxury fashion editorial, realistic fabric and anatomy, natural skin texture and hands, subtle film grain. Balanced composition with lower space for website text overlay. This must be a distinct new scene, never a video frame. No text, logos, watermark, fantasy, collage or typography."
+    },
+    {
+      "collectionId": "studio-ivory",
+      "image": "/media/collection-studio-ivory.webp",
+      "small": "/media/collection-studio-ivory-small.webp",
+      "prompt": "Use case: photorealistic-natural. One original premium fashion campaign photograph made exclusively for the KelseTS Maison collection carousel, studio-ivory. Scene: adult woman in an ivory tailored trouser suit and silk shell top inside a minimalist sunlit gallery with travertine walls, calm daytime editorial, no garden no sunset. Portrait 3:4 frame, outfit visible, sophisticated restrained European luxury fashion editorial, realistic fabric and anatomy, natural skin texture and hands, subtle film grain. Balanced composition with lower space for website text overlay. This must be a distinct new scene, never a video frame. No text, logos, watermark, fantasy, collage or typography."
+    },
+    {
+      "collectionId": "city-pages",
+      "image": "/media/collection-city-pages.webp",
+      "small": "/media/collection-city-pages-small.webp",
+      "prompt": "Use case: photorealistic-natural. One original premium fashion campaign photograph made exclusively for the KelseTS Maison collection carousel, city-pages. Scene: adult woman wearing a checked wool coat over black knitwear with leather boots on a modern stone urban square, grey morning light, no forest no autumn leaves. Portrait 3:4 frame, outfit visible, sophisticated restrained European luxury fashion editorial, realistic fabric and anatomy, natural skin texture and hands, subtle film grain. Balanced composition with lower space for website text overlay. This must be a distinct new scene, never a video frame. No text, logos, watermark, fantasy, collage or typography."
+    },
+    {
+      "collectionId": "travel-maison",
+      "image": "/media/collection-travel-maison.webp",
+      "small": "/media/collection-travel-maison-small.webp",
+      "prompt": "Use case: photorealistic-natural. One original premium fashion campaign photograph made exclusively for the KelseTS Maison collection carousel, travel-maison. Scene: adult woman in a camel wrap coat and cashmere scarf carrying a leather weekender in an elegant railway station lounge, natural window light, no autumn street. Portrait 3:4 frame, outfit visible, sophisticated restrained European luxury fashion editorial, realistic fabric and anatomy, natural skin texture and hands, subtle film grain. Balanced composition with lower space for website text overlay. This must be a distinct new scene, never a video frame. No text, logos, watermark, fantasy, collage or typography."
+    },
+    {
+      "collectionId": "golden-hour",
+      "image": "/media/collection-golden-hour.webp",
+      "small": "/media/collection-golden-hour-small.webp",
+      "prompt": "Use case: photorealistic-natural. Create one premium fashion campaign photograph for the fictional boutique KelseTS Maison collection Golden Hour. Portrait 3:4 crop, elegant adult woman wearing a champagne satin slip dress and small gold earrings in a warm limestone courtyard at golden hour. Restrained European luxury editorial, candid relaxed posture, believable skin and hands, tactile satin, natural film-like light, subtle grain, not fantasy, not overly glossy. Full outfit visible, balanced composition suitable for a collection card, no text no logos no watermark. Save the generated image file."
+    }
+  ]
+}

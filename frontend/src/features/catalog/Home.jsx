@@ -1,5 +1,6 @@
 import { demoBoutiques, boutiqueCopy } from '@maison/contracts/boutiques';
 import CampaignHero from './CampaignHero';
+import CollectionCarousel from './CollectionCarousel';
 import { Link } from 'react-router-dom';
 import { useMaison, useResource } from '../../shared/state';
 import { Icon, ProductGrid, ResourceState } from '../../shared/components';
@@ -80,21 +81,9 @@ export default function Home() {
             </Link>
           </div>
           <ResourceState resource={collections}>
-            <div className="collection-strip">
-              {collections.data?.map((collection, i) => (
-                <Link
-                  to={`/catalog?collection=${collection.id}`}
-                  className="collection-tile"
-                  key={collection.id}
-                  style={{ '--collection-color': collection.color }}
-                >
-                  <span className="collection-number">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="collection-name">{collection.name}</span>
-                  <span className="collection-description">{collection.description[language]}</span>
-                  <Icon name="arrow" />
-                </Link>
-              ))}
-            </div>
+            {collections.data?.length > 0 && (
+              <CollectionCarousel collections={collections.data} language={language} />
+            )}
           </ResourceState>
         </div>
       </section>

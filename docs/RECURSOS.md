@@ -154,3 +154,10 @@ He revisado los componentes de mapa, distancia y vista del entorno de KelseTS Ca
 | [Porto Banus](https://commons.wikimedia.org/wiki/File:Porto_Banus.jpg)                             | Sean Glossop · [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)     | Entorno de Puerto Banús, Marbella; reducción a 1200 px de ancho, conversión WebP y encuadre responsive. La copia conserva CC BY-SA 4.0. |
 
 Las fuentes de descarga y la fecha de revisión están en `data/boutique-photos.json`; autor, licencia y enlaces se muestran también en las interfaces. No se han descargado ni republicado imágenes de Google Street View. Uso [URLs oficiales de Google Maps](https://developers.google.com/maps/documentation/urls/get-started) para abrir su panorama próximo a cada punto. El mapa web utiliza [Leaflet](https://leafletjs.com/) y teselas con atribución a [OpenStreetMap](https://www.openstreetmap.org/copyright); los mapas nativos utilizan los proveedores de react-native-maps y sus atribuciones.
+
+
+## Portadas del carrusel de colecciones · 7 de noviembre de 2026
+
+Dieciséis imágenes editoriales nuevas, generadas individualmente con la herramienta integrada de imágenes de OpenAI para el carrusel de portada. Cada escena corresponde a una colección y enlaza a su catálogo filtrado. No se reutilizan los fotogramas ni las imágenes de las campañas en vídeo. Son representaciones generadas de moda ficticia, no fotografías de mercancía real.
+
+Los encargos completos y rutas finales están en [collection-carousel.json](recursos/collection-carousel.json). Se optimizan a WebP en 1080 × 1440 y 600 × 800 píxeles; se aplica recorte vertical para las tarjetas y un degradado mediante CSS para conservar la legibilidad. La carga es diferida, sin reproducción automática, con navegación manual, foco visible y respeto por movimiento reducido.
