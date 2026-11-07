@@ -14,7 +14,7 @@ KelseTS Maison es una boutique ficticia de moda, accesorios y belleza. Puedes ex
 
 **Web:** [Abrir KelseTS Maison](https://kelsets-maison.vercel.app) · **API:** [Comprobar el servicio](https://kelsets-maison-api.vercel.app/api/v1/health).
 
-**Estado:** primera versión publicada en [Vercel](https://kelsets-maison.vercel.app), con MongoDB y Cloudinary propios. La presentación final y las ampliaciones siguen pendientes.
+**Estado:** primera versión publicada en [Vercel](https://kelsets-maison.vercel.app), con MongoDB y Cloudinary propios. El chat de Maison Stylist está publicado en modo editorial; la activación pública de IA, parte de las pruebas físicas y el ajuste de la presentación siguen pendientes.
 
 ### Una historia personal
 
@@ -24,7 +24,7 @@ Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS 
 
 ### Qué puedes hacer
 
-- Ver una pasarela ilustrada de 36 looks, con escenarios, música y controles de reproducción, y explorar dieciséis colecciones propias.
+- Ver una pasarela ilustrada de 36 looks, con escenarios, música y controles de reproducción, y explorar dieciséis colecciones propias desde un carrusel de imágenes editoriales con enlaces a cada colección.
 - Consultar 190 artículos con 996 variantes, incluidas las 139 piezas de los 36 looks de la pasarela.
 - Explorar 21 looks editoriales y los 36 outfits de la película; elegir piezas por separado o añadir el conjunto con sus tallas.
 - Consultar Moda, Accesorios y Belleza con búsqueda, filtros de talla y precio máximo por pieza, orden por precio y paginación. Al volver desde una ficha se conservan los filtros.
@@ -33,12 +33,15 @@ Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS 
 - Registrarte, acceder y guardar productos en «Mi selección».
 - Preparar una bolsa y crear pedidos de demostración; consultar su historial, detalle y comunicaciones.
 - Buscar combinaciones editoriales según ocasión, paleta, presupuesto y preferencia de incluir belleza.
+- Abrir Maison Stylist desde su botón flotante, explicar el plan por escrito y recibir looks con fotos, precios y enlaces a sus piezas; continuar la conversación para valorar la selección o pedir cambios.
 - Gestionar productos, textos ES/EN, imágenes, variantes y stock desde Team; buscar por nombre o identificador, filtrar visibles y archivados y avanzar o cancelar pedidos según las transiciones permitidas.
 - Cambiar entre castellano e inglés conservando la ruta y la bolsa.
 
 El pago es una simulación académica: puedo elegir una cuenta bancaria ficticia, tarjeta ficticia o PayPal simulado; en la app también Apple Pay simulado en iOS o Samsung Pay simulado en Android. Antes de confirmar acepto el aviso de que no compro nada. El justificante DEMO indica un cargo real de **0,00 €**. No hay pasarela, SDK de pagos, campos de datos bancarios ni conexión con esos servicios. Puedo simular un rechazo sin crear pedido ni descontar stock.
 
-«Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. Está identificado como **modo editorial, sin IA**. [Maison Stylist](docs/MAISON-STYLIST.md) tiene preparada la integración Gemini → Claude → OpenAI, desactivada en producción; los tres proveedores se han probado individualmente con datos ficticios. La [app nativa](mobile/README.md) incorpora catálogo, variantes, outfits musicales, bolsa por cuenta, acceso, historial y comunicaciones. He probado la apertura en iPhone, iPad y Android; todavía tengo que validar el nuevo recorrido privado en los dispositivos.
+«Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. El chat de [Maison Stylist](docs/MAISON-STYLIST.md), accesible desde un botón flotante en web y app, añade una conversación con burbujas y un campo de escritura fijo. Pide presupuesto cuando falta y muestra fotografías del catálogo, totales y enlaces a las fichas para elegir variantes. Después pregunta si gusta la elección; las valoraciones breves se responden localmente, sin consumir IA. El formulario de filtros detallados sigue disponible.
+
+El servicio tiene preparada la integración **Gemini → Claude → OpenAI**, probada individualmente con tres consultas autorizadas sobre datos ficticios. En producción continúa identificado como **selección editorial, sin IA**: el chat publicado no acredita todavía una conversación generativa completa. El backend valida disponibilidad, tallas y presupuesto y no añade piezas a la bolsa automáticamente. La [guía del asesor](docs/MAISON-STYLIST.md) explica configuración, referencias y límites.
 
 ### Entrega y boutiques de demostración
 
@@ -71,7 +74,11 @@ Abre el QR en Expo Go con móvil/tablet y ordenador en la misma Wi-Fi. En iPhone
 | iPad · iPadOS | Apertura e interfaz/entrada corregida confirmadas                          | iPad de 6.ª generación · sistema 17.7.0 · Expo Go 57.0.9 |
 | Android       | Apertura confirmada; vuelve a cargar tras reiniciar Metro con caché limpia | Samsung Galaxy A34 · Android 16 · Expo Go 57.0.9         |
 
-He comprobado la apertura en estos tres dispositivos. Me queda completar el recorrido de outfits y bolsa, registrar capturas nativas y revisar la conservación de la bolsa, la accesibilidad y los cambios de conexión en cada uno. El acceso, registro, historial y comunicaciones ya están implementados, junto con el checkout simulado y las boutiques; tengo pendiente probar estas ampliaciones en los tres dispositivos. Favoritos, gestión Team e IA siguen pendientes en la app. No hay publicación en tiendas ni binario de distribución.
+La tabla anterior conserva las pruebas del 18 de octubre, anteriores a SDK 58. El 7 de noviembre he comprobado en iPhone registro, acceso, rechazo con bolsa conservada, pedido DEMO aceptado con cargo real cero e historial, y persistencia de sesión tras cerrar completamente Expo Go. El pedido de prueba se canceló y se repuso su stock. La sesión nativa utiliza Expo SecureStore y no guarda contraseñas. El iPad volvió a abrir Maison después de actualizar su sistema y Expo Go; no he registrado las nuevas versiones exactas.
+
+También he confirmado en Expo Go la apertura del chat y sus fotografías, sin registrar qué dispositivo utilicé. La última revisión de burbujas y seguimiento está comprobada en Safari local; falta revisarla físicamente en la app. Quedan recorridos completos en iPad y Android, capturas nativas, mapas y permisos, accesibilidad y cambios de conexión. Favoritos y Team nativos, la activación pública de IA y la distribución en tiendas siguen pendientes.
+
+Para ver cambios nativos durante el desarrollo hay que recargar el proyecto en Expo Go conectado a Metro. Un despliegue de Vercel actualiza web y API, pero no distribuye el código de la app.
 
 **Versiones del proyecto comprobadas en el lockfile:** Maison móvil 0.1.0, Expo 58.0.23 (SDK 58), React Native 0.88.1, React 19.3.0 y expo-splash-screen 58.0.13. He registrado estas versiones para reproducir el entorno de desarrollo. Exportación iOS/Android y Expo Doctor 20/20 correctos (7/11/2026). Los detalles de las verificaciones y los avisos de dependencias están en [Validación](docs/VALIDACION.md) y en la guía móvil.
 
@@ -217,7 +224,7 @@ Esta selección muestra la web publicada y el recorrido de compra. Puedes abrir 
 
 ### Despliegue y entrega
 
-Maison está publicada en **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, con [API propia](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB y Cloudinary. La web y la API son proyectos separados de Vercel y `/api` se sirve a través del proxy de la web. El 18 de octubre se comprobaron por HTTPS el catálogo, recursos, cabeceras, permisos y un recorrido HTTP de Team con imagen y pedido temporales. Además he completado recorridos de compra simulada desde Chrome y Safari, documentados en las capturas. La apertura de la app está comprobada en mis dispositivos; el nuevo recorrido privado móvil sigue pendiente. El [documento de despliegue](docs/DESPLIEGUE.md) recoge configuración y límites. `npm run check:deployment -- https://kelsets-maison.vercel.app` repite el chequeo de solo lectura. El Dockerfile conserva la alternativa local con SQLite, pendiente de probar en Docker.
+Maison está publicada en **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, con [API propia](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB y Cloudinary. La web y la API son proyectos separados de Vercel y `/api` se sirve a través del proxy de la web. El 18 de octubre se comprobaron por HTTPS el catálogo, recursos, cabeceras, permisos y un recorrido HTTP de Team con imagen y pedido temporales. Además he completado recorridos de compra simulada desde Chrome y Safari, documentados en las capturas. La apertura de la app está comprobada en mis dispositivos; las comprobaciones privadas de iPhone están registradas, mientras que las de iPad y Android siguen pendientes. El [documento de despliegue](docs/DESPLIEGUE.md) recoge configuración y límites. `npm run check:deployment -- https://kelsets-maison.vercel.app` repite el chequeo de solo lectura. El Dockerfile conserva la alternativa local con SQLite, pendiente de probar en Docker.
 
 La entrega del TFM reunirá código, README, acceso a la aplicación y slides. El [seguimiento de entrega](docs/ENTREGA.md) distingue lo realizado de lo pendiente; hay una [presentación PDF de diez diapositivas](output/pdf/KelseTS-Maison-Presentacion-TFM.pdf), pendiente de ensayo y ajuste final.
 
@@ -253,7 +260,7 @@ KelseTS Maison is a fictional fashion, accessories and beauty boutique. Explore 
 
 **Website:** [Open KelseTS Maison](https://kelsets-maison.vercel.app) · **API:** [Check the service](https://kelsets-maison-api.vercel.app/api/v1/health).
 
-**Status:** first version published on [Vercel](https://kelsets-maison.vercel.app), with Maison MongoDB and Cloudinary services. The final presentation and extensions are still pending.
+**Status:** first version published on [Vercel](https://kelsets-maison.vercel.app), with Maison MongoDB and Cloudinary services. The Maison Stylist chat is published in editorial mode; public AI activation, some physical-device checks and presentation revisions remain pending.
 
 ### A personal story
 
@@ -263,7 +270,7 @@ After the AFM Moda Oceánica landing page and the full stack journey of KelseTS 
 
 ### What you can do
 
-- Watch the illustrated runway with 36 looks, music and playback controls, enjoy a full-height mobile hero, and explore sixteen original collections.
+- Watch the illustrated runway with 36 looks, music and playback controls, enjoy a full-height mobile hero, and explore sixteen original collections through an editorial-image carousel linking to each collection.
 - Browse 190 products with 996 variants, including the 139 pieces of the 36 runway outfits.
 - Explore 21 editorial looks and the 36 film outfits; choose separate pieces or add the complete outfit with individual sizes.
 - Browse Fashion, Accessories and Beauty with search, size and maximum price filters, price sorting and pagination. Returning from a product keeps the catalogue filters.
@@ -272,12 +279,15 @@ After the AFM Moda Oceánica landing page and the full stack journey of KelseTS 
 - Register, sign in and save products to “My selection”.
 - Prepare a bag, create demonstration orders and view their history, details and messages.
 - Find editorial combinations by occasion, palette, budget and whether to include beauty.
+- Open Maison Stylist from its floating button, describe your plans and receive outfits with photos, prices and product links; continue the conversation with feedback or changes.
 - Manage products, ES/EN text, images, variants and stock in Team; search by name or identifier, filter visible and archived products, and advance or cancel orders through allowed transitions.
 - Switch between Spanish and English while keeping your route and bag.
 
 Payment is an academic simulation: fictional bank account, fictional card or simulated PayPal, plus simulated Apple Pay on iOS or Samsung Pay on Android. Before confirming I acknowledge that no purchase takes place. The DEMO receipt shows a real charge of **0,00 €**. There is no payment gateway, payment SDK, banking-data form or connection to these services. A simulated decline creates no order and changes no stock.
 
-“Complete your look” uses manual selections and actual catalogue availability. It is labelled **editorial mode, without AI**. [Maison Stylist](docs/MAISON-STYLIST.md) has a prepared Gemini → Claude → OpenAI integration, disabled in production; all three providers have been tested individually with fictional data. The [native app](mobile/README.md) includes catalogue, variants, musical outfits, a bag per account, sign-in, order history and messages. I have opened it on iPhone, iPad and Android; I still need to validate the new private flow on physical devices.
+“Complete your look” uses manual selections and actual catalogue availability. The [Maison Stylist](docs/MAISON-STYLIST.md) chat, available from a floating button on web and native app, adds message bubbles and a fixed composer. It asks for a missing budget and displays catalogue photos, totals and product links for choosing variants. It then asks for feedback; short reactions receive local replies without consuming AI calls. Detailed filters remain available.
+
+The service includes a prepared **Gemini → Claude → OpenAI** integration, tested individually through three authorised queries using fictional data. Production remains explicitly labelled **editorial selection, without AI**: the published chat does not yet demonstrate an entire generative conversation. The backend validates availability, sizes and budget, and never adds products to the bag automatically. The [stylist guide](docs/MAISON-STYLIST.md) records configuration, references and limitations.
 
 ### Demonstration delivery and boutiques
 
@@ -310,7 +320,11 @@ Open the QR in Expo Go with the device and computer on the same Wi-Fi. On iPhone
 | iPad · iPadOS | App opened; corrected introduction and interface checked | iPad (6th generation) · system 17.7.0 · Expo Go 57.0.9 |
 | Android       | App opened and loaded again after clearing Metro’s cache | Samsung Galaxy A34 · Android 16 · Expo Go 57.0.9       |
 
-I still need to complete outfit and bag checks, capture native screenshots, and test persistence, accessibility and connection changes on each device. Sign-in, registration, history, messages, simulated checkout and boutiques are implemented, but these extensions still need physical-device checks. Native favourites, Team management and AI remain pending. There are no distribution binaries or app-store releases.
+The table above preserves the 18 October checks, before SDK 58. On 7 November, iPhone checks covered registration, sign-in, a declined payment preserving the bag, an accepted DEMO order with zero real charge, order history and session persistence after fully closing Expo Go. The test order was cancelled and its stock restored. Native sessions use Expo SecureStore without storing passwords. Maison opened on iPad after updating its system and Expo Go; the exact updated versions were not recorded.
+
+I also confirmed that the chat opens and displays photographs in Expo Go, without recording which device was used. The latest message-bubble and feedback revision was checked in local Safari; its physical native check remains pending. Full iPad and Android flows, native screenshots, maps and permissions, accessibility and connection changes still need verification. Native favourites and Team, public AI activation and app-store distribution remain pending.
+
+During development, native changes require reloading the project in Expo Go connected to Metro. Vercel deploys web and API updates; it does not distribute the native app code.
 
 **Project versions recorded in the lockfile:** mobile app 0.1.0, Expo 58.0.23 (SDK 58), React Native 0.88.1, React 19.3.0 and expo-splash-screen 58.0.13. iOS/Android exports and Expo Doctor 20/20 passed (7 November 2026). These checks are separate from physical-device testing; see [Validation](docs/VALIDACION.md).
 
@@ -456,7 +470,7 @@ This selection shows the published website and checkout flow. Open each screensh
 
 ### Deployment and delivery
 
-Maison is published at **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, with its [own API](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB and Cloudinary. Web and API are separate Vercel projects, with `/api` proxied through the web origin. On 18 October, HTTPS checks covered the catalogue, assets, headers, permissions and an HTTP Team flow with a temporary image and demonstration order. I have also completed simulated checkout flows in Chrome and Safari, recorded in the screenshots. I have opened the native app on my devices; its new private flow still needs physical-device validation. The [deployment document](docs/DESPLIEGUE.md) records configuration and limits. Run `npm run check:deployment -- https://kelsets-maison.vercel.app` to repeat read-only checks. The Dockerfile retains the local SQLite alternative, still untested in Docker.
+Maison is published at **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, with its [own API](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB and Cloudinary. Web and API are separate Vercel projects, with `/api` proxied through the web origin. On 18 October, HTTPS checks covered the catalogue, assets, headers, permissions and an HTTP Team flow with a temporary image and demonstration order. I have also completed simulated checkout flows in Chrome and Safari, recorded in the screenshots. I have opened the native app on my devices; the private iPhone checks are recorded, while the corresponding iPad and Android flows remain pending. The [deployment document](docs/DESPLIEGUE.md) records configuration and limits. Run `npm run check:deployment -- https://kelsets-maison.vercel.app` to repeat read-only checks. The Dockerfile retains the local SQLite alternative, still untested in Docker.
 
 The final project will include code, README, application access and slides. [Delivery tracking](docs/ENTREGA.md) separates completed work from pending work; a [ten-slide PDF presentation](output/pdf/KelseTS-Maison-Presentacion-TFM.pdf) is available, pending rehearsal and final revision.
 
