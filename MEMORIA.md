@@ -223,3 +223,10 @@ La suite más reciente supera **118 comprobaciones**: 72 de backend, 10 del clie
 En iPhone he comprobado registro y acceso, pago DEMO rechazado sin perder la bolsa, pago aceptado con cargo real de cero, consulta del pedido y conservación de sesión tras cerrar Expo Go. Cancelé el pedido de prueba y repuse sus unidades. La sesión utiliza SecureStore sin guardar contraseñas. El iPad volvió a abrir la app tras actualizar su sistema y Expo Go; no he registrado sus versiones nuevas ni un recorrido privado completo. Los apartados anteriores de octubre conservan las versiones y los resultados de aquellas pruebas históricas.
 
 Queda completar las pruebas privadas en iPad y Android, mapas y permisos nativos, accesibilidad y cambios de conexión; revisar físicamente la última interfaz del chat; decidir la activación de IA y ampliar su evaluación; y ajustar y ensayar la presentación. Existe un PDF inicial de diez diapositivas, pendiente de mi revisión visual. La entrega al campus continúa siendo manual. El [registro de validación](docs/VALIDACION.md) y la [documentación del asesor](docs/MAISON-STYLIST.md) conservan las evidencias y sus límites.
+
+
+### Ajustes a partir de una conversación real · 7 de noviembre de 2026
+
+Al probar una entrevista de trabajo detecté que el chat pedía de nuevo el presupuesto aunque escribiese «tengo 6000». También repetía los looks al responder «sí mucho muchas gracias». He ampliado las reglas compartidas y sus pruebas para reconocer estas expresiones y el número de calzado, sin confundirlos con la edad ni descartar nuevas restricciones. El resumen muestra ahora talla y calzado. En la web, Intro envía y Mayús+Intro permite continuar en otra línea. He reducido la ayuda inicial a un solo ejemplo. La reproducción local en Safari confirmó el recorrido; queda pendiente comprobar esta corrección en la app física.
+
+Tras esta corrección pasan las 121 pruebas de la suite completa: 72 backend, 10 cliente HTTP, 7 frontend y 32 móvil. Build web y exportaciones iOS/Android correctos.

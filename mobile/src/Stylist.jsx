@@ -203,6 +203,9 @@ function Chat({ language, user, openAccount, openProduct }) {
                   {message.result.preferences.size
                     ? ` · ${es ? 'Talla' : 'Size'} ${message.result.preferences.size}`
                     : ''}
+                  {message.result.preferences.shoeSize
+                    ? ` · ${es ? 'Calzado' : 'Shoes'} ${message.result.preferences.shoeSize}`
+                    : ''}
                 </Text>
                 {message.result.looks.map((look) => (
                   <View key={look.id} style={s.look}>

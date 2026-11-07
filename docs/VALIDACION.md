@@ -431,3 +431,12 @@ En Safari local, con catálogo ficticio e IA desactivada: solicitud de cena, tal
 
 ### Conversación y valoración del outfit
 La interfaz utiliza burbujas de mensaje, respuestas alineadas a cada interlocutor y un campo de escritura fijo en web y app, con colores Maison. Tras las propuestas pregunta si gusta la elección y ofrece continuar con cambios. Las valoraciones breves positivas o negativas se responden localmente, sin consumir una consulta a proveedores; las nuevas preferencias siguen el recorrido de recomendación. Safari local confirmó la pregunta y la respuesta a «me gusta». No se ha verificado físicamente esta última revisión visual en la app.
+
+
+### Regresión de conversación · 7 de noviembre de 2026
+
+La prueba de la autora detectó que «tengo 6000» y «6000, talla S y nº 36» no se interpretaban como presupuesto y que «sí mucho muchas gracias» repetía la recomendación. Se amplían las reglas compartidas de presupuesto, número de calzado y valoraciones breves, con pruebas que conservan la distinción respecto a edad, tallas y nuevas restricciones.
+
+En Safari local, con IA desactivada, «una entrevista de trabajo. tengo 6000, talla S y nº de calzado 36» enviada con Intro produjo recomendaciones con presupuesto 6.000 €, talla S y calzado 36. El agradecimiento produjo una respuesta local sin tarjetas repetidas; Mayús+Intro conservó dos líneas sin enviar. Se comprobó un único ejemplo inicial. La prueba física de esta corrección en Expo Go queda pendiente.
+
+Tras esta corrección pasan las 121 pruebas de la suite completa: 72 backend, 10 cliente HTTP, 7 frontend y 32 móvil. Build web y exportaciones iOS/Android correctos.

@@ -68,3 +68,6 @@ La revisión local en Safari confirmó petición de presupuesto, respuesta edito
 
 ### Conversación y valoración del outfit
 La interfaz utiliza burbujas de mensaje, respuestas alineadas a cada interlocutor y un campo de escritura fijo en web y app, con colores Maison. Tras las propuestas pregunta si gusta la elección y ofrece continuar con cambios. Las valoraciones breves positivas o negativas se responden localmente, sin consumir una consulta a proveedores; las nuevas preferencias siguen el recorrido de recomendación. Safari local confirmó la pregunta y la respuesta a «me gusta». No se ha verificado físicamente esta última revisión visual en la app.
+
+
+En web, Intro envía y Mayús+Intro introduce un salto de línea; durante la composición de texto no se fuerza el envío. Hay un único ejemplo inicial. Las reglas reconocen presupuestos como «tengo 6000» y respuestas como «6000, talla S y nº 36»; el resumen muestra también el calzado aplicado. Los agradecimientos combinados, como «sí mucho muchas gracias», reciben una respuesta local sin volver a consultar el catálogo o los proveedores.

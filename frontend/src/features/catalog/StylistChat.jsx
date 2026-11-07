@@ -117,9 +117,6 @@ export default function StylistChat() {
             es
               ? 'Una cena romántica, máximo 3.000 €, talla M.'
               : 'A romantic dinner, up to €3,000, size M.',
-            es
-              ? 'Un concierto, presupuesto 6.000 €, sin maquillaje.'
-              : 'A concert, budget €6,000, without makeup.',
           ].map((text) => (
             <button type="button" key={text} onClick={() => setDraft(text)}>
               {text}
@@ -155,6 +152,9 @@ export default function StylistChat() {
                   <Money cents={message.result.preferences.budgetCents} />
                   {message.result.preferences.size
                     ? ` · ${es ? 'Talla' : 'Size'} ${message.result.preferences.size}`
+                    : ''}
+                  {message.result.preferences.shoeSize
+                    ? ` · ${es ? 'Calzado' : 'Shoes'} ${message.result.preferences.shoeSize}`
                     : ''}
                 </p>
                 {message.result.looks.map((look) => (
@@ -203,6 +203,12 @@ export default function StylistChat() {
           value={draft}
           disabled={busy}
           onChange={(event) => setDraft(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
+              event.preventDefault();
+              if (!busy && draft.trim()) event.currentTarget.form.requestSubmit();
+            }
+          }}
           placeholder={es ? 'Escribe a Maison Stylist…' : 'Message Maison Stylist…'}
         />
         <button className="button" disabled={busy || !draft.trim()}>

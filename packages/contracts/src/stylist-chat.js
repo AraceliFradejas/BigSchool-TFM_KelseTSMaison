@@ -18,6 +18,10 @@ export function chatPreferences(message, previous = {}) {
       /(?:presupuesto|budget|maximo|max\.?|up to|hasta|under|menos de|no mas de)\s*(?:(?:maximo|de|es|son|of|is|:)\s*)*(?:€\s*)?(-?[\d][\d.,]*(?:\s?[€])?)/,
     )?.[1] ||
     normalized.match(/(-?[\d][\d.,]*)\s*(?:€|euros?\b|eur\b)/)?.[1] ||
+    normalized.match(
+      /\b(?:tengo|dispongo de|cuento con|i have)\s+(-?\d[\d.,]*)(?![\w.,])(?!(?:\s*)(?:anos?|years?|de edad|de calzado|de zapatos|de talla)\b)/,
+    )?.[1] ||
+    normalized.match(/^(-?\d[\d.,]*?)\s*,?\s+(?:y\s+)?(?:talla|size)\b/)?.[1] ||
     (/^\d[\d.,]*\s*€?$/.test(normalized) ? normalized : null);
   let invalidBudget = false;
   if (amount) {
@@ -36,7 +40,7 @@ export function chatPreferences(message, previous = {}) {
   }
   const size = normalized.match(/\b(?:talla|size)\s*(xxl|xl|xs|s|m|l)\b/);
   const shoes = normalized.match(
-    /\b(?:calzo|calzado|zapatos|shoe size)\s*(?:talla\s*)?(3[5-9]|4[0-2])\b/,
+    /\b(?:calzo|calzado|zapatos|shoe size|n[º°o.]?\s*(?:de\s+calzado)?|numero\s*(?:de\s+calzado)?)\s*(?:talla\s*)?(3[5-9]|4[0-2])\b/,
   );
   if (size) preferences.size = size[1].toUpperCase();
   if (shoes) preferences.shoeSize = shoes[1];
@@ -75,15 +79,18 @@ export function stylistFeedback(message, hasSuggestion, language = 'es') {
     .replace(/[¡!¿?.,]/g, '')
     .trim();
   const es = language === 'es';
-  if (
-    /^(si|si gracias|me gusta|me encanta|perfecto|genial|yes|i like it|love it|thanks)$/.test(text)
-  )
-    return es
-      ? '¡Qué bien! Puedes abrir las piezas del look para elegir tu talla y añadir tus favoritas a la bolsa. Si quieres ajustar algo más, cuéntamelo.'
-      : 'Lovely! Open the outfit pieces to choose your size and add your favourites to your bag. Tell me if you would like any changes.';
   if (/^(no|no me gusta|no me convence|no gracias|i dont like it|not really)$/.test(text))
     return es
       ? 'Lo ajustamos. ¿Qué cambiarías: el estilo, los colores, las piezas o el presupuesto? Por ejemplo: «algo más informal, máximo 2.000 €».'
       : 'Let’s adjust it. What would you change: style, colours, pieces or budget? For example: “something more casual, up to €2,000”.';
+  // Accept combinations of acknowledgement phrases, but never swallow added constraints.
+  if (
+    /^(?:(?:si|mucho|muchas gracias|gracias|me gusta|me encanta|perfecto|genial|la eleccion|yes|very much|i like it|love it|thanks|thank you)(?:\s+|$))+$/.test(
+      text,
+    )
+  )
+    return es
+      ? '¡Qué bien! Puedes abrir las piezas del look para elegir tu talla y añadir tus favoritas a la bolsa. Si quieres ajustar algo más, cuéntamelo.'
+      : 'Lovely! Open the outfit pieces to choose your size and add your favourites to your bag. Tell me if you would like any changes.';
   return null;
 }

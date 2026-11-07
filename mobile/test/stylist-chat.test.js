@@ -58,3 +58,48 @@ test('feedback does not swallow a new preference or budget request', () => {
   assert.equal(stylistFeedback('no, prefiero algo informal', true), null);
   assert.match(stylistFeedback('Love it!', true, 'en'), /Open the outfit/);
 });
+
+test('reported interview conversation recognises conversational budgets and shoe sizes', () => {
+  let previous = chatPreferences('una entrevista a de trabajo . tengo 6000').preferences;
+  assert.equal(previous.budgetCents, 600000);
+  assert.equal(previous.occasion, 'television');
+  for (const text of [
+    'tengo 6000',
+    '6000 , talla s y nº 36',
+    'presupuesto 6000€, talla S y nº de calzado 36',
+  ]) {
+    const parsed = chatPreferences(text, previous);
+    assert.equal(parsed.needsBudget, false);
+    assert.equal(parsed.preferences.budgetCents, 600000);
+    previous = parsed.preferences;
+  }
+  assert.equal(previous.size, 'S');
+  assert.equal(previous.shoeSize, '36');
+  assert.match(stylistFeedback('si mucho muchas gracias', true), /abrir las piezas/);
+});
+test('conversational amounts do not turn age, clothing or shoe sizes into money', () => {
+  for (const text of [
+    'tengo 35 años',
+    'tengo 38 de calzado',
+    'tengo 36 de talla',
+    'talla S y nº 36',
+  ])
+    assert.equal(chatPreferences(text).needsBudget, true, text);
+  for (const text of ['tengo -100', 'tengo 20000'])
+    assert.equal(chatPreferences(text, { budgetCents: 600000 }).needsBudget, true, text);
+});
+test('combined thanks do not swallow a request to change the outfit', () => {
+  for (const text of [
+    'sí mucho muchas gracias',
+    'si, me gusta mucho, gracias',
+    'Muchas gracias',
+    'Yes, thank you very much',
+  ])
+    assert.ok(stylistFeedback(text, true), text);
+  for (const text of [
+    'sí mucho gracias pero otro color',
+    'muchas gracias, presupuesto 1000',
+    'me gusta pero calzo 37',
+  ])
+    assert.equal(stylistFeedback(text, true), null, text);
+});
