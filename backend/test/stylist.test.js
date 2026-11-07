@@ -1,3 +1,4 @@
+import { stylistPrompt } from '../src/stylist/prompt.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import request from 'supertest';
@@ -360,4 +361,21 @@ test('stylist input rejects client-supplied price, stock and permissions', () =>
   for (const field of ['priceCents', 'totalCents', 'stock', 'role']) {
     assert.equal(stylistSchema.safeParse({ ...preferences, [field]: 1 }).success, false, field);
   }
+});
+
+test('job interview prompt does not replace the requested context with television', () => {
+  const job = stylistPrompt([], {
+    ...preferences,
+    occasion: 'television',
+    style: 'Una entrevista de trabajo',
+    language: 'es',
+  });
+  assert.equal(JSON.parse(job.input).preferences.occasion, 'job_interview');
+  const tv = stylistPrompt([], {
+    ...preferences,
+    occasion: 'television',
+    style: 'Una entrevista en televisión',
+    language: 'es',
+  });
+  assert.equal(JSON.parse(tv.input).preferences.occasion, 'television');
 });

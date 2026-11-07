@@ -450,3 +450,8 @@ Tras esta corrección pasan las 121 pruebas de la suite completa: 72 backend, 10
 ### Continuidad del chat al abrir productos · 7 de noviembre
 
 En Safari local y modo editorial se envió una petición de cena, presupuesto 3.000 €, talla M y sin maquillaje. Tras abrir Enchanted desde la respuesta y reabrir el asesor se conservaron petición, propuestas y filtros. También se conservó un borrador al cerrar y abrir el panel. El estado se mantiene en el componente que contiene el chat en web y app y se reinicia al cambiar de cuenta o idioma; no se guarda en disco ni se promete restauración tras recarga o reinicio. Build y exportaciones nativas correctos. La comprobación física de continuidad en Expo Go queda pendiente.
+
+
+## Prueba rápida real y contexto de entrevista
+
+Una nueva llamada autorizada a Gemini devolvió tres looks válidos para presupuesto 6.000 €, talla S, calzado 36 y sin belleza, en 1,8 segundos. La explicación confundió entrevista laboral con televisión. Se corrigió el contexto del prompt y se comprobó la distinción con una prueba; no se repitió el consumo real. Suite completa: 127 correctas (76+10+7+34). [Registro y límites](evidencias/stylist-prueba-rapida-2026-11-07.md). La IA pública sigue desactivada.

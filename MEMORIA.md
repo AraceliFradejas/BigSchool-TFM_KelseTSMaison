@@ -245,3 +245,8 @@ La revisión de una pieza interrumpía la conversación porque el panel destruí
 
 
 He añadido el guiño «tu tAIlor» para las preguntas sobre la identidad del asistente, jugando con tailor y AI. Se presenta como estilista personal virtual de Maison y responde de forma local, sin consultas a modelos ni cambios en los filtros. La respuesta mantiene el tono cercano de la marca y no se hace pasar por una persona.
+
+
+### Aprendizaje de una prueba real del asesor
+
+He realizado una nueva prueba rápida autorizada con Gemini para una entrevista laboral, presupuesto 6.000 €, talla S y calzado 36. Los tres conjuntos respetaron los filtros, pero dos explicaciones añadían referencias a televisión y cámaras. Detecté que el filtro histórico de entrevistas se llamaba `television` y condicionaba la respuesta. He separado ese contexto en el prompt cuando se pide una entrevista de trabajo, manteniendo el filtro de catálogo y añadiendo una prueba de regresión. No he repetido la consulta real después de corregirlo; la mejora de redacción sigue pendiente de validación con el proveedor. Las 127 pruebas automáticas pasan y la IA pública permanece desactivada. El [registro del ensayo rápido](docs/evidencias/stylist-prueba-rapida-2026-11-07.md) conserva resultados y límites.
