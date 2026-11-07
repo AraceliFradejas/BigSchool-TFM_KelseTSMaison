@@ -14,7 +14,7 @@ KelseTS Maison es una boutique ficticia de moda, accesorios y belleza. Puedes ex
 
 **Web:** [Abrir KelseTS Maison](https://kelsets-maison.vercel.app) · **API:** [Comprobar el servicio](https://kelsets-maison-api.vercel.app/api/v1/health).
 
-**Estado:** primera versión publicada en [Vercel](https://kelsets-maison.vercel.app), con MongoDB y Cloudinary propios. El chat de Maison Stylist está publicado en modo editorial; la activación pública de IA, parte de las pruebas físicas y el ajuste de la presentación siguen pendientes.
+**Estado:** primera versión publicada en [Vercel](https://kelsets-maison.vercel.app), con MongoDB y Cloudinary propios. Maison Stylist tiene una prueba de IA activada para cuentas registradas, con un límite global de tres intentos de proveedor al día. Quedan parte de las pruebas físicas, una evaluación más amplia del asesor y el ajuste de la presentación.
 
 ### Una historia personal
 
@@ -41,7 +41,7 @@ El pago es una simulación académica: puedo elegir una cuenta bancaria ficticia
 
 «Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. El chat de [Maison Stylist](docs/MAISON-STYLIST.md), accesible desde un botón flotante en web y app, añade una conversación con burbujas y un campo de escritura fijo. Pide presupuesto cuando falta y muestra fotografías del catálogo, totales y enlaces a las fichas para elegir variantes. Después pregunta si gusta la elección; las valoraciones breves se responden localmente, sin consumir IA. El formulario de filtros detallados sigue disponible. El asesor limita la conversación a outfits y aplica controles de ámbito e intentos de manipular instrucciones o precios, también en el servidor.
 
-El servicio tiene preparada la integración **Gemini → Claude → OpenAI**, probada individualmente con tres consultas autorizadas sobre datos ficticios. En producción continúa identificado como **selección editorial, sin IA**: el chat publicado no acredita todavía una conversación generativa completa. El backend valida disponibilidad, tallas y presupuesto y no añade piezas a la bolsa automáticamente. La [guía del asesor](docs/MAISON-STYLIST.md) explica configuración, referencias y límites.
+El servicio tiene preparada la integración **Gemini → Claude → OpenAI**, probada individualmente con tres consultas autorizadas sobre datos ficticios. La prueba de IA está **activada en producción para cuentas registradas**, con un máximo global de tres intentos de proveedor al día, incluidos fallos y respaldos. Cuando no se obtiene una respuesta válida o se agota la cuota, se muestran selecciones editoriales identificadas como tales. La evaluación conversacional en producción sigue en curso. El backend valida disponibilidad, tallas y presupuesto y no añade piezas a la bolsa automáticamente. La [guía del asesor](docs/MAISON-STYLIST.md) explica configuración, referencias y límites.
 
 ### Entrega y boutiques de demostración
 
@@ -76,7 +76,7 @@ Abre el QR en Expo Go con móvil/tablet y ordenador en la misma Wi-Fi. En iPhone
 
 La tabla anterior conserva las pruebas del 18 de octubre, anteriores a SDK 58. El 7 de noviembre he comprobado en iPhone registro, acceso, rechazo con bolsa conservada, pedido DEMO aceptado con cargo real cero e historial, y persistencia de sesión tras cerrar completamente Expo Go. El pedido de prueba se canceló y se repuso su stock. La sesión nativa utiliza Expo SecureStore y no guarda contraseñas. El iPad volvió a abrir Maison después de actualizar su sistema y Expo Go; no he registrado las nuevas versiones exactas.
 
-También he confirmado en Expo Go la apertura del chat y sus fotografías, sin registrar qué dispositivo utilicé. La última revisión de burbujas y seguimiento está comprobada en Safari local; falta revisarla físicamente en la app. Quedan recorridos completos en iPad y Android, capturas nativas, mapas y permisos, accesibilidad y cambios de conexión. Favoritos y Team nativos, la activación pública de IA y la distribución en tiendas siguen pendientes.
+También he confirmado en Expo Go la apertura del chat y sus fotografías, sin registrar qué dispositivo utilicé. La última revisión de burbujas y seguimiento está comprobada en Safari local; falta revisarla físicamente en la app. Quedan recorridos completos en iPad y Android, capturas nativas, mapas y permisos, accesibilidad y cambios de conexión. Favoritos y Team nativos, la validación física del asesor con IA y la distribución en tiendas siguen pendientes.
 
 Para ver cambios nativos durante el desarrollo hay que recargar el proyecto en Expo Go conectado a Metro. Un despliegue de Vercel actualiza web y API, pero no distribuye el código de la app.
 
@@ -260,7 +260,7 @@ KelseTS Maison is a fictional fashion, accessories and beauty boutique. Explore 
 
 **Website:** [Open KelseTS Maison](https://kelsets-maison.vercel.app) · **API:** [Check the service](https://kelsets-maison-api.vercel.app/api/v1/health).
 
-**Status:** first version published on [Vercel](https://kelsets-maison.vercel.app), with Maison MongoDB and Cloudinary services. The Maison Stylist chat is published in editorial mode; public AI activation, some physical-device checks and presentation revisions remain pending.
+**Status:** first version published on [Vercel](https://kelsets-maison.vercel.app), with Maison MongoDB and Cloudinary services. Maison Stylist has an AI trial enabled for registered accounts, with a global limit of three provider attempts per day. Some physical-device checks, broader stylist evaluation and presentation revisions remain pending.
 
 ### A personal story
 
@@ -287,7 +287,7 @@ Payment is an academic simulation: fictional bank account, fictional card or sim
 
 “Complete your look” uses manual selections and actual catalogue availability. The [Maison Stylist](docs/MAISON-STYLIST.md) chat, available from a floating button on web and native app, adds message bubbles and a fixed composer. It asks for a missing budget and displays catalogue photos, totals and product links for choosing variants. It then asks for feedback; short reactions receive local replies without consuming AI calls. Detailed filters remain available. The adviser limits conversation to outfits and checks scope and attempts to manipulate instructions or prices, including on the server.
 
-The service includes a prepared **Gemini → Claude → OpenAI** integration, tested individually through three authorised queries using fictional data. Production remains explicitly labelled **editorial selection, without AI**: the published chat does not yet demonstrate an entire generative conversation. The backend validates availability, sizes and budget, and never adds products to the bag automatically. The [stylist guide](docs/MAISON-STYLIST.md) records configuration, references and limitations.
+The service includes a prepared **Gemini → Claude → OpenAI** integration, tested individually through three authorised queries using fictional data. The AI trial is **enabled in production for registered accounts**, with a global maximum of three provider attempts per day, including failures and fallback attempts. Invalid responses or exhausted quota return explicitly labelled editorial selections. Production conversation evaluation remains in progress. The backend validates availability, sizes and budget, and never adds products to the bag automatically. The [stylist guide](docs/MAISON-STYLIST.md) records configuration, references and limitations.
 
 ### Demonstration delivery and boutiques
 
@@ -322,7 +322,7 @@ Open the QR in Expo Go with the device and computer on the same Wi-Fi. On iPhone
 
 The table above preserves the 18 October checks, before SDK 58. On 7 November, iPhone checks covered registration, sign-in, a declined payment preserving the bag, an accepted DEMO order with zero real charge, order history and session persistence after fully closing Expo Go. The test order was cancelled and its stock restored. Native sessions use Expo SecureStore without storing passwords. Maison opened on iPad after updating its system and Expo Go; the exact updated versions were not recorded.
 
-I also confirmed that the chat opens and displays photographs in Expo Go, without recording which device was used. The latest message-bubble and feedback revision was checked in local Safari; its physical native check remains pending. Full iPad and Android flows, native screenshots, maps and permissions, accessibility and connection changes still need verification. Native favourites and Team, public AI activation and app-store distribution remain pending.
+I also confirmed that the chat opens and displays photographs in Expo Go, without recording which device was used. The latest message-bubble and feedback revision was checked in local Safari; its physical native check remains pending. Full iPad and Android flows, native screenshots, maps and permissions, accessibility and connection changes still need verification. Native favourites and Team, physical AI-stylist validation and app-store distribution remain pending.
 
 During development, native changes require reloading the project in Expo Go connected to Metro. Vercel deploys web and API updates; it does not distribute the native app code.
 

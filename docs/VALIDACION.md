@@ -455,3 +455,8 @@ En Safari local y modo editorial se envió una petición de cena, presupuesto 3.
 ## Prueba rápida real y contexto de entrevista
 
 Una nueva llamada autorizada a Gemini devolvió tres looks válidos para presupuesto 6.000 €, talla S, calzado 36 y sin belleza, en 1,8 segundos. La explicación confundió entrevista laboral con televisión. Se corrigió el contexto del prompt y se comprobó la distinción con una prueba; no se repitió el consumo real. Suite completa: 127 correctas (76+10+7+34). [Registro y límites](evidencias/stylist-prueba-rapida-2026-11-07.md). La IA pública sigue desactivada.
+
+
+## Activación autorizada para pruebas de la autora
+
+7 de noviembre: secretos guardados únicamente en Production de `kelsets-maison-api`, redespliegue listo en Vercel. Estado HTTPS del asesor: disponible, cuenta obligatoria y orden Gemini/Anthropic/OpenAI. Se verificó HTTP 401 sin sesión, sin llamada a modelos. Cuota global de tres intentos diarios UTC, incluidos fallos y respaldos; límite de salida 512 tokens y timeout 10 segundos. No se han consumido llamadas de validación después de activar: se reservan para Araceli. La prueba conversacional autenticada y la revisión física siguen pendientes.

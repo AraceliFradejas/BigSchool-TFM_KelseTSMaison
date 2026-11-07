@@ -250,3 +250,10 @@ He añadido el guiño «tu tAIlor» para las preguntas sobre la identidad del as
 ### Aprendizaje de una prueba real del asesor
 
 He realizado una nueva prueba rápida autorizada con Gemini para una entrevista laboral, presupuesto 6.000 €, talla S y calzado 36. Los tres conjuntos respetaron los filtros, pero dos explicaciones añadían referencias a televisión y cámaras. Detecté que el filtro histórico de entrevistas se llamaba `television` y condicionaba la respuesta. He separado ese contexto en el prompt cuando se pide una entrevista de trabajo, manteniendo el filtro de catálogo y añadiendo una prueba de regresión. No he repetido la consulta real después de corregirlo; la mejora de redacción sigue pendiente de validación con el proveedor. Las 127 pruebas automáticas pasan y la IA pública permanece desactivada. El [registro del ensayo rápido](docs/evidencias/stylist-prueba-rapida-2026-11-07.md) conserva resultados y límites.
+
+
+### Activación de una prueba pública con IA
+
+Después del ensayo controlado he autorizado guardar las tres claves de Maison como secretos del backend de producción en Vercel y activar el asesor para probarlo desde mi cuenta. He mantenido el orden Gemini, Claude y OpenAI y un máximo global de tres intentos de proveedor por día UTC, incluidos fallos y respaldos. La salida se limita a 512 tokens y cada proveedor dispone de diez segundos. Al agotarse la cuota o no recibir una respuesta válida se conserva la alternativa editorial. No se han comprado servicios ni activado facturación nueva.
+
+El despliegue está listo y el estado público confirma la disponibilidad y los tres proveedores. La solicitud sin cuenta se rechaza con HTTP 401 antes de contactar con modelos. Estas verificaciones no gastaron consultas: quedan disponibles para mi prueba manual. La activación no sustituye una evaluación amplia ni acredita todavía todo el recorrido autenticado en producción. Los apartados previos conservan los resultados de las fases en las que la IA pública estaba desactivada.

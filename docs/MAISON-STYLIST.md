@@ -1,4 +1,4 @@
-# Maison Stylist · integración en preparación
+# Maison Stylist · prueba de IA activada
 
 ## Comportamiento de esta primera versión
 
@@ -63,7 +63,7 @@ El botón flotante Maison Stylist abre un chat: panel lateral en web y modal en 
 
 Las respuestas muestran fotografías reales del catálogo, precios y enlaces a las fichas. El usuario elige allí las variantes y añade cada pieza a la bolsa. No se generan fotografías ni se ejecutan compras desde el chat. El formulario detallado sigue disponible en `/looks`. Cerrar el chat cancela la solicitud en curso, pero conserva mensajes, preferencias y borrador durante la sesión de navegación.
 
-La revisión local en Safari confirmó petición de presupuesto, respuesta editorial con talla M y sin belleza, dos conjuntos dentro de 3.000 €, fotografías y navegación a la ficha de Enchanted. Esta comprobación no consumió servicios de IA. Las tres consultas reales previas verificaron proveedores individuales, no el nuevo chat completo contra IA en producción. La activación pública y la transferencia de claves a Vercel siguen pendientes.
+La revisión local en Safari confirmó petición de presupuesto, respuesta editorial con talla M y sin belleza, dos conjuntos dentro de 3.000 €, fotografías y navegación a la ficha de Enchanted. Esta comprobación no consumió servicios de IA. Las tres consultas reales previas verificaron proveedores individuales, no el nuevo chat completo contra IA en producción. La activación pública se realizó posteriormente con autorización expresa, como se detalla al final de este documento. Esta comprobación local anterior no acredita por sí sola el funcionamiento conversacional con IA en producción.
 
 
 ### Conversación y valoración del outfit
@@ -83,3 +83,12 @@ Estas reglas léxicas son una defensa mínima adicional, no un clasificador sem�
 
 
 El asesor responde localmente a preguntas breves como «¿Eres un robot?» o «¿Quién eres?» con el guiño «Soy tu tAIlor», identificado como estilista personal virtual. La respuesta no consume IA ni cambia preferencias. La coincidencia exige una pregunta de identidad completa; texto adicional con nuevas instrucciones continúa por las comprobaciones de ámbito.
+
+
+## Prueba pública activada · 7 de noviembre de 2026
+
+Con autorización expresa de Araceli, las tres claves específicas de Maison y su configuración se guardaron como secretos solo en el entorno Production del proyecto `kelsets-maison-api` de Vercel. No se copiaron al frontend, al repositorio ni a informes. La API se redesplegó sobre `f1d0425`. El archivo local conserva el arranque desactivado por defecto.
+
+Configuración de la prueba: Gemini → Claude → OpenAI, máximo global de **3 intentos por día UTC**, timeout de 10 segundos por proveedor y 512 tokens de salida como máximo por respuesta. Los intentos fallidos y los respaldos consumen esa misma cuota; no son tres conversaciones por usuario. Los agradecimientos, preguntas de identidad y bloqueos locales no usan modelos. No se compró saldo ni se activó facturación. Al agotarse la cuota, el servicio devuelve el modo editorial y lo identifica en la respuesta. El límite de intentos no equivale a un presupuesto monetario medido.
+
+Se verificó por HTTPS `available: true`, la exigencia de cuenta y el orden de proveedores. Una petición sin sesión devolvió HTTP 401 antes de contactar con modelos. Estas verificaciones no consumieron intentos de proveedor: se reservaron para la prueba manual de Araceli. La activación no acredita todavía una conversación completa con cuenta en producción ni un fallback real.
