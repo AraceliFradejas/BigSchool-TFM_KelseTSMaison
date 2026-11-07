@@ -1,3 +1,4 @@
+import StylistLauncher from '../features/catalog/StylistLauncher';
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useMaison } from '../shared/state';
@@ -117,6 +118,7 @@ export default function Layout() {
       <main ref={mainRef} id="main" tabIndex={-1}>
         <Outlet />
       </main>
+      <StylistLauncher />
       <footer className="site-footer">
         <div className="footer-top">
           <div>

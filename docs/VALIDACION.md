@@ -421,3 +421,9 @@ La integración se entrega desactivada; el selector público conserva el modo ed
 Con autorización expresa para tres consultas y hasta 1 USD, Gemini, Claude y OpenAI devuelven cada uno tres selecciones válidas en un caso ES con catálogo sintético. HTTP200, esquemas aceptados y tiempos observados de 1,7/4,6/5,4 segundos. [Resultados y límites](evidencias/stylist-2026-11-07.md). Las pruebas no activan la web y no acreditan calidad general ni facturación real.
 
 Se corrige la geometría de los controles de «Completa tu look»: campos y desplegables con altura explícita de 48px, ancho completo y apariencia normalizada para Safari. La propuesta de acceso flotante para web/app es una previsualización separada, todavía sin implementar en los clientes.
+
+## Chat Maison Stylist · 7 de noviembre
+
+116 pruebas automáticas superadas: backend 72, cliente 10, frontend 7 y app 27. Build web, exportaciones nativas y comprobación local de producción correctos. Cinco pruebas nuevas cubren aclaración de presupuesto, importes ES/EN, conservación de preferencias, sustitución de un presupuesto inválido y contexto limitado.
+
+En Safari local, con catálogo ficticio e IA desactivada: solicitud de cena, talla M y sin maquillaje; pregunta de presupuesto; respuesta a 3.000 € con conjuntos de 2.300 € y 1.340 €, fotografías y enlace funcional a la ficha del vestido. No hubo compras ni llamadas a proveedores. La interacción física del nuevo chat nativo queda pendiente; exportar no sustituye esa prueba.

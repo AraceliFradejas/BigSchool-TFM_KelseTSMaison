@@ -123,3 +123,9 @@ Tras detectar que Expo Go pedía acceso al cerrarlo, se ha incorporado `expo-sec
 La primera entrada tras la actualización requiere acceder una vez con la cuenta Maison existente para emitir su token nativo. Después se debe comprobar cierre completo de Expo Go y reapertura, identidad y bolsa por cuenta, cierre de sesión y nueva reapertura anónima. La caducidad la decide el servidor (siete días), no una promesa indefinida del dispositivo.
 
 Las acciones de acceso, pago, entrega, recogida y exploración de boutiques utilizan el botón Maison compartido, con fondo/borde, estado desactivado y etiquetas accesibles. La confirmación de añadir piezas utiliza una modal nativa con Aceptar rojo y fondo no accesible mientras está abierta. Compilación comprobada; revisar también el resultado físico y VoiceOver/TalkBack antes de acreditar accesibilidad completa.
+
+### Chat Maison Stylist
+
+Un botón flotante sobre las cinco pestañas abre el chat con texto libre, aclaración de presupuesto y tarjetas con fotos, precios y acceso a cada ficha. No aparece durante cuenta, ficha ni pago para no tapar acciones principales. Con IA desactivada se identifica como selección editorial. El cierre cancela peticiones y elimina la conversación de memoria.
+
+Las exportaciones nativas se han comprobado; queda pendiente probar físicamente este nuevo chat. Los despliegues Vercel actualizan web/API, no el código nativo de Expo Go: durante el desarrollo hay que recargar el proyecto conectado a Metro.

@@ -1,0 +1,49 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { chatPreferences } from '@maison/contracts/stylist-chat';
+import { stylistSchema } from '@maison/contracts';
+
+test('chat asks for a budget and does not mistake age or shoe size for money', () => {
+  const parsed = chatPreferences('Quiero algo para una cena, talla M. Calzo 38 y tengo 35 años.');
+  assert.equal(parsed.needsBudget, true);
+  assert.equal(parsed.preferences.budgetCents, undefined);
+  assert.equal(parsed.preferences.size, 'M');
+  assert.equal(parsed.preferences.shoeSize, '38');
+});
+test('chat recognises Spanish and English currency formats without losing cents', () => {
+  for (const [text, cents] of [
+    ['Máximo 3.000 €, talla M', 300000],
+    ['Budget up to €3,000, size M', 300000],
+    ['Presupuesto máximo de 1.850,50 euros', 185050],
+    ['Presupuesto 1850.50 EUR', 185050],
+  ]) {
+    assert.equal(chatPreferences(text).preferences.budgetCents, cents);
+  }
+});
+test('a numeric budget reply preserves the previous request and excludes beauty', () => {
+  const first = chatPreferences('Una cena romántica, talla M, sin maquillaje.');
+  const second = chatPreferences('2500', first.preferences);
+  assert.equal(second.needsBudget, false);
+  assert.equal(second.preferences.occasion, 'dinner');
+  assert.equal(second.preferences.size, 'M');
+  assert.equal(second.preferences.excludeBeauty, true);
+  assert.equal(second.preferences.budgetCents, 250000);
+  assert.equal(second.preferences.style, first.preferences.style);
+  assert.ok(
+    stylistSchema.safeParse({ ...second.preferences, mode: 'editorial', language: 'es' }).success,
+  );
+});
+test('an invalid replacement budget cannot silently reuse the old ceiling', () => {
+  for (const message of ['presupuesto -100', 'presupuesto 20000']) {
+    const result = chatPreferences(message, { budgetCents: 300000 });
+    assert.equal(result.needsBudget, true);
+    assert.equal(result.preferences.budgetCents, undefined);
+  }
+});
+test('follow-up style context is bounded and can update occasion without changing budget', () => {
+  const first = chatPreferences('Una cena, presupuesto 3000');
+  const next = chatPreferences('Mejor para un concierto. ' + 'a'.repeat(500), first.preferences);
+  assert.equal(next.preferences.occasion, 'concert');
+  assert.equal(next.preferences.budgetCents, 300000);
+  assert.ok(next.preferences.style.length <= 400);
+});

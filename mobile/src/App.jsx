@@ -1,3 +1,4 @@
+import Stylist from './Stylist';
 import Button from './Button';
 import SelectionNotice from './SelectionNotice';
 import Boutiques from './Boutiques';
@@ -461,6 +462,8 @@ export default function App() {
   const [added, setAdded] = useState(false);
   const t = words[language];
   const [route, setRoute] = useState({ screen: 'catalogue' });
+  const [stylistOpen, setStylistOpen] = useState(false);
+  const [tabsHeight, setTabsHeight] = useState(72);
   const commerce = useCommerce();
   const { user, ready, storageError, busy } = commerce;
   const lines = commerce.cart.lines;
@@ -534,8 +537,8 @@ export default function App() {
         <StatusBar style="dark" />
         <View
           style={s.flex}
-          accessibilityElementsHidden={intro || added}
-          importantForAccessibility={intro || added ? 'no-hide-descendants' : 'auto'}
+          accessibilityElementsHidden={intro || added || stylistOpen}
+          importantForAccessibility={intro || added || stylistOpen ? 'no-hide-descendants' : 'auto'}
         >
           <Text style={s.banner}>{t.demo}</Text>
           <View style={s.header}>
@@ -636,7 +639,37 @@ export default function App() {
           ) : (
             <Catalogue language={language} t={t} open={open} />
           )}
-          <View style={s.tabs} accessibilityRole="tablist">
+          {ready &&
+            !intro &&
+            !added &&
+            !['bag', 'checkout', 'order', 'account', 'detail'].includes(route.screen) && (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel={
+                  language === 'es'
+                    ? 'Abrir Maison Stylist, asesor de looks'
+                    : 'Open Maison Stylist, outfit adviser'
+                }
+                disabled={busy}
+                onPress={() => setStylistOpen(true)}
+                style={[s.stylistFloat, { bottom: tabsHeight + 14 }]}
+              >
+                <Text style={s.stylistMark} accessibilityElementsHidden>
+                  ✧
+                </Text>
+                <View>
+                  <Text style={s.stylistFloatTitle}>Maison Stylist</Text>
+                  <Text style={s.stylistFloatSubtitle}>
+                    {language === 'es' ? 'Tu asesor de looks' : 'Your outfit adviser'}
+                  </Text>
+                </View>
+              </Pressable>
+            )}
+          <View
+            onLayout={(event) => setTabsHeight(event.nativeEvent.layout.height)}
+            style={s.tabs}
+            accessibilityRole="tablist"
+          >
             {['catalogue', 'outfits', 'boutiques', 'bag', 'account'].map((screen) => {
               const selected =
                 route.screen === screen ||
@@ -695,6 +728,20 @@ export default function App() {
           </View>
         </View>
         {intro && <Intro language={language} onDone={() => setIntro(false)} />}
+        <Stylist
+          visible={stylistOpen}
+          onClose={() => setStylistOpen(false)}
+          language={language}
+          user={user}
+          openAccount={() => {
+            setStylistOpen(false);
+            setRoute({ screen: 'account' });
+          }}
+          openProduct={(id) => {
+            setStylistOpen(false);
+            open(id);
+          }}
+        />
         <SelectionNotice
           visible={added}
           title={t.added}
@@ -803,6 +850,30 @@ const s = StyleSheet.create({
     justifyContent: 'center',
   },
   badgeText: { color: '#fff', fontSize: 10, fontWeight: '700' },
+  stylistFloat: {
+    position: 'absolute',
+    maxWidth: '85%',
+    right: 16,
+    zIndex: 5,
+    elevation: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingVertical: 11,
+    paddingHorizontal: 17,
+    minHeight: 54,
+    borderRadius: 30,
+    backgroundColor: '#801d36',
+    borderWidth: 1,
+    borderColor: '#ad536c',
+    shadowColor: '#32101e',
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+  },
+  stylistMark: { color: '#fff8ee', fontSize: 29 },
+  stylistFloatTitle: { color: '#fff8ee', fontSize: 13, fontWeight: '500' },
+  stylistFloatSubtitle: { color: '#f0d8d3', fontSize: 11, marginTop: 3 },
   tabs: {
     flexDirection: 'row',
     justifyContent: 'space-around',

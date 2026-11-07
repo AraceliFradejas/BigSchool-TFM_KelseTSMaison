@@ -2751,3 +2751,196 @@ main:focus {
   background-repeat: no-repeat;
   background-position: right 14px center;
 }
+.stylist-launcher {
+  position: fixed;
+  z-index: 35;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 56px;
+  padding: 11px 20px;
+  border: 1px solid #ad536c;
+  border-radius: 32px;
+  background: #801d36;
+  color: #fff8ee;
+  box-shadow: 0 6px 24px #32101e30;
+  cursor: pointer;
+  text-align: left;
+}
+.stylist-launcher strong {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.stylist-launcher small {
+  display: block;
+  font-size: 0.65rem;
+  margin-top: 3px;
+  opacity: 0.9;
+}
+.stylist-launcher-mark {
+  font-size: 28px;
+  line-height: 1;
+}
+.stylist-launcher:hover {
+  background: #68172c;
+}
+.stylist-dialog {
+  position: fixed;
+  inset: 0 0 0 auto;
+  margin: 0;
+  width: min(640px, 100%);
+  max-width: 100%;
+  height: 100%;
+  height: 100dvh;
+  max-height: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-y: auto;
+  box-shadow: -12px 0 45px #190a1525;
+}
+.stylist-dialog::backdrop {
+  background: #1b111b75;
+}
+.stylist-dialog-content {
+  min-height: 100%;
+}
+.stylist-dialog-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 18px 24px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--serif);
+  font-size: 1.65rem;
+}
+.stylist-compact {
+  padding: 20px 24px 40px;
+}
+.stylist-compact .stylist-panel {
+  padding: 0;
+  background: transparent;
+  margin: 0 0 30px;
+}
+.stylist-compact .stylist-panel h2 {
+  display: none;
+}
+.stylist-compact .stylist-form {
+  grid-template-columns: 1fr 1fr;
+}
+.stylist-compact .stylist-form > .button {
+  grid-column: 1 / -1;
+}
+.stylist-compact .stylist-results > .mode-badge {
+  margin-bottom: 12px;
+}
+.stylist-compact .look-result .section-intro {
+  display: block;
+  margin-bottom: 16px;
+}
+.stylist-compact .look-result h2 {
+  font-size: 1.8rem;
+}
+.stylist-compact .look-result .product-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 14px;
+}
+@media (max-width: 400px) {
+  .stylist-compact {
+    padding-inline: 18px;
+  }
+  .stylist-compact .stylist-form {
+    grid-template-columns: 1fr;
+  }
+  .stylist-compact .stylist-form .checkbox-label {
+    grid-column: 1;
+  }
+  .stylist-launcher {
+    right: 14px;
+    bottom: max(14px, env(safe-area-inset-bottom));
+  }
+}
+.stylist-chat {
+  padding: 22px 24px 32px;
+}
+.stylist-chat-intro {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.stylist-chat-examples {
+  display: grid;
+  gap: 10px;
+  margin: 10px 0 25px;
+}
+.stylist-chat-examples button {
+  text-align: left;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.stylist-chat-message {
+  margin: 0 0 20px;
+  padding: 16px;
+  background: #eee8df;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.stylist-chat-message.is-user {
+  margin-left: 12%;
+  background: #f0dfe3;
+}
+.stylist-chat-speaker {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: #801d36;
+}
+.stylist-chat-message > p {
+  margin: 9px 0;
+}
+.stylist-chat-look {
+  padding-block: 18px;
+  border-top: 1px solid var(--line);
+}
+.stylist-chat-look h3 {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+.stylist-chat-look .product-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 12px;
+}
+.stylist-chat-composer {
+  display: grid;
+  gap: 12px;
+  margin-block: 20px 12px;
+}
+.stylist-chat-composer textarea {
+  width: 100%;
+  min-height: 90px;
+  resize: vertical;
+  padding: 13px;
+  border: 1px solid var(--line);
+  font: inherit;
+  font-size: 16px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.stylist-chat-composer .button {
+  justify-self: end;
+}
