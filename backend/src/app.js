@@ -101,7 +101,8 @@ export function createApp({ db, config, limits = true, cloudStorage, imageFetch 
           : status === 400
             ? 'invalid_input'
             : 'server_error';
-    if (status >= 500) console.error('Maison API:', error.message);
+    // Provider messages may contain query values, credentials or customer data.
+    if (status >= 500) console.error('Maison API: unexpected server error.');
     res.status(status).json({ success: false, error: code });
   });
   return app;

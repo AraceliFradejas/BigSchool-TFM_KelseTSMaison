@@ -1,0 +1,34 @@
+# Pruebas físicas de Maison · 7 de noviembre de 2026
+
+Versión local de desarrollo: Expo 58.0.23 (SDK 58), React Native 0.88.1, React 19.3.0. API utilizada por la app: la web HTTPS publicada de Maison; el backend publicado todavía no incorpora las correcciones locales de esta sesión. Acceso a la app por Metro LAN: no es una distribución permanente.
+
+Resultados comunicados por Araceli durante la prueba. No hay nuevas capturas físicas incorporadas todavía; no se sustituyen por imágenes de escritorio o emulación. Modelos y versiones de sistema de hoy no revalidados; el registro del 18/10 se conserva como histórico.
+
+| Dispositivo / recorrido | Resultado registrado | Alcance de la evidencia |
+| --- | --- | --- |
+| iPhone · intento inicial con SDK 57 | Bloqueado por incompatibilidad | Mensaje de Metro y confirmación de Araceli: Expo Go 58 frente a proyecto 57 |
+| iPhone · apertura y catálogo tras actualizar | Correcto, confirmado por Araceli | No acredita todas las fichas, filtros o estados |
+| iPhone · importes ES/EN | Corrección confirmada por Araceli tras recargar | El importe de 1.850,00 € conserva el separador de miles; pruebas compartidas de ambos idiomas correctas |
+| iPhone · registro y acceso | Correcto, Araceli confirma cuenta creada y que puede continuar | Cuenta de prueba con datos ficticios; no se guarda contraseña en el registro |
+| iPhone · pago DEMO rechazado | Correcto, confirmado por Araceli | Rechazo visible, bolsa conservada y sin pedido nuevo. No se ha medido el stock remoto en este paso |
+| iPhone · pago DEMO aceptado e historial | Correcto, confirmado por Araceli | Justificante con cargo real cero e historial. Pedido e3fbf7e2-e60b-4c17-9c21-af48641160dd, total simulado 1.900,00 €. Cancelado desde Team mediante API; líneas conservadas y reposición de stock comprobada. La sesión Team de prueba se cierra al terminar |
+| iPhone · reapertura y sesión | Pide acceder otra vez, confirmado por Araceli | El pedido persiste en el servidor. La persistencia de autenticación nativa tras cierre completo todavía no está resuelta |
+| iPhone · desconexión y recuperación | Pendiente | Error comprensible, reintento y ausencia de pedido duplicado |
+| iPad · SDK 58 | Pendiente | Apertura, zonas seguras, formulario, bolsa y recorrido privado |
+| Android · SDK 58 | Pendiente | Apertura, Atrás, cuenta, bolsa, pago y recorrido privado |
+| Mapas y ubicación | Pendiente | Probar también permiso denegado; no es necesario compartir ubicación real |
+
+El identificador se recuperó del historial después de cerrar la app. El primer texto comunicado tenía `360b` en lugar de `e60b`; la consulta exacta no encontró pedido y no realizó una cancelación. Se identificó la coincidencia única con el mismo prefijo y resto del UUID, y se canceló solo el pedido de prueba correcto. La conservación de sesión tras cierre completo de Expo Go se pregunta por separado y Araceli confirma que pide acceder otra vez.
+
+## Incidencia de comprensión del formulario
+
+Al intentar acceder con el correo de ejemplo antes de registrarlo, la API devolvió credenciales incorrectas. Se explicó la diferencia entre cuenta Maison y cuentas BigSchool/Expo. El formulario diferencia ahora «No tengo cuenta: registrarme» de «Ya tengo cuenta: acceder» y muestra errores concretos de los campos mediante el contrato compartido. El resultado posterior de creación se confirma por la autora; no se atribuye la incidencia a un fallo demostrado de almacenamiento de cookies.
+
+## Criterios para cerrar
+
+Registrar cada resultado real, errores observados y correcciones. Una apertura correcta no sustituye el pedido completo, y una exportación no sustituye la prueba física. Los pasos no ejecutados permanecen pendientes. Las operaciones comerciales son simulaciones académicas; no introducir datos bancarios o domicilios reales.
+
+
+## Ajustes visuales solicitados durante la prueba
+
+Araceli observa los controles nativos de acceso como texto rojo en iOS y el botón Aceptar del aviso de bolsa gris. Se extrae el botón Maison a un componente compartido y se usa en acceso/registro; el aviso de selección pasa a modal nativa con tarjeta Maison y botón rojo. Se mantienen etiquetas ES/EN, estados desactivados y tratamiento de Android Atrás. Exportaciones iOS/Android correctas; confirmación física del ajuste todavía pendiente.

@@ -1,3 +1,5 @@
+import Button from './Button';
+import SelectionNotice from './SelectionNotice';
 import Boutiques from './Boutiques';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -115,32 +117,7 @@ const words = {
     close: 'OK',
   },
 };
-function Button({ children, onPress, disabled, secondary, selected, ...props }) {
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityState={{
-        disabled: Boolean(disabled),
-        ...(selected === undefined ? {} : { selected }),
-      }}
-      disabled={disabled}
-      android_ripple={{ color: secondary ? '#b3152b22' : '#ffffff33' }}
-      onPress={onPress}
-      style={({ pressed }) => [
-        s.button,
-        secondary && s.secondary,
-        selected && s.selected,
-        disabled && s.dim,
-        pressed && Platform.OS === 'ios' && s.pressed,
-      ]}
-      {...props}
-    >
-      <Text style={[s.buttonText, secondary && s.secondaryText, selected && s.selectedText]}>
-        {children}
-      </Text>
-    </Pressable>
-  );
-}
+
 function Photo({ product, language, large = false, style }) {
   const [failed, setFailed] = useState(false);
   const uri = imageUrl(product?.image);
@@ -480,6 +457,7 @@ function Bag({ lines, change, language, t, open, user, onCheckout, onLogin }) {
 export default function App() {
   const [language, setLanguage] = useState('es');
   const [intro, setIntro] = useState(true);
+  const [added, setAdded] = useState(false);
   const t = words[language];
   const [route, setRoute] = useState({ screen: 'catalogue' });
   const commerce = useCommerce();
@@ -529,7 +507,7 @@ export default function App() {
   function add(product, variantId) {
     try {
       change(addToBag(lines, product, variantId));
-      Alert.alert(t.added, '', [{ text: t.close }]);
+      setAdded(true);
     } catch (e) {
       Alert.alert(t.stock);
     }
@@ -537,7 +515,7 @@ export default function App() {
   function addLook(pieces) {
     try {
       change(mergeCartSelection(lines, pieces));
-      Alert.alert(t.added, '', [{ text: t.close }]);
+      setAdded(true);
     } catch {
       Alert.alert(t.stock);
     }
@@ -555,8 +533,8 @@ export default function App() {
         <StatusBar style="dark" />
         <View
           style={s.flex}
-          accessibilityElementsHidden={intro}
-          importantForAccessibility={intro ? 'no-hide-descendants' : 'auto'}
+          accessibilityElementsHidden={intro || added}
+          importantForAccessibility={intro || added ? 'no-hide-descendants' : 'auto'}
         >
           <Text style={s.banner}>{t.demo}</Text>
           <View style={s.header}>
@@ -716,6 +694,12 @@ export default function App() {
           </View>
         </View>
         {intro && <Intro language={language} onDone={() => setIntro(false)} />}
+        <SelectionNotice
+          visible={added}
+          title={t.added}
+          accept={t.close}
+          onClose={() => setAdded(false)}
+        />
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -757,24 +741,9 @@ const s = StyleSheet.create({
     minHeight: 48,
   },
   chips: { gap: 8, paddingVertical: 12 },
-  button: {
-    backgroundColor: '#b3152b',
-    borderRadius: Platform.OS === 'ios' ? 14 : 24,
-    overflow: 'hidden',
-    paddingVertical: 13,
-    paddingHorizontal: 16,
-    minHeight: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: { color: '#fff', fontSize: 15, fontWeight: '600' },
-  secondary: { borderWidth: 0, backgroundColor: '#eeeae3' },
-  secondaryText: { color: '#242320' },
-  selected: { backgroundColor: '#f7dfe3' },
   selectedText: { color: '#a50e27', fontWeight: '700' },
   pressed: { opacity: 0.65, transform: [{ scale: 0.98 }] },
   backControl: { alignSelf: 'flex-start', minHeight: 44, justifyContent: 'center' },
-  dim: { opacity: 0.45 },
   grid: { padding: 16, paddingTop: 4 },
   gridRow: { gap: 12 },
   card: { flex: 1, maxWidth: '50%', marginBottom: 22 },

@@ -1,5 +1,7 @@
 # Evidencias de Maison
 
+[Registro de pruebas físicas del 7 de noviembre](dispositivos-2026-11-07.md): resultados confirmados por la autora, pendientes separados y sin nuevas capturas físicas todavía.
+
 La selección de la versión publicada está en [Capturas de producción del 18 de octubre de 2026](produccion-2026-10-18/README.md): diecinueve capturas de portada, catálogo, ficha, cuenta, bolsa, pedido, Team, comunicaciones, editor bilingüe y móvil emulado, con pies y límites de cada evidencia.
 
 ## Archivo histórico · Safari local

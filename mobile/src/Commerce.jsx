@@ -1,3 +1,4 @@
+import MaisonButton from './Button';
 import { fulfillmentSchema, fulfillmentCopy } from '@maison/contracts/fulfillment';
 import { DeliveryForm, DeliverySummary } from './Delivery';
 import { useRef, useState } from 'react';
@@ -15,6 +16,7 @@ import {
 } from 'react-native';
 import { paymentCopy } from '@maison/contracts/demo-payment';
 import { accountCopy, commerceError } from './commerce-copy';
+import { accountInput } from './account-input';
 import { useRemote } from './useRemote';
 import { money } from './model';
 const color = '#b3152b';
@@ -175,10 +177,11 @@ export function Account({ commerce, language, open }) {
   const [error, setError] = useState(null);
   async function submit() {
     setError(null);
-    const value = password;
-    setPassword('');
+    Keyboard.dismiss();
     try {
-      await commerce.login({ email, password: value, ...(register ? { name } : {}) }, register);
+      const input = accountInput({ email, password, name, register });
+      setPassword('');
+      await commerce.login(input, register);
     } catch (e) {
       setError(e);
     }
@@ -207,7 +210,8 @@ export function Account({ commerce, language, open }) {
         </>
       ) : (
         <>
-          <Text style={s.notice}>{t.help}</Text>
+          <Text style={s.heading}>{register ? t.register : t.login}</Text>
+          <Text style={s.notice}>{register ? t.help : t.loginHelp}</Text>
           {register && (
             <TextInput
               style={s.input}
@@ -243,21 +247,22 @@ export function Account({ commerce, language, open }) {
             maxLength={128}
             editable={!commerce.busy}
           />
-          <Button
-            color={color}
-            title={register ? t.register : t.login}
+          <MaisonButton
             disabled={commerce.busy || !email || !password || (register && !name)}
             onPress={submit}
-          />
-          <Button
-            color={color}
+          >
+            {register ? t.register : t.login}
+          </MaisonButton>
+          <MaisonButton
+            secondary
             disabled={commerce.busy}
-            title={register ? t.login : t.register}
             onPress={() => {
               setRegister(!register);
               setError(null);
             }}
-          />
+          >
+            {register ? t.switchToLogin : t.switchToRegister}
+          </MaisonButton>
         </>
       )}
       {error && (

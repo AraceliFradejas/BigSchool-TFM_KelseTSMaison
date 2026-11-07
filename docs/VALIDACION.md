@@ -1,5 +1,26 @@
 # Validación de la primera versión de Maison
 
+## Revisión local de cierre · 7 de noviembre de 2026
+
+La revisión de seguridad y refactorización se realiza sobre trabajo local posterior a `e933006`, todavía sin publicar. Se corrigieron cookies malformadas que provocaban errores en logout, validación incompleta de configuración, copia de mensajes inesperados de proveedores a logs y sobres JSON inválidos en el cliente compartido. Se extrajeron los textos de los estados del pedido a una política independiente de HTTP/persistencia.
+
+- Cinco pruebas nuevas de configuración/seguridad y tres de cliente HTTP fallaron antes de la corrección y pasaron después. Son errores reproducidos en entorno aislado, no ataques o incidentes detectados en producción.
+- Suite completa: **79 comprobaciones correctas**, 55 backend (incluidas subpruebas MongoDB), 9 cliente HTTP, 7 frontend y 8 modelos móviles; cero fallos y cero omisiones. MongoDB temporal con binario existente y dobles de Cloudinary, sin datos de producción.
+- Build web y exportación Hermes iOS/Android correctos tanto antes como después de migrar a SDK 58 y deduplicar React. Las 75 comprobaciones también se repitieron tras la alineación, con resultado correcto.
+- Chequeo del build web real con configuración de producción correcto tras los cambios: rutas, assets, cabeceras, salud, catálogo, imagen, acceso privado y 404. Se usa HTTP loopback y datos temporales; no acredita HTTPS público, Docker o recuperación en proveedores.
+- iPhone: al intentar abrir por LAN, Metro registra Expo Go SDK 58 incompatible con el proyecto SDK 57. Araceli confirma el mismo mensaje en el dispositivo. La red alcanza Metro; el recorrido móvil no se ha iniciado y no se cuenta como validado. Actualización a SDK 58 autorizada expresamente y completada: React/React Native deduplicados, Expo Doctor 20/20, exportaciones iOS/Android, build web y 75 comprobaciones correctas. Araceli confirma apertura y catálogo en iPhone. Araceli confirma también registro y acceso con una cuenta Maison de prueba. Rechazo/confirmación, reapertura, iPad y Android siguen pendientes. Registro por paso en [pruebas físicas del 7/11](evidencias/dispositivos-2026-11-07.md).
+
+En Safari sobre `http://127.0.0.1:4173`, con SQLite en memoria y datos ficticios, se ha navegado portada → Enchanted → selección de talla S → añadir a bolsa → cambio ES/EN → bolsa. La talla L agotada está desactivada; cambiar idioma conserva la talla seleccionada y la bolsa de una unidad, con precio 1.850,00 €. Evidencia observada mediante accesibilidad del navegador, sin nuevas capturas ni auditoría visual/lector de pantalla completa. No se crean pedidos ni se toca producción en este recorrido.
+
+Tras autorizar las actualizaciones compatibles del backend: Express 5.3.0, body-parser 2.4.0, Multer 2.5.0, qs 6.17.1 e ip-address 10.7.6. La suite final, incluida la regresión de moneda, pasa 79 comprobaciones. `npm audit --omit=dev`: cinco avisos moderados de herramientas Expo y cero altos/críticos; no se aplica `--force`. El chequeo público de solo lectura también pasa, sobre la versión previamente publicada y sin escribir datos.
+
+La instalación limpia se verificó en una copia temporal de archivos del proyecto sin `.env`, `docbase`, datos privados ni `node_modules` anteriores. El intento `npm ci --offline --ignore-scripts --no-audit --no-fund` falló porque Vite no estaba en caché; no se atribuye a un defecto del proyecto. Araceli autorizó descargar las dependencias del lockfile. `npm ci --ignore-scripts --no-audit --no-fund` completó, seguido de las 79 comprobaciones, build web y chequeo local de producción correctos. No se han necesitado scripts de instalación de terceros para estas comprobaciones. La exportación iOS/Android de la instalación limpia también es correcta. `npm run dev` arranca sin `.env`, con API local 3000 y Vite5173; consultas GET de salud y catálogo de 190 productos correctas en API y proxy. Proceso de prueba detenido después. Esto no comprueba la configuración de servicios privados del evaluador.
+
+En el iPhone Araceli detectó `1850,00 €` sin separador de miles. Se reprodujo el fallo simulando un motor Intl que ignora la opción de agrupación. El formateador compartido utiliza ahora los dígitos de los céntimos enteros, con punto de miles y coma decimal en ES/EN. Pasa la nueva prueba de regresión y las pruebas de todas las variantes de la semilla. Araceli confirma `1.850,00 €` tras recargar. También confirma rechazo DEMO con bolsa conservada y justificante aceptado con cargo real cero en el historial; pedido e3fbf7e2-e60b-4c17-9c21-af48641160dd cancelado desde Team, total simulado 1.900,00 €, cargo real cero y reposición de stock verificada. La sesión Team de prueba se cierra. Reapertura de sesión del cliente todavía en comprobación.
+
+La [matriz de revisión](REVISION-Y-CIERRE.md) enlaza criterios, implementación, evidencias y clases. Los apartados posteriores conservan el histórico y sus límites.
+
+
 ### Editor y subida desde Team publicado · 18 de octubre de 2026
 
 - He accedido sin error con mi nueva contraseña. Después se revisa la sesión ya abierta en Chrome de escritorio sobre la web publicada, sin volver a introducir credenciales ni cerrar mi sesión.

@@ -73,7 +73,7 @@ Abre el QR en Expo Go con móvil/tablet y ordenador en la misma Wi-Fi. En iPhone
 
 He comprobado la apertura en estos tres dispositivos. Me queda completar el recorrido de outfits y bolsa, registrar capturas nativas y revisar la conservación de la bolsa, la accesibilidad y los cambios de conexión en cada uno. El acceso, registro, historial y comunicaciones ya están implementados, junto con el checkout simulado y las boutiques; tengo pendiente probar estas ampliaciones en los tres dispositivos. Favoritos, gestión Team e IA siguen pendientes en la app. No hay publicación en tiendas ni binario de distribución.
 
-**Versiones del proyecto comprobadas en el lockfile:** Maison móvil 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10. He registrado estas versiones para reproducir el entorno de desarrollo. Exportación iOS/Android y Expo Doctor 21/21 correctos. Los detalles de las verificaciones y los avisos de dependencias están en [Validación](docs/VALIDACION.md) y en la guía móvil.
+**Versiones del proyecto comprobadas en el lockfile:** Maison móvil 0.1.0, Expo 58.0.23 (SDK 58), React Native 0.88.1, React 19.3.0 y expo-splash-screen 58.0.13. He registrado estas versiones para reproducir el entorno de desarrollo. Exportación iOS/Android y Expo Doctor 20/20 correctos (7/11/2026). Los detalles de las verificaciones y los avisos de dependencias están en [Validación](docs/VALIDACION.md) y en la guía móvil.
 
 ### Estructura y tecnologías
 
@@ -177,7 +177,7 @@ npm run build
 npm run check:production
 ```
 
-Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. Las últimas 67 comprobaciones automáticas han pasado. Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
+Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. Las últimas 79 comprobaciones automáticas han pasado (7 de noviembre de 2026). Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
 
 ### Capturas de la web publicada
 
@@ -225,6 +225,7 @@ La entrega del TFM reunirá código, README, acceso a la aplicación y slides. E
 
 - [Memoria del proyecto](MEMORIA.md).
 - [Arquitectura y reglas de tienda](docs/ARQUITECTURA.md).
+- [Revisión, criterios de cierre y aplicación del curso](docs/REVISION-Y-CIERRE.md).
 - [Validación](docs/VALIDACION.md) y [evidencias](docs/evidencias/README.md).
 - [Recursos y reutilización](docs/RECURSOS.md).
 - [Criterio de precios de lujo y actualización](docs/PRECIOS.md).
@@ -311,7 +312,7 @@ Open the QR in Expo Go with the device and computer on the same Wi-Fi. On iPhone
 
 I still need to complete outfit and bag checks, capture native screenshots, and test persistence, accessibility and connection changes on each device. Sign-in, registration, history, messages, simulated checkout and boutiques are implemented, but these extensions still need physical-device checks. Native favourites, Team management and AI remain pending. There are no distribution binaries or app-store releases.
 
-**Project versions recorded in the lockfile:** mobile app 0.1.0, Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 and expo-splash-screen 57.0.10. iOS/Android exports and Expo Doctor 21/21 passed. These checks are separate from physical-device testing; see [Validation](docs/VALIDACION.md).
+**Project versions recorded in the lockfile:** mobile app 0.1.0, Expo 58.0.23 (SDK 58), React Native 0.88.1, React 19.3.0 and expo-splash-screen 58.0.13. iOS/Android exports and Expo Doctor 20/20 passed (7 November 2026). These checks are separate from physical-device testing; see [Validation](docs/VALIDACION.md).
 
 ### Structure and technologies
 
@@ -415,7 +416,7 @@ npm run build
 npm run check:production
 ```
 
-Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. The latest 67 automated checks passed. Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
+Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. The latest 79 automated checks passed (7 November 2026). Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
 
 ### Published website screenshots
 
@@ -463,6 +464,7 @@ The final project will include code, README, application access and slides. [Del
 
 - [Project report](MEMORIA.md).
 - [Architecture and shop rules](docs/ARQUITECTURA.md).
+- [Review, acceptance criteria and course references (Spanish)](docs/REVISION-Y-CIERRE.md).
 - [Validation](docs/VALIDACION.md) and [evidence](docs/evidencias/README.md).
 - [Resources and reuse](docs/RECURSOS.md).
 - [Luxury pricing references and migration](docs/PRECIOS.md).

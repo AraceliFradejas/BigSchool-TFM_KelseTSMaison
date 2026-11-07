@@ -1,3 +1,4 @@
+import { combineGuestBag } from '@maison/contracts/cart-selection';
 import { mergeCartSelection } from './cart-selection';
 import { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 import { createApiClient } from '@maison/api-client';
@@ -112,13 +113,7 @@ export function Provider({ children }) {
   function authenticated(current) {
     const guest = user ? null : cart;
     const existing = readCart(current.id);
-    const combined = [...existing.lines];
-    for (const line of guest?.lines || []) {
-      const match = combined.find((item) => item.variantId === line.variantId);
-      if (match) match.quantity = Math.min(10, match.quantity + line.quantity);
-      else if (combined.length < 30) combined.push(line);
-    }
-    setCart(guest?.lines.length ? { key: crypto.randomUUID(), lines: combined } : existing);
+    setCart(combineGuestBag(existing, guest || { lines: [] }, () => crypto.randomUUID()));
     writeStorage('maison-bag:guest', emptyCart());
     userRef.current = current;
     setUser(current);

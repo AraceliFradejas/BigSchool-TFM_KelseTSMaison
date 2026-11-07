@@ -15,12 +15,4 @@ export function restoreCart(value, makeKey) {
     return { key: makeKey(), lines: [] };
   }
 }
-export function combineGuestBag(existing, guest, makeKey) {
-  const lines = existing.lines.map((line) => ({ ...line }));
-  for (const line of guest.lines) {
-    const match = lines.find((item) => item.variantId === line.variantId);
-    if (match) match.quantity = Math.min(10, match.quantity + line.quantity);
-    else if (lines.length < 30) lines.push({ ...line });
-  }
-  return guest.lines.length ? { key: makeKey(), lines } : existing;
-}
+export { combineGuestBag } from '@maison/contracts/cart-selection';

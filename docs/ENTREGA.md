@@ -1,13 +1,13 @@
 # Seguimiento de la entrega BigSchool
 
-La primera versión cubre el recorrido de tienda en local. El objetivo de trabajo sigue siendo cerrar el domingo **8 de noviembre de 2026** para una entrega manual el lunes **9 de noviembre**. Es mi objetivo de preparación, no una fecha impuesta por el enunciado.
+La web y la API están publicadas; existe además una app nativa en desarrollo con recorrido privado implementado, pendiente de validación física completa. El objetivo de trabajo sigue siendo cerrar el domingo **8 de noviembre de 2026** para una entrega manual el lunes **9 de noviembre**. Es mi objetivo de preparación, no una fecha impuesta por el enunciado.
 
 ## Requisitos de entrega
 
 | Material                                                                 | Estado                                                   |
 | ------------------------------------------------------------------------ | -------------------------------------------------------- |
 | Código y control de versiones                                            | Proyecto independiente preparado en este repositorio     |
-| README con descripción, stack, instalación, estructura y funcionalidades | Redactado en ES/EN para la primera versión local         |
+| README con descripción, stack, instalación, estructura y funcionalidades | Redactado en ES/EN; revisión final de coherencia en curso         |
 | Despliegue o publicación funcional                                       | Publicado en Vercel; comprobaciones de cierre en curso |
 | Slides y acceso desde el código o documentación                          | Presentación final pendiente                             |
 | Formulario de entrega                                                    | Lo cumplimentaré manualmente en el campus          |
@@ -24,14 +24,18 @@ Fuente académica: `Documentacion-TFM.pdf`, conservado como referencia privada. 
 - Looks manuales y selección por preferencias con modo editorial explícito.
 - Pruebas de API y cliente HTTP; build y comprobación de un recorrido en Safari.
 
-## Cierre pendiente
+## Cierre pendiente · revisión del 7 de noviembre
+
+La [matriz de entrega](REVISION-Y-CIERRE.md) vincula implementación, evidencias y criterios del curso. Las verificaciones locales de hoy no sustituyen la comprobación de la versión publicada.
+
+### Trabajo pendiente
 
 1. Completar los detalles editoriales que surjan de la revisión a resolución completa y de las pruebas de dispositivo. El 17 de octubre se revisaron las 190 imágenes en láminas de contacto y se comprobaron fichas de muestra con los nombres musicales; la pasarela ilustrada de 90 segundos ya está aceptada.
 2. Completar la validación de la versión publicada en Vercel con MongoDB y Cloudinary propios, incluida persistencia tras redeploy. El 17 de octubre se verificó en local el build con configuración de producción y la restauración independiente de datos ficticios; no acredita despliegue público ni Docker.
 3. Comprobar iPhone, iPad y Android; revisar teclado y lector de pantalla.
 4. Completar la auditoría de teclado y lector de pantalla. El 17 de octubre se revisaron el foco entre páginas, filtros, salto al contenido y cierre del menú con Escape; se corrigieron los problemas encontrados. Alta desde el formulario, acceso, redirección y recuperación de conexión comprobados en una base temporal aislada el 17 de octubre. Creación de producto bilingüe y subida de imagen desde Team comprobadas en una copia local aislada el 12 de octubre.
 5. Preparar slides y demostración sobre la versión desplegada; actualizar memoria y evidencias.
-6. Continuar con la app nativa y el asistente de IA de outfits, que forman parte de mis objetivos desde el 18 de octubre. Empezar por conectar y verificar los servicios compartidos; concretar después la implementación y el acceso del evaluador. La app comienza con catálogo, variantes y bolsa local en Expo; prueba física y recorrido privado pendientes. El asistente de IA sigue pendiente.
+6. Continuar con la app nativa y el asistente de IA de outfits, que forman parte de mis objetivos desde el 18 de octubre. Empezar por conectar y verificar los servicios compartidos; concretar después la implementación y el acceso del evaluador. La app incluye catálogo, outfits, variantes, sesión, bolsa por cuenta, pago simulado, pedidos y boutiques en Expo; prueba física privada completa y acceso del evaluador pendientes. El asistente de IA sigue pendiente.
 
 ## Calendario orientativo
 
@@ -55,7 +59,11 @@ Las horas disponibles siguen sin concretarse. Este calendario es una propuesta a
 7. Pruebas ejecutadas, decisiones y dificultades reales.
 8. Demostración, aprendizajes y siguientes pasos.
 
-Este guion no sustituye las slides exigidas para la entrega.
+El [guion desarrollado de presentación](GUION-PRESENTACION.md) prepara diez diapositivas, narración y demostración con referencias al curso. No sustituye las slides exigidas para la entrega, todavía pendientes.
+
+## Histórico de avances
+
+Las secciones siguientes conservan el estado de cada fecha. Las limitaciones ya superadas no describen el estado actual; para el cierre vigente consultar [Revisión y matriz de entrega](REVISION-Y-CIERRE.md).
 
 ## Cierre de sesión · 17 de octubre de 2026
 

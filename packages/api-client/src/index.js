@@ -25,11 +25,23 @@ export function createApiClient({ baseUrl = '/api/v1', fetchImpl = globalThis.fe
     let payload;
     try {
       payload = await response.json();
-    } catch {
+    } catch (error) {
+      if (error.name === 'AbortError' || signal?.aborted) throw error;
       throw new ApiError('invalid_response', response.status);
     }
+    if (
+      !payload ||
+      typeof payload !== 'object' ||
+      Array.isArray(payload) ||
+      typeof payload.success !== 'boolean' ||
+      (payload.success && !Object.hasOwn(payload, 'data'))
+    )
+      throw new ApiError('invalid_response', response.status);
     if (!response.ok || !payload.success)
-      throw new ApiError(payload.error || 'request_failed', response.status);
+      throw new ApiError(
+        typeof payload.error === 'string' ? payload.error : 'request_failed',
+        response.status,
+      );
     return payload.data;
   }
   return { request };

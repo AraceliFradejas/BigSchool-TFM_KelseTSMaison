@@ -43,7 +43,7 @@ MongoDB guarda documentos nativos, con variantes separadas, índices únicos par
 5. Copiar nombres, imagen, variante y precio; calcular subtotales y total en céntimos.
 6. Insertar el pedido y su mensaje. Confirmar el conjunto o revertirlo si falla cualquier paso.
 
-La huella se calcula con SHA-256 sobre las líneas ordenadas por identificador. La clave no se reutiliza para una bolsa distinta. El navegador conserva la misma clave si reintenta un pedido sin cambiar sus líneas.
+La huella se calcula con SHA-256 sobre las líneas ordenadas por identificador y, cuando hay pago simulado, también incluye el método, resultado, entrega y total revisado. La clave no se reutiliza para una bolsa distinta. El navegador conserva la misma clave si reintenta un pedido sin cambiar sus líneas.
 
 ## Estados
 
@@ -95,7 +95,7 @@ En MongoDB, `withTransaction` permite reintentar conflictos transitorios; la uni
 
 La API síncrona de SQLite encaja con una demostración pequeña y una sola instancia. No se han medido concurrencia de varios procesos ni cargas grandes. El almacenamiento exige disco persistente y copias coherentes de SQLite; copiar solo el archivo principal durante una escritura en WAL no basta.
 
-No hay recuperación de contraseña, verificación de correo, pagos, envíos reales, impuestos desglosados ni tarifas de transporte. El pedido usa únicamente precios ficticios finales. Tampoco hay correo externo, integración de IA ni app nativa. Cloudinary está probado con dobles y también con subida y lectura reales a través de la API de Maison.
+No hay recuperación de contraseña, verificación de correo, pagos, envíos reales, impuestos desglosados ni tarifas de transporte. El pedido usa únicamente precios ficticios finales. Tampoco hay correo externo ni integración de IA generativa. Existe una app nativa Expo/React Native con acceso, catálogo, outfits, bolsa, pedidos DEMO y boutiques; su validación física del recorrido privado y distribución para evaluación siguen pendientes. Cloudinary está probado con dobles y también con subida y lectura reales a través de la API de Maison.
 
 ## Referencias técnicas
 
@@ -103,3 +103,39 @@ No hay recuperación de contraseña, verificación de correo, pagos, envíos rea
 - [Vite](https://vite.dev/guide/).
 - [Sharp](https://sharp.pixelplumbing.com/).
 - [Zod](https://zod.dev/).
+
+
+## Revisión de responsabilidades · 7 de noviembre de 2026
+
+Los textos bilingües de los estados del pedido viven en `backend/src/domain/order-messages.js`. Los adaptadores SQLite y MongoDB comparten esa política sin que MongoDB importe las rutas HTTP de pedidos. Las escrituras de pedido, stock y comunicación siguen en la misma transacción; no se ha introducido una cola de eventos ni correo externo.
+
+`readConfig(env)` acepta una fuente explícita de configuración y usa `process.env` por defecto. Las pruebas suministran objetos independientes, sin modificar variables globales. Se validan protocolo y origen, puerto entero de 1 a 65535 y proveedores; Vercel fuerza modo de producción aunque falte `NODE_ENV`.
+
+Las cookies que no contienen el token hexadecimal esperado se ignoran tanto al consultar sesión como al acceder o salir. Los errores inesperados emiten un mensaje de servidor genérico sin copiar el mensaje de la dependencia a logs. No hay todavía trazas distribuidas o alertas operativas.
+
+El cliente HTTP compartido valida el sobre JSON: indicador `success` booleano y campo `data` presente en éxitos (incluido `null`, válido para una sesión no iniciada). Los errores conservan código de texto y estado HTTP; cancelar durante la lectura de JSON conserva la cancelación. Esto valida el sobre, no todos los campos de cada entidad ni la seguridad completa del servidor.
+
+### Secuencia de confirmación DEMO
+
+```mermaid
+sequenceDiagram
+  actor Cliente
+  participant UI as Web o app
+  participant API as API Maison
+  participant DB as MongoDB o SQLite
+  Cliente->>UI: Acepta simulación y confirma
+  UI->>API: Líneas, clave, total revisado y entrega
+  API->>API: Sesión y esquema
+  API->>DB: Iniciar transacción y buscar clave por cuenta
+  alt Mismo intento ya confirmado
+    DB-->>API: Pedido existente y huella
+    API-->>UI: Mismo pedido o conflicto si cambió la petición
+  else Intento nuevo
+    API->>DB: Leer producto y descontar stock condicionalmente
+    API->>API: Calcular total, validar simulación y copiar datos
+    API->>DB: Insertar pedido y comunicación
+    Note over API,DB: Commit conjunto o rollback ante un fallo
+    API-->>UI: Pedido DEMO con cargo real cero
+  end
+  UI-->>Cliente: Justificante e historial
+```

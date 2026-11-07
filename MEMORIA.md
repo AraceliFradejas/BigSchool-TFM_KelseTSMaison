@@ -22,7 +22,7 @@ El recorrido principal conecta portada, catálogo, ficha, elección de variante,
 
 La diferencia editorial está en «Completa tu look»: dieciséis colecciones reúnen prendas, calzado, bolsos, joyería y propuestas de belleza en veintiuna selecciones manuales y los treinta y seis looks de la pasarela. El buscador de combinaciones comprueba ocasión, paleta, presupuesto y stock. Esta primera versión utiliza reglas y selecciones manuales; no hace peticiones a un modelo de IA.
 
-La web tiene textos en castellano e inglés y CSS responsive. La app nativa ya tiene una primera versión con catálogo, outfits y bolsa local, descrita más adelante. He incorporado boutiques ficticias con mapa y entrega simulada. La integración con un proveedor de IA y las citas siguen pendientes. La web ya está publicada en [Vercel](https://kelsets-maison.vercel.app); las slides finales y las ampliaciones siguen pendientes de cierre.
+La web tiene textos en castellano e inglés y CSS responsive. La app nativa tiene catálogo, outfits, sesión, bolsa por cuenta, pago simulado, pedidos y boutiques, descritos más adelante; falta completar la validación física de ese recorrido. He incorporado boutiques ficticias con mapa y entrega simulada. La integración con un proveedor de IA y las citas siguen pendientes. La web ya está publicada en [Vercel](https://kelsets-maison.vercel.app); las slides finales y las ampliaciones siguen pendientes de cierre.
 
 ## 3 Organización técnica
 
@@ -181,3 +181,14 @@ He comprobado la ampliación publicada en Safari con un punto manual para las di
 ## Recorrido completo de compra con envío ficticio · 18 de octubre de 2026
 
 He completado en Chrome el recorrido de producto, variante, bolsa, destinatario, envío a domicilio, revisión del método ficticio, confirmación, justificante e historial. El pedido `4345dfb5-3d36-4c31-aa23-d538c5bfde59` conserva una unidad de Enchanted M por 1.850,00 €, destinatario Alex Maison y domicilio ficticio en Madrid. El justificante muestra la estimación del 21 al 23 de octubre de 2026, referencia DEMO y cargo real de 0,00 €. He comprobado la comunicación interna, abierto el detalle desde Team y cancelado el pedido para reponer la unidad. La ficha vuelve a mostrar ocho unidades y la bolsa queda vacía. Las [capturas 28–39](docs/evidencias/produccion-2026-10-18/README.md) documentan el recorrido publicado; la captura 27 añade la presentación de boutiques en la portada. No he realizado un pago ni un envío real, ni he validado aquí el envío de correo electrónico.
+
+
+## Revisión de cierre · 7 de noviembre de 2026
+
+He contrastado la implementación con los criterios de las clases de requisitos, principios de diseño, testing y seguridad. El detalle está en la [matriz de revisión](docs/REVISION-Y-CIERRE.md), con referencias a lecciones concretas y límites de las evidencias.
+
+La revisión detectó que una cookie JSON malformada podía hacer fallar el cierre de sesión y que el cliente HTTP no distinguía correctamente algunos sobres JSON inválidos. También faltaba validar el puerto de arranque y evitar que los mensajes inesperados del proveedor se copiaran en los logs. Se reprodujeron los fallos con pruebas y después se corrigieron.
+
+La refactorización ha sido acotada: los textos de los estados de pedido pasan a una política compartida independiente de HTTP y persistencia. La configuración admite una fuente explícita para poder probarla sin cambiar variables globales. No he cambiado de framework ni incorporado nuevos servicios por aparecer en el temario.
+
+Las 79 comprobaciones automatizadas y el build web pasan, al igual que la exportación iOS/Android. Son comprobaciones locales: no prueban por sí solas el uso físico de la app, la versión publicada tras nuevos cambios ni la recuperación de datos en los proveedores. La revisión y las propuestas de cambios se han realizado con asistencia de IA y se han contrastado con código, diferencias y pruebas ejecutadas.

@@ -162,3 +162,47 @@ test('closed runtime backup restores orders, sessions, stock and uploaded images
     source.close();
   }
 });
+
+test('malformed session cookies cannot break logout or a new login', async (t) => {
+  const { app } = setup(t);
+  await post(app, '/auth/register', registration).expect(201);
+  // cookie-parser decodes the JSON cookie prefix into an object rather than a token.
+  const malformed = 'maison_session=j:%7B%22invalid%22%3Atrue%7D';
+  const me = await request(app).get('/api/v1/auth/me').set('Cookie', malformed);
+  assert.equal(me.status, 200);
+  assert.equal(me.body.data, null);
+  const logout = await post(app, '/auth/logout', {}).set('Cookie', malformed);
+  assert.equal(logout.status, 200);
+  assert.match(logout.headers['set-cookie'][0], /Expires=Thu, 01 Jan 1970/);
+  const login = await post(app, '/auth/login', registrationWithoutName()).set('Cookie', malformed);
+  assert.equal(login.status, 200);
+  const cookie = login.headers['set-cookie'][0].split(';')[0];
+  assert.equal(
+    (await request(app).get('/api/v1/auth/me').set('Cookie', cookie)).body.data.email,
+    registration.email,
+  );
+});
+function registrationWithoutName() {
+  const { name, ...login } = registration;
+  return login;
+}
+
+test('unexpected provider errors expose neither private details in responses nor raw logs', async (t) => {
+  const { config } = setup(t);
+  const secret = 'private-provider-detail-do-not-log';
+  const logs = t.mock.method(console, 'error', () => {});
+  const db = {
+    kind: 'mongo',
+    async findSessionUser() {
+      throw new Error(secret);
+    },
+  };
+  const app = createApp({ db, config, limits: false });
+  const response = await request(app)
+    .get('/api/v1/auth/me')
+    .set('Cookie', `maison_session=${'a'.repeat(64)}`);
+  assert.equal(response.status, 500);
+  assert.deepEqual(response.body, { success: false, error: 'server_error' });
+  assert.equal(logs.mock.callCount(), 1);
+  assert.ok(!JSON.stringify(logs.mock.calls.map(({ arguments: args }) => args)).includes(secret));
+});

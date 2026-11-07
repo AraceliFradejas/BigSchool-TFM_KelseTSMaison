@@ -5,6 +5,11 @@ import { registerSchema, loginSchema } from '@maison/contracts';
 import { HttpError, parse, send } from '../http.js';
 const deriveKey = promisify(scrypt);
 const SESSION_DURATION_MS = 7 * 24 * 60 * 60 * 1000;
+// cookie-parser may decode JSON cookies into objects; only our opaque token is valid.
+const sessionToken = (req) => {
+  const value = req.cookies.maison_session;
+  return typeof value === 'string' && /^[a-f0-9]{64}$/.test(value) ? value : null;
+};
 const hashToken = (token) => createHash('sha256').update(token).digest('hex');
 const publicUser = (user) => ({ id: user.id, name: user.name, email: user.email, role: user.role });
 export async function hashPassword(password) {
@@ -19,8 +24,8 @@ async function verifyPassword(password, stored) {
 }
 export function sessionMiddleware(db) {
   return async (req, res, next) => {
-    const token = req.cookies.maison_session;
-    if (typeof token === 'string' && /^[a-f0-9]{64}$/.test(token)) {
+    const token = sessionToken(req);
+    if (token) {
       const user =
         db.kind === 'mongo'
           ? await db.findSessionUser(hashToken(token), Date.now())
@@ -57,10 +62,11 @@ export function authRouter(db, config, limiter) {
     maxAge: SESSION_DURATION_MS,
   };
   async function startSession(req, res, user) {
+    const oldToken = sessionToken(req);
     if (db.kind === 'mongo') {
       const token = randomBytes(32).toString('hex');
       await db.startSession(
-        req.cookies.maison_session && hashToken(req.cookies.maison_session),
+        oldToken && hashToken(oldToken),
         hashToken(token),
         user.id,
         Date.now() + SESSION_DURATION_MS,
@@ -68,10 +74,7 @@ export function authRouter(db, config, limiter) {
       res.cookie('maison_session', token, options);
       return publicUser(user);
     }
-    if (db.kind !== 'mongo' && req.cookies.maison_session)
-      db.prepare('DELETE FROM sessions WHERE token_hash=?').run(
-        hashToken(req.cookies.maison_session),
-      );
+    if (oldToken) db.prepare('DELETE FROM sessions WHERE token_hash=?').run(hashToken(oldToken));
     db.prepare('DELETE FROM sessions WHERE expires_at<=?').run(Date.now());
     const token = randomBytes(32).toString('hex');
     db.prepare('INSERT INTO sessions VALUES (?,?,?)').run(
@@ -118,12 +121,10 @@ export function authRouter(db, config, limiter) {
     send(res, await startSession(req, res, user));
   });
   router.post('/logout', async (req, res) => {
-    if (db.kind === 'mongo' && req.cookies.maison_session)
-      await db.deleteSession(hashToken(req.cookies.maison_session));
-    if (db.kind !== 'mongo' && req.cookies.maison_session)
-      db.prepare('DELETE FROM sessions WHERE token_hash=?').run(
-        hashToken(req.cookies.maison_session),
-      );
+    const token = sessionToken(req);
+    if (db.kind === 'mongo' && token) await db.deleteSession(hashToken(token));
+    if (db.kind !== 'mongo' && token)
+      db.prepare('DELETE FROM sessions WHERE token_hash=?').run(hashToken(token));
     const { maxAge, ...clearOptions } = options;
     res.clearCookie('maison_session', clearOptions);
     send(res, null);

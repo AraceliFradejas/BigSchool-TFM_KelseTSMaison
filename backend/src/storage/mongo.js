@@ -4,7 +4,7 @@ import { randomUUID, createHash } from 'node:crypto';
 import { products, collections, looks } from '../../../data/catalog.js';
 import { productSchema, checkoutSchema, transitions } from '@maison/contracts';
 import { HttpError, parse } from '../http.js';
-import { orderMessage } from '../modules/orders.js';
+import { orderMessage } from '../domain/order-messages.js';
 
 const clean = (row) => {
   if (!row) return null;

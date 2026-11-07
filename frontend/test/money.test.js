@@ -34,3 +34,13 @@ test('every seeded catalogue variant follows the Spanish thousands and decimal c
     );
   }
 });
+
+test('four-digit prices keep their separator when the native Intl engine ignores grouping strings', (t) => {
+  const NativeNumberFormat = Intl.NumberFormat;
+  t.mock.method(Intl, 'NumberFormat', function (locale, options) {
+    const { useGrouping, ...supported } = options;
+    return new NativeNumberFormat(locale, supported);
+  });
+  assert.equal(normalize(money(185000, 'es')), '1.850,00 €');
+  assert.equal(normalize(money(185000, 'en')), '1.850,00 €');
+});

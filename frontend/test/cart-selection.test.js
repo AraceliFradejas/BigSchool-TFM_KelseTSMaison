@@ -41,3 +41,34 @@ test('stock and 30-line limits include the existing cart and repeated selections
     /insufficient_stock/,
   );
 });
+
+test('merging saved bags preserves the account cap and retry key when there is no guest selection', async () => {
+  const { combineGuestBag } = await import('@maison/contracts/cart-selection');
+  const lines = Array.from({ length: 30 }, (_, i) => ({
+    productId: `p${i}`,
+    variantId: `p${i}-m`,
+    quantity: 1,
+  }));
+  const own = { key: 'existing', lines };
+  assert.equal(
+    combineGuestBag(own, { lines: [] }, () => {
+      throw new Error('unnecessary key');
+    }),
+    own,
+  );
+  const merged = combineGuestBag(
+    own,
+    {
+      lines: [
+        { productId: 'extra', variantId: 'extra-m', quantity: 1 },
+        { ...lines[0], quantity: 2 },
+      ],
+    },
+    () => 'changed',
+  );
+  assert.equal(merged.key, 'changed');
+  assert.equal(merged.lines.length, 30);
+  assert.equal(merged.lines[0].quantity, 3);
+  assert.equal(own.lines[0].quantity, 1);
+  assert.ok(!merged.lines.some((line) => line.variantId === 'extra-m'));
+});

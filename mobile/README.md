@@ -1,6 +1,6 @@
 # KelseTS Maison · app móvil
 
-Primera etapa nativa con React Native y Expo SDK 57, independiente de la web y conectada a su API HTTPS. Incluye catálogo paginado, búsqueda, categorías, ficha bilingüe con variantes, disponibilidad, outfits, bolsa por cuenta, acceso, pago simulado, historial y comunicaciones. Los componentes son nativos; no se utiliza un WebView.
+Primera etapa nativa con React Native y Expo SDK 58, independiente de la web y conectada a su API HTTPS. Incluye catálogo paginado, búsqueda, categorías, ficha bilingüe con variantes, disponibilidad, outfits, bolsa por cuenta, acceso, pago simulado, historial y comunicaciones. Los componentes son nativos; no se utiliza un WebView.
 
 ## Arranque
 
@@ -11,17 +11,17 @@ npm ci
 npm run mobile
 ```
 
-Instala Expo Go desde App Store o Google Play. Si no aparece la versión compatible en Google Play, utiliza la [página oficial de instalación Android para SDK 57](https://expo.dev/go?device=true&platform=android&sdkVersion=57), que proporciona la descarga oficial de Expo. Conecta móvil y ordenador a la misma Wi-Fi. En iPhone, escanea el QR de la terminal con Cámara; en Android, desde Expo Go. El ordenador y Metro deben permanecer encendidos. La dirección local cambia al cambiar de red; usa siempre el QR de la ejecución actual. No hace falta una clave de Atlas, Cloudinary ni una cuenta de pago de Expo.
+Instala Expo Go desde App Store o Google Play. Si no aparece la versión compatible en Google Play, utiliza la [página oficial de Expo Go](https://expo.dev/go), que proporciona la descarga oficial de Expo. Conecta móvil y ordenador a la misma Wi-Fi. En iPhone, escanea el QR de la terminal con Cámara; en Android, desde Expo Go. El ordenador y Metro deben permanecer encendidos. La dirección local cambia al cambiar de red; usa siempre el QR de la ejecución actual. No hace falta una clave de Atlas, Cloudinary ni una cuenta de pago de Expo.
 
 **Cuenta de Expo en iPhone:** desde septiembre de 2026, Expo Go para iOS con SDK 57 exige la misma cuenta iniciada en Expo Go y en la CLI del ordenador. Ejecuta `npx expo login` dentro de `mobile/`, completa el acceso y utiliza esa misma cuenta en Expo Go antes de abrir el QR. Expo recomienda también iniciar sesión en Android para ver los servidores de desarrollo. Véase el [aviso oficial de Expo](https://expo.dev/changelog/expo-go-57-login). Un mensaje de Cámara sobre contenido no válido no acredita por sí solo un fallo de cuenta: hay que distinguir si el enlace llega a abrir Expo Go.
 
-Se elige SDK 57 porque la [guía oficial de Expo](https://docs.expo.dev/get-started/create-a-project/) lo indica para Expo Go en dispositivos físicos durante la transición a SDK 58 (consulta del 18 de octubre de 2026). Las dependencias están fijadas en el lockfile. La configuración de Metro sigue la [guía oficial de monorepos](https://docs.expo.dev/guides/monorepos/).
+El 18/10 se eligió SDK 57 durante la transición de Expo Go. Desde el 7/11 el proyecto usa SDK 58 para abrir con el cliente actual del iPhone; véase el cierre de actualización al final de esta guía. Las dependencias están fijadas en el lockfile. La configuración de Metro sigue la [guía oficial de monorepos](https://docs.expo.dev/guides/monorepos/).
 
 ## Configuración
 
 La API predeterminada es `https://kelsets-maison.vercel.app/api/v1`. Para otro despliegue propio, copia `mobile/.env.example` a `mobile/.env` y cambia solo `EXPO_PUBLIC_API_URL` por su URL HTTPS terminada en `/api/v1`; reinicia Metro. Este valor es público y se incluye en el paquete. No pongas aquí contraseñas ni claves. La app no accede directamente a MongoDB ni Cloudinary.
 
-La bolsa guarda únicamente identificadores y cantidades en AsyncStorage. Al abrirla se consulta la API para recuperar precios y existencias; una pieza retirada o sin stock suficiente queda señalada y el total se oculta hasta corregirla. La bolsa del móvil es independiente de la del navegador. No reserva stock y no puede crear pedidos en esta etapa. Las reglas para añadir cantidades se comparten con la web mediante `@maison/contracts/cart-selection`.
+La bolsa guarda únicamente identificadores y cantidades en AsyncStorage. Al abrirla se consulta la API para recuperar precios y existencias; una pieza retirada o sin stock suficiente queda señalada y el total se oculta hasta corregirla. La bolsa del móvil es independiente de la del navegador. La bolsa no reserva stock. El pedido se crea únicamente desde la confirmación explícita del pago simulado, con sesión y validación del servidor. Las reglas para añadir cantidades se comparten con la web mediante `@maison/contracts/cart-selection`.
 
 ## Comprobaciones
 
@@ -32,7 +32,7 @@ cd mobile
 npx expo-doctor
 ```
 
-Exportación de los paquetes de iOS y Android correcta y 21/21 comprobaciones de Expo Doctor correctas. Esto comprueba el empaquetado y la configuración, no una ejecución en un teléfono ni un IPA/APK instalable. No se ha generado un binario de distribución ni publicado en tiendas. `mobile/dist/` queda fuera de Git.
+Comprobación del 7/11 tras actualizar: exportación de los paquetes de iOS y Android correcta y 20/20 comprobaciones de Expo Doctor correctas. Esto comprueba el empaquetado y la configuración, no una ejecución en un teléfono ni un IPA/APK instalable. No se ha generado un binario de distribución ni publicado en tiendas. `mobile/dist/` queda fuera de Git.
 
 He abierto la app en **iPhone, iPad y Android**. Falta completar y registrar el recorrido siguiente:
 
@@ -49,7 +49,7 @@ He abierto la app en **iPhone, iPad y Android**. Falta completar y registrar el 
 
 He incorporado acceso y registro, bolsa separada por cuenta, pago simulado, historial y comunicaciones. Tras acceder, la app vuelve a consultar la sesión en la API antes de mostrar la cuenta. No guardo contraseñas ni traslado las cookies del navegador. Tengo pendiente verificar este recorrido completo en los dispositivos; la apertura anterior no valida la sesión nativa. Favoritos, Team y asistente de IA siguen pendientes en la app.
 
-La revisión inicial de `npm audit --omit=dev` señala 22 avisos en el árbol Expo/React Native (7 moderados, 15 altos), con avisos base en braces, node-forge y uuid y propagación al resto del árbol. La corrección automática propone versiones mayores incompatibles o retrocesos de SDK: no se aplica `--force`. Debe revisarse la ruta de actualización compatible antes de preparar una distribución. No equivale a afirmar que cada aviso afecte al código empaquetado de la app.
+La revisión inicial del 18/10 registró 22 avisos de dependencias; es un dato histórico. Tras actualizar a SDK 58, `npm audit --omit=dev` del 7/11 registró inicialmente 9 avisos en el monorepo completo (7 moderados y 2 altos), no nueve vulnerabilidades demostradas en el bundle móvil. Después de las actualizaciones compatibles del backend quedan cinco moderados en herramientas de Expo y ninguno alto/crítico. Los cinco moderados siguen pendientes de resolución compatible. No se aplica `npm audit fix --force` ni el retroceso de SDK que propone para algunas cadenas.
 
 ## Adaptación de controles a iOS y Android
 
@@ -95,4 +95,22 @@ He ampliado el checkout con destinatario, domicilio o recogida y una revisión p
 
 La pestaña Boutiques muestra tres espacios ficticios Maison en los entornos de Serrano, Passeig de Gràcia y Puerto Banús. Incluye mapa nativo, fotografías acreditadas del entorno, selección para recogida y enlaces públicos a Street View. La ubicación solo se pide al pulsar «Calcular distancia»; también puedo elegir un punto en el mapa y olvidarlo. No guardo ese punto en AsyncStorage, en la cuenta ni en pedidos. La distancia es en línea recta, sin cálculo de rutas.
 
-Utilizo react-native-maps y expo-location compatibles con Expo Go SDK 57. Tengo pendiente comprobar sus mapas, permisos y el recorrido de entrega en iPhone, iPad y Android. Una futura distribución con Google Maps necesita configuración propia; no he añadido claves ni activado facturación. Referencias: [react-native-maps en Expo](https://docs.expo.dev/versions/v57.0.0/sdk/map-view/) y [Expo Location](https://docs.expo.dev/versions/v57.0.0/sdk/location/).
+Utilizo react-native-maps y expo-location alineados con Expo Go SDK 58; las referencias SDK 57 siguientes corresponden a la implementación inicial. Tengo pendiente comprobar sus mapas, permisos y el recorrido de entrega en iPhone, iPad y Android. Una futura distribución con Google Maps necesita configuración propia; no he añadido claves ni activado facturación. Referencias: [react-native-maps en Expo](https://docs.expo.dev/versions/v57.0.0/sdk/map-view/) y [Expo Location](https://docs.expo.dev/versions/v57.0.0/sdk/location/).
+
+
+## Actualización SDK 58 · 7 de noviembre de 2026
+
+La apertura de prueba en iPhone detectó incompatibilidad: Expo Go del dispositivo utiliza SDK 58 y el proyecto aún estaba en SDK 57. Araceli autorizó expresamente descargar y actualizar las dependencias oficiales. Se actualizó Expo, se alinearon sus módulos y se deduplicaron React/React Native en el monorepo; web y app utilizan React 19.3.0 para evitar las versiones duplicadas detectadas por Expo Doctor.
+
+Estado actual del proyecto: Expo 58.0.23, React Native 0.88.1, React 19.3.0, expo-splash-screen 58.0.13, expo-location 58.0.20 y react-native-maps 1.29.11. **Expo Doctor: 20/20**, exportaciones iOS/Android y regresión de 75 comprobaciones correctas tras la alineación. El recuento anterior 21/21 corresponde al diagnóstico anterior, no a una regresión de una comprobación.
+
+Araceli confirma que el iPhone ya abre Maison y muestra el catálogo con esta actualización. Esto acredita apertura y catálogo por confirmación de la autora; el recorrido privado completo, iPad y Android siguen pendientes en esta versión. Araceli confirma también la creación y acceso a una cuenta Maison de prueba. Se ha solicitado probar un rechazo DEMO conservando la bolsa, todavía sin resultado registrado. Registro de resultados en [pruebas físicas del 7/11](../docs/evidencias/dispositivos-2026-11-07.md).
+
+Para la prueba LAN: desde la raíz, `npm run start -w @maison/mobile -- --lan`. Abrir la dirección `exp://` que muestre Metro desde Expo Go, con dispositivos en la misma red. Esa URL depende de la red y requiere el Mac encendido: no es un acceso permanente de evaluación ni una publicación.
+
+Guía oficial consultada: [actualizar SDK de Expo](https://docs.expo.dev/workflow/upgrading-expo-sdk-walkthrough/) y [notas SDK 58](https://expo.dev/changelog/sdk-58). La actualización es una corrección de compatibilidad con el cliente de prueba actual, no la incorporación de nuevas funciones al producto. Las versiones y comprobaciones de los apartados históricos se conservan con su fecha.
+
+
+### Registro de cuenta durante la prueba
+
+Para una cuenta nueva hay que pulsar «Crear cuenta», completar nombre (2–80 caracteres), correo ficticio y contraseña nueva (10–128), y pulsar «Crear cuenta» para enviarlo. «Acceder» corresponde a una cuenta de Maison ya creada, no a las credenciales de BigSchool o Expo. El formulario utiliza los mismos esquemas de validación que la API y explica los errores por campo en ES/EN; no se necesita comunicar la contraseña a nadie. La bolsa continúa disponible en su pestaña tras entrar.

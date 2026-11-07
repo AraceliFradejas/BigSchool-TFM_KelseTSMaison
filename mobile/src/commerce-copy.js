@@ -4,6 +4,8 @@ export const accountCopy = {
     account: 'Mi cuenta',
     login: 'Acceder',
     register: 'Crear cuenta',
+    switchToRegister: 'No tengo cuenta: registrarme',
+    switchToLogin: 'Ya tengo cuenta: acceder',
     name: 'Nombre',
     email: 'Correo electrónico',
     password: 'Contraseña',
@@ -13,6 +15,8 @@ export const accountCopy = {
     empty: 'Todavía no tienes pedidos de demostración.',
     noMessages: 'Todavía no tienes comunicaciones.',
     help: 'Utiliza un correo ficticio y una contraseña propia de al menos 10 caracteres. No se envían correos externos.',
+    loginHelp:
+      'Accede con una cuenta de Maison ya creada. No utilices las credenciales de BigSchool ni de Expo.',
     retry: 'Reintentar',
     loading: 'Cargando…',
     detail: 'Detalle del pedido',
@@ -24,9 +28,13 @@ export const accountCopy = {
     cancelled: 'Cancelado',
     continue: 'Accede para continuar con tu bolsa',
     errors: {
+      invalid_email: 'Introduce un correo válido, por ejemplo alex@example.test.',
+      invalid_name: 'El nombre debe tener entre 2 y 80 caracteres.',
+      invalid_password: 'La contraseña debe tener entre 10 y 128 caracteres.',
       storage_unavailable:
         'No se puede guardar el intento en este dispositivo. Reintenta antes de confirmar.',
-      invalid_credentials: 'Revisa el correo y la contraseña.',
+      invalid_credentials:
+        'El correo o la contraseña no coinciden con una cuenta de Maison. Si todavía no la has creado, pulsa «No tengo cuenta: registrarme».',
       email_exists: 'Ya existe una cuenta con ese correo.',
       invalid_input: 'Revisa los datos y sus límites.',
       authentication_required: 'Accede a tu cuenta para continuar.',
@@ -45,6 +53,8 @@ export const accountCopy = {
     account: 'My account',
     login: 'Sign in',
     register: 'Create account',
+    switchToRegister: 'I need an account: register',
+    switchToLogin: 'I have an account: sign in',
     name: 'Name',
     email: 'Email',
     password: 'Password',
@@ -54,6 +64,8 @@ export const accountCopy = {
     empty: 'You have no demonstration orders yet.',
     noMessages: 'You have no messages yet.',
     help: 'Use a fictional email and your own password of at least 10 characters. No external emails are sent.',
+    loginHelp:
+      'Sign in with an existing Maison account. Do not use your BigSchool or Expo credentials.',
     retry: 'Retry',
     loading: 'Loading…',
     detail: 'Order details',
@@ -65,8 +77,12 @@ export const accountCopy = {
     cancelled: 'Cancelled',
     continue: 'Sign in to continue with your bag',
     errors: {
+      invalid_email: 'Enter a valid email, for example alex@example.test.',
+      invalid_name: 'Your name must have between 2 and 80 characters.',
+      invalid_password: 'Your password must have between 10 and 128 characters.',
       storage_unavailable: 'Cannot save this attempt on your device. Retry before confirming.',
-      invalid_credentials: 'Check your email and password.',
+      invalid_credentials:
+        'The email or password does not match a Maison account. If you have not created one, choose “I need an account: register”.',
       email_exists: 'An account already exists with that email.',
       invalid_input: 'Check the fields and their limits.',
       authentication_required: 'Sign in to continue.',

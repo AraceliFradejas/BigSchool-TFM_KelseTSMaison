@@ -21,3 +21,14 @@ export function mergeCartSelection(lines, pieces) {
   }
   return next;
 }
+
+// Merging saved bags does not reserve stock; availability is revalidated before checkout.
+export function combineGuestBag(existing, guest, makeKey) {
+  const lines = existing.lines.map((line) => ({ ...line }));
+  for (const line of guest.lines) {
+    const match = lines.find((item) => item.variantId === line.variantId);
+    if (match) match.quantity = Math.min(10, match.quantity + line.quantity);
+    else if (lines.length < 30) lines.push({ ...line });
+  }
+  return guest.lines.length ? { key: makeKey(), lines } : existing;
+}

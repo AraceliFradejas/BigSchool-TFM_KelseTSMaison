@@ -94,3 +94,47 @@ test('cancelled requests retain their abort error and custom abort reason', asyn
     (error) => error === reason,
   );
 });
+
+test('malformed JSON envelopes cannot escape as TypeErrors or successful undefined data', async () => {
+  for (const payload of [null, [], 'ok', {}, { success: 'true', data: [] }, { success: true }]) {
+    const client = createApiClient({
+      fetchImpl: async () => new Response(JSON.stringify(payload), { status: 200 }),
+    });
+    await assert.rejects(
+      client.request('/products'),
+      (error) =>
+        error instanceof ApiError && error.code === 'invalid_response' && error.status === 200,
+    );
+  }
+});
+
+test('untrusted error values remain translatable strings and null session data remains valid', async () => {
+  const client = createApiClient({
+    fetchImpl: async () =>
+      new Response(JSON.stringify({ success: false, error: { internal: 'private' } }), {
+        status: 503,
+      }),
+  });
+  await assert.rejects(
+    client.request('/products'),
+    (error) => error instanceof ApiError && error.code === 'request_failed' && error.status === 503,
+  );
+  assert.equal(
+    await createApiClient({ fetchImpl: async () => response(null) }).request('/auth/me'),
+    null,
+  );
+});
+
+test('cancellation while reading JSON keeps its abort reason', async () => {
+  const reason = new DOMException('Cancelled body', 'AbortError');
+  const client = createApiClient({
+    fetchImpl: async () => ({
+      ok: true,
+      status: 200,
+      async json() {
+        throw reason;
+      },
+    }),
+  });
+  await assert.rejects(client.request('/products'), (error) => error === reason);
+});

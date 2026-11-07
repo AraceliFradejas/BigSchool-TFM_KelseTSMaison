@@ -26,11 +26,12 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "Maison utiliza tu ubicaci\u00f3n solo cuando solicitas calcular la distancia aproximada a las boutiques ficticias.",
+          "locationWhenInUsePermission": "Maison utiliza tu ubicación solo cuando solicitas calcular la distancia aproximada a las boutiques ficticias.",
           "isAndroidBackgroundLocationEnabled": false,
           "isAndroidForegroundServiceEnabled": false
         }
-      ]
+      ],
+      "expo-status-bar"
     ]
   }
 }
