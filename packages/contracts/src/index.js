@@ -88,5 +88,10 @@ export const stylistSchema = z
     budgetCents: z.number().int().min(100).max(1000000),
     color: z.enum(['any', 'dark', 'red', 'natural', 'gold', 'green', 'silver']),
     excludeBeauty: z.boolean().default(false),
+    mode: z.enum(['editorial', 'ai']).default('editorial'),
+    language: z.enum(['es', 'en']).default('es'),
+    size: z.enum(['XS', 'S', 'M', 'L', 'XL', 'XXL']).optional(),
+    shoeSize: z.enum(['35', '36', '37', '38', '39', '40', '41', '42']).optional(),
+    style: z.string().trim().max(400).default(''),
   })
   .strict();

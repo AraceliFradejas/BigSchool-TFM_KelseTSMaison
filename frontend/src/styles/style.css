@@ -2670,3 +2670,59 @@ main:focus {
     height: 300px;
   }
 }
+
+/* Maison Stylist keeps the recommendation mode and data sharing explicit. */
+.stylist-ai-choice {
+  display: flex;
+  gap: 10px;
+  align-items: start;
+  margin-top: 20px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+.stylist-ai-choice input {
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+.stylist-style-note {
+  grid-column: 1 / -1;
+}
+.stylist-style-note textarea {
+  width: 100%;
+  font: inherit;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: inherit;
+  resize: vertical;
+}
+.stylist-style-note small {
+  display: block;
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.stylist-explanation {
+  max-width: 75ch;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+.stylist-ai-choice {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.stylist-form {
+  align-items: start;
+}
+.stylist-form > label:not(.checkbox-label) {
+  display: grid;
+  gap: 8px;
+}
+.stylist-form select,
+.stylist-form input:not([type='checkbox']) {
+  min-height: 44px;
+}
+.stylist-form > .button {
+  align-self: end;
+}

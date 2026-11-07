@@ -1,0 +1,56 @@
+import { eligibleLooks } from './editorial.js';
+import { claimStylistCall } from './quota.js';
+import { selectionSchema, stylistPrompt } from './prompt.js';
+import { requestStylistProvider } from './providers.js';
+
+export async function recommendLooks({
+  db,
+  config,
+  getLooks,
+  preferences,
+  signal,
+  requestProvider = requestStylistProvider,
+}) {
+  const candidates = eligibleLooks(await getLooks(), preferences);
+  const editorial = async (reason = null, latest) => ({
+    mode: 'editorial',
+    reason,
+    looks: (latest ?? eligibleLooks(await getLooks(), preferences)).slice(0, 3),
+    preferences,
+  });
+  if (preferences.mode !== 'ai') return editorial(null, candidates);
+  if (!config?.enabled) return editorial('not_configured', candidates);
+  if (!candidates.length) return editorial('no_candidates', candidates);
+  const shortlist = candidates.slice(0, 12);
+  const prompt = stylistPrompt(shortlist, preferences);
+  if (Buffer.byteLength(prompt.input, 'utf8') > 24576) return editorial('input_limit');
+  for (const settings of config.chain) {
+    if (signal?.aborted) return editorial('unavailable');
+    if (!(await claimStylistCall(db, config.dailyLimit))) return editorial('daily_limit');
+    let selection;
+    try {
+      selection = selectionSchema.parse(
+        await requestProvider(settings, prompt, { ...config, signal }),
+      );
+      const ids = selection.looks.map((look) => look.lookId);
+      if (
+        new Set(ids).size !== ids.length ||
+        ids.some((id) => !shortlist.some((look) => look.id === id))
+      )
+        throw new Error('invalid_selection');
+    } catch (error) {
+      if (error.kind === 'refusal') return editorial('refusal');
+      if (error.kind !== 'unavailable') return editorial('invalid_response');
+      continue;
+    }
+    // Re-read after provider latency; never return a now-sold-out or over-budget look.
+    const latest = eligibleLooks(await getLooks(), preferences);
+    const selected = selection.looks.map((item) => {
+      const look = latest.find((look) => look.id === item.lookId);
+      return look ? { ...look, explanation: item.explanation } : null;
+    });
+    if (selected.some((look) => !look)) return editorial('catalog_changed', latest);
+    return { mode: 'ai', provider: settings.provider, looks: selected, preferences };
+  }
+  return editorial('unavailable', eligibleLooks(await getLooks(), preferences));
+}

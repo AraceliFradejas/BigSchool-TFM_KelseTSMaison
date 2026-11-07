@@ -1,3 +1,4 @@
+import { claimStylistCall } from '../src/stylist/quota.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { tmpdir } from 'node:os';
@@ -45,6 +46,26 @@ test(
     });
     t.after(() => db.close());
     await db.seed();
+    await t.test(
+      'stylist quota is atomic across MongoDB store instances and provider attempts',
+      async () => {
+        const day = new Date('2030-01-01T00:00:00Z');
+        assert.equal(await claimStylistCall(db, 3, day), true);
+        const otherInstance = { kind: 'mongo', collection: (name) => db.collection(name) };
+        const claims = await Promise.all(
+          Array.from({ length: 12 }, (_, i) =>
+            claimStylistCall(i % 2 ? db : otherInstance, 3, day),
+          ),
+        );
+        assert.equal(claims.filter(Boolean).length, 2);
+        assert.equal(await claimStylistCall(otherInstance, 3, day), false);
+        assert.equal(
+          (await db.collection('stylist_usage').findOne({ _id: '2030-01-01' })).calls,
+          3,
+        );
+        assert.equal(await claimStylistCall(db, 3, new Date('2030-01-02T00:00:00Z')), true);
+      },
+    );
     const uploaded = new Map();
     const config = {
       production: true,

@@ -1,3 +1,4 @@
+import { stylistRouter } from './modules/stylist.js';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
@@ -10,7 +11,7 @@ import { catalogRouter, teamCatalogRouter } from './modules/catalog.js';
 import { ordersRouter, teamOrdersRouter } from './modules/orders.js';
 import { mediaRouter, imageDeliveryRouter } from './modules/media.js';
 
-export function createApp({ db, config, limits = true, cloudStorage, imageFetch }) {
+export function createApp({ db, config, limits = true, cloudStorage, imageFetch, stylistRequest }) {
   const app = express();
   app.disable('x-powered-by');
   if (config.trustProxy) app.set('trust proxy', 1);
@@ -66,7 +67,12 @@ export function createApp({ db, config, limits = true, cloudStorage, imageFetch 
   if (config.mediaStorage === 'cloudinary')
     app.use('/api/v1', imageDeliveryRouter(db, config, imageFetch));
   app.use('/api/v1/auth', authRouter(db, config, limiter(20, 15 * 60 * 1000)));
-  app.use('/api/v1', catalogRouter(db), ordersRouter(db));
+  app.use(
+    '/api/v1',
+    stylistRouter(db, config, limiter(8, 60 * 1000), stylistRequest),
+    catalogRouter(db),
+    ordersRouter(db),
+  );
   app.use(
     '/api/v1/team',
     teamCatalogRouter(db, config),

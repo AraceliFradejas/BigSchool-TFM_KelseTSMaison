@@ -87,7 +87,7 @@ La semilla utiliza WebP propios y conserva los SVG anteriores para referencias h
 
 `POST /stylist` valida ocasión, presupuesto, paleta y exclusión de belleza. Lee únicamente looks completos y productos activos; selecciona una variante disponible por pieza, calcula el total y devuelve hasta tres combinaciones que cumplan los criterios. No reserva stock ni modifica la bolsa. Cada incorporación se realiza explícitamente en la ficha.
 
-La respuesta identifica `mode: editorial`. No existe una integración de IA en esta versión. Un proveedor futuro deberá someter identificadores, disponibilidad y totales a estas mismas reglas del servidor.
+La respuesta identifica el modo utilizado. La integración de Maison Stylist está preparada y desactivada por defecto: la selección pública sigue siendo editorial hasta configurar y verificar los proveedores. La IA solo puede seleccionar y explicar combinaciones candidatas; identificadores, disponibilidad, tallas y totales se validan en el servidor. [Diseño, activación y límites](MAISON-STYLIST.md).
 
 ## Límites de esta versión
 
@@ -95,7 +95,7 @@ En MongoDB, `withTransaction` permite reintentar conflictos transitorios; la uni
 
 La API síncrona de SQLite encaja con una demostración pequeña y una sola instancia. No se han medido concurrencia de varios procesos ni cargas grandes. El almacenamiento exige disco persistente y copias coherentes de SQLite; copiar solo el archivo principal durante una escritura en WAL no basta.
 
-No hay recuperación de contraseña, verificación de correo, pagos, envíos reales, impuestos desglosados ni tarifas de transporte. El pedido usa únicamente precios ficticios finales. Tampoco hay correo externo ni integración de IA generativa. Existe una app nativa Expo/React Native con acceso, catálogo, outfits, bolsa, pedidos DEMO y boutiques; su validación física del recorrido privado y distribución para evaluación siguen pendientes. Cloudinary está probado con dobles y también con subida y lectura reales a través de la API de Maison.
+No hay recuperación de contraseña, verificación de correo, pagos, envíos reales, impuestos desglosados ni tarifas de transporte. El pedido usa únicamente precios ficticios finales. Tampoco hay correo externo ni asesoría generativa activada y verificada. Existe una app nativa Expo/React Native con acceso, catálogo, outfits, bolsa, pedidos DEMO y boutiques; su validación física del recorrido privado y distribución para evaluación siguen pendientes. Cloudinary está probado con dobles y también con subida y lectura reales a través de la API de Maison.
 
 ## Referencias técnicas
 
@@ -154,3 +154,10 @@ Cerrar sesión revoca el token en servidor y retira la copia local. Una sesión 
 La web conserva la cookie HttpOnly, Secure en producción y SameSite=Lax. Se comprueban ambos adaptadores, permisos, expiración, rotación/revocación y límite compartido entre login web y nativo. Los dobles de almacenamiento prueban restauración y errores; no sustituyen el cierre y reapertura en teléfono. Esta implementación debe publicarse y verificarse físicamente antes de declararla cerrada.
 
 Fuentes oficiales consultadas el 7/11: [SecureStore](https://docs.expo.dev/versions/v58.0.0/sdk/securestore/) y [limitaciones de cookies en React Native](https://reactnative.dev/docs/network#known-issues-with-fetch-and-cookie-based-authentication). SecureStore está incluido en Expo Go y usa almacenamiento protegido por plataforma; sus límites no equivalen a una garantía contra un dispositivo comprometido.
+
+
+## Maison Stylist · integración desactivada
+
+`stylist/editorial.js` aplica las restricciones compartidas. El servicio construye una lista de hasta doce candidatos, consulta Gemini → Claude → OpenAI ante fallos técnicos y valida la respuesta mediante Zod. Cada consulta utiliza un contador diario persistente antes de salir al proveedor; MongoDB usa una actualización condicional atómica sobre el mismo documento de día y SQLite un UPSERT condicional. Tras la respuesta se vuelve a leer el catálogo.
+
+Los adaptadores HTTP tienen destinos fijos, rechazan redirecciones, acotan tiempo, salida y cuerpo recibido y no incorporan herramientas externas ni acceso a cuentas o pedidos. No se cambia de modelo tras negativas o respuestas inválidas. La interfaz distingue modo editorial e IA, muestra el proveedor que respondió y pide acceso para la asesoría IA. En producción sigue apagada hasta configurar claves y ejecutar ensayos reales autorizados. No es un sistema multiagente ni un agente con autonomía de compra.

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { z } from 'zod';
 import { validateProductImage } from './media.js';
-import { productSchema, stylistSchema, catalogQuerySchema, variantSize } from '@maison/contracts';
+import { productSchema, catalogQuerySchema, variantSize } from '@maison/contracts';
 import { HttpError, parse, send } from '../http.js';
 import { transaction } from '../db.js';
 import { requireUser, requireTeam } from './auth.js';
@@ -122,46 +122,6 @@ export function catalogRouter(db) {
     send(res, product);
   });
   router.get('/looks', async (req, res) => send(res, await getLooks(db)));
-  router.post('/stylist', async (req, res) => {
-    const preferences = parse(stylistSchema, req.body);
-    const results = (await getLooks(db))
-      .filter((look) => look.complete)
-      .map((look) => {
-        const products = look.products.filter(
-          (item) => !preferences.excludeBeauty || item.category !== 'beauty',
-        );
-        const pieces = products.map((product) => ({
-          product,
-          variant: product.variants.find((variant) => variant.stock > 0),
-        }));
-        const totalCents = pieces.reduce(
-          (total, piece) => total + (piece.variant?.priceCents || 0),
-          0,
-        );
-        const fashion = products.find((item) => item.category === 'fashion');
-        const fitsOccasion =
-          preferences.occasion === 'any' ||
-          look.mood === preferences.occasion ||
-          fashion?.tags.includes(preferences.occasion);
-        const fitsColor =
-          preferences.color === 'any' ||
-          products.some((item) => item.tags.includes(preferences.color));
-        return {
-          ...look,
-          pieces,
-          totalCents,
-          valid:
-            pieces.length >= 2 &&
-            pieces.every((piece) => piece.variant) &&
-            fitsOccasion &&
-            fitsColor &&
-            totalCents <= preferences.budgetCents,
-        };
-      })
-      .filter((look) => look.valid)
-      .slice(0, 3);
-    send(res, { mode: 'editorial', looks: results, preferences });
-  });
   router.get('/favorites', requireUser, async (req, res) =>
     send(
       res,

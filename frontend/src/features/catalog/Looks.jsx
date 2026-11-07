@@ -3,7 +3,14 @@ import { useState } from 'react';
 import { useMaison, useResource, api } from '../../shared/state';
 import { PageHeading, Money, ProductGrid, ResourceState } from '../../shared/components';
 export default function Looks() {
-  const { language, t, errorText } = useMaison();
+  const { language, t, errorText, user } = useMaison();
+  const availability = useResource('/stylist/status');
+  const [useAI, setUseAI] = useState(false);
+  const es = language === 'es';
+  const providerNames = (availability.data?.providers || [])
+    .map((provider) => ({ gemini: 'Gemini', anthropic: 'Claude', openai: 'OpenAI' })[provider])
+    .filter(Boolean)
+    .join(' → ');
   const resource = useResource('/looks');
   const [result, setResult] = useState(null);
   const [busy, setBusy] = useState(false);
@@ -25,6 +32,11 @@ export default function Looks() {
             color: values.get('color'),
             budgetCents: Math.round(Number(values.get('budget')) * 100),
             excludeBeauty: values.has('excludeBeauty'),
+            mode: useAI ? 'ai' : 'editorial',
+            language,
+            size: values.get('size') || undefined,
+            shoeSize: values.get('shoeSize') || undefined,
+            style: useAI ? values.get('style') || '' : '',
           },
         }),
       );
@@ -40,16 +52,38 @@ export default function Looks() {
       <Link className="text-link" to="/runway">
         {language === 'es' ? 'Comprar los 36 looks de la pasarela' : 'Shop the 36 runway looks'}
       </Link>
-      <section className="stylist-panel">
+      <section className="stylist-panel" aria-busy={busy}>
         <div>
-          <h2>{t.stylist}</h2>
-          <p>{t.stylistIntro}</p>
-          <span className="mode-badge">{t.editorialMode}</span>
+          <h2>Maison Stylist</h2>
+          <p>
+            {es
+              ? 'Tu plan, tus colores, tu manera de llevarlo. Encuentra una combinación de nuestra selección.'
+              : 'Your plans, your colours, your way to wear them. Find a combination from our selection.'}
+          </p>
+          <span className="mode-badge">
+            {useAI ? (es ? 'Asesoría con IA' : 'AI styling') : t.editorialMode}
+          </span>
+          {availability.data?.available && (
+            <label className="stylist-ai-choice">
+              <input
+                type="checkbox"
+                disabled={busy}
+                checked={useAI}
+                onChange={(event) => {
+                  setUseAI(event.target.checked);
+                  setResult(null);
+                }}
+              />
+              {es
+                ? 'Personalizar con inteligencia artificial'
+                : 'Personalise with artificial intelligence'}
+            </label>
+          )}
         </div>
         <form className="stylist-form" onSubmit={submit}>
           <label>
             {t.occasion}
-            <select name="occasion">
+            <select disabled={busy} name="occasion">
               {[
                 'any',
                 'dinner',
@@ -69,6 +103,7 @@ export default function Looks() {
           <label>
             {t.budget}
             <input
+              disabled={busy}
               name="budget"
               type="number"
               min="1"
@@ -86,7 +121,7 @@ export default function Looks() {
           </label>
           <label>
             {t.color}
-            <select name="color">
+            <select disabled={busy} name="color">
               {['any', 'dark', 'red', 'natural', 'gold', 'green', 'silver'].map((value) => (
                 <option key={value} value={value}>
                   {t[value]}
@@ -94,13 +129,58 @@ export default function Looks() {
               ))}
             </select>
           </label>
+          <label>
+            {es ? 'Talla de ropa (opcional)' : 'Clothing size (optional)'}
+            <select disabled={busy} name="size">
+              <option value="">{es ? 'Sin preferencia' : 'No preference'}</option>
+              {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                <option key={size}>{size}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            {es ? 'Calzado (opcional)' : 'Shoe size (optional)'}
+            <select disabled={busy} name="shoeSize">
+              <option value="">{es ? 'Sin preferencia' : 'No preference'}</option>
+              {['35', '36', '37', '38', '39', '40', '41', '42'].map((size) => (
+                <option key={size}>{size}</option>
+              ))}
+            </select>
+          </label>
+          {useAI && (
+            <label className="stylist-style-note">
+              {es ? '¿Qué estilo te apetece?' : 'What style do you have in mind?'}
+              <textarea
+                disabled={busy}
+                name="style"
+                maxLength={400}
+                rows={3}
+                placeholder={
+                  es
+                    ? 'Por ejemplo: una cena relajada, con un toque romántico.'
+                    : 'For example: a relaxed dinner with a romantic touch.'
+                }
+              />
+              <small>
+                {es
+                  ? `Describe solo tu estilo, sin datos personales. Tus preferencias y una selección del catálogo se enviarán a ${providerNames}, por ese orden si hay fallos técnicos. La sugerencia no modifica tu bolsa.`
+                  : `Describe only your style, without personal details. Your preferences and a catalogue selection will be sent to ${providerNames}, in that order if technical failures occur. Suggestions do not change your bag.`}
+              </small>
+            </label>
+          )}
           <label className="checkbox-label">
-            <input type="checkbox" name="excludeBeauty" />
+            <input disabled={busy} type="checkbox" name="excludeBeauty" />
             {t.excludeBeauty}
           </label>
-          <button className="button" disabled={busy}>
-            {busy ? t.working : t.find}
-          </button>
+          {useAI && !user ? (
+            <Link className="button" to="/account">
+              {es ? 'Acceder para usar la asesoría IA' : 'Sign in for AI styling'}
+            </Link>
+          ) : (
+            <button className="button" disabled={busy}>
+              {busy ? t.working : t.find}
+            </button>
+          )}
         </form>
         {error && (
           <p className="form-error" role="alert">
@@ -110,6 +190,19 @@ export default function Looks() {
       </section>
       {result && (
         <section className="stylist-results" aria-live="polite">
+          <p className="mode-badge">
+            {result.mode === 'ai'
+              ? `${es ? 'Sugerencias con IA' : 'AI suggestions'} · ${{ gemini: 'Gemini', anthropic: 'Claude', openai: 'OpenAI' }[result.provider] || 'IA'}`
+              : t.editorialMode}
+          </p>
+          {useAI && result.mode === 'editorial' && (
+            <p>
+              {es
+                ? 'Esta vez te mostramos nuestra selección editorial, sin IA. Se mantienen tus filtros de ocasión, color, tallas y presupuesto.'
+                : 'This time we are showing our editorial selection, without AI. Your occasion, colour, size and budget filters still apply.'}
+            </p>
+          )}
+
           {result.looks.length === 0 ? (
             <div className="empty-state">{t.noLooks}</div>
           ) : (
@@ -124,6 +217,11 @@ export default function Looks() {
                     </strong>
                   </p>
                 </div>
+                {look.explanation && (
+                  <p className="stylist-explanation" lang={result.preferences.language}>
+                    {look.explanation}
+                  </p>
+                )}
                 <ProductGrid
                   products={look.pieces.map((piece) => ({
                     ...piece.product,

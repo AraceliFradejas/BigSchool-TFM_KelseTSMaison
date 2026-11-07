@@ -191,4 +191,11 @@ La revisión detectó que una cookie JSON malformada podía hacer fallar el cier
 
 La refactorización ha sido acotada: los textos de los estados de pedido pasan a una política compartida independiente de HTTP y persistencia. La configuración admite una fuente explícita para poder probarla sin cambiar variables globales. No he cambiado de framework ni incorporado nuevos servicios por aparecer en el temario.
 
-Las 97 comprobaciones automatizadas y el build web pasan, al igual que la exportación iOS/Android. Son comprobaciones locales: no prueban por sí solas el uso físico de la app, la versión publicada tras nuevos cambios ni la recuperación de datos en los proveedores. La revisión y las propuestas de cambios se han realizado con asistencia de IA y se han contrastado con código, diferencias y pruebas ejecutadas.
+Las 111 comprobaciones automatizadas y el build web pasan, al igual que la exportación iOS/Android. Son comprobaciones locales: no prueban por sí solas el uso físico de la app, la versión publicada tras nuevos cambios ni la recuperación de datos en los proveedores. La revisión y las propuestas de cambios se han realizado con asistencia de IA y se han contrastado con código, diferencias y pruebas ejecutadas.
+
+
+## Maison Stylist · preparación de la integración, 7 de noviembre de 2026
+
+He preparado la primera integración del recomendador con Gemini, Claude y OpenAI, en ese orden. Parte de combinaciones existentes y permite que el modelo seleccione y explique hasta tres; el backend conserva las restricciones de ocasión, color, tallas, disponibilidad y presupuesto. No crea pedidos ni añade piezas a la bolsa automáticamente. Los fallos técnicos permiten consultar el siguiente proveedor; negativas y respuestas inválidas vuelven al modo editorial.
+
+La integración está desactivada por defecto. Las pruebas ejecutadas usan respuestas simuladas y no acreditan acceso a los modelos, calidad estética, latencia ni coste real. Quedan pendientes las claves específicas de Maison y los ensayos reales autorizados. El detalle, fuentes técnicas y referencias a las clases está en [Maison Stylist](docs/MAISON-STYLIST.md). Esta fase no se presenta como un sistema multiagente ni como una función generativa ya verificada en producción.

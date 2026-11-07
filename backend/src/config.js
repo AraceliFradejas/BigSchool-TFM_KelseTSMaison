@@ -1,3 +1,4 @@
+import { readStylistConfig } from './stylist/config.js';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { existsSync } from 'node:fs';
@@ -58,6 +59,7 @@ export function readConfig(env = process.env) {
     ? path.join(frontendDir, 'media')
     : fileURLToPath(new URL('../../frontend/public/media', import.meta.url));
   return {
+    stylist: readStylistConfig(env),
     production,
     serverless,
     databaseProvider,

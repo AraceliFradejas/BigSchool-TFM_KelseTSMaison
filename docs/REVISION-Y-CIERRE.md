@@ -91,3 +91,8 @@ Araceli autoriza persistencia segura de sesión con Expo SecureStore. Se impleme
 Resultado local: 86 comprobaciones correctas, build web, chequeo local de producción y exportaciones iOS/Android correctos; Expo Doctor 20/20. La instalación limpia anterior (79 comprobaciones) corresponde al primer bloque; no se presenta como una instalación limpia de este segundo bloque.
 
 Los botones de acceso, pago, entrega, recogida y exploración de boutiques pasan al componente Maison con fondo/borde y estados accesibles; el aviso de bolsa utiliza modal con Aceptar rojo. La prueba física final de estos ajustes y de persistencia queda pendiente de publicar la API actualizada. No se ha hecho push ni desplegado este bloque todavía.
+
+
+## Maison Stylist · fase de integración
+
+Integración preparada, desactivada por defecto, con orden Gemini → Claude → OpenAI y retorno editorial. Suite actual: 111 correctas; las respuestas de IA de estas pruebas son dobles, no resultados de los proveedores. La [guía del asesor](MAISON-STYLIST.md) relaciona límites, contratos y referencias a las clases. Permanecen pendientes claves propias, pruebas reales autorizadas y evaluación de calidad.

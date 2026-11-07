@@ -19,6 +19,7 @@ export function openDatabase(filename = ':memory:') {
     CREATE TABLE IF NOT EXISTS orders (id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), idempotency_key TEXT NOT NULL, request_hash TEXT NOT NULL, lines TEXT NOT NULL, total_cents INTEGER NOT NULL, status TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, UNIQUE(user_id, idempotency_key));
     CREATE INDEX IF NOT EXISTS orders_user ON orders(user_id);
     CREATE TABLE IF NOT EXISTS demo_payments (order_id TEXT PRIMARY KEY REFERENCES orders(id), data TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS stylist_usage (day TEXT PRIMARY KEY, calls INTEGER NOT NULL CHECK(calls > 0));
     CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), order_id TEXT REFERENCES orders(id), data TEXT NOT NULL, created_at TEXT NOT NULL);
     CREATE INDEX IF NOT EXISTS messages_user ON messages(user_id);`);
   return db;

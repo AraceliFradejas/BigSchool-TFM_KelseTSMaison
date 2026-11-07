@@ -38,7 +38,7 @@ Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS 
 
 El pago es una simulación académica: puedo elegir una cuenta bancaria ficticia, tarjeta ficticia o PayPal simulado; en la app también Apple Pay simulado en iOS o Samsung Pay simulado en Android. Antes de confirmar acepto el aviso de que no compro nada. El justificante DEMO indica un cargo real de **0,00 €**. No hay pasarela, SDK de pagos, campos de datos bancarios ni conexión con esos servicios. Puedo simular un rechazo sin crear pedido ni descontar stock.
 
-«Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. Está identificado como **modo editorial, sin IA**. Maison Stylist con un proveedor de IA sigue pendiente. La [app nativa](mobile/README.md) incorpora catálogo, variantes, outfits musicales, bolsa por cuenta, acceso, historial y comunicaciones. He probado la apertura en iPhone, iPad y Android; todavía tengo que validar el nuevo recorrido privado en los dispositivos.
+«Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. Está identificado como **modo editorial, sin IA**. [Maison Stylist](docs/MAISON-STYLIST.md) tiene preparada la integración Gemini → Claude → OpenAI, desactivada hasta configurar claves y verificar respuestas reales. La [app nativa](mobile/README.md) incorpora catálogo, variantes, outfits musicales, bolsa por cuenta, acceso, historial y comunicaciones. He probado la apertura en iPhone, iPad y Android; todavía tengo que validar el nuevo recorrido privado en los dispositivos.
 
 ### Entrega y boutiques de demostración
 
@@ -177,7 +177,7 @@ npm run build
 npm run check:production
 ```
 
-Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. Las últimas 97 comprobaciones automáticas han pasado (7 de noviembre de 2026). Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
+Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. Las últimas 111 comprobaciones automáticas han pasado (7 de noviembre de 2026). Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
 
 ### Capturas de la web publicada
 
@@ -277,7 +277,7 @@ After the AFM Moda Oceánica landing page and the full stack journey of KelseTS 
 
 Payment is an academic simulation: fictional bank account, fictional card or simulated PayPal, plus simulated Apple Pay on iOS or Samsung Pay on Android. Before confirming I acknowledge that no purchase takes place. The DEMO receipt shows a real charge of **0,00 €**. There is no payment gateway, payment SDK, banking-data form or connection to these services. A simulated decline creates no order and changes no stock.
 
-“Complete your look” uses manual selections and actual catalogue availability. It is labelled **editorial mode, without AI**. Maison Stylist with an AI provider remains pending. The [native app](mobile/README.md) includes catalogue, variants, musical outfits, a bag per account, sign-in, order history and messages. I have opened it on iPhone, iPad and Android; I still need to validate the new private flow on physical devices.
+“Complete your look” uses manual selections and actual catalogue availability. It is labelled **editorial mode, without AI**. [Maison Stylist](docs/MAISON-STYLIST.md) has a prepared Gemini → Claude → OpenAI integration, disabled until credentials and real responses are verified. The [native app](mobile/README.md) includes catalogue, variants, musical outfits, a bag per account, sign-in, order history and messages. I have opened it on iPhone, iPad and Android; I still need to validate the new private flow on physical devices.
 
 ### Demonstration delivery and boutiques
 
@@ -416,7 +416,7 @@ npm run build
 npm run check:production
 ```
 
-Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. The latest 97 automated checks passed (7 November 2026). Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
+Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. The latest 111 automated checks passed (7 November 2026). Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
 
 ### Published website screenshots
 
