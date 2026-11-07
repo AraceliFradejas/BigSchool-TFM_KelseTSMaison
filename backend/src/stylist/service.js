@@ -1,3 +1,9 @@
+import {
+  stylistScopeViolation,
+  stylistUnsafeText,
+  stylistScopeMessage,
+  stylistUnsafeExplanation,
+} from '@maison/contracts/stylist-policy';
 import { eligibleLooks } from './editorial.js';
 import { claimStylistCall } from './quota.js';
 import { selectionSchema, stylistPrompt } from './prompt.js';
@@ -11,6 +17,17 @@ export async function recommendLooks({
   signal,
   requestProvider = requestStylistProvider,
 }) {
+  if (
+    stylistScopeViolation(preferences.message ?? preferences.style) ||
+    stylistUnsafeText(preferences.style)
+  )
+    return {
+      mode: 'editorial',
+      reason: 'out_of_scope',
+      message: stylistScopeMessage(preferences.language),
+      looks: [],
+      preferences,
+    };
   const candidates = eligibleLooks(await getLooks(), preferences);
   const editorial = async (reason = null, latest) => ({
     mode: 'editorial',
@@ -32,6 +49,8 @@ export async function recommendLooks({
       selection = selectionSchema.parse(
         await requestProvider(settings, prompt, { ...config, signal }),
       );
+      if (selection.looks.some((item) => stylistUnsafeExplanation(item.explanation)))
+        throw new Error('unsafe_explanation');
       const ids = selection.looks.map((look) => look.lookId);
       if (
         new Set(ids).size !== ids.length ||

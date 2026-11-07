@@ -11,7 +11,8 @@
     "./demo-payment": "./src/demo-payment.js",
     "./fulfillment": "./src/fulfillment.js",
     "./boutiques": "./src/boutiques.js",
-    "./stylist-chat": "./src/stylist-chat.js"
+    "./stylist-chat": "./src/stylist-chat.js",
+    "./stylist-policy": "./src/stylist-policy.js"
   },
   "dependencies": {
     "zod": "^4.1.11"

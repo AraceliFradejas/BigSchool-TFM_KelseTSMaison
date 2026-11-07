@@ -230,3 +230,10 @@ Queda completar las pruebas privadas en iPad y Android, mapas y permisos nativos
 Al probar una entrevista de trabajo detecté que el chat pedía de nuevo el presupuesto aunque escribiese «tengo 6000». También repetía los looks al responder «sí mucho muchas gracias». He ampliado las reglas compartidas y sus pruebas para reconocer estas expresiones y el número de calzado, sin confundirlos con la edad ni descartar nuevas restricciones. El resumen muestra ahora talla y calzado. En la web, Intro envía y Mayús+Intro permite continuar en otra línea. He reducido la ayuda inicial a un solo ejemplo. La reproducción local en Safari confirmó el recorrido; queda pendiente comprobar esta corrección en la app física.
 
 Tras esta corrección pasan las 121 pruebas de la suite completa: 72 backend, 10 cliente HTTP, 7 frontend y 32 móvil. Build web y exportaciones iOS/Android correctos.
+
+
+### Límites del asesor y protección de las reglas de tienda
+
+He acotado Maison Stylist a outfits, prendas y estilismo. Cuando detecta consultas fuera de ese ámbito, incluidas sexo, religión o política, responde con una invitación a volver al look. La política compartida da una respuesta inmediata en los clientes y la API la comprueba de nuevo antes de consumir cuota o consultar modelos. He reforzado las instrucciones y el filtrado de explicaciones para detectar intentos de cambiar reglas, revelar secretos o presentar precios y descuentos inventados.
+
+La protección de importes depende del backend: el modelo solo selecciona identificadores permitidos y explica la combinación. No dispone de herramientas de escritura ni fija precios, y el servidor reconstruye productos, variantes y totales desde su catálogo. Los campos adicionales de precio, stock o permisos se rechazan. Las comprobaciones simuladas confirman esos límites y conservan el catálogo sin cambios. Las reglas léxicas no cubren todas las formas de expresar un ataque; son una defensa adicional sobre los permisos, esquemas y validaciones existentes. La suite alcanza 125 pruebas correctas, sin nuevas llamadas reales de IA para esta revisión.

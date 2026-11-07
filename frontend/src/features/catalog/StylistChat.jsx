@@ -1,3 +1,4 @@
+import { stylistScopeViolation, stylistScopeMessage } from '@maison/contracts/stylist-policy';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { chatPreferences, stylistFeedback } from '@maison/contracts/stylist-chat';
@@ -41,6 +42,10 @@ export default function StylistChat() {
       say({ role: 'assistant', text: feedback });
       return;
     }
+    if (stylistScopeViolation(text)) {
+      say({ role: 'assistant', text: stylistScopeMessage(language) });
+      return;
+    }
     const parsed = chatPreferences(text, preferences);
     setPreferences(parsed.preferences);
     if (parsed.needsBudget) {
@@ -74,18 +79,20 @@ export default function StylistChat() {
       const result = await api.request('/stylist', {
         method: 'POST',
         signal: controller.signal,
-        body: { ...parsed.preferences, language, mode: ai ? 'ai' : 'editorial' },
+        body: { ...parsed.preferences, message: text, language, mode: ai ? 'ai' : 'editorial' },
       });
       if (!controller.signal.aborted)
         say({
           role: 'assistant',
-          text: result.looks.length
-            ? es
-              ? 'Estas combinaciones encajan con los filtros que he recogido. Puedes abrir cada pieza para elegir su variante.'
-              : 'These combinations match the filters I picked up. Open any piece to choose its variant.'
-            : es
-              ? 'No encuentro un conjunto completo con esos filtros. ¿Probamos otro presupuesto, talla o plan?'
-              : 'I could not find a complete outfit with those filters. Shall we try another budget, size or occasion?',
+          text:
+            result.message ||
+            (result.looks.length
+              ? es
+                ? 'Estas combinaciones encajan con los filtros que he recogido. Puedes abrir cada pieza para elegir su variante.'
+                : 'These combinations match the filters I picked up. Open any piece to choose its variant.'
+              : es
+                ? 'No encuentro un conjunto completo con esos filtros. ¿Probamos otro presupuesto, talla o plan?'
+                : 'I could not find a complete outfit with those filters. Shall we try another budget, size or occasion?'),
           result,
         });
     } catch (error) {

@@ -39,7 +39,7 @@ Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS 
 
 El pago es una simulación académica: puedo elegir una cuenta bancaria ficticia, tarjeta ficticia o PayPal simulado; en la app también Apple Pay simulado en iOS o Samsung Pay simulado en Android. Antes de confirmar acepto el aviso de que no compro nada. El justificante DEMO indica un cargo real de **0,00 €**. No hay pasarela, SDK de pagos, campos de datos bancarios ni conexión con esos servicios. Puedo simular un rechazo sin crear pedido ni descontar stock.
 
-«Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. El chat de [Maison Stylist](docs/MAISON-STYLIST.md), accesible desde un botón flotante en web y app, añade una conversación con burbujas y un campo de escritura fijo. Pide presupuesto cuando falta y muestra fotografías del catálogo, totales y enlaces a las fichas para elegir variantes. Después pregunta si gusta la elección; las valoraciones breves se responden localmente, sin consumir IA. El formulario de filtros detallados sigue disponible.
+«Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. El chat de [Maison Stylist](docs/MAISON-STYLIST.md), accesible desde un botón flotante en web y app, añade una conversación con burbujas y un campo de escritura fijo. Pide presupuesto cuando falta y muestra fotografías del catálogo, totales y enlaces a las fichas para elegir variantes. Después pregunta si gusta la elección; las valoraciones breves se responden localmente, sin consumir IA. El formulario de filtros detallados sigue disponible. El asesor limita la conversación a outfits y aplica controles de ámbito e intentos de manipular instrucciones o precios, también en el servidor.
 
 El servicio tiene preparada la integración **Gemini → Claude → OpenAI**, probada individualmente con tres consultas autorizadas sobre datos ficticios. En producción continúa identificado como **selección editorial, sin IA**: el chat publicado no acredita todavía una conversación generativa completa. El backend valida disponibilidad, tallas y presupuesto y no añade piezas a la bolsa automáticamente. La [guía del asesor](docs/MAISON-STYLIST.md) explica configuración, referencias y límites.
 
@@ -184,7 +184,7 @@ npm run build
 npm run check:production
 ```
 
-Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. Las últimas 121 comprobaciones automáticas han pasado (7 de noviembre de 2026). Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
+Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. Las últimas 125 comprobaciones automáticas han pasado (7 de noviembre de 2026). Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
 
 ### Capturas de la web publicada
 
@@ -285,7 +285,7 @@ After the AFM Moda Oceánica landing page and the full stack journey of KelseTS 
 
 Payment is an academic simulation: fictional bank account, fictional card or simulated PayPal, plus simulated Apple Pay on iOS or Samsung Pay on Android. Before confirming I acknowledge that no purchase takes place. The DEMO receipt shows a real charge of **0,00 €**. There is no payment gateway, payment SDK, banking-data form or connection to these services. A simulated decline creates no order and changes no stock.
 
-“Complete your look” uses manual selections and actual catalogue availability. The [Maison Stylist](docs/MAISON-STYLIST.md) chat, available from a floating button on web and native app, adds message bubbles and a fixed composer. It asks for a missing budget and displays catalogue photos, totals and product links for choosing variants. It then asks for feedback; short reactions receive local replies without consuming AI calls. Detailed filters remain available.
+“Complete your look” uses manual selections and actual catalogue availability. The [Maison Stylist](docs/MAISON-STYLIST.md) chat, available from a floating button on web and native app, adds message bubbles and a fixed composer. It asks for a missing budget and displays catalogue photos, totals and product links for choosing variants. It then asks for feedback; short reactions receive local replies without consuming AI calls. Detailed filters remain available. The adviser limits conversation to outfits and checks scope and attempts to manipulate instructions or prices, including on the server.
 
 The service includes a prepared **Gemini → Claude → OpenAI** integration, tested individually through three authorised queries using fictional data. Production remains explicitly labelled **editorial selection, without AI**: the published chat does not yet demonstrate an entire generative conversation. The backend validates availability, sizes and budget, and never adds products to the bag automatically. The [stylist guide](docs/MAISON-STYLIST.md) records configuration, references and limitations.
 
@@ -430,7 +430,7 @@ npm run build
 npm run check:production
 ```
 
-Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. The latest 121 automated checks passed (7 November 2026). Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
+Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. The latest 125 automated checks passed (7 November 2026). Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
 
 ### Published website screenshots
 

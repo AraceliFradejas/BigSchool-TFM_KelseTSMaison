@@ -1,3 +1,4 @@
+import { stylistScopeViolation, stylistScopeMessage } from '@maison/contracts/stylist-policy';
 import { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -83,6 +84,10 @@ function Chat({ language, user, openAccount, openProduct }) {
       say({ role: 'assistant', text: feedback });
       return;
     }
+    if (stylistScopeViolation(text)) {
+      say({ role: 'assistant', text: stylistScopeMessage(language) });
+      return;
+    }
     const parsed = chatPreferences(text, preferences);
     setPreferences(parsed.preferences);
     if (parsed.needsBudget) {
@@ -116,18 +121,20 @@ function Chat({ language, user, openAccount, openProduct }) {
       const result = await api.request('/stylist', {
         method: 'POST',
         signal: controller.signal,
-        body: { ...parsed.preferences, language, mode: ai ? 'ai' : 'editorial' },
+        body: { ...parsed.preferences, message: text, language, mode: ai ? 'ai' : 'editorial' },
       });
       if (!controller.signal.aborted)
         say({
           role: 'assistant',
-          text: result.looks.length
-            ? es
-              ? 'Te propongo estas combinaciones. Abre cada pieza para elegir su variante.'
-              : 'Here are some combinations. Open any piece to choose its variant.'
-            : es
-              ? 'No encuentro un conjunto completo con esos filtros. ¿Probamos otro presupuesto, talla o plan?'
-              : 'No complete outfit matches those filters. Shall we try another budget, size or occasion?',
+          text:
+            result.message ||
+            (result.looks.length
+              ? es
+                ? 'Te propongo estas combinaciones. Abre cada pieza para elegir su variante.'
+                : 'Here are some combinations. Open any piece to choose its variant.'
+              : es
+                ? 'No encuentro un conjunto completo con esos filtros. ¿Probamos otro presupuesto, talla o plan?'
+                : 'No complete outfit matches those filters. Shall we try another budget, size or occasion?'),
           result,
         });
     } catch (error) {

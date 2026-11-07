@@ -71,3 +71,12 @@ La interfaz utiliza burbujas de mensaje, respuestas alineadas a cada interlocuto
 
 
 En web, Intro envía y Mayús+Intro introduce un salto de línea; durante la composición de texto no se fuerza el envío. Hay un único ejemplo inicial. Las reglas reconocen presupuestos como «tengo 6000» y respuestas como «6000, talla S y nº 36»; el resumen muestra también el calzado aplicado. Los agradecimientos combinados, como «sí mucho muchas gracias», reciben una respuesta local sin volver a consultar el catálogo o los proveedores.
+
+
+### Guardarraíles mínimos del asesor · 7 de noviembre de 2026
+
+La política compartida limita la conversación a outfits y estilismo de Maison. Web y app redirigen consultas ajenas al ámbito; sexo, religión y política se incluyen entre los temas excluidos. Una ocasión como una boda en una iglesia sigue siendo válida cuando la consulta trata de ropa. Las reglas detectan expresiones comunes de cambio de instrucciones, revelación de secretos y manipulación de precios o stock. La API repite la comprobación antes de leer el catálogo, reservar cuota o llamar a un proveedor; no depende de que el cliente conserve sus controles. El mensaje actual y el contexto se comprueban por separado.
+
+Las instrucciones del modelo refuerzan el ámbito y tratan los datos del catálogo como contenido no confiable. La salida se limita a identificadores permitidos y explicaciones: campos adicionales como precio no pasan el esquema. Si la explicación contiene temas prohibidos, intentos de instrucciones o afirmaciones monetarias detectadas, se descarta y vuelve al modo editorial sin consultar otro modelo. El total y las variantes se reconstruyen desde el catálogo del backend. El asesor no dispone de herramientas para modificar productos, precios, stock, roles ni pedidos. El checkout mantiene sus propias validaciones y permisos.
+
+Estas reglas léxicas son una defensa mínima adicional, no un clasificador semántico completo ni una garantía frente a todos los ataques u ofuscaciones. No sustituyen autenticación, permisos ni validación de precios en el servidor. Las pruebas usan proveedores simulados y no acreditan moderación general de los tres modelos reales.

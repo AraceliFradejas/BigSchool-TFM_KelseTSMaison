@@ -440,3 +440,8 @@ La prueba de la autora detectó que «tengo 6000» y «6000, talla S y nº 36» 
 En Safari local, con IA desactivada, «una entrevista de trabajo. tengo 6000, talla S y nº de calzado 36» enviada con Intro produjo recomendaciones con presupuesto 6.000 €, talla S y calzado 36. El agradecimiento produjo una respuesta local sin tarjetas repetidas; Mayús+Intro conservó dos líneas sin enviar. Se comprobó un único ejemplo inicial. La prueba física de esta corrección en Expo Go queda pendiente.
 
 Tras esta corrección pasan las 121 pruebas de la suite completa: 72 backend, 10 cliente HTTP, 7 frontend y 32 móvil. Build web y exportaciones iOS/Android correctos.
+
+
+### Guardarraíles · pruebas sin consumo real de IA
+
+125 pruebas correctas: 75 backend, 10 cliente HTTP, 7 frontend y 33 móvil. Se comprueba rechazo de temas excluidos e instrucciones maliciosas antes de catálogo/cuota/proveedor; descarte de explicaciones monetarias o ajenas al ámbito sin continuar la cadena; catálogo sin cambios tras esas respuestas; y rechazo de campos de precio, total, stock o rol enviados por el cliente. La política compartida permite los ejemplos válidos de presupuesto, tallas y ropa para una boda. Build, exportaciones iOS/Android y comprobación local de producción correctos. Las pruebas de guardarraíles no realizan nuevas llamadas a proveedores reales y no prueban todos los ataques posibles.
