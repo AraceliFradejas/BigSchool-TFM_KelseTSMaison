@@ -242,3 +242,6 @@ La protección de importes depende del backend: el modelo solo selecciona identi
 ### Continuidad entre asesor y fichas
 
 La revisión de una pieza interrumpía la conversación porque el panel destruía su estado al cerrarse. He trasladado mensajes, preferencias y borrador al componente que contiene el chat en web y app. Así puedo abrir una ficha y volver al asesor sin empezar de nuevo. Safari local confirmó el recorrido y la conservación del borrador. La conversación permanece en memoria durante la navegación y se limpia al cambiar de cuenta o idioma, recargar la web o reiniciar la app; no se ha añadido almacenamiento permanente. Falta confirmar físicamente esta continuidad en Expo Go.
+
+
+He añadido el guiño «tu tAIlor» para las preguntas sobre la identidad del asistente, jugando con tailor y AI. Se presenta como estilista personal virtual de Maison y responde de forma local, sin consultas a modelos ni cambios en los filtros. La respuesta mantiene el tono cercano de la marca y no se hace pasar por una persona.

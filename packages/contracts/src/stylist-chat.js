@@ -69,9 +69,8 @@ export function chatPreferences(message, previous = {}) {
   return { preferences, needsBudget: !preferences.budgetCents || invalidBudget, invalidBudget };
 }
 
-// Short feedback is handled locally: it must not spend a provider call or change filters.
+// Identity questions and short feedback are local: no provider call or filter changes.
 export function stylistFeedback(message, hasSuggestion, language = 'es') {
-  if (!hasSuggestion) return null;
   const text = message
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
@@ -79,6 +78,15 @@ export function stylistFeedback(message, hasSuggestion, language = 'es') {
     .replace(/[¡!¿?.,]/g, '')
     .trim();
   const es = language === 'es';
+  if (
+    /^(?:eres (?:un |una )?(?:robot|bot|ia|inteligencia artificial|humano|humana)|quien eres|que eres|are you (?:a |an )?(?:robot|bot|ai|human)|who are you|what are you)$/.test(
+      text,
+    )
+  )
+    return es
+      ? 'Soy tu tAIlor ✨, tu estilista personal virtual de Maison. No coso botones, ¡pero sí te ayudo a encontrar un look a tu medida! ¿Qué tienes planeado?'
+      : 'I’m your tAIlor ✨, your personal virtual stylist at Maison. I don’t sew buttons, but I can help you find an outfit that suits you! What are you planning?';
+  if (!hasSuggestion) return null;
   if (/^(no|no me gusta|no me convence|no gracias|i dont like it|not really)$/.test(text))
     return es
       ? 'Lo ajustamos. ¿Qué cambiarías: el estilo, los colores, las piezas o el presupuesto? Por ejemplo: «algo más informal, máximo 2.000 €».'
