@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-08",
+  "authorObservation": "El contador de grabación aparece; al terminar quedan Hablar ahora, Transcribir y continuación por texto, sin mensaje visible comunicado.",
+  "serverProbe": {
+    "source": "Audio sintético, convertido temporalmente a M4A/AAC, sin micrófono.",
+    "realVoiceActions": 2,
+    "m4aBytes": 22484,
+    "http": 200,
+    "transcript": "Necesito un conjunto elegante para una cena",
+    "audioStored": false
+  },
+  "localRegression": {
+    "source": "Serializador multipart real del SDK instalado, cargado en la prueba desde node_modules, sin implementación sustituta del serializador.",
+    "oldUriPart": "Rechazo Unsupported FormDataPart implementation antes de red",
+    "expoFilePart": "Incluye bytes, nombre, tipo y campo language",
+    "suitePassed": 179,
+    "iosAndroidExport": "correcto"
+  },
+  "physicalVerification": "Solicitada a la autora tras recargar Expo Go; no acreditada por estas pruebas."
+}

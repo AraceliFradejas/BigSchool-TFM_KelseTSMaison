@@ -10,6 +10,8 @@ import {
   setAudioModeAsync,
 } from 'expo-audio';
 import * as Files from 'expo-file-system/legacy';
+import { File } from 'expo-file-system';
+import { createStylistRecordingForm } from './stylistRecordingUpload';
 import {
   voiceError,
   stylistSpeechText,
@@ -269,12 +271,10 @@ export function VoiceInput({
     onBusyChange(true);
     const controller = new AbortController();
     pending.current = controller;
+    let step = 'read_recording';
     try {
-      const info = await Files.getInfoAsync(uri.current);
-      if (!info.exists || info.size > 2 * 1024 * 1024) throw Error('invalid audio');
-      const body = new FormData();
-      body.append('language', language);
-      body.append('audio', { uri: uri.current, name: 'recording.m4a', type: 'audio/mp4' });
+      const body = createStylistRecordingForm(new File(uri.current), language);
+      step = 'upload_recording';
       const result = await api.request('/stylist/voice/transcribe', {
         method: 'POST',
         multipart: true,
@@ -294,7 +294,31 @@ export function VoiceInput({
         uri.current = null;
         setPhase('idle');
       } else if (alive.current && err.name !== 'AbortError') {
-        setError(voiceError(err.code, language));
+        // Diagnostic metadata only: never log the audio, file URI, transcript or credentials.
+        console.warn('Maison voice upload', {
+          step,
+          code: err.code || err.name,
+          status: err.status,
+        });
+        setError(
+          step === 'read_recording'
+            ? es
+              ? 'No he podido leer la grabación. Descártala y graba un mensaje nuevo.'
+              : 'I could not read the recording. Discard it and record a new message.'
+            : err.code === 'network_error'
+              ? es
+                ? 'No he podido enviar la grabación. Comprueba tu conexión y pulsa Transcribir para reintentarlo.'
+                : 'I could not upload the recording. Check your connection and press Transcribe to retry.'
+              : err.code === 'rate_limited'
+                ? es
+                  ? 'Hay demasiadas peticiones seguidas. Espera un minuto y pulsa Transcribir.'
+                  : 'Too many requests in a short time. Wait a minute and press Transcribe.'
+                : err.code === 'voice_audio_invalid'
+                  ? es
+                    ? 'No puedo leer el formato de esta grabación. Descártala y graba un mensaje nuevo.'
+                    : 'I cannot read this recording format. Discard it and record a new message.'
+                  : voiceError(err.code, language),
+        );
         setPhase('ready');
       }
     } finally {
