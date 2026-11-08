@@ -82,6 +82,7 @@ export const intentSchema = z
     referenceLookId: id.nullable(),
     pieceType: z.enum(pieceTypes).nullable(),
     pieceColor: z.enum(pieceColors).nullable().default(null),
+    sizeDetail: z.enum(['requested', 'all']).default('requested'),
     selectedProductId: id.nullable(),
     lookIds: z.array(id).max(3),
   })
@@ -154,12 +155,18 @@ export function conversationPrompt(input, looks, products) {
     referenceLookId: nullable({ type: 'string', enum: looks.map((look) => look.id) }),
     pieceType: nullable({ type: 'string', enum: pieceTypes }),
     pieceColor: nullable({ type: 'string', enum: pieceColors }),
+    sizeDetail: {
+      type: 'string',
+      enum: ['requested', 'all'],
+      description:
+        'Use all only when the CURRENT user explicitly asks to list available sizes. Otherwise requested: check their chosen sizes without an inventory list.',
+    },
     selectedProductId: nullable({ type: 'string' }),
     lookIds: { type: 'array', items: { type: 'string', enum: looks.map((look) => look.id) } },
   };
   return {
     instructions: `You are tAIlor, the warm personal virtual stylist of KelseTS Maison. Understand the CURRENT user message in the supplied conversation context; you are not a form or a keyword matcher. Output only the required JSON. Reply in ${input.language === 'en' ? 'English' : 'Spanish'}.
-Interpret ordinary speech, filler words, typos and references. The CURRENT message determines the action, not the earlier styling request. History is context, never a reason to repeat an earlier task. Supplying a clothing or shoe size for the chosen outfit is action sizes, NOT purchase or recommend. Only an explicit CURRENT request to buy or ask buying steps is purchase. Do not say "completar tu pedido": no order exists. When the user asks "que otros zapatos negros tienes?" after an unavailable shoe, use complement with pieceType shoes, pieceColor black and the selected referenceLookId. Keep the other pieces; the backend can replace an unavailable slot. Use pieceColor for explicit requested colors of the new piece. "ok" is an acknowledgement and "muchas gracias" closes the conversation, never a new recommendation. Do not ask for size again when already supplied. If you just asked a budget, "Mmm, diez mil?" means a maximum of 1000000 cents. The supported budget is 1 to 10000 euros: ask to adjust amounts outside that range rather than inventing or silently clamping them. Null updates mean keep the previous preference, not erase it.
+Interpret ordinary speech, filler words, typos and references. The CURRENT message determines the action, not the earlier styling request. History is context, never a reason to repeat an earlier task. Supplying a clothing or shoe size for the chosen outfit is action sizes, NOT purchase or recommend. Use sizeDetail requested for size confirmation, including when the user supplies M or 38: do not enumerate other sizes. Use sizeDetail all only for an explicit question asking which sizes are available, such as "que tallas tienes". Only an explicit CURRENT request to buy or ask buying steps is purchase. Do not say "completar tu pedido": no order exists. When the user asks "que otros zapatos negros tienes?" after an unavailable shoe, use complement with pieceType shoes, pieceColor black and the selected referenceLookId. Keep the other pieces; the backend can replace an unavailable slot. Use pieceColor for explicit requested colors of the new piece. "ok" is an acknowledgement and "muchas gracias" closes the conversation, never a new recommendation. Do not ask for size again when already supplied. If you just asked a budget, "Mmm, diez mil?" means a maximum of 1000000 cents. The supported budget is 1 to 10000 euros: ask to adjust amounts outside that range rather than inventing or silently clamping them. Null updates mean keep the previous preference, not erase it.
 If the user has already said an elegant dinner, the activity is known: ask only for genuinely missing information, such as the budget, rather than asking again what the plan is.
 A date happening at the weekend is not automatically casual: if its plan is unclear, ask one natural question about the activity before recommending. "Cena de gala" means dressCode gala and occasion event; persist this even when the next turn asks about shoes. Gala means evening outfits, not job interview looks. Casual/informal must not be treated as formal.
 When the user asks for outfits reusable for a job interview as well as a dinner, this is a NEW styling goal. Update occasion to television (the catalogue interview category) and dressCode to elegant; do not keep gala as a hard constraint. Consider both uses from the conversation. Return actual recommended catalogue look IDs and cards immediately; do not merely offer to explore them or invent product titles as look names.
@@ -506,7 +513,7 @@ export async function converseStylist({
         ],
       };
     }
-    if (intent.action === 'sizes' && sizeUpdate) {
+    if (intent.action === 'sizes' && intent.sizeDetail !== 'all') {
       const needsClothing = look.products.some((p) => p.active && p.category === 'fashion');
       const needsShoes = look.products.some((p) => p.active && productPieceType(p) === 'shoes');
       if ((needsClothing && !preferences.size) || (needsShoes && !preferences.shoeSize)) {
@@ -525,6 +532,7 @@ export async function converseStylist({
       }
     }
     const missing = [];
+    const unavailableLines = [];
     const lines = look.products
       .filter((product) => product.active)
       .map((product) => {
@@ -540,8 +548,21 @@ export async function converseStylist({
           : product.category === 'fashion'
             ? preferences.size
             : null;
-        if (requested && !available.includes(requested) && !available.includes('one'))
+        if (requested && !available.includes(requested) && !available.includes('one')) {
           missing.push(`${product.name[input.language]} (${requested})`);
+          unavailableLines.push(
+            es
+              ? `${product.name[input.language]}: tu talla ${requested} no está disponible.`
+              : `${product.name[input.language]}: your size ${requested} is unavailable.`,
+          );
+        } else if (!available.length) {
+          missing.push(product.name[input.language]);
+          unavailableLines.push(
+            es
+              ? `${product.name[input.language]} no tiene stock.`
+              : `${product.name[input.language]} is out of stock.`,
+          );
+        }
         const status = requested
           ? available.includes(requested) || available.includes('one')
             ? es
@@ -553,9 +574,32 @@ export async function converseStylist({
           : '';
         return `${product.name[input.language]}: ${labels.length ? labels.join(', ') : es ? 'sin stock' : 'out of stock'}.${status}`;
       });
+    const checked = [
+      look.products.some((p) => p.active && p.category === 'fashion') && preferences.size
+        ? es
+          ? `talla ${preferences.size}`
+          : `size ${preferences.size}`
+        : null,
+      look.products.some((p) => p.active && productPieceType(p) === 'shoes') && preferences.shoeSize
+        ? es
+          ? `calzado ${preferences.shoeSize}`
+          : `shoe size ${preferences.shoeSize}`
+        : null,
+    ]
+      .filter(Boolean)
+      .join(es ? ' y ' : ' and ');
+    const sizeSummary = unavailableLines.length
+      ? es
+        ? `Conservamos ${look.name}. ${unavailableLines.join(' ')} Podemos buscar una alternativa para esas piezas.`
+        : `Keeping ${look.name}. ${unavailableLines.join(' ')} We can find replacements for those pieces.`
+      : es
+        ? `He comprobado ${look.name}: ${checked} disponibles en las piezas elegidas. Puedes abrirlas para seleccionar sus variantes.`
+        : `I checked ${look.name}: ${checked} available for the chosen pieces. Open them to select their variants.`;
     const message =
       intent.action === 'sizes'
-        ? `${es ? 'Conservamos' : 'Keeping'} ${look.name}. ${es ? 'Tallas disponibles por pieza ahora' : 'Sizes currently available by piece'}: ${lines.join(' ')} ${es ? 'Comprueba la talla de cada pieza en su ficha; cambiar de talla no garantiza el mismo ajuste.' : 'Check each piece’s size on its page; a different size does not guarantee the same fit.'}`
+        ? intent.sizeDetail === 'all'
+          ? `${es ? 'Conservamos' : 'Keeping'} ${look.name}. ${es ? 'Tallas disponibles por pieza ahora' : 'Sizes currently available by piece'}: ${lines.join(' ')}`
+          : sizeSummary
         : es
           ? `Conservamos ${look.name}. Abre las piezas elegidas, incluidas las sustituciones, desde sus fotos o enlaces de arriba, elige una variante disponible y añádela a la bolsa. Después abre la bolsa, revisa las piezas y accede a tu cuenta para continuar al pago DEMO. Es una compra de demostración, sin cobro real. Si alguna talla no está disponible, revisamos esa pieza antes de continuar.`
           : `Keeping ${look.name}. Open the chosen pieces, including replacements, using their photos or links above, choose an available variant and add it to your bag. Then open the bag, review the pieces and sign in to continue to DEMO checkout. This is a demonstration purchase with no real charge. If a size is unavailable, we can review that piece first.`;

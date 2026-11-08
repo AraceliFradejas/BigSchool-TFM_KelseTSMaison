@@ -119,3 +119,7 @@ Se retira la referencia temporal de revisión y se conservan los estados de grab
 ## Pronunciación del nombre del asistente
 
 A petición de la autora, el texto de síntesis en castellano transforma la palabra tAIlor en «téilor», con acento en la primera sílaba. La grafía visible del chat continúa siendo tAIlor. La normalización se comparte entre web y app; no modifica Taylor Swift ni transcripciones de la usuaria. La regresión de voz comprueba esas distinciones. La pronunciación audible resultante queda sujeta a escucha de la autora; no se consumió síntesis para este ajuste.
+
+## Respuestas de tallas breves
+
+La autora indica que la voz enumera demasiadas tallas. La causa era el mensaje del backend para confirmar disponibilidad: listaba siempre todas las variantes de cada pieza. Se distingue `sizeDetail: requested` (por defecto) de `all` (solo petición explícita de inventario). Al facilitar M/38 se comprueban esas tallas: una confirmación breve si hay stock, o únicamente las piezas no disponibles. Se pregunta solo por la talla de ropa o calzado pendiente. El listado completo se conserva para «¿qué tallas tienes?». La regresión comprueba una respuesta de menos de250 caracteres sin XS/XXL ni listas de números al confirmar M/38 y mantiene el caso de inventario solicitado. Once pruebas de conversación correctas; no se modifica la voz elegida ni se generan audios para este ajuste.

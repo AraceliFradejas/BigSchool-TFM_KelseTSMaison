@@ -337,7 +337,12 @@ test('sizes, relative size and purchase keep the selected outfit without restart
     const result = await run(
       db,
       input,
-      intent({ action, referenceLookId: look.id, updates: { ...updates, size } }),
+      intent({
+        action,
+        sizeDetail: 'all',
+        referenceLookId: look.id,
+        updates: { ...updates, size },
+      }),
     );
     assert.equal(result.selectedLookId, look.id);
     assert.deepEqual(result.looks, []);
@@ -513,4 +518,26 @@ test('reported Noir sequence checks sizes, replaces sold-out black shoes and clo
     ])
       assert.deepEqual(result.preferences[key], before[key], key);
   }
+});
+
+test('confirming M and 38 returns a short stock result without enumerating other sizes', async (t) => {
+  const db = setup(t);
+  const look = (await getLooks(db)).find((l) => l.id === 'look-runway-elegancia-2');
+  const result = await run(
+    db,
+    {
+      message: 'Mi talla es M y calzo el 38',
+      preferences: { budgetCents: 600000, size: 'M', shoeSize: '38' },
+      context: { referenceLookId: look.id },
+    },
+    intent({
+      action: 'sizes',
+      referenceLookId: look.id,
+      updates: { ...updates, size: 'M', shoeSize: '38' },
+    }),
+  );
+  assert.equal(result.looks.length, 0);
+  assert.match(result.message, /talla M y calzado 38/);
+  assert.doesNotMatch(result.message, /XS|XXL|Tallas disponibles|35,|S, M/);
+  assert.ok(result.message.length < 250);
 });
