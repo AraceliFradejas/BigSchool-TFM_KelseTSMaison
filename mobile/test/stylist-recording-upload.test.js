@@ -73,3 +73,20 @@ test('missing, empty and oversized recordings fail locally before upload', () =>
   ])
     assert.throws(() => createStylistRecordingForm({ ...recording(), ...changes }, 'es', Form));
 });
+
+test('stopping preserves a recording URI even if the native recorder clears it on stop', async () => {
+  const { stopStylistRecording } = await import('../src/stylistRecordingUpload.js');
+  const recorder = {
+    uri: 'file:///recording.m4a',
+    async stop() {
+      this.uri = null;
+    },
+  };
+  assert.equal(await stopStylistRecording(recorder), 'file:///recording.m4a');
+});
+test('a missing recording file is an explicit error rather than a silent no-op', async () => {
+  const { stopStylistRecording } = await import('../src/stylistRecordingUpload.js');
+  await assert.rejects(stopStylistRecording({ uri: null, async stop() {} }), {
+    code: 'voice_recording_missing',
+  });
+});

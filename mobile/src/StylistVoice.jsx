@@ -11,7 +11,7 @@ import {
 } from 'expo-audio';
 import * as Files from 'expo-file-system/legacy';
 import { File } from 'expo-file-system';
-import { createStylistRecordingForm } from './stylistRecordingUpload';
+import { createStylistRecordingForm, stopStylistRecording } from './stylistRecordingUpload';
 import {
   voiceError,
   stylistSpeechText,
@@ -166,6 +166,7 @@ export function VoiceInput({
   const recorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY),
     recorderState = useAudioRecorderState(recorder, 200);
   const [phase, setPhase] = useState('idle'),
+    [stage, setStage] = useState(''),
     [error, setError] = useState('');
   const uri = useRef(null),
     timer = useRef(null),
@@ -196,13 +197,13 @@ export function VoiceInput({
     recording.current = false;
     clearTimeout(timer.current);
     try {
-      await recorder.stop();
+      setStage(es ? 'Cerrando la grabación…' : 'Finishing recording…');
+      const file = await stopStylistRecording(recorder, uri.current);
       await setAudioModeAsync({
         playsInSilentMode: true,
         allowsRecording: false,
         shouldPlayInBackground: false,
       });
-      const file = recorder.uri;
       if (!alive.current || modeRef.current !== 'voice' || !submit) {
         await erase(file);
         return;
@@ -213,9 +214,15 @@ export function VoiceInput({
         onBusyChange(false);
         await transcribe();
       }
-    } catch {
+    } catch (err) {
       if (alive.current) {
-        setError(voiceError('', language));
+        console.warn('Maison voice stop', { code: err.code || err.name });
+        setError(
+          es
+            ? 'No he podido finalizar el archivo de audio. Graba un mensaje nuevo.'
+            : 'I could not finish the audio file. Record a new message.',
+        );
+        setStage('');
         setPhase('idle');
       }
     } finally {
@@ -227,6 +234,7 @@ export function VoiceInput({
     setError('');
     onBusyChange(true);
     setPhase('permission');
+    setStage(es ? 'Preparando el micrófono…' : 'Preparing microphone…');
     onRecord();
     try {
       const permission = await requestRecordingPermissionsAsync();
@@ -252,7 +260,9 @@ export function VoiceInput({
       if (!alive.current || modeRef.current !== 'voice') return;
       await recorder.prepareToRecordAsync();
       if (!alive.current || modeRef.current !== 'voice') return;
+      uri.current = recorder.uri || recorder.getStatus?.().url || null;
       recorder.record();
+      setStage(es ? 'Grabando tu mensaje' : 'Recording your message');
       recording.current = true;
       setPhase('recording');
       timer.current = setTimeout(() => void stop(), 60000);
@@ -265,8 +275,16 @@ export function VoiceInput({
     }
   }
   async function transcribe() {
-    if (!uri.current) return;
+    if (!uri.current) {
+      setError(
+        es
+          ? 'No encuentro el archivo grabado. Graba un mensaje nuevo.'
+          : 'The recording file is missing. Record a new message.',
+      );
+      return;
+    }
     setError('');
+    setStage(es ? 'Leyendo la grabación…' : 'Reading recording…');
     setPhase('busy');
     onBusyChange(true);
     const controller = new AbortController();
@@ -275,6 +293,7 @@ export function VoiceInput({
     try {
       const body = createStylistRecordingForm(new File(uri.current), language);
       step = 'upload_recording';
+      setStage(es ? 'Enviando para transcribir…' : 'Sending for transcription…');
       const result = await api.request('/stylist/voice/transcribe', {
         method: 'POST',
         multipart: true,
@@ -282,6 +301,7 @@ export function VoiceInput({
         signal: controller.signal,
       });
       if (!alive.current || controller.signal.aborted || modeRef.current !== 'voice') return;
+      setStage(es ? 'Transcripción recibida' : 'Transcription received');
       onTranscript(result.text);
       await erase(uri.current);
       uri.current = null;
@@ -440,6 +460,10 @@ export function VoiceInput({
           <Text style={s.modeSwitchText}>{es ? 'Cambiar a texto' : 'Switch to text'}</Text>
         </Pressable>
       </View>
+      <Text accessibilityLiveRegion="polite" style={s.note}>
+        {`Prueba de voz 08.11.5 · ${stage || (es ? 'Lista para grabar' : 'Ready to record')}`}
+      </Text>
+      {error ? <Text accessibilityLiveRegion="polite">{error}</Text> : null}
       <View style={[s.actions, { justifyContent: 'center' }]}>
         <Button
           color="#821b32"

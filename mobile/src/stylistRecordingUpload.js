@@ -16,3 +16,15 @@ export function createStylistRecordingForm(file, language, Form = FormData) {
   body.append('audio', file, 'recording.m4a');
   return body;
 }
+
+export async function stopStylistRecording(recorder, savedUri) {
+  const before = savedUri || recorder.uri || recorder.getStatus?.().url;
+  await recorder.stop();
+  const uri = recorder.uri || before;
+  if (!uri) {
+    const error = new Error('Recording file missing');
+    error.code = 'voice_recording_missing';
+    throw error;
+  }
+  return uri;
+}
