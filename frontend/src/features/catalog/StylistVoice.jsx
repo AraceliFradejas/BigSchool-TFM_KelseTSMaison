@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import VoiceIcon from './VoiceIcon';
+import { webVoicePlayer } from './webVoicePlayer';
 import { api } from '../../shared/state';
 import {
   voiceError,
@@ -30,7 +31,7 @@ export function SpeakButton({ message, language, available, autoPlay, onAutoStar
   const [busy, setBusy] = useState(false),
     [playing, setPlaying] = useState(false),
     [error, setError] = useState('');
-  const audio = useRef(null),
+  const playbackOwner = useRef(Symbol('stylist-speech')),
     pending = useRef(null),
     uri = useRef(null),
     alive = useRef(true);
@@ -38,7 +39,7 @@ export function SpeakButton({ message, language, available, autoPlay, onAutoStar
     alive.current = true;
     const stop = () => {
       pending.current?.abort();
-      audio.current?.pause();
+      webVoicePlayer.pause(playbackOwner.current);
       setBusy(false);
       setPlaying(false);
     };
@@ -46,20 +47,20 @@ export function SpeakButton({ message, language, available, autoPlay, onAutoStar
     return () => {
       alive.current = false;
       pending.current?.abort();
-      audio.current?.pause();
-      if (audio.current) audio.current.src = '';
+      webVoicePlayer.pause(playbackOwner.current, true);
       window.removeEventListener('maison-voice-stop', stop);
     };
   }, []);
   useEffect(() => {
     if (!available) {
       pending.current?.abort();
-      audio.current?.pause();
+      webVoicePlayer.pause(playbackOwner.current);
       setBusy(false);
       setPlaying(false);
     }
   }, [available]);
   async function speak(automatic = false) {
+    if (!automatic) webVoicePlayer.prime();
     if (quota.blocked && !uri.current) {
       if (!automatic) quota.show();
       return;
@@ -70,7 +71,7 @@ export function SpeakButton({ message, language, available, autoPlay, onAutoStar
       return;
     }
     if (playing) {
-      audio.current?.pause();
+      webVoicePlayer.pause(playbackOwner.current);
       setPlaying(false);
       return;
     }
@@ -89,12 +90,10 @@ export function SpeakButton({ message, language, available, autoPlay, onAutoStar
         if (!alive.current || controller.signal.aborted) return;
         uri.current = `data:audio/mpeg;base64,${result.audioBase64}`;
       }
-      if (!audio.current) {
-        audio.current = new Audio(uri.current);
-        audio.current.onended = () => setPlaying(false);
-      }
-      await audio.current.play();
-      if (alive.current && !audio.current.paused) setPlaying(true);
+      await webVoicePlayer.play(playbackOwner.current, uri.current, () => {
+        if (alive.current) setPlaying(false);
+      });
+      if (alive.current && webVoicePlayer.isPlaying(playbackOwner.current)) setPlaying(true);
     } catch (err) {
       if (err.code === 'voice_daily_limit') {
         markVoiceQuotaReached();
@@ -221,6 +220,7 @@ export function VoiceInput({
       );
       return;
     }
+    webVoicePlayer.prime();
     try {
       window.dispatchEvent(new Event('maison-voice-stop'));
       onBusyChange(true);
@@ -335,6 +335,7 @@ export function VoiceInput({
       quota.show();
       return;
     }
+    webVoicePlayer.prime();
     setError('');
     setPhase('permission');
     onBusyChange(true);

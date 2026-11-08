@@ -20,6 +20,7 @@ import {
 import { api } from './api';
 import Button from './Button';
 import VoiceIcon from './VoiceIcon';
+import { playStylistAudio } from './stylistAudioPlayback';
 const erase = async (uri) => {
   if (uri) await Files.deleteAsync(uri, { idempotent: true }).catch(() => {});
 };
@@ -120,9 +121,8 @@ export function useStylistSpeech(language) {
         shouldPlayInBackground: false,
       });
       if (!alive.current || controller.signal.aborted) return;
-      player.replace({ uri });
-      player.play();
-      setPlaying(index);
+      await playStylistAudio(player, { uri }, { signal: controller.signal });
+      if (alive.current && !controller.signal.aborted) setPlaying(index);
     } catch (err) {
       if (err.code === 'voice_daily_limit') {
         markVoiceQuotaReached();
@@ -183,6 +183,11 @@ export function VoiceInput({
     clearTimeout(timer.current);
     try {
       await recorder.stop();
+      await setAudioModeAsync({
+        playsInSilentMode: true,
+        allowsRecording: false,
+        shouldPlayInBackground: false,
+      });
       const file = recorder.uri;
       if (!alive.current || modeRef.current !== 'voice' || !submit) {
         await erase(file);
