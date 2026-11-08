@@ -8,6 +8,7 @@ import {
   voiceQuotaReached,
   markVoiceQuotaReached,
   subscribeVoiceQuota,
+  refreshVoiceQuotaStatus,
 } from '@maison/contracts/stylist-voice';
 
 function useVoiceQuotaHint(language) {
@@ -23,7 +24,18 @@ function useVoiceQuotaHint(language) {
       {voiceError('voice_daily_limit', language)}
     </span>
   ) : null;
-  return { blocked, show: () => setVisible(true), tooltip };
+  async function allow() {
+    if (!voiceQuotaReached()) return true;
+    try {
+      await refreshVoiceQuotaStatus(() => api.request('/stylist/voice/status'));
+    } catch {
+      /* Keep the known block on a failed check. */
+    }
+    if (!voiceQuotaReached()) return true;
+    setVisible(true);
+    return false;
+  }
+  return { blocked, allow, show: () => setVisible(true), tooltip };
 }
 export function SpeakButton({ message, language, available, autoPlay, onAutoStart }) {
   const es = language === 'es';
@@ -62,8 +74,7 @@ export function SpeakButton({ message, language, available, autoPlay, onAutoStar
   async function speak(automatic = false) {
     if (!automatic) webVoicePlayer.prime();
     if (quota.blocked && !uri.current) {
-      if (!automatic) quota.show();
-      return;
+      if (automatic || !(await quota.allow())) return;
     }
     if (busy) {
       pending.current?.abort();
@@ -207,10 +218,8 @@ export function VoiceInput({
     stream.current?.getTracks().forEach((track) => track.stop());
   }
   async function record() {
-    if (quota.blocked) {
-      quota.show();
-      return;
-    }
+    webVoicePlayer.prime();
+    if (!(await quota.allow())) return;
     setError('');
     if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
       setError(
@@ -220,7 +229,6 @@ export function VoiceInput({
       );
       return;
     }
-    webVoicePlayer.prime();
     try {
       window.dispatchEvent(new Event('maison-voice-stop'));
       onBusyChange(true);
@@ -331,11 +339,8 @@ export function VoiceInput({
     }
   }
   async function chooseVoice() {
-    if (quota.blocked) {
-      quota.show();
-      return;
-    }
     webVoicePlayer.prime();
+    if (!(await quota.allow())) return;
     setError('');
     setPhase('permission');
     onBusyChange(true);

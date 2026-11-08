@@ -85,3 +85,11 @@ Se permite un máximo configurable de 200 y se conserva el contador: una prueba 
 
 
 Verificación pública completada: HTTP 200, voz disponible y `dailyActionLimit: 200`. Una única petición real de síntesis, con frase sintética en castellano y sin micrófono, devolvió HTTP 200 y 12.556 bytes de audio MPEG. No se guardó ese audio ni se afirma escucha en el dispositivo físico. [Evidencia del contador, cuota y síntesis](evidencias/stylist-2026-11-08/10-voz-cuota-200.json). Se avisó a la autora para cerrar Expo Go por completo y abrir Maison de nuevo, o recargar en web.
+
+## Revalidación de un bloqueo recordado tras ampliar cuota
+
+La autora comunica que no graba ni transcribe en iPad, Android e iPhone después de ampliar el límite. La consulta de solo lectura confirma 101 acciones consumidas con límite público 200: los intentos no estaban agotando el nuevo margen. La reproducción real en el dispositivo y si se utiliza web o Expo Go no quedan acreditadas por esa lectura.
+
+Se corrige un bloqueo reproducible del cliente: recordar un 429 por día sin volver a consultar podía mantener la grabación deshabilitada tras ampliar el máximo en ese mismo día. El endpoint de estado incorpora `quotaDay` y `quotaAvailable`, leídos del contador sin incrementarlo ni exponer mensajes/audio. Al abrir el chat se sincroniza el estado; un control bloqueado reconsulta antes de impedir la acción. Peticiones simultáneas comparten esa consulta, se ignora un estado de otro día y un fallo de red no elimina el bloqueo conocido. La preparación de audio web permanece dentro del gesto del usuario, antes de la espera de red.
+
+176 comprobaciones correctas (101 backend, 10 cliente HTTP, 10 web y 55 móvil), build web y exportaciones iOS/Android. Las pruebas cubren margen 100/200, cuota agotada 200/200, lectura sin consumo, desbloqueo por respuesta actual y deduplicación. Es una corrección comprobada del mecanismo de cuota, no una prueba física del micrófono ni una afirmación de que sea la única causa del fallo comunicado. No se grabó a la autora ni se consumió síntesis/transcripción para estas comprobaciones.

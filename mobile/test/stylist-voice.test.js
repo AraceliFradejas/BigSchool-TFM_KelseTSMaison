@@ -87,3 +87,29 @@ test('generative speech keeps its contextual reply without appending the recurri
   assert.match(text, /Revisamos las tallas/);
   assert.doesNotMatch(text, /Con cuál|lo vamos afinando/);
 });
+
+test('fresh server availability clears an old client block when the daily ceiling is raised', async () => {
+  const { markVoiceQuotaReached, voiceQuotaReached, syncVoiceQuotaStatus } =
+    await import('@maison/contracts/stylist-voice');
+  const now = new Date('2025-01-01T12:00:00Z');
+  markVoiceQuotaReached(now);
+  syncVoiceQuotaStatus({ quotaDay: '2024-12-31', quotaAvailable: true }, now);
+  assert.equal(voiceQuotaReached(now), true);
+  syncVoiceQuotaStatus({ quotaDay: '2025-01-01', quotaAvailable: false }, now);
+  assert.equal(voiceQuotaReached(now), true);
+  syncVoiceQuotaStatus({ quotaDay: '2025-01-01', quotaAvailable: true }, now);
+  assert.equal(voiceQuotaReached(now), false);
+});
+test('concurrent blocked controls share one read-only quota refresh, without speech or microphone calls', async () => {
+  const { markVoiceQuotaReached, voiceQuotaReached, refreshVoiceQuotaStatus } =
+    await import('@maison/contracts/stylist-voice');
+  markVoiceQuotaReached();
+  let requests = 0;
+  const request = async () => {
+    requests++;
+    return { quotaDay: new Date().toISOString().slice(0, 10), quotaAvailable: true };
+  };
+  await Promise.all([refreshVoiceQuotaStatus(request), refreshVoiceQuotaStatus(request)]);
+  assert.equal(requests, 1);
+  assert.equal(voiceQuotaReached(), false);
+});

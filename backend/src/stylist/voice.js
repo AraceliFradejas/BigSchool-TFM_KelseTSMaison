@@ -3,7 +3,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import { z } from 'zod';
 import { HttpError, parse, send } from '../http.js';
-import { claimStylistCall } from './quota.js';
+import { claimStylistCall, readStylistVoiceQuota } from './quota.js';
 import { stylistUnsafeText } from '@maison/contracts/stylist-policy';
 
 export const voiceAvailable = (config, now = Date.now()) =>
@@ -105,9 +105,10 @@ export async function requestVoice(kind, payload, config, signal, fetcher = fetc
 }
 export function voiceRouter(db, config, limiter, provider = requestVoice) {
   const router = Router();
-  router.get('/stylist/voice/status', (req, res) =>
+  router.get('/stylist/voice/status', async (req, res) =>
     send(res, {
       available: voiceAvailable(config),
+      ...(await readStylistVoiceQuota(db, config.voice?.dailyLimit || 6)),
       dailyActionLimit: config.voice?.dailyLimit || 6,
       maxRecordingSeconds: 60,
       maxAudioBytes: 2 * 1024 * 1024,

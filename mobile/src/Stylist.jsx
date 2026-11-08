@@ -1,3 +1,4 @@
+import { syncVoiceQuotaStatus } from '@maison/contracts/stylist-voice';
 import { VoiceInput, useStylistSpeech } from './StylistVoice';
 import {
   stylistScopeViolation,
@@ -91,6 +92,9 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
   const es = language === 'es';
   const status = useRemote('/stylist/status');
   const voice = useRemote('/stylist/voice/status');
+  useEffect(() => {
+    syncVoiceQuotaStatus(voice.data);
+  }, [voice.data]);
   const speech = useStylistSpeech(language);
   const [voiceBusy, setVoiceBusy] = useState(false);
   const {

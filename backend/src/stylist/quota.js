@@ -29,3 +29,15 @@ export async function claimStylistCall(db, dailyLimit, now = new Date(), bucket 
       .get(day, dailyLimit),
   );
 }
+
+// Read-only availability: a previous client-side 429 must not outlive a raised limit.
+export async function readStylistVoiceQuota(db, limit, now = new Date()) {
+  const day = now.toISOString().slice(0, 10);
+  const row =
+    db.kind === 'mongo'
+      ? await db
+          .collection('stylist_voice_usage')
+          .findOne({ _id: day }, { projection: { calls: 1 } })
+      : db.prepare('SELECT calls FROM stylist_voice_usage WHERE day=?').get(day);
+  return { quotaDay: day, quotaAvailable: (row?.calls || 0) < limit };
+}

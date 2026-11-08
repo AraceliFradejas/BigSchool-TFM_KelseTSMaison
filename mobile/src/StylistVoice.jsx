@@ -16,6 +16,7 @@ import {
   voiceQuotaReached,
   markVoiceQuotaReached,
   subscribeVoiceQuota,
+  refreshVoiceQuotaStatus,
 } from '@maison/contracts/stylist-voice';
 import { api } from './api';
 import Button from './Button';
@@ -32,8 +33,20 @@ function useVoiceQuotaHint(language) {
     const timer = setTimeout(() => setVisible(false), 5000);
     return () => clearTimeout(timer);
   }, [visible]);
+  async function allow() {
+    if (!voiceQuotaReached()) return true;
+    try {
+      await refreshVoiceQuotaStatus(() => api.request('/stylist/voice/status'));
+    } catch {
+      /* Keep the known block on a failed check. */
+    }
+    if (!voiceQuotaReached()) return true;
+    setVisible(true);
+    return false;
+  }
   return {
     blocked,
+    allow,
     show: () => setVisible(true),
     hint: visible ? voiceError('voice_daily_limit', language) : '',
   };
@@ -76,8 +89,7 @@ export function useStylistSpeech(language) {
   };
   async function speak(message, index, automatic = false) {
     if (quota.blocked && !cache.current.has(stylistSpeechText(message, language))) {
-      if (!automatic) quota.show();
-      return;
+      if (automatic || !(await quota.allow())) return;
     }
     if (playing === index) {
       stop();
@@ -209,10 +221,7 @@ export function VoiceInput({
     }
   }
   async function record() {
-    if (quota.blocked) {
-      quota.show();
-      return;
-    }
+    if (!(await quota.allow())) return;
     setError('');
     onBusyChange(true);
     setPhase('permission');
@@ -293,10 +302,7 @@ export function VoiceInput({
     }
   }
   async function chooseVoice() {
-    if (quota.blocked) {
-      quota.show();
-      return;
-    }
+    if (!(await quota.allow())) return;
     setPhase('permission');
     setError('');
     onBusyChange(true);

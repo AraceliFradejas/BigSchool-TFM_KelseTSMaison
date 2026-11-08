@@ -176,3 +176,30 @@ export function subscribeVoiceQuota(listener) {
     }
   };
 }
+
+export function syncVoiceQuotaStatus(status, now = new Date()) {
+  const day = now.toISOString().slice(0, 10);
+  if (status?.quotaDay !== day || typeof status.quotaAvailable !== 'boolean') return;
+  if (!status.quotaAvailable) {
+    markVoiceQuotaReached(now);
+    return;
+  }
+  if (blockedVoiceDay === day) {
+    blockedVoiceDay = null;
+    for (const listener of quotaListeners) listener();
+  }
+}
+let quotaRefresh;
+export async function refreshVoiceQuotaStatus(request) {
+  if (!quotaRefresh)
+    quotaRefresh = Promise.resolve()
+      .then(request)
+      .then((status) => {
+        syncVoiceQuotaStatus(status);
+        return status;
+      })
+      .finally(() => {
+        quotaRefresh = null;
+      });
+  return quotaRefresh;
+}

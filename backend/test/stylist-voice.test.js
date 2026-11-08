@@ -207,3 +207,17 @@ test('raising the voice ceiling to 200 preserves the 100 actions already consume
   assert.equal(result.status, 200);
   assert.equal(db.prepare('SELECT calls FROM stylist_voice_usage WHERE day=?').get(day).calls, 101);
 });
+
+test('read-only voice status distinguishes an exhausted ceiling from a raised ceiling without spending quota', async (t) => {
+  const { app, db } = setup(t, { ...settings, voice: { ...voice, dailyLimit: 200 } });
+  const day = new Date().toISOString().slice(0, 10);
+  db.prepare('INSERT INTO stylist_voice_usage (day,calls) VALUES (?,100)').run(day);
+  let result = await request(app).get('/api/v1/stylist/voice/status');
+  assert.equal(result.body.data.quotaDay, day);
+  assert.equal(result.body.data.quotaAvailable, true);
+  assert.equal(db.prepare('SELECT calls FROM stylist_voice_usage WHERE day=?').get(day).calls, 100);
+  db.prepare('UPDATE stylist_voice_usage SET calls=200 WHERE day=?').run(day);
+  result = await request(app).get('/api/v1/stylist/voice/status');
+  assert.equal(result.body.data.quotaAvailable, false);
+  assert.equal(db.prepare('SELECT calls FROM stylist_voice_usage WHERE day=?').get(day).calls, 200);
+});

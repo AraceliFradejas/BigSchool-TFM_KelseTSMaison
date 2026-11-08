@@ -1,3 +1,4 @@
+import { syncVoiceQuotaStatus } from '@maison/contracts/stylist-voice';
 import VoiceIcon from './VoiceIcon';
 import { SpeakButton, VoiceInput } from './StylistVoice';
 import {
@@ -25,6 +26,9 @@ export default function StylistChat({ conversation }) {
   const es = language === 'es';
   const availability = useResource('/stylist/status');
   const voice = useResource('/stylist/voice/status');
+  useEffect(() => {
+    syncVoiceQuotaStatus(voice.data);
+  }, [voice.data]);
   const [voiceBusy, setVoiceBusy] = useState(false);
   const {
     messages,
