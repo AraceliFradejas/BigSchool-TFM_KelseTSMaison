@@ -485,12 +485,15 @@ test('reported Noir sequence checks sizes, replaces sold-out black shoes and clo
     `Me quedo con ${chosen.name.es}`,
     intent({
       action: 'select',
-      referenceLookId: noir.id,
+      referenceLookId: 'look-runway-elegancia-2', // model confuses replacement collection with base look
       pieceType: 'shoes',
       selectedProductId: chosen.id,
     }),
   );
   assert.ok(selected.selectedAdditions.some((piece) => piece.product.id === chosen.id));
+  assert.equal(selected.selectedLookId, noir.id);
+  assert.equal(selected.referenceLook.id, noir.id);
+  assert.match(selected.message, /Noir Premiere/);
   const buying = await turn(
     '¿Cómo compro mi conjunto con estos zapatos?',
     intent({ action: 'purchase', referenceLookId: noir.id }),
