@@ -600,9 +600,12 @@ export async function converseStylist({
       result.message = result.selectedAdditions?.some(
         (piece) => piece.product.id === intent.selectedProductId,
       )
-        ? intent.reply
+        ? es
+          ? `Conservamos ${result.referenceLook?.name || 'tu conjunto'} con ${products.find((p) => p.id === intent.selectedProductId).name[input.language]}. Puedes abrir la pieza elegida para revisar su variante.`
+          : `Keeping ${result.referenceLook?.name || 'your outfit'} with ${products.find((p) => p.id === intent.selectedProductId).name[input.language]}. Open the chosen piece to check its variant.`
         : result.message;
-    } else if (result.complements.length) result.message = intent.reply;
+    }
+    // Complement copy must describe the server-verified options, not unseen model proposals.
     if (referenceId) result.selectedLookId = referenceId;
     return finish(result);
   }

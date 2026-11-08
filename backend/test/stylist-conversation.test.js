@@ -461,9 +461,12 @@ test('reported Noir sequence checks sizes, replaces sold-out black shoes and clo
       referenceLookId: noir.id,
       pieceType: 'shoes',
       pieceColor: 'black',
+      reply: 'Te sugiero otro conjunto Gorgeous que no está en las opciones.',
     }),
   );
   assert.equal(shoes.looks.length, 0);
+  assert.doesNotMatch(shoes.message, /Gorgeous/);
+  assert.match(shoes.message, /Noir Premiere/);
   assert.ok(shoes.complements.length > 0);
   assert.equal(shoes.selectedLookId, noir.id);
   for (const piece of shoes.complements) {
