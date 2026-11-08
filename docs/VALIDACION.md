@@ -494,3 +494,5 @@ Safari local: pregunta contextual de presupuesto, talla M/calzado 38, propuestas
 ### Voz por turnos y lectura completa · 8 de noviembre
 
 A petición de la autora, el dictado pasa a un minuto. Al detener, se transcribe y envía automáticamente; en modo voz la nueva respuesta se lee una sola vez con explicaciones, totales, piezas, variantes, precios y pregunta final. El texto y las fotos permanecen disponibles. Se conserva la cuota de seis acciones diarias de voz y el cierre al finalizar el 31/12/2026. Normalmente cada turno hablado requiere dos acciones. Safari puede requerir pulsar Escuchar si bloquea la reproducción automática. La autora ha autorizado los secretos de producción; la comprobación física del recorrido automático sigue pendiente y no se han repetido las tres llamadas reales ya consumidas. La suite de 144 pruebas, build web y exportaciones iOS/Android pasan con el nuevo contrato de límites.
+
+Producción `1bbb7c1`: Vercel Ready y GET de estado de voz HTTP 200 en web y API con `available: true` y límites actualizados. Smoke público correcto, sin llamadas de síntesis/transcripción adicionales. La prueba física de voz por turnos queda pendiente.
