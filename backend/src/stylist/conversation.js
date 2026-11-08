@@ -1,12 +1,19 @@
 import { z } from 'zod';
 import { stylistSchema, variantSize } from '@maison/contracts';
-import { pieceTypes, productPieceType, requestedDressCode } from '@maison/contracts/stylist-pieces';
+import {
+  pieceColors,
+  pieceTypes,
+  productPieceType,
+  matchesPieceType,
+  replacesPieceType,
+  requestedDressCode,
+} from '@maison/contracts/stylist-pieces';
 import {
   stylistUnsafeText,
   stylistUnsafeExplanation,
   stylistScopeMessage,
 } from '@maison/contracts/stylist-policy';
-import { stylistEditorialIntro } from '@maison/contracts/stylist-chat';
+import { stylistEditorialIntro, stylistClosure } from '@maison/contracts/stylist-chat';
 import { isStylistAvailable } from './config.js';
 import { claimStylistCall } from './quota.js';
 import { requestStylistProvider } from './providers.js';
@@ -27,6 +34,7 @@ export const chatRequestSchema = z
       .default([]),
     context: z
       .object({
+        lastAction: z.string().max(40).nullable().default(null),
         currentLookIds: z.array(id).max(3).default([]),
         lookIds: z.array(id).max(12).default([]),
         referenceLookId: id.nullable().default(null),
@@ -73,6 +81,7 @@ export const intentSchema = z
     updates,
     referenceLookId: id.nullable(),
     pieceType: z.enum(pieceTypes).nullable(),
+    pieceColor: z.enum(pieceColors).nullable().default(null),
     selectedProductId: id.nullable(),
     lookIds: z.array(id).max(3),
   })
@@ -144,12 +153,13 @@ export function conversationPrompt(input, looks, products) {
     },
     referenceLookId: nullable({ type: 'string', enum: looks.map((look) => look.id) }),
     pieceType: nullable({ type: 'string', enum: pieceTypes }),
+    pieceColor: nullable({ type: 'string', enum: pieceColors }),
     selectedProductId: nullable({ type: 'string' }),
     lookIds: { type: 'array', items: { type: 'string', enum: looks.map((look) => look.id) } },
   };
   return {
     instructions: `You are tAIlor, the warm personal virtual stylist of KelseTS Maison. Understand the CURRENT user message in the supplied conversation context; you are not a form or a keyword matcher. Output only the required JSON. Reply in ${input.language === 'en' ? 'English' : 'Spanish'}.
-Interpret ordinary speech, filler words, typos and references. If you just asked a budget, "Mmm, diez mil?" means a maximum of 1000000 cents. The supported budget is 1 to 10000 euros: ask to adjust amounts outside that range rather than inventing or silently clamping them. Null updates mean keep the previous preference, not erase it.
+Interpret ordinary speech, filler words, typos and references. The CURRENT message determines the action, not the earlier styling request. History is context, never a reason to repeat an earlier task. Supplying a clothing or shoe size for the chosen outfit is action sizes, NOT purchase or recommend. Only an explicit CURRENT request to buy or ask buying steps is purchase. Do not say "completar tu pedido": no order exists. When the user asks "que otros zapatos negros tienes?" after an unavailable shoe, use complement with pieceType shoes, pieceColor black and the selected referenceLookId. Keep the other pieces; the backend can replace an unavailable slot. Use pieceColor for explicit requested colors of the new piece. "ok" is an acknowledgement and "muchas gracias" closes the conversation, never a new recommendation. Do not ask for size again when already supplied. If you just asked a budget, "Mmm, diez mil?" means a maximum of 1000000 cents. The supported budget is 1 to 10000 euros: ask to adjust amounts outside that range rather than inventing or silently clamping them. Null updates mean keep the previous preference, not erase it.
 If the user has already said an elegant dinner, the activity is known: ask only for genuinely missing information, such as the budget, rather than asking again what the plan is.
 A date happening at the weekend is not automatically casual: if its plan is unclear, ask one natural question about the activity before recommending. "Cena de gala" means dressCode gala and occasion event; persist this even when the next turn asks about shoes. Gala means evening outfits, not job interview looks. Casual/informal must not be treated as formal.
 When the user asks for outfits reusable for a job interview as well as a dinner, this is a NEW styling goal. Update occasion to television (the catalogue interview category) and dressCode to elegant; do not keep gala as a hard constraint. Consider both uses from the conversation. Return actual recommended catalogue look IDs and cards immediately; do not merely offer to explore them or invent product titles as look names.
@@ -180,6 +190,27 @@ Stay within Maison outfits and styling. Do not discuss sex, religion, politics o
         minimumTotalCents: minimumTotal(look),
         pieces: look.products.filter((p) => p.active).map((p) => p.name[input.language]),
       })),
+      chosenLook: looks
+        .filter(
+          (look) =>
+            look.id ===
+            (input.context.referenceLookId ||
+              (input.context.currentLookIds?.length === 1
+                ? input.context.currentLookIds[0]
+                : null)),
+        )
+        .map((look) => ({
+          id: look.id,
+          name: look.name,
+          pieces: look.products
+            .filter((p) => p.active)
+            .map((p) => ({
+              id: p.id,
+              name: p.name[input.language],
+              type: productPieceType(p),
+              availableSizes: [...new Set(p.variants.filter((v) => v.stock > 0).map(variantSize))],
+            })),
+        })),
       shownOptions: products
         .filter(
           (product) =>
@@ -230,6 +261,15 @@ export async function converseStylist({
   });
   if (stylistUnsafeText(input.message))
     return empty(stylistScopeMessage(input.language), 'out_of_scope');
+  const closure = stylistClosure(input.message, input.language);
+  if (closure)
+    return {
+      ...empty(closure.message, closure.action),
+      conversationAction: closure.action,
+      selectedLookId:
+        input.context.referenceLookId ||
+        (input.context.currentLookIds?.length === 1 ? input.context.currentLookIds[0] : null),
+    };
   const unavailable = (reason) =>
     empty(
       es
@@ -314,6 +354,7 @@ export async function converseStylist({
     ...result,
     mode: 'ai',
     provider,
+    conversationAction: intent.action,
     preferences: result.preferences || preferences,
   });
   // A model echoing a budget must not invalidate the understood intent. Monetary facts remain server-owned.
@@ -346,6 +387,27 @@ export async function converseStylist({
             'The current price is shown on each product page. What styling detail would you like to review?',
         };
     intent.reply = replies[intent.action] || stylistScopeMessage(input.language);
+  }
+  const boundReference =
+    intent.referenceLookId ||
+    input.context.referenceLookId ||
+    (input.context.currentLookIds?.length === 1 ? input.context.currentLookIds[0] : null);
+  const sizeUpdate = intent.updates.size !== null || intent.updates.shoeSize !== null;
+  const newStylingGoal = ['occasion', 'dressCode', 'color', 'budgetCents'].some(
+    (key) => intent.updates[key] !== null && intent.updates[key] !== input.preferences[key],
+  );
+  if (
+    boundReference &&
+    sizeUpdate &&
+    !newStylingGoal &&
+    ['recommend', 'purchase', 'answer', 'select', 'clarify'].includes(intent.action)
+  ) {
+    intent.action = 'sizes';
+    intent.referenceLookId = boundReference;
+  }
+  if (intent.action === 'recommend' && boundReference && intent.pieceType && !newStylingGoal) {
+    intent.action = 'complement';
+    intent.referenceLookId = boundReference;
   }
   if (intent.action === 'out_of_scope')
     return finish(empty(stylistScopeMessage(input.language), 'out_of_scope'));
@@ -418,7 +480,7 @@ export async function converseStylist({
     input.context.referenceLookId ||
     ((input.context.currentLookIds || []).length === 1 ? input.context.currentLookIds[0] : null);
   if (['sizes', 'purchase'].includes(intent.action)) {
-    const look = (await getLooks()).find((item) => item.id === referenceId);
+    let look = (await getLooks()).find((item) => item.id === referenceId);
     if (!look)
       return finish(
         empty(
@@ -428,6 +490,40 @@ export async function converseStylist({
           'clarify',
         ),
       );
+    const selectedProducts = (await getProducts()).filter(
+      (p) => input.context.selectedProductIds.includes(p.id) && p.active,
+    );
+    for (const product of selectedProducts) {
+      const kind = productPieceType(product);
+      look = {
+        ...look,
+        products: [
+          ...look.products.filter(
+            (old) =>
+              old.id !== product.id && (!replacesPieceType(kind) || !matchesPieceType(old, kind)),
+          ),
+          product,
+        ],
+      };
+    }
+    if (intent.action === 'sizes' && sizeUpdate) {
+      const needsClothing = look.products.some((p) => p.active && p.category === 'fashion');
+      const needsShoes = look.products.some((p) => p.active && productPieceType(p) === 'shoes');
+      if ((needsClothing && !preferences.size) || (needsShoes && !preferences.shoeSize)) {
+        const question =
+          needsClothing && !preferences.size
+            ? es
+              ? '¿Qué talla de ropa necesitas?'
+              : 'What clothing size do you need?'
+            : es
+              ? '¿Qué número de calzado necesitas?'
+              : 'What shoe size do you need?';
+        return finish({
+          ...empty(`${es ? 'Conservamos' : 'Keeping'} ${look.name}. ${question}`, 'needs_sizes'),
+          selectedLookId: look.id,
+        });
+      }
+    }
     const missing = [];
     const lines = look.products
       .filter((product) => product.active)
@@ -461,15 +557,19 @@ export async function converseStylist({
       intent.action === 'sizes'
         ? `${es ? 'Conservamos' : 'Keeping'} ${look.name}. ${es ? 'Tallas disponibles por pieza ahora' : 'Sizes currently available by piece'}: ${lines.join(' ')} ${es ? 'Comprueba la talla de cada pieza en su ficha; cambiar de talla no garantiza el mismo ajuste.' : 'Check each piece’s size on its page; a different size does not guarantee the same fit.'}`
         : es
-          ? `Conservamos ${look.name}. Abre cada pieza del conjunto desde sus fotos o enlaces de arriba, elige una variante disponible y añádela a la bolsa. Después abre la bolsa, revisa las piezas y accede a tu cuenta para continuar al pago DEMO. Es una compra de demostración, sin cobro real. Si alguna talla no está disponible, revisamos esa pieza antes de continuar.`
-          : `Keeping ${look.name}. Open each piece using its photo or link above, choose an available variant and add it to your bag. Then open the bag, review the pieces and sign in to continue to DEMO checkout. This is a demonstration purchase with no real charge. If a size is unavailable, we can review that piece first.`;
+          ? `Conservamos ${look.name}. Abre las piezas elegidas, incluidas las sustituciones, desde sus fotos o enlaces de arriba, elige una variante disponible y añádela a la bolsa. Después abre la bolsa, revisa las piezas y accede a tu cuenta para continuar al pago DEMO. Es una compra de demostración, sin cobro real. Si alguna talla no está disponible, revisamos esa pieza antes de continuar.`
+          : `Keeping ${look.name}. Open the chosen pieces, including replacements, using their photos or links above, choose an available variant and add it to your bag. Then open the bag, review the pieces and sign in to continue to DEMO checkout. This is a demonstration purchase with no real charge. If a size is unavailable, we can review that piece first.`;
     const availabilityNote =
       intent.action === 'purchase' && missing.length
         ? es
           ? ` Antes de continuar, estas tallas no están disponibles: ${missing.join('; ')}. Podemos buscar alternativas para esas piezas.`
           : ` Before continuing, these sizes are unavailable: ${missing.join('; ')}. We can find alternatives for those pieces.`
         : '';
-    return finish({ ...empty(message + availabilityNote, intent.action), selectedLookId: look.id });
+    return finish({
+      ...empty(message + availabilityNote, intent.action),
+      selectedLookId: look.id,
+      selectedAdditions: selectedProducts.map((product) => ({ product })),
+    });
   }
   if (intent.action === 'complement' || (intent.action === 'select' && intent.selectedProductId)) {
     const selectedIds = [...input.context.selectedProductIds];
@@ -489,6 +589,7 @@ export async function converseStylist({
       mode: 'editorial',
       followUp: {
         pieceType: kind,
+        ...(intent.pieceColor ? { pieceColor: intent.pieceColor } : {}),
         ...(referenceId ? { referenceLookId: referenceId } : {}),
         selectedProductIds: [...new Set(selectedIds)].slice(-8),
       },
@@ -502,6 +603,7 @@ export async function converseStylist({
         ? intent.reply
         : result.message;
     } else if (result.complements.length) result.message = intent.reply;
+    if (referenceId) result.selectedLookId = referenceId;
     return finish(result);
   }
   const result = empty(intent.reply, intent.action);

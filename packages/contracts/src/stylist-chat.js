@@ -282,6 +282,7 @@ export function stylistConversationContext(messages) {
         result = {
           ...result,
           selectedLookId: response.selectedLookId || result.selectedLookId,
+          conversationAction: response.conversationAction || result.conversationAction,
           preferences: response.preferences || result.preferences,
         };
     }
@@ -452,6 +453,7 @@ export function stylistConversationRequest(
     ),
     history: messages.slice(-8).map((turn) => ({ role: turn.role, text: turn.text.slice(0, 500) })),
     context: {
+      lastAction: context?.conversationAction || null,
       currentLookIds: (context?.looks || [])
         .map((look) => look.id)
         .filter(Boolean)
@@ -481,4 +483,33 @@ export function stylistConversationRequest(
         .slice(-8),
     },
   };
+}
+
+// Standalone acknowledgement must never become catalogue work or change preferences.
+export function stylistClosure(message, language = 'es') {
+  const text = feedbackNormalize(message)
+    .replace(/[¡!¿?.,;:]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (
+    /^(?:(?:muchas gracias|gracias|thank you|thanks|adios|hasta luego|bye|goodbye)(?:\s+|$))+$/.test(
+      text,
+    )
+  )
+    return {
+      action: 'thanks',
+      message:
+        language === 'es'
+          ? 'Gracias a ti. Aquí estoy si necesitas revisar alguna pieza o algún detalle de tu look.'
+          : 'Thank you. I’m here if you need to check a piece or any detail of your outfit.',
+    };
+  if (/^(?:ok|okay|vale|de acuerdo|all right)$/.test(text))
+    return {
+      action: 'answer',
+      message:
+        language === 'es'
+          ? 'De acuerdo. Mantengo lo que hemos visto; cuando quieras, seguimos desde aquí.'
+          : 'All right. We can continue from what we have already discussed whenever you wish.',
+    };
+  return null;
 }

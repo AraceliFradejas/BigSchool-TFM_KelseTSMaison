@@ -1,11 +1,11 @@
 import {
   matchesPieceType,
+  matchesPieceColor,
   pieceLabel,
   productPieceType,
   replacesPieceType,
 } from '@maison/contracts/stylist-pieces';
 import { variantSize } from '@maison/contracts';
-import { eligibleLooks } from './editorial.js';
 function variantFor(product, preferences) {
   const requested = matchesPieceType(product, 'shoes')
     ? preferences.shoeSize
@@ -16,7 +16,8 @@ function variantFor(product, preferences) {
     .filter(
       (variant) =>
         variant.stock > 0 &&
-        (!requested || variantSize(variant) === requested || variantSize(variant) === 'one'),
+        (!requested || variantSize(variant) === requested || variantSize(variant) === 'one') &&
+        matchesPieceColor(product, variant, preferences.followUp?.pieceColor),
     )
     .sort((a, b) => a.priceCents - b.priceCents)[0];
 }
@@ -25,11 +26,30 @@ export async function recommendComplements({ getLooks, getProducts, preferences 
     kind = preferences.followUp.pieceType,
     label = pieceLabel(kind, preferences.language);
   const allLooks = await getLooks();
-  let reference = preferences.followUp.referenceLookId
-    ? eligibleLooks(allLooks, { ...preferences, occasion: 'any', color: 'any' }).find(
-        (look) => look.id === preferences.followUp.referenceLookId,
-      )
-    : null;
+  const original = allLooks.find(
+    (look) => look.id === preferences.followUp.referenceLookId && look.complete,
+  );
+  // Validate the retained pieces, not the unavailable slot the user wants to replace.
+  const retainedProducts = original?.products.filter(
+    (product) =>
+      product.active &&
+      (!preferences.excludeBeauty || product.category !== 'beauty') &&
+      (!replacesPieceType(kind) || !matchesPieceType(product, kind)),
+  );
+  const basePieces = retainedProducts?.map((product) => ({
+    product,
+    variant: variantFor(product, { ...preferences, followUp: undefined }),
+  }));
+  let reference =
+    original && basePieces.length && basePieces.every((piece) => piece.variant)
+      ? {
+          ...original,
+          pieces: basePieces,
+          products: retainedProducts,
+          totalCents: basePieces.reduce((sum, piece) => sum + piece.variant.priceCents, 0),
+          pendingPieceType: kind,
+        }
+      : null;
   let selectedAdditions = [];
   const response = (message, complements = []) => ({
     mode: 'editorial',
@@ -59,7 +79,7 @@ export async function recommendComplements({ getLooks, getProducts, preferences 
       (item) =>
         item.id === id && item.active && (!preferences.excludeBeauty || item.category !== 'beauty'),
     );
-    const variant = product && variantFor(product, preferences);
+    const variant = product && variantFor(product, { ...preferences, followUp: undefined });
     if (!product || !variant)
       return response(
         es
@@ -99,7 +119,10 @@ export async function recommendComplements({ getLooks, getProducts, preferences 
       (piece) => !replacesPieceType(kind) || !matchesPieceType(piece.product, kind),
     ) || [];
   const baseCents = retained.reduce((sum, piece) => sum + piece.variant.priceCents, 0);
-  const existing = new Set(reference?.pieces.map((piece) => piece.product.id));
+  const existing = new Set([
+    ...(original?.products.map((product) => product.id) || []),
+    ...(reference?.pieces.map((piece) => piece.product.id) || []),
+  ]);
   const colours = new Set(
     (reference?.pieces || [])
       .filter((piece) => piece.product.category === 'fashion')
@@ -124,7 +147,9 @@ export async function recommendComplements({ getLooks, getProducts, preferences 
         !existing.has(product.id) &&
         (!preferences.excludeBeauty || product.category !== 'beauty') &&
         (!sporty(product) || allowSport) &&
-        (preferences.color === 'any' || product.tags.includes(preferences.color)),
+        ((preferences.followUp.pieceColor && preferences.followUp.pieceColor !== 'any') ||
+          preferences.color === 'any' ||
+          product.tags.includes(preferences.color)),
     )
     .map((product) => ({ product, variant: variantFor(product, preferences) }))
     .filter(

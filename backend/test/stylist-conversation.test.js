@@ -406,3 +406,108 @@ test('offering to confirm sizes stays a conversation even when the model include
   });
   assert.equal(next.context.referenceLookId, look.id);
 });
+
+test('reported Noir sequence checks sizes, replaces sold-out black shoes and closes without new searches', async (t) => {
+  const db = setup(t);
+  const looks = await getLooks(db);
+  const noir = looks.find((l) => l.id === 'look-noir-signature');
+  assert.ok(noir);
+  let preferences = {
+    budgetCents: 600000,
+    occasion: 'event',
+    dressCode: 'elegant',
+    color: 'dark',
+    excludeBeauty: true,
+  };
+  const messages = [
+    { role: 'assistant', text: 'Noir Premiere.', result: { looks: [noir], preferences } },
+  ];
+  const turn = async (message, response) => {
+    const result = await run(
+      db,
+      stylistConversationRequest(message, { preferences, messages, language: 'es' }),
+      response,
+    );
+    messages.push(
+      { role: 'user', text: message },
+      { role: 'assistant', text: result.message, result },
+    );
+    preferences = result.preferences;
+    return result;
+  };
+  const clothing = await turn(
+    'Me parece perfecto. Mi talla es la M',
+    intent({ action: 'clarify', referenceLookId: noir.id, updates: { ...updates, size: 'M' } }),
+  );
+  assert.equal(clothing.reason, 'needs_sizes');
+  assert.match(clothing.message, /calzado/);
+  assert.equal(clothing.looks.length, 0);
+  // The backend also prevents a model wrongly treating size input as buying consent.
+  const footwear = await turn(
+    'Mi talla de calzado es un número treinta y ocho.',
+    intent({
+      action: 'purchase',
+      referenceLookId: noir.id,
+      updates: { ...updates, shoeSize: '38' },
+    }),
+  );
+  assert.equal(footwear.reason, 'sizes');
+  assert.doesNotMatch(footwear.message, /pago DEMO|añádela/);
+  assert.match(footwear.message, /38 no está disponible/);
+  const shoes = await turn(
+    '¿Qué otros zapatos negros tienes?',
+    intent({
+      action: 'recommend',
+      referenceLookId: noir.id,
+      pieceType: 'shoes',
+      pieceColor: 'black',
+    }),
+  );
+  assert.equal(shoes.looks.length, 0);
+  assert.ok(shoes.complements.length > 0);
+  assert.equal(shoes.selectedLookId, noir.id);
+  for (const piece of shoes.complements) {
+    assert.ok(piece.variant.stock > 0);
+    assert.ok(piece.totalWithLookCents <= 600000);
+    assert.match(piece.product.name.es + ' ' + piece.variant.label.es, /negr/i);
+    assert.match(piece.variant.label.es, /38/);
+  }
+  const chosen = shoes.complements[0].product;
+  const selected = await turn(
+    `Me quedo con ${chosen.name.es}`,
+    intent({
+      action: 'select',
+      referenceLookId: noir.id,
+      pieceType: 'shoes',
+      selectedProductId: chosen.id,
+    }),
+  );
+  assert.ok(selected.selectedAdditions.some((piece) => piece.product.id === chosen.id));
+  const buying = await turn(
+    '¿Cómo compro mi conjunto con estos zapatos?',
+    intent({ action: 'purchase', referenceLookId: noir.id }),
+  );
+  assert.match(buying.message, /pago DEMO/);
+  assert.doesNotMatch(buying.message, /Salones · Dress \(38\)/);
+  assert.ok(buying.selectedAdditions.some((piece) => piece.product.id === chosen.id));
+  const before = { ...preferences };
+  for (const message of ['ok', 'muchas gracias']) {
+    const result = await turn(message, () => {
+      throw Error('Standalone closure must not call a provider');
+    });
+    assert.equal(result.looks.length, 0);
+    assert.equal(result.complements?.length || 0, 0);
+    assert.equal(result.selectedLookId, noir.id);
+    for (const key of [
+      'budgetCents',
+      'occasion',
+      'dressCode',
+      'color',
+      'excludeBeauty',
+      'size',
+      'shoeSize',
+      'style',
+    ])
+      assert.deepEqual(result.preferences[key], before[key], key);
+  }
+});

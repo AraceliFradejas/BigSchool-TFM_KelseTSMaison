@@ -1,4 +1,4 @@
-import { pieceTypes } from './stylist-pieces.js';
+import { pieceTypes, pieceColors } from './stylist-pieces.js';
 import { z } from 'zod';
 import { demoPaymentSchema } from './demo-payment.js';
 
@@ -99,6 +99,7 @@ export const stylistSchema = z
     followUp: z
       .object({
         pieceType: z.enum(pieceTypes),
+        pieceColor: z.enum(pieceColors).optional(),
         selectedProductIds: z
           .array(z.string().regex(/^[a-z0-9-]{1,100}$/))
           .max(8)

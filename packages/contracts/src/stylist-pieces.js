@@ -77,3 +77,37 @@ export function requestedDressCode(text) {
 export const productPieceType = (product) =>
   pieceTypes.find((type) => matchesPieceType(product, type)) || null;
 export const replacesPieceType = (type) => !['beauty', 'jewellery', 'accessories'].includes(type);
+
+export const pieceColors = [
+  'any',
+  'black',
+  'white',
+  'navy',
+  'red',
+  'beige',
+  'brown',
+  'gold',
+  'silver',
+  'green',
+];
+const colorPatterns = {
+  black: /\b(negro|negra|negros|negras|black)\b/,
+  white: /\b(blanco|blanca|white|marfil|ivory)\b/,
+  navy: /\b(azul noche|azul marino|navy|midnight blue)\b/,
+  red: /\b(rojo|roja|red|burdeos|burgundy)\b/,
+  beige: /\b(beige|arena|sand)\b/,
+  brown: /\b(marron|brown|chocolate|cafe|coffee)\b/,
+  gold: /\b(dorado|dorada|gold|golden)\b/,
+  silver: /\b(plateado|plateada|silver)\b/,
+  green: /\b(verde|green)\b/,
+};
+export function matchesPieceColor(product, variant, color) {
+  if (!color || color === 'any') return true;
+  return (
+    colorPatterns[color]?.test(
+      normalize(
+        [product.name?.es, product.name?.en, variant?.label?.es, variant?.label?.en].join(' '),
+      ),
+    ) || false
+  );
+}
