@@ -1,0 +1,77 @@
+{
+  "capturedOn": "2026-11-08",
+  "source": "Safari, https://kelsets-maison.vercel.app, conversación original realizada por la autora y observada abierta.",
+  "format": "JPEG original devuelto por la herramienta de captura, sin recomprimir ni reconstruir.",
+  "screenshots": [
+    {
+      "file": "00-ocasion-y-presupuesto.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 335725,
+      "sha256": "ac539d8b9fafb6eb3e33eef76514b9d6df9bbdcae8b00d75d071e8fc5ba1d727"
+    },
+    {
+      "file": "01a-propuesta-gemini-presupuesto-total.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 353410,
+      "sha256": "5bc217a393af340288659ea8fefad30b0390a03173469f4f57551054a685266a"
+    },
+    {
+      "file": "01b-endgame-chaqueta-blusa.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 349717,
+      "sha256": "ee9b66b642129968bb68761ed88668c463c6099826dae69bd6839ffd8fb145b9"
+    },
+    {
+      "file": "01c-endgame-pantalon-calzado-original.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 371106,
+      "sha256": "dd6775dc7c4ab92f8e5f7b9ad44bc64927eb5d2579a62ba960605aa5fd5fac71"
+    },
+    {
+      "file": "02-sustitucion-negro-38-claude.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 350684,
+      "sha256": "80ef96b4e74dbbf85f5436fd33e1226bfbc8716dad819df40e35bb8537d862e3"
+    },
+    {
+      "file": "03-foto-mocasines-nombre-precio.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 334352,
+      "sha256": "26adf557096cbfe32834ea8842d3fd6f6b1cace714ad3287a03c3418589d04b8"
+    },
+    {
+      "file": "04-eleccion-mocasines-conserva-look.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 346223,
+      "sha256": "71ebe1538ec099531264fa68e55ba7e5e321458c44f71a1e97afb76803e05a0a"
+    },
+    {
+      "file": "05-despedida-contexto.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 341896,
+      "sha256": "b8f4063ee6e48ab63ad293906bce52e9d9f5edc54fc2c85ebd9bef54ea1df4ab"
+    },
+    {
+      "file": "06-continuar-compra-pide-talla.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 355115,
+      "sha256": "2cdac02896dfe695676a94f4dbfbb58c544044b9d88c891974c620ceb034c0ef"
+    },
+    {
+      "file": "07-aviso-limite-voz.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 360907,
+      "sha256": "472e2940dc60fea0742b8352cb06406e75eca615e801d8b6dcfee389fa395f01"
+    }
+  ]
+}
