@@ -328,7 +328,7 @@ test('sizes, relative size and purchase keep the selected outfit without restart
   };
   for (const [message, action, size] of [
     ['Me quedo con este outfit. ¿Qué tallas tienes?', 'sizes', null],
-    ['¿Tienes una talla más grande?', 'sizes', 'L'],
+    ['¿Tienes una talla más grande? Enséñame todas las disponibles.', 'sizes', 'L'],
     ['Me parece perfecto. ¿Qué tengo que hacer para comprarlo?', 'purchase', null],
   ]) {
     const input = stylistConversationRequest(message, { preferences, messages, language: 'es' });

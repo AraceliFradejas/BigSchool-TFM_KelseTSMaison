@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-08",
+  "initialContext": "Fixture de The Manuscript elegido y pregunta de talla; una petición real de producción, sin voz, bolsa ni pedidos.",
+  "message": "Mi talla es M y calzo el 38.",
+  "http": 200,
+  "provider": "gemini",
+  "mode": "ai",
+  "reason": "sizes",
+  "reply": "He comprobado The Manuscript: talla M y calzado 38 disponibles en las piezas elegidas. Puedes abrirlas para seleccionar sus variantes.",
+  "selectedLookId": "look-runway-elegancia-2",
+  "looks": [],
+  "preferences": {
+    "occasion": "television",
+    "color": "any",
+    "excludeBeauty": false,
+    "dressCode": "elegant",
+    "style": "Ahora: Mi talla es M y calzo el 38.",
+    "budgetCents": 600000,
+    "language": "es",
+    "size": "M",
+    "shoeSize": "38"
+  }
+}
