@@ -36,7 +36,7 @@
       [
         "expo-audio",
         {
-          "microphonePermission": "Permite a KelseTS Maison grabar tu petición solo cuando pulses Dictar. El audio se envía a ElevenLabs al pulsar Transcribir.",
+          "microphonePermission": "Permite a KelseTS Maison grabar tu petición solo cuando pulses Dictar. El audio se procesa fuera del dispositivo al pulsar Transcribir.",
           "enableBackgroundRecording": false,
           "enableBackgroundPlayback": false
         }

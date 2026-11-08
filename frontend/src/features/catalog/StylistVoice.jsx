@@ -400,8 +400,8 @@ export function VoiceInput({
       </div>
       <p className="fine-print">
         {es
-          ? 'Hasta 20 segundos. Al pulsar Transcribir se envía el audio a ElevenLabs. Revisa el texto antes de Enviar. No incluyas datos personales.'
-          : 'Up to 20 seconds. Transcribe sends audio to ElevenLabs. Review the text before Send. Do not include personal details.'}
+          ? 'Graba hasta 20 segundos. El audio se procesa fuera del dispositivo para transcribirlo. Revisa el texto antes de enviarlo y evita incluir datos personales.'
+          : 'Record up to 20 seconds. Audio is processed outside your device for transcription. Review the text before sending it and avoid personal details.'}
       </p>
       {error && (
         <p role="status" className="fine-print">

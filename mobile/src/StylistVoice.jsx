@@ -373,8 +373,8 @@ export function VoiceInput({
       </View>
       <Text style={s.note}>
         {es
-          ? 'Hasta 20 segundos. Transcribir envía el audio a ElevenLabs. Revisa el texto antes de Enviar. No incluyas datos personales.'
-          : 'Up to 20 seconds. Transcribe sends audio to ElevenLabs. Review before Send. Do not include personal details.'}
+          ? 'Graba hasta 20 segundos. El audio se procesa fuera del dispositivo para transcribirlo. Revisa el texto antes de enviarlo y evita incluir datos personales.'
+          : 'Record up to 20 seconds. Audio is processed outside your device for transcription. Review the text before sending it and avoid personal details.'}
       </Text>
       {error && (
         <Text accessibilityLiveRegion="polite" style={s.note}>
