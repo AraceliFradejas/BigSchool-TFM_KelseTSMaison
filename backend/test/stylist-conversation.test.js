@@ -282,7 +282,7 @@ test('reuse for an interview replaces the previous gala constraint and show both
   const reusable = await turn(
     '¿Tienes algo que luego pudiera reutilizar en una entrevista de trabajo?',
     intent({
-      action: 'answer',
+      action: 'recommend',
       reply: 'Podemos comparar opciones versátiles.',
       lookIds: workIds,
       updates: { ...updates, occasion: 'television' },
@@ -357,4 +357,52 @@ test('sizes, relative size and purchase keep the selected outfit without restart
     );
     preferences = result.preferences;
   }
+});
+
+test('offering to confirm sizes stays a conversation even when the model includes the existing look ID in an answer', async (t) => {
+  const db = setup(t);
+  const id = 'look-noir-premiere';
+  const looks = await getLooks(db);
+  const look =
+    looks.find((item) => item.id === id) || looks.find((item) => item.name === 'Noir Premiere');
+  assert.ok(look);
+  const preferences = {
+    budgetCents: 600000,
+    occasion: 'event',
+    dressCode: 'elegant',
+    color: 'dark',
+  };
+  const messages = [
+    {
+      role: 'assistant',
+      text: 'Este conjunto es una opción sobria.',
+      result: { looks: [look], preferences },
+    },
+  ];
+  const message = 'Me parece perfecto. Eh, ¿te digo y te confirmo mi talla?';
+  const result = await run(
+    db,
+    stylistConversationRequest(message, { preferences, messages, language: 'es' }),
+    intent({
+      action: 'answer',
+      reply: 'Sí, dime tu talla de ropa y tu número de calzado y lo comprobamos.',
+      referenceLookId: look.id,
+      lookIds: [look.id],
+    }),
+  );
+  assert.equal(result.reason, 'answer');
+  assert.equal(result.selectedLookId, look.id);
+  assert.deepEqual(result.looks, []);
+  assert.match(result.message, /dime tu talla/);
+  assert.doesNotMatch(result.message, /opciones del catálogo|comparar/);
+  messages.push(
+    { role: 'user', text: message },
+    { role: 'assistant', text: result.message, result },
+  );
+  const next = stylistConversationRequest('M y 38', {
+    preferences: result.preferences,
+    messages,
+    language: 'es',
+  });
+  assert.equal(next.context.referenceLookId, look.id);
 });
