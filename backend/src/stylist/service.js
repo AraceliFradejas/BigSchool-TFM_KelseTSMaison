@@ -1,3 +1,4 @@
+import { requestedDressCode } from '@maison/contracts/stylist-pieces';
 import { recommendComplements } from './complements.js';
 import { stylistEditorialIntro } from '@maison/contracts/stylist-chat';
 import { isStylistAvailable } from './config.js';
@@ -21,8 +22,17 @@ export async function recommendLooks({
   signal,
   requestProvider = requestStylistProvider,
 }) {
+  const dressCode =
+    preferences.dressCode !== 'any' && preferences.dressCode
+      ? preferences.dressCode
+      : requestedDressCode(preferences.style) || 'any';
+  preferences = {
+    ...preferences,
+    dressCode,
+    ...(dressCode === 'gala' ? { occasion: 'event' } : {}),
+  };
   if (
-    stylistScopeViolation(preferences.message ?? preferences.style) ||
+    stylistScopeViolation(preferences.message ?? preferences.style, { awaitingBudget: true }) ||
     stylistUnsafeText(preferences.style)
   )
     return {

@@ -138,3 +138,7 @@ El analizador compartido reconoce importes monetarios ES/EN escritos con palabra
 Las opciones de pantalón presentadas se pueden confirmar por su nombre, título o una frase de elección; se reconoce «ready por it» únicamente como alias de Ready For It? cuando esa opción se ha mostrado y es única. Confirmar no vuelve a buscar, añadir a la bolsa ni reservar stock. El contexto de la despedida conserva conjunto y pieza. Las peticiones de otra talla, cambios, referencias no mostradas o manipulación siguen sin confirmar una elección.
 
 Ante una petición explícita de mayor elegancia, el ranking editorial prioriza vestidos y sastrería disponibles dentro de los filtros. No interpreta «informal» como «formal» ni rellena con looks casuales si faltan opciones formales. Esta ordenación es editorial y no se presenta como una nueva llamada de IA o una garantía subjetiva de estilo.
+
+## Interpretación generativa de la conversación
+
+El nuevo chat utiliza [un endpoint conversacional con contexto y salida estructurada](CHAT-GENERATIVO-TAILOR.md). Con IA activa, interpreta la petición antes de las reglas locales; el backend valida los identificadores y calcula los importes reales. Esta ampliación sustituye la limitación anterior de interpretar solo frases previstas o consultas de pantalones. Los filtros y el modo editorial separados permanecen como alternativa explícita.

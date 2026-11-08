@@ -14,13 +14,13 @@ export function stylistUnsafeText(text) {
   const value = normalize(text);
   return excludedTopics.test(value) || injection.test(value);
 }
-export function stylistScopeViolation(text = '') {
-  const value = normalizeSpokenBudget(text).trim();
+export function stylistScopeViolation(text = '', { awaitingBudget = false } = {}) {
+  const value = normalizeSpokenBudget(text, awaitingBudget).trim();
   if (!value) return false; // The detailed preference form does not require free text.
   if (stylistUnsafeText(value)) return true;
   if (/^(hola|hello|hi|buenas|buenos dias|buenas tardes)[!.\s]*$/.test(value)) return false;
   return (
-    !/\b(look\w*|outfit\w*|moda|fashion|maison|coleccion\w*|catalog\w*|prenda\w*|ropa|vestid\w*|camisa\w*|blusa\w*|pantalon\w*|falda\w*|blazer|americana|jersey|cardigan|top|zapato\w*|calzado|calzo|shoe\w*|bota\w*|bolso\w*|bag|accesorio\w*|accessor\w*|joya\w*|jewel\w*|maquillaje|makeup|belleza|beauty|perfume|talla|size|presupuesto|budget|cena|dinner|concierto|concert|entrevista|interview|boda|wedding|evento|event|fiesta|party|weekend|semana|estilo|style|informal|casual|formal|elegante|elegant|color\w*|paleta|palette|rojo|red|negro|black|blanco|white|azul|blue|verde|green|rosa|pink|beige|marfil|ivory|dorado|gold|plateado|silver|barato|caro|cheaper|expensive|economico|combinar|combina\w*|wear|clothes|clothing|dress|trousers|skirt|shirt)\b/.test(
+    !/\b(look\w*|outfit\w*|moda|fashion|maison|coleccion\w*|catalog\w*|prenda\w*|ropa|vestid\w*|camisa\w*|blusa\w*|pantalon\w*|falda\w*|blazer|americana|jersey|cardigan|top|zapato\w*|calzado|calzo|shoe\w*|bota\w*|bolso\w*|bag|accesorio\w*|accessor\w*|joya\w*|jewel\w*|maquillaje|makeup|belleza|beauty|perfume|talla|size|presupuesto|budget|cena|dinner|gala|restaurante|restaurant|cita|date|paseo|walk|romantica|romantic|concierto|concert|entrevista|interview|boda|wedding|evento|event|fiesta|party|weekend|semana|estilo|style|informal|casual|formal|elegante|elegant|color\w*|paleta|palette|rojo|red|negro|black|blanco|white|azul|blue|verde|green|rosa|pink|beige|marfil|ivory|dorado|gold|plateado|silver|barato|caro|cheaper|expensive|economico|combinar|combina\w*|wear|clothes|clothing|dress|trousers|skirt|shirt)\b/.test(
       value,
     ) &&
     !/\b(?:tengo|dispongo de|cuento con|i have)\s+-?\d/.test(value) &&

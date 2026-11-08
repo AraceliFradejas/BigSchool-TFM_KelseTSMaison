@@ -1,3 +1,4 @@
+import { requestedDressCode } from '@maison/contracts/stylist-pieces';
 import { variantSize } from '@maison/contracts';
 
 // Both modes share these hard constraints; the model cannot relax them.
@@ -45,20 +46,32 @@ export function eligibleLooks(looks, preferences) {
 
 // A request for a formal dinner should not fall back to the first casual combinations.
 export function rankEditorialLooks(looks, preferences) {
-  const latest = (preferences.style || '').split(/Ahora:/).at(-1);
-  if (!/\b(?:elegant\w*|formal\w*|gala|michelin)\b|fine dining/i.test(latest)) return looks;
-  const score = (look) =>
-    look.pieces
-      .filter((piece) => piece.product.category === 'fashion')
-      .reduce((sum, piece) => {
-        const text = `${piece.product.name.es} ${piece.product.name.en} ${piece.product.description?.es || ''}`;
-        return (
-          sum +
-          (/vestido|dress|blazer|americana|sastre|tailor/i.test(text) ? 2 : 0) +
-          (/satin|saten|seda|silk|velvet|terciopelo/i.test(text) ? 1 : 0) -
-          (/deportiv|sport|jogger/i.test(text) ? 10 : 0)
-        );
-      }, 0);
-  const formal = looks.filter((look) => score(look) >= 2).sort((a, b) => score(b) - score(a));
-  return formal;
+  const code =
+    preferences.dressCode && preferences.dressCode !== 'any'
+      ? preferences.dressCode
+      : requestedDressCode(preferences.style);
+  if (!['gala', 'elegant'].includes(code)) return looks;
+  const score = (look) => {
+    const fashion = look.pieces.filter((piece) => piece.product.category === 'fashion');
+    const dress = fashion.some((piece) =>
+      /vestido|dress|gown/i.test(`${piece.product.name.es} ${piece.product.name.en}`),
+    );
+    const tailoring = fashion.some((piece) =>
+      /blazer|americana|sastre|tailor|tuxedo|esmoquin/i.test(
+        `${piece.product.name.es} ${piece.product.name.en}`,
+      ),
+    );
+    const sporty = fashion.some((piece) =>
+      /deportiv|sport|jogger/i.test(`${piece.product.name.es} ${piece.product.name.en}`),
+    );
+    if (sporty) return -1;
+    if (code === 'gala')
+      return dress
+        ? 10 + (look.mood === 'event' ? 2 : 0)
+        : /tuxedo|esmoquin/i.test(look.name)
+          ? 8
+          : -1;
+    return (dress ? 5 : tailoring ? 3 : 0) - (/interview|presentation/i.test(look.name) ? 1 : 0);
+  };
+  return looks.filter((look) => score(look) > 0).sort((a, b) => score(b) - score(a));
 }

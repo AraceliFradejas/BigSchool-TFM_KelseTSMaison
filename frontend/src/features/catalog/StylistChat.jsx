@@ -11,6 +11,7 @@ import {
   chatPreferences,
   stylistFeedback,
   stylistConversationContext,
+  stylistConversationRequest,
   stylistFollowUp,
   stylistDisplayOptions,
   stylistBudgetQuestion,
@@ -35,6 +36,18 @@ export default function StylistChat({ conversation }) {
     interactionMode,
     setInteractionMode,
   } = conversation;
+  const lastResult = messages.at(-1)?.result;
+  const aiUnavailable =
+    lastResult?.mode === 'editorial' &&
+    [
+      'daily_limit',
+      'expired',
+      'not_configured',
+      'unavailable',
+      'invalid_response',
+      'input_limit',
+      'catalog_unavailable',
+    ].includes(lastResult.reason);
   const [busy, setBusy] = useState(false);
   const pending = useRef(null);
   const end = useRef(null);
@@ -65,6 +78,36 @@ export default function StylistChat({ conversation }) {
     window.dispatchEvent(new Event('maison-voice-stop'));
     setDraft('');
     say({ role: 'user', text });
+    if (availability.data?.available && availability.data?.conversational) {
+      if (!user && availability.data.requiresAccount !== false) {
+        say({
+          role: 'assistant',
+          text: es ? 'Accede a tu cuenta para hablar con tAIlor.' : 'Sign in to talk with tAIlor.',
+          login: true,
+        });
+        return;
+      }
+      const controller = new AbortController();
+      pending.current = controller;
+      setBusy(true);
+      try {
+        const result = await api.request('/stylist/chat', {
+          method: 'POST',
+          signal: controller.signal,
+          body: stylistConversationRequest(text, { preferences, messages, language }),
+        });
+        if (!controller.signal.aborted) {
+          setPreferences(result.preferences);
+          say({ role: 'assistant', text: result.message, result });
+        }
+      } catch (error) {
+        if (!controller.signal.aborted) say({ role: 'assistant', text: errorText(error) });
+      } finally {
+        if (!controller.signal.aborted) setBusy(false);
+        if (pending.current === controller) pending.current = null;
+      }
+      return;
+    }
     const feedback = stylistFeedback(
       text,
       messages.some((message) => message.result?.looks.length),
@@ -75,7 +118,7 @@ export default function StylistChat({ conversation }) {
       say({ role: 'assistant', text: feedback });
       return;
     }
-    if (stylistScopeViolation(text)) {
+    if (stylistScopeViolation(text, { awaitingBudget: !preferences.budgetCents })) {
       say({
         role: 'assistant',
         text:
@@ -93,6 +136,15 @@ export default function StylistChat({ conversation }) {
       say({
         role: 'assistant',
         text: stylistBudgetQuestion(parsed, language),
+      });
+      return;
+    }
+    if (parsed.needsPlan) {
+      say({
+        role: 'assistant',
+        text: es
+          ? '¿Qué tenéis planeado para esa cita: una cena especial, un paseo o algo más informal? Así buscamos un look que esté a la altura de la ocasión.'
+          : 'What do you have planned for your date: a special dinner, a walk or something casual? That will help us find the right outfit.',
       });
       return;
     }
@@ -145,13 +197,17 @@ export default function StylistChat({ conversation }) {
           : 'I’m tAIlor, your personal virtual stylist at KelseTS Maison. Let’s find your next outfit together.'}
       </p>
       <p className="mode-badge">
-        {availability.data?.available
+        {aiUnavailable
           ? es
-            ? 'Asesoría con IA'
-            : 'AI styling'
-          : es
-            ? 'Selección editorial · IA todavía desactivada'
-            : 'Editorial selection · AI currently disabled'}
+            ? 'Conversación con IA no disponible'
+            : 'AI conversation unavailable'
+          : availability.data?.available
+            ? es
+              ? 'Asesoría con IA'
+              : 'AI styling'
+            : es
+              ? 'Selección editorial · IA todavía desactivada'
+              : 'Editorial selection · AI currently disabled'}
       </p>
       {!messages.length && interactionMode === 'text' && (
         <div className="stylist-chat-examples">
@@ -213,65 +269,64 @@ export default function StylistChat({ conversation }) {
                 {es ? 'Acceder a mi cuenta' : 'Sign in'}
               </Link>
             )}
-            {message.result && (
-              <>
-                <p className="fine-print">
-                  {message.result.mode === 'ai'
-                    ? `${es ? 'Sugerencia con IA' : 'AI suggestion'} · ${{ gemini: 'Gemini', anthropic: 'Claude', openai: 'OpenAI' }[message.result.provider]}`
-                    : es
-                      ? 'Selección editorial, sin IA.'
-                      : 'Editorial selection, without AI.'}{' '}
-                  {es ? 'Presupuesto aplicado: ' : 'Applied budget: '}
-                  <Money cents={message.result.preferences.budgetCents} />
-                  {message.result.preferences.size
-                    ? ` · ${es ? 'Talla' : 'Size'} ${message.result.preferences.size}`
-                    : ''}
-                  {message.result.preferences.shoeSize
-                    ? ` · ${es ? 'Calzado' : 'Shoes'} ${message.result.preferences.shoeSize}`
-                    : ''}
-                </p>
-                {stylistDisplayOptions(message.result, language).map((look) => (
-                  <section className="stylist-chat-look" key={look.id}>
-                    <h3>{look.name}</h3>
-                    <p>
-                      {message.result.complements
-                        ? message.result.referenceLook
-                          ? `${es ? 'Total con' : 'Total with'} ${message.result.referenceLook.name}`
-                          : es
-                            ? 'Precio de la pieza'
-                            : 'Piece price'
-                        : es
-                          ? 'Total del look'
-                          : 'Outfit total'}
-                      :{' '}
-                      <strong>
-                        <Money cents={look.totalCents} />
-                      </strong>
-                    </p>
-                    {look.explanation && <p>{look.explanation}</p>}
-                    <ProductGrid
-                      products={look.pieces.map((piece) => ({
-                        ...piece.product,
-                        variants: [piece.variant],
-                      }))}
-                    />
-                  </section>
-                ))}
-                {message.result.looks.length > 0 && (
-                  <p className="stylist-chat-followup">
-                    {es
-                      ? '¿Con cuál te ves más? Cuéntame qué te gusta y qué cambiarías; lo vamos afinando a tu gusto.'
-                      : 'Which one feels most like you? Tell me what you like or would change; we can refine it together.'}
+            {message.result &&
+              (message.result.looks.length > 0 || message.result.complements?.length > 0) && (
+                <>
+                  <p className="fine-print">
+                    {message.result.mode === 'ai'
+                      ? `${es ? 'Sugerencia con IA' : 'AI suggestion'} · ${{ gemini: 'Gemini', anthropic: 'Claude', openai: 'OpenAI' }[message.result.provider]}`
+                      : es
+                        ? 'Selección editorial, sin IA.'
+                        : 'Editorial selection, without AI.'}{' '}
+                    {es ? 'Presupuesto aplicado: ' : 'Applied budget: '}
+                    <Money cents={message.result.preferences.budgetCents} />
+                    {message.result.preferences.size
+                      ? ` · ${es ? 'Talla' : 'Size'} ${message.result.preferences.size}`
+                      : ''}
+                    {message.result.preferences.shoeSize
+                      ? ` · ${es ? 'Calzado' : 'Shoes'} ${message.result.preferences.shoeSize}`
+                      : ''}
                   </p>
-                )}
-              </>
-            )}
+                  {stylistDisplayOptions(message.result, language).map((look) => (
+                    <section className="stylist-chat-look" key={look.id}>
+                      <h3>{look.name}</h3>
+                      <p>
+                        {message.result.complements
+                          ? message.result.referenceLook
+                            ? `${es ? 'Total con' : 'Total with'} ${message.result.referenceLook.name}`
+                            : es
+                              ? 'Precio de la pieza'
+                              : 'Piece price'
+                          : es
+                            ? 'Total del look'
+                            : 'Outfit total'}
+                        :{' '}
+                        <strong>
+                          <Money cents={look.totalCents} />
+                        </strong>
+                      </p>
+                      {look.explanation && <p>{look.explanation}</p>}
+                      <ProductGrid
+                        products={look.pieces.map((piece) => ({
+                          ...piece.product,
+                          variants: [piece.variant],
+                        }))}
+                      />
+                    </section>
+                  ))}
+                  {message.result.looks.length > 0 && (
+                    <p className="stylist-chat-followup">
+                      {es
+                        ? '¿Con cuál te ves más? Cuéntame qué te gusta y qué cambiarías; lo vamos afinando a tu gusto.'
+                        : 'Which one feels most like you? Tell me what you like or would change; we can refine it together.'}
+                    </p>
+                  )}
+                </>
+              )}
           </article>
         ))}
         {busy && (
-          <p role="status">
-            {es ? 'Estoy buscando combinaciones en Maison…' : 'Finding combinations in Maison…'}
-          </p>
+          <p role="status">{es ? 'Estoy preparando tu respuesta…' : 'Preparing your response…'}</p>
         )}
       </div>
       <VoiceInput
@@ -311,8 +366,8 @@ export default function StylistChat({ conversation }) {
       </form>
       <p className="fine-print">
         {es
-          ? 'No incluyas datos personales. Si la IA está activa, las preferencias se enviarán a los proveedores configurados. Las sugerencias no cambian tu bolsa.'
-          : 'Do not include personal details. When AI is active, preferences are sent to the configured providers. Suggestions do not change your bag.'}
+          ? 'No incluyas datos personales. Si la IA está activa, la conversación y tus preferencias se enviarán a los proveedores configurados. Las sugerencias no cambian tu bolsa.'
+          : 'Do not include personal details. When AI is active, the conversation and your preferences are sent to the configured providers. Suggestions do not change your bag.'}
       </p>
       <Link className="text-link" to="/looks">
         {es ? 'Prefiero usar los filtros detallados' : 'I prefer the detailed filters'}

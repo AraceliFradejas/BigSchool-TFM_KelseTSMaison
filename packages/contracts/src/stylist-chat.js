@@ -1,15 +1,22 @@
+import {
+  requestedPieceType,
+  requestedDressCode,
+  productPieceType,
+  replacesPieceType,
+} from './stylist-pieces.js';
 import { normalizeSpokenBudget } from './stylist-budget.js';
 import { stylistUnsafeText, stylistScopeViolation } from './stylist-policy.js';
 // The chat asks explicitly for a budget rather than silently assuming one.
 // These local rules identify common numeric constraints; style interpretation stays with the model.
 export function chatPreferences(message, previous = {}) {
   const text = message.trim();
-  const normalized = normalizeSpokenBudget(text);
+  const normalized = normalizeSpokenBudget(text, !previous.budgetCents);
   const preferences = {
     occasion: 'any',
     color: 'any',
     excludeBeauty: false,
     style: '',
+    dressCode: 'any',
     ...previous,
   };
   const amount =
@@ -59,6 +66,9 @@ export function chatPreferences(message, previous = {}) {
       preferences.occasion = key;
       break;
     }
+  const dressCode = requestedDressCode(normalized);
+  if (dressCode) preferences.dressCode = dressCode;
+  if (preferences.dressCode === 'gala') preferences.occasion = 'event';
   if (/\bsin (?:productos de )?(?:belleza|maquillaje)\b|without (?:beauty|makeup)/.test(normalized))
     preferences.excludeBeauty = true;
   if (/(?:incluye|incluir|include) (?:belleza|maquillaje|beauty|makeup)/.test(normalized))
@@ -67,7 +77,16 @@ export function chatPreferences(message, previous = {}) {
     preferences.style = (
       previous.style ? `${previous.style.slice(-190)}\nAhora: ${text}` : text
     ).slice(-1200);
-  return { preferences, needsBudget: !preferences.budgetCents || invalidBudget, invalidBudget };
+  const needsPlan =
+    /\b(cita|date)\b/i.test(preferences.style) &&
+    ['any', 'weekend'].includes(preferences.occasion) &&
+    preferences.dressCode === 'any';
+  return {
+    preferences,
+    needsBudget: !preferences.budgetCents || invalidBudget,
+    invalidBudget,
+    needsPlan,
+  };
 }
 
 // Identity questions and short feedback are local: no provider call or filter changes.
@@ -222,13 +241,13 @@ export function stylistChosenComplement(message, suggestion) {
     .replace(/\s+/g, ' ')
     .trim();
   if (
-    /\b(tienes|hay|busco|puedes|pero|sin|otro|otra|mas|menos|presupuesto|talla|budget|size|without|instead|show)\b/.test(
+    /\b(tienes|hay|busco|puedes|recomiendas|recomendar|aconsejas|recommend|suggest|pero|sin|otro|otra|mas|menos|presupuesto|talla|budget|size|without|instead|show)\b/.test(
       text,
     )
   )
     return null;
   const selected =
-    /\b(me quedaria|me quedo|elijo|prefiero|me gusta|este pantalon|ese pantalon|i choose|i prefer|i ll take)\b/.test(
+    /\b(me quedaria|me quedo|elijo|prefiero|me gusta|est[ea]s? (?:pantalon(?:es)?|zapatos?|bolsos?|vestidos?|blusas?|joyas?)|es[ea]s? (?:pantalon(?:es)?|zapatos?|bolsos?|vestidos?|blusas?|joyas?)|i choose|i prefer|i ll take)\b/.test(
       text,
     );
   const matches = suggestion.complements.filter((option) => {
@@ -260,7 +279,20 @@ export function stylistConversationContext(messages) {
         : message.result;
     if (message.role === 'user') {
       const piece = stylistChosenComplement(message.text, result);
-      if (piece) result = { ...result, selectedComplement: piece, selected: true };
+      if (piece) {
+        const kind = productPieceType(piece.product);
+        const previous = (result.selectedAdditions || []).filter(
+          (old) =>
+            old.product.id !== piece.product.id &&
+            (!replacesPieceType(kind) || productPieceType(old.product) !== kind),
+        );
+        result = {
+          ...result,
+          selectedComplement: piece,
+          selectedAdditions: [...previous, piece],
+          selected: true,
+        };
+      }
       const chosen = stylistChosenLook(message.text, result);
       if (chosen) result = { ...result, looks: [chosen], selected: true };
     }
@@ -299,7 +331,9 @@ function stylistFarewell(language, suggestion) {
     if (wishes[occasion]) wish = wishes[occasion][es ? 0 : 1];
   }
   const names = suggestion.looks.slice(0, 3).map((look) => String(look.name).slice(0, 120));
-  if (suggestion.selectedComplement)
+  if (suggestion.selectedAdditions?.length)
+    names.push(...suggestion.selectedAdditions.map((piece) => piece.product.name[language]));
+  else if (suggestion.selectedComplement)
     names.push(suggestion.selectedComplement.product.name[language]);
   const last = names.pop();
   const conjunction = suggestion.selectedComplement ? (es ? 'y' : 'and') : es ? 'o' : 'or';
@@ -322,7 +356,9 @@ export function stylistBudgetQuestion(parsed, language = 'es') {
     television: ['Para esa entrevista', 'For your interview'],
     weekend: ['Para ese fin de semana', 'For your weekend'],
   };
-  const plan = plans[p.occasion];
+  const plan = /\b(cita|date)\b/i.test(p.style)
+    ? ['Para esa cita', 'For your date']
+    : plans[p.occasion];
   return language === 'es'
     ? `${plan ? plan[0] + ', ¿qué' : '¿Qué'} presupuesto máximo te viene bien para el conjunto? Después afinamos los detalles a tu gusto.`
     : `${plan ? plan[1] + ', what' : 'What'} maximum budget feels right for the whole outfit? We can fine-tune the details together.`;
@@ -354,17 +390,18 @@ export function stylistFollowUp(message, suggestion) {
   )
     return null;
   const text = feedbackNormalize(message);
-  if (
-    !/\b(pantalon(?:es)?|trousers|pants)\b/.test(text) ||
-    /\b(?:sin|no quiero|no me gustan|without|no|don't want)\s+(?:los?\s+)?(?:pantalon(?:es)?|trousers|pants)\b/.test(
-      text,
-    )
-  )
-    return null;
+  const pieceType = requestedPieceType(text);
+  if (!pieceType || /\b(?:sin|no quiero|no me gustan|without|don't want)\b/.test(text)) return null;
   const mentioned = suggestion.looks.filter((look) => text.includes(feedbackNormalize(look.name)));
   if (mentioned.length > 1) return null;
   const reference = mentioned[0] || (suggestion.looks.length === 1 ? suggestion.looks[0] : null);
-  return { pieceType: 'trousers', ...(reference ? { referenceLookId: reference.id } : {}) };
+  return {
+    pieceType,
+    ...(reference ? { referenceLookId: reference.id } : {}),
+    ...(suggestion.selectedAdditions?.length
+      ? { selectedProductIds: suggestion.selectedAdditions.map((piece) => piece.product.id) }
+      : {}),
+  };
 }
 export function stylistDisplayOptions(result, language = 'es') {
   if (!result?.complements) return result?.looks || [];
@@ -374,4 +411,58 @@ export function stylistDisplayOptions(result, language = 'es') {
     totalCents: totalWithLookCents,
     pieces: [{ product, variant }],
   }));
+}
+
+// The conversational endpoint receives bounded text and public catalogue IDs, never client prices.
+export function stylistConversationRequest(
+  message,
+  { preferences = {}, messages = [], language = 'es' },
+) {
+  const context = stylistConversationContext(messages);
+  const keys = [
+    'budgetCents',
+    'occasion',
+    'color',
+    'excludeBeauty',
+    'size',
+    'shoeSize',
+    'style',
+    'dressCode',
+  ];
+  return {
+    message,
+    language,
+    preferences: Object.fromEntries(
+      keys.filter((key) => preferences[key] !== undefined).map((key) => [key, preferences[key]]),
+    ),
+    history: messages.slice(-8).map((turn) => ({ role: turn.role, text: turn.text.slice(0, 500) })),
+    context: {
+      currentLookIds: (context?.looks || [])
+        .map((look) => look.id)
+        .filter(Boolean)
+        .slice(0, 3),
+      lookIds: [
+        ...new Set(
+          messages
+            .flatMap((turn) => turn.result?.looks?.map((look) => look.id) || [])
+            .filter(Boolean),
+        ),
+      ].slice(-12),
+      referenceLookId:
+        context?.referenceLook?.id ||
+        (context?.selected && context.looks?.length === 1 ? context.looks[0].id : null) ||
+        null,
+      optionProductIds: (
+        messages
+          .slice()
+          .reverse()
+          .find((turn) => turn.result?.complements?.length)?.result.complements || []
+      )
+        .map((piece) => piece.product.id)
+        .slice(0, 12),
+      selectedProductIds: (context?.selectedAdditions || [])
+        .map((piece) => piece.product.id)
+        .slice(-8),
+    },
+  };
 }

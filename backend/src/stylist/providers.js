@@ -30,7 +30,7 @@ async function boundedJson(response) {
   return JSON.parse(Buffer.concat(parts).toString('utf8'));
 }
 
-// No SDK retries, external tools, conversation history or user/account data.
+// No SDK retries, external tools or user/account data. Conversation prompts include bounded styling history.
 export async function requestStylistProvider(settings, prompt, options, fetcher = fetch) {
   const { provider, key, model } = settings;
   const { instructions, input, schema } = prompt;

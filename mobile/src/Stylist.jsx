@@ -24,6 +24,7 @@ import {
   chatPreferences,
   stylistFeedback,
   stylistConversationContext,
+  stylistConversationRequest,
   stylistFollowUp,
   stylistDisplayOptions,
   stylistBudgetQuestion,
@@ -102,6 +103,18 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
     interactionMode,
     setInteractionMode,
   } = conversation;
+  const lastResult = messages.at(-1)?.result;
+  const aiUnavailable =
+    lastResult?.mode === 'editorial' &&
+    [
+      'daily_limit',
+      'expired',
+      'not_configured',
+      'unavailable',
+      'invalid_response',
+      'input_limit',
+      'catalog_unavailable',
+    ].includes(lastResult.reason);
   const [busy, setBusy] = useState(false);
   const pending = useRef(null);
   const scroll = useRef(null);
@@ -143,6 +156,37 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
     speech.stop();
     setDraft('');
     say({ role: 'user', text });
+    if (status.data?.available && status.data?.conversational) {
+      if (!user && status.data.requiresAccount !== false) {
+        say({
+          role: 'assistant',
+          text: es ? 'Accede a tu cuenta para hablar con tAIlor.' : 'Sign in to talk with tAIlor.',
+          login: true,
+        });
+        return;
+      }
+      const controller = new AbortController();
+      pending.current = controller;
+      setBusy(true);
+      try {
+        const result = await api.request('/stylist/chat', {
+          method: 'POST',
+          signal: controller.signal,
+          body: stylistConversationRequest(text, { preferences, messages, language }),
+        });
+        if (!controller.signal.aborted) {
+          setPreferences(result.preferences);
+          say({ role: 'assistant', text: result.message, result });
+        }
+      } catch (error) {
+        if (!controller.signal.aborted)
+          say({ role: 'assistant', text: commerceError(error, language) });
+      } finally {
+        if (!controller.signal.aborted) setBusy(false);
+        if (pending.current === controller) pending.current = null;
+      }
+      return;
+    }
     const feedback = stylistFeedback(
       text,
       messages.some((message) => message.result?.looks.length),
@@ -153,7 +197,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
       say({ role: 'assistant', text: feedback });
       return;
     }
-    if (stylistScopeViolation(text)) {
+    if (stylistScopeViolation(text, { awaitingBudget: !preferences.budgetCents })) {
       say({
         role: 'assistant',
         text:
@@ -171,6 +215,15 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
       say({
         role: 'assistant',
         text: stylistBudgetQuestion(parsed, language),
+      });
+      return;
+    }
+    if (parsed.needsPlan) {
+      say({
+        role: 'assistant',
+        text: es
+          ? '¿Qué tenéis planeado para esa cita: una cena especial, un paseo o algo más informal? Así buscamos un look que esté a la altura de la ocasión.'
+          : 'What do you have planned for your date: a special dinner, a walk or something casual? That will help us find the right outfit.',
       });
       return;
     }
@@ -249,13 +302,17 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
             : 'I’m tAIlor, your personal virtual stylist at KelseTS Maison. Let’s find your next outfit together.'}
         </Text>
         <Text style={s.mode}>
-          {status.data?.available
+          {aiUnavailable
             ? es
-              ? 'Asesoría con IA'
-              : 'AI styling'
-            : es
-              ? 'Selección editorial · IA todavía desactivada'
-              : 'Editorial selection · AI currently disabled'}
+              ? 'Conversación con IA no disponible'
+              : 'AI conversation unavailable'
+            : status.data?.available
+              ? es
+                ? 'Asesoría con IA'
+                : 'AI styling'
+              : es
+                ? 'Selección editorial · IA todavía desactivada'
+                : 'Editorial selection · AI currently disabled'}
         </Text>
         {interactionMode === null && voiceControls}
         {!messages.length && interactionMode === 'text' && (
@@ -310,72 +367,73 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
             {message.login && (
               <Button onPress={openAccount}>{es ? 'Acceder a mi cuenta' : 'Sign in'}</Button>
             )}
-            {message.result && (
-              <>
-                <Text style={s.note}>
-                  {message.result.mode === 'ai'
-                    ? `${es ? 'Sugerencia con IA' : 'AI suggestion'} · ${names[message.result.provider]}`
-                    : es
-                      ? 'Selección editorial, sin IA.'
-                      : 'Editorial selection, without AI.'}{' '}
-                  {es ? 'Presupuesto aplicado: ' : 'Applied budget: '}
-                  {money(message.result.preferences.budgetCents, language)}
-                  {message.result.preferences.size
-                    ? ` · ${es ? 'Talla' : 'Size'} ${message.result.preferences.size}`
-                    : ''}
-                  {message.result.preferences.shoeSize
-                    ? ` · ${es ? 'Calzado' : 'Shoes'} ${message.result.preferences.shoeSize}`
-                    : ''}
-                </Text>
-                {stylistDisplayOptions(message.result, language).map((look) => (
-                  <View key={look.id} style={s.look}>
-                    <Text accessibilityRole="header" style={s.lookTitle}>
-                      {look.name}
-                    </Text>
-                    <Text style={s.total}>
-                      {message.result.complements
-                        ? message.result.referenceLook
-                          ? `${es ? 'Total con' : 'Total with'} ${message.result.referenceLook.name}`
-                          : es
-                            ? 'Precio de la pieza'
-                            : 'Piece price'
-                        : es
-                          ? 'Total del look'
-                          : 'Outfit total'}{' '}
-                      · {money(look.totalCents, language)}
-                    </Text>
-                    {look.explanation && <Text style={s.body}>{look.explanation}</Text>}
-                    {look.pieces.map(({ product, variant }) => (
-                      <Pressable
-                        key={variant.id}
-                        accessibilityRole="button"
-                        onPress={() => openProduct(product.id)}
-                        style={s.piece}
-                      >
-                        <Image
-                          source={{ uri: imageUrl(product.image) }}
-                          resizeMode="contain"
-                          style={s.image}
-                        />
-                        <View style={s.pieceText}>
-                          <Text style={s.product}>{product.name[language]}</Text>
-                          <Text style={s.note}>{variant.label[language]}</Text>
-                          <Text>{money(variant.priceCents, language)}</Text>
-                          <Text style={s.link}>{es ? 'Ver la pieza →' : 'View piece →'}</Text>
-                        </View>
-                      </Pressable>
-                    ))}
-                  </View>
-                ))}
-                {message.result.looks.length > 0 && (
-                  <Text style={s.followup}>
-                    {es
-                      ? '¿Con cuál te ves más? Cuéntame qué te gusta y qué cambiarías; lo vamos afinando a tu gusto.'
-                      : 'Which one feels most like you? Tell me what you like or would change; we can refine it together.'}
+            {message.result &&
+              (message.result.looks.length > 0 || message.result.complements?.length > 0) && (
+                <>
+                  <Text style={s.note}>
+                    {message.result.mode === 'ai'
+                      ? `${es ? 'Sugerencia con IA' : 'AI suggestion'} · ${names[message.result.provider]}`
+                      : es
+                        ? 'Selección editorial, sin IA.'
+                        : 'Editorial selection, without AI.'}{' '}
+                    {es ? 'Presupuesto aplicado: ' : 'Applied budget: '}
+                    {money(message.result.preferences.budgetCents, language)}
+                    {message.result.preferences.size
+                      ? ` · ${es ? 'Talla' : 'Size'} ${message.result.preferences.size}`
+                      : ''}
+                    {message.result.preferences.shoeSize
+                      ? ` · ${es ? 'Calzado' : 'Shoes'} ${message.result.preferences.shoeSize}`
+                      : ''}
                   </Text>
-                )}
-              </>
-            )}
+                  {stylistDisplayOptions(message.result, language).map((look) => (
+                    <View key={look.id} style={s.look}>
+                      <Text accessibilityRole="header" style={s.lookTitle}>
+                        {look.name}
+                      </Text>
+                      <Text style={s.total}>
+                        {message.result.complements
+                          ? message.result.referenceLook
+                            ? `${es ? 'Total con' : 'Total with'} ${message.result.referenceLook.name}`
+                            : es
+                              ? 'Precio de la pieza'
+                              : 'Piece price'
+                          : es
+                            ? 'Total del look'
+                            : 'Outfit total'}{' '}
+                        · {money(look.totalCents, language)}
+                      </Text>
+                      {look.explanation && <Text style={s.body}>{look.explanation}</Text>}
+                      {look.pieces.map(({ product, variant }) => (
+                        <Pressable
+                          key={variant.id}
+                          accessibilityRole="button"
+                          onPress={() => openProduct(product.id)}
+                          style={s.piece}
+                        >
+                          <Image
+                            source={{ uri: imageUrl(product.image) }}
+                            resizeMode="contain"
+                            style={s.image}
+                          />
+                          <View style={s.pieceText}>
+                            <Text style={s.product}>{product.name[language]}</Text>
+                            <Text style={s.note}>{variant.label[language]}</Text>
+                            <Text>{money(variant.priceCents, language)}</Text>
+                            <Text style={s.link}>{es ? 'Ver la pieza →' : 'View piece →'}</Text>
+                          </View>
+                        </Pressable>
+                      ))}
+                    </View>
+                  ))}
+                  {message.result.looks.length > 0 && (
+                    <Text style={s.followup}>
+                      {es
+                        ? '¿Con cuál te ves más? Cuéntame qué te gusta y qué cambiarías; lo vamos afinando a tu gusto.'
+                        : 'Which one feels most like you? Tell me what you like or would change; we can refine it together.'}
+                    </Text>
+                  )}
+                </>
+              )}
           </View>
         ))}
         {busy && (
@@ -418,8 +476,8 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
         )}
         <Text style={s.note}>
           {es
-            ? 'No incluyas datos personales. Con IA activa, las preferencias se envían a los proveedores configurados. Las sugerencias no cambian tu bolsa.'
-            : 'Do not include personal details. When AI is active, preferences are sent to configured providers. Suggestions do not change your bag.'}
+            ? 'No incluyas datos personales. Con IA activa, la conversación y tus preferencias se envían a los proveedores configurados. Las sugerencias no cambian tu bolsa.'
+            : 'Do not include personal details. When AI is active, the conversation and your preferences are sent to configured providers. Suggestions do not change your bag.'}
         </Text>
       </View>
     </KeyboardAvoidingView>

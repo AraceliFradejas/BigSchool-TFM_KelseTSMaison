@@ -1,3 +1,4 @@
+import { chatRequestSchema, converseStylist } from '../stylist/conversation.js';
 import { isStylistAvailable } from '../stylist/config.js';
 import { Router } from 'express';
 import { stylistSchema } from '@maison/contracts';
@@ -10,12 +11,40 @@ export function stylistRouter(db, config, limiter, requestProvider) {
   router.get('/stylist/status', (req, res) =>
     send(res, {
       available: isStylistAvailable(config.stylist),
+      conversational: true,
+      dailyActionLimit: config.stylist?.dailyLimit || 20,
       requiresAccount: config.stylist?.requireAccount !== false,
       providers: isStylistAvailable(config.stylist)
         ? config.stylist.chain.map((item) => item.provider)
         : [],
     }),
   );
+  router.post('/stylist/chat', limiter, async (req, res) => {
+    const input = parse(chatRequestSchema, req.body);
+    if (isStylistAvailable(config.stylist) && config.stylist?.requireAccount !== false && !req.user)
+      throw new HttpError(401, 'unauthorized');
+    const controller = new AbortController();
+    const close = () => {
+      if (!res.writableFinished) controller.abort();
+    };
+    res.on('close', close);
+    try {
+      send(
+        res,
+        await converseStylist({
+          db,
+          config: config.stylist,
+          getLooks: () => getLooks(db),
+          getProducts: () => allProducts(db),
+          input,
+          signal: controller.signal,
+          requestProvider,
+        }),
+      );
+    } finally {
+      res.removeListener('close', close);
+    }
+  });
   router.post('/stylist', limiter, async (req, res) => {
     const preferences = parse(stylistSchema, req.body);
     if (

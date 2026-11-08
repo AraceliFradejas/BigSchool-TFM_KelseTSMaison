@@ -13,7 +13,8 @@
     "./boutiques": "./src/boutiques.js",
     "./stylist-chat": "./src/stylist-chat.js",
     "./stylist-policy": "./src/stylist-policy.js",
-    "./stylist-voice": "./src/stylist-voice.js"
+    "./stylist-voice": "./src/stylist-voice.js",
+    "./stylist-pieces": "./src/stylist-pieces.js"
   },
   "dependencies": {
     "zod": "^4.1.11"

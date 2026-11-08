@@ -1,3 +1,4 @@
+import { pieceTypes } from './stylist-pieces.js';
 import { z } from 'zod';
 import { demoPaymentSchema } from './demo-payment.js';
 
@@ -93,10 +94,15 @@ export const stylistSchema = z
     size: z.enum(['XS', 'S', 'M', 'L', 'XL', 'XXL']).optional(),
     shoeSize: z.enum(['35', '36', '37', '38', '39', '40', '41', '42']).optional(),
     style: z.string().trim().max(1200).default(''),
+    dressCode: z.enum(['any', 'casual', 'elegant', 'gala']).default('any'),
     message: z.string().trim().max(1200).optional(),
     followUp: z
       .object({
-        pieceType: z.literal('trousers'),
+        pieceType: z.enum(pieceTypes),
+        selectedProductIds: z
+          .array(z.string().regex(/^[a-z0-9-]{1,100}$/))
+          .max(8)
+          .optional(),
         referenceLookId: z
           .string()
           .regex(/^[a-z0-9-]{1,100}$/)

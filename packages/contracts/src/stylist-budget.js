@@ -97,11 +97,23 @@ function valueOf(text) {
   return total + group;
 }
 // Only monetary phrases are converted: shoe sizes, ages and dates are left alone.
-export function normalizeSpokenBudget(text) {
+export function normalizeSpokenBudget(text, allowBare = false) {
   const normalized = String(text || '')
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase();
+  if (allowBare) {
+    const answer = normalized
+      .replace(/[¡!¿?.,;:]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const bare = answer.match(
+      new RegExp(
+        `^(?:(?:mmm|mm|eh|pues|unos|about|around)\\s+)*(${amount})(?:\\s+(?:aproximadamente|estaria perfecto|estaria bien))?$`,
+      ),
+    );
+    if (bare) return String(valueOf(bare[1]));
+  }
   return normalized
     .replace(
       new RegExp(`(${amount})\\s*(euros?\\b|eur\\b|€)`, 'g'),

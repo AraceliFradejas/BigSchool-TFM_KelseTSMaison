@@ -283,6 +283,8 @@ test('AI route requires an account, exposes no secret configuration, and editori
   const status = await agent.get('/api/v1/stylist/status');
   assert.deepEqual(status.body.data, {
     available: true,
+    conversational: true,
+    dailyActionLimit: 20,
     requiresAccount: true,
     providers: ['gemini', 'anthropic', 'openai'],
   });
