@@ -109,3 +109,9 @@ La regresión ejecuta el serializador real del SDK instalado: demuestra el recha
 La autora indica que, después del cambio a File, sigue sin ocurrir nada. No se considera resuelto el problema físico por pasar las pruebas del serializador. Se introduce temporalmente la referencia visible «Prueba de voz 08.11.5» y el paso de captura/envío, con errores junto al botón, para confirmar qué código ha cargado Expo Go antes de volver a grabar. No se muestran rutas, audio, transcripciones ni secretos en el diagnóstico.
 
 Se conserva la URI antes de detener el grabador y se utiliza como respaldo después de stop; una URI ausente produce un error explícito en lugar de una salida silenciosa. Las dos regresiones nuevas cubren pérdida de URI durante stop y ausencia de archivo. Las 60 pruebas móviles y exportaciones iOS/Android pasan. Esta defensa no acredita que la URI se haya perdido en los dispositivos de la autora. Se solicita únicamente confirmar si aparece la revisión visible; la causa física final y la prueba completa siguen pendientes. Retirar la referencia temporal al cerrar el diagnóstico.
+
+## Validación comunicada tras la revisión 08.11.5
+
+La autora confirma primero que ve «Prueba de voz 08.11.5» dentro de Expo Go y, al solicitarle una frase corta seguida de «Terminar y enviar», responde «funciona». Se registra como validación física comunicada por ella del intento realizado; no concreta en cuál de los tres dispositivos se ha repetido ni acredita por separado cada plataforma o la reproducción audible. No se atribuye esta validación a una prueba automatizada.
+
+Se retira la referencia temporal de revisión y se conservan los estados de grabación/envío y los errores visibles. Las 60 pruebas móviles pasan tras esa limpieza. Las correcciones de File para el multipart de Expo 58 y la conservación de la URI permanecen. La cuota de voz sigue en 200 acciones diarias y no se reinicia el contador.

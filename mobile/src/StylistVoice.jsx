@@ -460,9 +460,11 @@ export function VoiceInput({
           <Text style={s.modeSwitchText}>{es ? 'Cambiar a texto' : 'Switch to text'}</Text>
         </Pressable>
       </View>
-      <Text accessibilityLiveRegion="polite" style={s.note}>
-        {`Prueba de voz 08.11.5 · ${stage || (es ? 'Lista para grabar' : 'Ready to record')}`}
-      </Text>
+      {stage ? (
+        <Text accessibilityLiveRegion="polite" style={s.note}>
+          {stage}
+        </Text>
+      ) : null}
       {error ? <Text accessibilityLiveRegion="polite">{error}</Text> : null}
       <View style={[s.actions, { justifyContent: 'center' }]}>
         <Button
