@@ -14,6 +14,8 @@ La misma voz puede leer textos ES/EN. Web utiliza MediaRecorder y Audio; la app 
 
 ## Configuración privada
 
+**Producción actual (08/11/2026): 200 acciones de voz por día UTC**, sin reiniciar consumos y con caducidad al finalizar el 31/12/2026 en Madrid. Los cambios anteriores de cuota se conservan abajo como historial.
+
 Solo backend: `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`, `STYLIST_VOICE_ENABLED=0` por defecto y `STYLIST_VOICE_DAILY_LIMIT=6`. Los valores reales están fuera de Git. Los permisos necesarios son Text to Speech, Speech to Text y lectura de Voices para comprobar la voz; no se necesita administración o borrado de voces.
 
 La autora ha ampliado el máximo global separado a cien intentos de voz por día UTC, compartido entre síntesis y transcripción, incluidos fallos. La cuota se guarda atómicamente en SQLite/MongoDB y no consume la cuota de los modelos de outfits. La fecha de vencimiento del asesor también desactiva las llamadas de voz. La activación está autorizada hasta finalizar el 31/12/2026 en Madrid; disponer de una clave no demuestra saldo ni todos los permisos.
@@ -80,3 +82,6 @@ En nativo se esperaba la respuesta TTS, pero se llamaba a play inmediatamente tr
 La autora solicita ampliar el límite de voz de 100 a 200 acciones diarias para pruebas. La consulta de solo lectura a la base configurada confirmó 100 acciones en `stylist_voice_usage` para el día UTC 2026-11-08; el endpoint público anunciaba límite 100. El saldo de ElevenLabs aportado por la autora (9.106 de 363.000 créditos utilizados) es un dato independiente y no fue auditado mediante su API.
 
 Se permite un máximo configurable de 200 y se conserva el contador: una prueba con proveedor simulado parte de 100 acciones consumidas y comprueba que una petición con límite 200 eleva el total a 101, sin reiniciarlo. Ocho pruebas de voz correctas. El valor privado local y la variable Production STYLIST_VOICE_DAILY_LIMIT pasan a 200. La activación se publica mediante el despliegue normal de Git después de guardar el entorno. Se mantiene el cierre del 31/12/2026, sin recargas ni compra de créditos. El límite de modelos es independiente. Web y Expo Go recuerdan un 429 hasta recargar o cambiar de día UTC; tras la ampliación se debe recargar el cliente. La comprobación pública final se registra después de publicar.
+
+
+Verificación pública completada: HTTP 200, voz disponible y `dailyActionLimit: 200`. Una única petición real de síntesis, con frase sintética en castellano y sin micrófono, devolvió HTTP 200 y 12.556 bytes de audio MPEG. No se guardó ese audio ni se afirma escucha en el dispositivo físico. [Evidencia del contador, cuota y síntesis](evidencias/stylist-2026-11-08/10-voz-cuota-200.json). Se avisó a la autora para cerrar Expo Go por completo y abrir Maison de nuevo, o recargar en web.

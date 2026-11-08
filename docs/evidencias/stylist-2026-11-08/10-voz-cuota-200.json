@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-08",
+  "authorization": "La autora solicita subir la cuota global de voz de 100 a 200 para pruebas.",
+  "before": {
+    "source": "Lectura directa del contador diario de voz en la base configurada, sin mutaciones.",
+    "utcDay": "2026-11-08",
+    "usedActions": 100,
+    "publicDailyActionLimit": 100
+  },
+  "after": {
+    "source": "GET público /api/v1/stylist/voice/status tras despliegue con el nuevo entorno.",
+    "http": 200,
+    "available": true,
+    "dailyActionLimit": 200
+  },
+  "speechCheck": {
+    "source": "Una petición pública real de síntesis con frase sintética en español, sin micrófono.",
+    "http": 200,
+    "mimeType": "audio/mpeg",
+    "audioBytes": 12556,
+    "audioStored": false
+  },
+  "limits": "El contador no se reinicia. Caducidad y créditos existentes se mantienen. No se verifica reproducción audible en el dispositivo ni el saldo del proveedor."
+}
