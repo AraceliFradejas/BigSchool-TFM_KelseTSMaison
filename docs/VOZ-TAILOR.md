@@ -115,3 +115,7 @@ Se conserva la URI antes de detener el grabador y se utiliza como respaldo despu
 La autora confirma primero que ve «Prueba de voz 08.11.5» dentro de Expo Go y, al solicitarle una frase corta seguida de «Terminar y enviar», responde «funciona». Se registra como validación física comunicada por ella del intento realizado; no concreta en cuál de los tres dispositivos se ha repetido ni acredita por separado cada plataforma o la reproducción audible. No se atribuye esta validación a una prueba automatizada.
 
 Se retira la referencia temporal de revisión y se conservan los estados de grabación/envío y los errores visibles. Las 60 pruebas móviles pasan tras esa limpieza. Las correcciones de File para el multipart de Expo 58 y la conservación de la URI permanecen. La cuota de voz sigue en 200 acciones diarias y no se reinicia el contador.
+
+## Pronunciación del nombre del asistente
+
+A petición de la autora, el texto de síntesis en castellano transforma la palabra tAIlor en «téilor», con acento en la primera sílaba. La grafía visible del chat continúa siendo tAIlor. La normalización se comparte entre web y app; no modifica Taylor Swift ni transcripciones de la usuaria. La regresión de voz comprueba esas distinciones. La pronunciación audible resultante queda sujeta a escucha de la autora; no se consumió síntesis para este ajuste.

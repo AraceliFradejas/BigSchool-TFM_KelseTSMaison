@@ -48,6 +48,11 @@ test('brand transcription correction preserves user names and recognises a spoke
     'Un concierto de Taylor Swift',
   );
   assert.match(stylistFeedback('Hola, Taylor', false), /Soy tAIlor/);
+  const introduction = 'Soy tAIlor, de KelseTS Maison. Una canción de Taylor Swift.';
+  const spoken = stylistSpeechText({ text: introduction }, 'es');
+  assert.match(spoken, /Soy téilor/);
+  assert.match(spoken, /Taylor Swift/);
+  assert.match(introduction, /Soy tAIlor/);
 });
 
 test('spoken prices name euros and cents without ambiguous thousands separators', async () => {

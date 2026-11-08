@@ -125,7 +125,8 @@ export function stylistSpeechText(message, language = 'es') {
   return sections
     .filter(Boolean)
     .join(' ')
-    .replace(/\bKelseTS\s+Maison\b/gi, 'Kelsi TiEs Meison');
+    .replace(/\bKelseTS\s+Maison\b/gi, 'Kelsi TiEs Meison')
+    .replace(/\btailor\b/gi, es ? 'téilor' : 'tailor');
 }
 export function voiceError(code, language = 'es') {
   const es = language === 'es';
