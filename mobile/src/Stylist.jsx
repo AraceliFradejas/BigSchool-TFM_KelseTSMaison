@@ -425,7 +425,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
                       ))}
                     </View>
                   ))}
-                  {message.result.looks.length > 0 && (
+                  {message.result.mode !== 'ai' && message.result.looks.length > 0 && (
                     <Text style={s.followup}>
                       {es
                         ? '¿Con cuál te ves más? Cuéntame qué te gusta y qué cambiarías; lo vamos afinando a tu gusto.'

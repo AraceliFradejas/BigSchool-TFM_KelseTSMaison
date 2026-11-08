@@ -116,7 +116,7 @@ export function stylistSpeechText(message, language = 'es') {
         );
     }
   }
-  if (message.result?.looks?.length)
+  if (message.result?.mode !== 'ai' && message.result?.looks?.length)
     sections.push(
       es
         ? '¿Con cuál te ves más? Cuéntame qué te gusta y qué cambiarías; lo vamos afinando a tu gusto.'

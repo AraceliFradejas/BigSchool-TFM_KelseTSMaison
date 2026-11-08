@@ -278,7 +278,12 @@ export function stylistConversationContext(messages) {
       if (response.referenceLook)
         result = { ...response, looks: [response.referenceLook], selected: true };
       else if (response.looks?.length || response.complements?.length || !result) result = response;
-      else result = { ...result, preferences: response.preferences || result.preferences };
+      else
+        result = {
+          ...result,
+          selectedLookId: response.selectedLookId || result.selectedLookId,
+          preferences: response.preferences || result.preferences,
+        };
     }
     if (message.role === 'user') {
       const piece = stylistChosenComplement(message.text, result);
@@ -459,6 +464,7 @@ export function stylistConversationRequest(
         ),
       ].slice(-12),
       referenceLookId:
+        context?.selectedLookId ||
         context?.referenceLook?.id ||
         (context?.selected && context.looks?.length === 1 ? context.looks[0].id : null) ||
         null,

@@ -313,3 +313,48 @@ test('reuse for an interview replaces the previous gala constraint and show both
   assert.doesNotMatch(shown.message, /Enchanted|Bejeweled/);
   for (const look of shown.looks) assert.ok(look.totalCents <= 600000);
 });
+
+test('sizes, relative size and purchase keep the selected outfit without restarting recommendations', async (t) => {
+  const db = setup(t);
+  const look = (await getLooks(db)).find((item) => item.complete);
+  assert.ok(look);
+  const messages = [];
+  let preferences = {
+    budgetCents: 1000000,
+    occasion: 'television',
+    dressCode: 'elegant',
+    size: 'M',
+    shoeSize: '38',
+  };
+  for (const [message, action, size] of [
+    ['Me quedo con este outfit. ¿Qué tallas tienes?', 'sizes', null],
+    ['¿Tienes una talla más grande?', 'sizes', 'L'],
+    ['Me parece perfecto. ¿Qué tengo que hacer para comprarlo?', 'purchase', null],
+  ]) {
+    const input = stylistConversationRequest(message, { preferences, messages, language: 'es' });
+    if (!messages.length) input.context.currentLookIds = [look.id];
+    else assert.equal(input.context.referenceLookId, look.id);
+    const result = await run(
+      db,
+      input,
+      intent({ action, referenceLookId: look.id, updates: { ...updates, size } }),
+    );
+    assert.equal(result.selectedLookId, look.id);
+    assert.deepEqual(result.looks, []);
+    assert.equal(result.preferences.size, size || preferences.size);
+    if (action === 'purchase') {
+      assert.match(result.message, /pago DEMO/);
+      assert.match(result.message, /sin cobro real/);
+      assert.doesNotMatch(result.message, /Con cuál/);
+    } else {
+      assert.match(result.message, /Tallas disponibles/);
+      for (const product of look.products.filter((item) => item.active))
+        assert.ok(result.message.includes(product.name.es));
+    }
+    messages.push(
+      { role: 'user', text: message },
+      { role: 'assistant', text: result.message, result },
+    );
+    preferences = result.preferences;
+  }
+});

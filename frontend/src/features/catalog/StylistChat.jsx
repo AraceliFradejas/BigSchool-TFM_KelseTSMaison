@@ -314,7 +314,7 @@ export default function StylistChat({ conversation }) {
                       />
                     </section>
                   ))}
-                  {message.result.looks.length > 0 && (
+                  {message.result.mode !== 'ai' && message.result.looks.length > 0 && (
                     <p className="stylist-chat-followup">
                       {es
                         ? '¿Con cuál te ves más? Cuéntame qué te gusta y qué cambiarías; lo vamos afinando a tu gusto.'

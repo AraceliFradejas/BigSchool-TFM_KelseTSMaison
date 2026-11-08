@@ -78,3 +78,12 @@ test('known voice quota blocks further automatic attempts only for its UTC day',
   assert.equal(voiceQuotaReached(day), true);
   assert.equal(voiceQuotaReached(new Date('2020-01-02T00:00:00Z')), false);
 });
+
+test('generative speech keeps its contextual reply without appending the recurring choice question', () => {
+  const text = stylistSpeechText({
+    text: 'Conservamos Studio Interview. Revisamos las tallas.',
+    result: { mode: 'ai', looks: [{ name: 'Studio Interview', totalCents: 484000, pieces: [] }] },
+  });
+  assert.match(text, /Revisamos las tallas/);
+  assert.doesNotMatch(text, /Con cuál|lo vamos afinando/);
+});
