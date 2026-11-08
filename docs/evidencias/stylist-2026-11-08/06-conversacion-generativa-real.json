@@ -1,0 +1,165 @@
+{
+  "date": "2026-11-08",
+  "commit": "0f3436f",
+  "environment": "Maison production, anonymous text requests",
+  "scenario": "Fictional styling scenario reproducing the reported dinner-to-interview regression",
+  "fullConversation": [
+    {
+      "userMessage": "Hola. Eh, necesitaría un outfit muy elegante y especial para una cena con una persona especial el próximo domingo.",
+      "http": 200,
+      "mode": "ai",
+      "provider": "gemini",
+      "reason": "needs_budget",
+      "reply": "¿Qué presupuesto máximo te viene bien para el conjunto?",
+      "budgetCents": null,
+      "occasion": "dinner",
+      "dressCode": "elegant",
+      "looks": []
+    },
+    {
+      "userMessage": "Es en un restaurante muy elegante, así que hay que ir superelegante.",
+      "http": 200,
+      "mode": "ai",
+      "provider": "gemini",
+      "reason": "needs_budget",
+      "reply": "¿Qué presupuesto máximo te viene bien para el conjunto?",
+      "budgetCents": null,
+      "occasion": "dinner",
+      "dressCode": "elegant",
+      "looks": []
+    },
+    {
+      "userMessage": "Tengo ahorrados 6.000 euros.",
+      "http": 200,
+      "mode": "ai",
+      "provider": "gemini",
+      "reason": null,
+      "reply": "Para una cena tan especial, te sugiero estas opciones que desprenden una elegancia absoluta. ¿Qué te parecen estas propuestas?",
+      "budgetCents": 600000,
+      "occasion": "dinner",
+      "dressCode": "elegant",
+      "looks": [
+        {
+          "id": "look-runway-boceto-disenador-4",
+          "name": "Gorgeous",
+          "totalCents": 438000
+        },
+        {
+          "id": "look-runway-elegancia-4",
+          "name": "Maroon",
+          "totalCents": 463000
+        },
+        {
+          "id": "look-runway-elegancia-3",
+          "name": "End Game",
+          "totalCents": 438000
+        }
+      ]
+    },
+    {
+      "userMessage": "¿Tienes algo que luego pudiera reutilizar, por ejemplo, en una entrevista de trabajo?",
+      "http": 200,
+      "mode": "ai",
+      "provider": "gemini",
+      "reason": null,
+      "reply": "¡Es una idea fantástica! Para una cena elegante que también te sirva para una entrevista de trabajo, necesitamos piezas con mucha personalidad y un corte impecable. He seleccionado dos opciones que cumplen con esa versatilidad. ¿Qué te parecen estas propuestas?",
+      "budgetCents": 600000,
+      "occasion": "television",
+      "dressCode": "elegant",
+      "looks": [
+        {
+          "id": "look-runway-elegancia-1",
+          "name": "Style",
+          "totalCents": 438000
+        },
+        {
+          "id": "look-runway-metro-ciudad-4",
+          "name": "The Man",
+          "totalCents": 438000
+        }
+      ]
+    },
+    {
+      "userMessage": "Sí, por favor, enséñame las dos.",
+      "http": 200,
+      "mode": "ai",
+      "provider": "gemini",
+      "reason": null,
+      "reply": "Aquí tienes esas opciones para compararlas; mantengo lo que acabamos de elegir.",
+      "budgetCents": 600000,
+      "occasion": "television",
+      "dressCode": "elegant",
+      "looks": [
+        {
+          "id": "look-runway-elegancia-1",
+          "name": "Style",
+          "totalCents": 438000
+        },
+        {
+          "id": "look-runway-metro-ciudad-4",
+          "name": "The Man",
+          "totalCents": 438000
+        }
+      ]
+    }
+  ],
+  "galaContextRegression": {
+    "initialContext": "Fixture matching previously shown Enchanted and Bejeweled gala options, with a budget of 600000 cents; the following two replies use real APIs",
+    "turns": [
+      {
+        "userMessage": "¿Tienes algo que luego pudiera reutilizar, por ejemplo, en una entrevista de trabajo?",
+        "http": 200,
+        "mode": "ai",
+        "provider": "gemini",
+        "reason": null,
+        "reply": "¡Qué buena idea! Para una cena elegante que también funcione en una entrevista, te recomiendo apostar por un estilo sofisticado y profesional. Aquí tienes dos opciones ideales que cumplen con ambos requisitos manteniendo la elegancia que buscas.",
+        "budgetCents": 600000,
+        "occasion": "television",
+        "dressCode": "elegant",
+        "looks": [
+          {
+            "id": "look-runway-elegancia-1",
+            "name": "Style",
+            "totalCents": 438000
+          },
+          {
+            "id": "look-runway-metro-ciudad-4",
+            "name": "The Man",
+            "totalCents": 438000
+          }
+        ]
+      },
+      {
+        "userMessage": "Sí, por favor, enséñame las dos.",
+        "http": 200,
+        "mode": "ai",
+        "provider": "gemini",
+        "reason": null,
+        "reply": "Aquí tienes esas opciones para compararlas; mantengo lo que acabamos de elegir.",
+        "budgetCents": 600000,
+        "occasion": "television",
+        "dressCode": "elegant",
+        "looks": [
+          {
+            "id": "look-runway-elegancia-1",
+            "name": "Style",
+            "totalCents": 438000
+          },
+          {
+            "id": "look-runway-metro-ciudad-4",
+            "name": "The Man",
+            "totalCents": 438000
+          }
+        ]
+      }
+    ]
+  },
+  "successfulFinalRequests": 7,
+  "providersReturned": [
+    "gemini"
+  ],
+  "voiceRequests": 0,
+  "ordersOrReservationsCreated": 0,
+  "monetaryCostVerified": false,
+  "result": "Both follow-up requests kept Style and The Man, 438000 cents each; no return to the old gala looks."
+}

@@ -273,10 +273,13 @@ export function stylistChosenComplement(message, suggestion) {
 export function stylistConversationContext(messages) {
   let result = null;
   for (const message of messages) {
-    if (message.result)
-      result = message.result.referenceLook
-        ? { ...message.result, looks: [message.result.referenceLook], selected: true }
-        : message.result;
+    if (message.result) {
+      const response = message.result;
+      if (response.referenceLook)
+        result = { ...response, looks: [response.referenceLook], selected: true };
+      else if (response.looks?.length || response.complements?.length || !result) result = response;
+      else result = { ...result, preferences: response.preferences || result.preferences };
+    }
     if (message.role === 'user') {
       const piece = stylistChosenComplement(message.text, result);
       if (piece) {
@@ -336,7 +339,14 @@ function stylistFarewell(language, suggestion) {
   else if (suggestion.selectedComplement)
     names.push(suggestion.selectedComplement.product.name[language]);
   const last = names.pop();
-  const conjunction = suggestion.selectedComplement ? (es ? 'y' : 'and') : es ? 'o' : 'or';
+  const conjunction =
+    suggestion.selectedComplement || suggestion.selectedAdditions?.length
+      ? es
+        ? 'y'
+        : 'and'
+      : es
+        ? 'o'
+        : 'or';
   const choices = names.length ? `${names.join(', ')} ${conjunction} ${last}` : last;
   return es
     ? `¡Gracias a ti! ${wish} ${suggestion.selected ? `Puedes volver a las piezas de ${choices} cuando quieras.` : `Puedes revisar las piezas de ${choices} cuando te decidas.`} Aquí estará tu tAIlor si necesitas otro look. ✨`

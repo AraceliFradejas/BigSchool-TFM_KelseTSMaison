@@ -424,3 +424,38 @@ test('reported trouser choices confirm the shown piece instead of requesting the
     null,
   );
 });
+
+test('a text-only styling answer cannot erase the last visible alternatives for show both', async () => {
+  const { stylistConversationRequest } = await import('@maison/contracts/stylist-chat');
+  const ids = ['look-studio-interview', 'look-midnight-presentation'];
+  const messages = [
+    {
+      role: 'assistant',
+      text: 'Estas son las opciones reutilizables.',
+      result: {
+        looks: ids.map((id, index) => ({
+          id,
+          name: ['Studio Interview', 'Midnight Presentation'][index],
+        })),
+        preferences: { occasion: 'television', budgetCents: 600000 },
+      },
+    },
+    { role: 'user', text: '¿Se pueden llevar con otros accesorios?' },
+    {
+      role: 'assistant',
+      text: 'Sí, puedes cambiar los accesorios según la ocasión.',
+      result: {
+        mode: 'ai',
+        reason: 'answer',
+        looks: [],
+        preferences: { occasion: 'television', budgetCents: 600000 },
+      },
+    },
+  ];
+  const input = stylistConversationRequest('enséñame las dos', {
+    messages,
+    preferences: { occasion: 'television', budgetCents: 600000 },
+    language: 'es',
+  });
+  assert.deepEqual(input.context.currentLookIds, ids);
+});
