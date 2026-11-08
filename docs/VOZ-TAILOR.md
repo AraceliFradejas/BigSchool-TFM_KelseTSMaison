@@ -52,3 +52,9 @@ Verificación de publicación: Vercel mostró `cb6581f` Ready en Production. La 
 ## Jerarquía visual de los controles
 
 Tras la captura de la autora del 08/11 a las 15:47, el modo voz tiene una sola acción principal: micrófono burdeos dentro de un panel propio. Cambiar a texto usa un control secundario con borde tenue. El campo y envío escritos solo aparecen en modo texto; el borrador se conserva al alternar. La reproducción de respuestas también tiene menor peso visual. En web, una bienvenida ocupa el estado vacío. La app aplica la misma separación de modos y jerarquía del panel. Se verificaron build web y exportaciones iOS/Android; la vista de voz se inspeccionó en Safari con un render estático local del componente real, sin solicitar micrófono ni consumir proveedores. No se presenta esa vista como una prueba funcional de grabación.
+
+## Nombres de looks y aclaración
+
+Se acepta el nombre aislado de un look presentado, también sin espacios («GoldenHour»), además de «me quedo con…». Si un nombre corto se parece de forma acotada a una única propuesta, se pregunta «¿Te refieres a Golden Hour?» sin darlo por elegido. Si la elección no se identifica, se pide escribirla; no se afirman nombres reconocidos por similitud como una selección confirmada. Las peticiones de otra prenda, color o presupuesto continúan como cambios de preferencias. Los temas bloqueados mantienen su redirección. Ante una frase hablada incomprensible, el chat ofrece repetir o cambiar a texto.
+
+El aviso habitual de voz termina en «tAIlor responde con voz». La información sobre el servicio externo se conserva en el paso previo a elegir micrófono. Los tests comprueban el texto de aclaración y reconocimiento local; no se ha grabado ni repetido una transcripción real para validar cómo se reconoce un acento concreto.

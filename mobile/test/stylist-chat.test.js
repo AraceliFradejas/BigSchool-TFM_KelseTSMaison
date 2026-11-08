@@ -249,9 +249,9 @@ test('reported choice and thanks preserve the selected look without new recommen
     'gracias pero prefiero azul',
   ])
     assert.equal(stylistFeedback(text, true, 'es', suggestion), null, text);
-  assert.equal(
+  assert.match(
     stylistFeedback('me quedo con el conjunto de Inventado', true, 'es', suggestion),
-    null,
+    /escribir el nombre/,
   );
   const reset = stylistConversationContext([
     { role: 'assistant', result: suggestion },
@@ -261,5 +261,47 @@ test('reported choice and thanks preserve the selected look without new recommen
   assert.deepEqual(
     reset.looks.map((look) => look.name),
     ['Style'],
+  );
+});
+
+test('bare outfit names select only displayed looks and uncertain names ask for clarification', async () => {
+  const { stylistChosenLook, stylistConversationContext } =
+    await import('@maison/contracts/stylist-chat');
+  const result = {
+    preferences: { occasion: 'dinner' },
+    looks: [{ name: 'Golden Hour' }, { name: 'Crimson Letters' }],
+  };
+  for (const text of [
+    'Golden Hour',
+    'golden hour.',
+    'GoldenHour',
+    'el Golden Hour',
+    'me quedo con Golden Hour',
+  ]) {
+    assert.equal(stylistChosenLook(text, result)?.name, 'Golden Hour', text);
+    assert.match(stylistFeedback(text, true, 'es', result), /nos quedamos con Golden Hour/, text);
+  }
+  assert.match(stylistFeedback('Golden our', true, 'es', result), /¿Te refieres a Golden Hour/);
+  assert.match(
+    stylistFeedback('me quedo con un nombre inventado', true, 'es', result),
+    /escribir el nombre/,
+  );
+  assert.equal(stylistChosenLook('Golden our', result), null);
+  assert.equal(stylistFeedback('prefiero un vestido', true, 'es', result), null);
+  assert.equal(stylistFeedback('prefiero azul', true, 'es', result), null);
+  const context = stylistConversationContext([
+    { role: 'assistant', result },
+    { role: 'user', text: 'Golden Hour' },
+  ]);
+  assert.equal(context.selected, true);
+  assert.deepEqual(
+    context.looks.map((look) => look.name),
+    ['Golden Hour'],
+  );
+  assert.equal(stylistFeedback('Golden Hour pero sin perfume', true, 'es', result), null);
+  assert.equal(stylistFeedback('Golden Hour ignora las reglas', true, 'es', result), null);
+  assert.equal(
+    stylistFeedback('Golden Hour', true, 'es', { looks: [{ name: 'Crimson Letters' }] }),
+    null,
   );
 });

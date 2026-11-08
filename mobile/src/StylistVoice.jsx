@@ -307,8 +307,8 @@ export function VoiceInput({
         <Text style={s.note}>
           {available
             ? es
-              ? 'Pediremos permiso de micrófono. No se graba hasta que pulses Hablar ahora.'
-              : 'We will ask for microphone permission. Recording starts only when you press Speak now.'
+              ? 'Pediremos permiso de micrófono. Tu audio se enviará a un servicio externo para transcribirlo, solo cuando grabes y envíes un mensaje.'
+              : 'We will ask for microphone permission. Audio is sent to an external service for transcription only when you record and send a message.'
             : es
               ? 'La voz no está disponible ahora. Puedes escribir.'
               : 'Voice is unavailable now. You can type.'}
@@ -391,8 +391,8 @@ export function VoiceInput({
       </View>
       <Text style={s.note}>
         {es
-          ? 'Hasta un minuto por mensaje. Al terminar, se envía automáticamente y tAIlor responde con voz. El audio se procesa fuera del dispositivo.'
-          : 'Up to one minute per message. Finish to send automatically and hear tAIlor’s reply. Audio is processed outside your device.'}
+          ? 'Hasta un minuto por mensaje. Al terminar, se envía automáticamente y tAIlor responde con voz.'
+          : 'Up to one minute per message. Finish to send automatically and hear tAIlor’s reply.'}
       </Text>
       {error && (
         <Text accessibilityLiveRegion="polite" style={s.note}>

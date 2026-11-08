@@ -131,8 +131,8 @@ export function voiceError(code, language = 'es') {
       : 'Today’s voice limit has been reached. You can keep typing.';
   if (code === 'voice_transcript_invalid')
     return es
-      ? 'No he obtenido una frase breve y clara. Prueba un audio más corto o escribe tu petición.'
-      : 'I could not get a short, clear sentence. Try a shorter recording or type your request.';
+      ? 'No te he entendido bien. ¿Puedes repetirlo o escribirlo? Puedes cambiar a modo texto cuando quieras.'
+      : 'I did not quite catch that. Could you repeat it or type it? You can switch to text mode whenever you like.';
   return es
     ? 'No he podido completar la acción de voz. Puedes intentarlo de nuevo o seguir por escrito.'
     : 'I could not complete that voice action. Try again or keep typing.';

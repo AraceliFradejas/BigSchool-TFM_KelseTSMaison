@@ -304,3 +304,7 @@ La prueba real de la autora detectó falsos rechazos al elegir Golden Hour y agr
 ### Jerarquía visual de voz y texto
 
 He simplificado el pie del chat tras revisar la captura de la autora: el micrófono es la acción principal del modo voz y cambiar a texto tiene un tratamiento secundario. El campo de escritura y Enviar aparecen solo en modo texto, conservando el borrador al alternar. La web añade un mensaje de bienvenida al estado vacío. Build y exportaciones nativas correctos; inspección visual de una vista estática local con el componente real, sin grabar ni consumir IA.
+
+### Nombre aislado del look y petición de aclaración
+
+He corregido el reconocimiento de «Golden Hour» sin exigir «me quedo con». Una coincidencia dudosa pide confirmación o que se escriba el nombre; las nuevas preferencias siguen su recorrido y los temas bloqueados conservan sus controles. También he simplificado el aviso recurrente de voz, manteniendo la información del servicio externo al elegir micrófono. Las 147 pruebas pasan; la nueva aclaración se verifica localmente, sin gastar transcripción ni síntesis reales.

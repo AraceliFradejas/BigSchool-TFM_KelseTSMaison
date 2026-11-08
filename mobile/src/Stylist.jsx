@@ -1,5 +1,9 @@
 import { VoiceInput, useStylistSpeech } from './StylistVoice';
-import { stylistScopeViolation, stylistScopeMessage } from '@maison/contracts/stylist-policy';
+import {
+  stylistScopeViolation,
+  stylistScopeMessage,
+  stylistUnsafeText,
+} from '@maison/contracts/stylist-policy';
 import { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -148,7 +152,15 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
       return;
     }
     if (stylistScopeViolation(text)) {
-      say({ role: 'assistant', text: stylistScopeMessage(language) });
+      say({
+        role: 'assistant',
+        text:
+          fromVoice && !stylistUnsafeText(text)
+            ? es
+              ? 'No te he entendido bien. ¿Puedes repetirlo o escribirlo? Pulsa «Cambiar a texto» si prefieres decirme el nombre del look por escrito.'
+              : 'I did not quite catch that. Could you repeat it or type it? Tap “Switch to text” to write the outfit name.'
+            : stylistScopeMessage(language),
+      });
       return;
     }
     const parsed = chatPreferences(text, preferences);

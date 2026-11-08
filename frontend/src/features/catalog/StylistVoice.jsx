@@ -363,8 +363,8 @@ export function VoiceInput({
         <p className="fine-print">
           {available
             ? es
-              ? 'Para usar la voz pediremos permiso de micrófono. No se graba hasta que pulses Hablar ahora.'
-              : 'Voice mode asks for microphone permission. Recording starts only when you press Speak now.'
+              ? 'Pediremos permiso de micrófono. Tu audio se enviará a un servicio externo para transcribirlo, solo cuando grabes y envíes un mensaje.'
+              : 'We will ask for microphone permission. Audio is sent to an external service for transcription only when you record and send a message.'
             : es
               ? 'La voz no está disponible ahora. Puedes continuar por escrito.'
               : 'Voice is unavailable now. You can keep typing.'}
@@ -459,8 +459,8 @@ export function VoiceInput({
       </div>
       <p className="fine-print">
         {es
-          ? 'Hasta un minuto por mensaje. Al terminar, se envía automáticamente y tAIlor responde con voz. El audio se procesa fuera del dispositivo.'
-          : 'Up to one minute per message. Finish to send automatically and hear tAIlor’s reply. Audio is processed outside your device.'}
+          ? 'Hasta un minuto por mensaje. Al terminar, se envía automáticamente y tAIlor responde con voz.'
+          : 'Up to one minute per message. Finish to send automatically and hear tAIlor’s reply.'}
       </p>
       {error && (
         <p role="status" className="fine-print">

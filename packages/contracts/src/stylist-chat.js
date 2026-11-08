@@ -1,4 +1,4 @@
-import { stylistUnsafeText } from './stylist-policy.js';
+import { stylistUnsafeText, stylistScopeViolation } from './stylist-policy.js';
 // The chat asks explicitly for a budget rather than silently assuming one.
 // These local rules identify common numeric constraints; style interpretation stays with the model.
 export function chatPreferences(message, previous = {}) {
@@ -88,6 +88,8 @@ export function stylistFeedback(message, hasSuggestion, language = 'es', suggest
     return es
       ? `¡Perfecto, nos quedamos con ${selected.name}! Abre sus piezas para revisar las tallas y añadir las que quieras a la bolsa. ¿Te ayudo con algún detalle más?`
       : `Lovely choice! ${selected.name} can be your outfit for the occasion. Open its pieces to check sizes and add your favourites to the bag. Anything else you would like to refine?`;
+  const clarification = choiceClarification(message, suggestion, language);
+  if (clarification) return clarification;
   if (
     /^(?:eres (?:un |una )?(?:robot|bot|ia|inteligencia artificial|humano|humana)|quien eres|que eres|are you (?:a |an )?(?:robot|bot|ai|human)|who are you|what are you)$/.test(
       text,
@@ -155,29 +157,58 @@ const feedbackNormalize = (text) =>
     .replace(/[¡!¿?.,;:]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+function choiceCandidate(message) {
+  const text = feedbackNormalize(message);
+  const prefix = /^(?:me quedo con|elijo|prefiero|me gusta|i choose|i prefer|i'll take)\s+/.exec(
+    text,
+  );
+  const candidate = text
+    .slice(prefix?.[0].length || 0)
+    .replace(/^(?:(?:el|la|the|conjunto|look|outfit|de)\s+)+/, '');
+  return { candidate, explicit: Boolean(prefix) };
+}
 export function stylistChosenLook(message, suggestion) {
   if (stylistUnsafeText(message)) return null;
-  const text = feedbackNormalize(message);
-  for (const look of suggestion?.looks || []) {
-    const name = feedbackNormalize(look.name);
-    const prefixes = [
-      'me quedo con',
-      'elijo',
-      'prefiero',
-      'me gusta',
-      'i choose',
-      'i prefer',
-      "i'll take",
-    ];
-    for (const prefix of prefixes) {
-      const remainder = text.startsWith(prefix + ' ')
-        ? text
-            .slice(prefix.length + 1)
-            .replace(/^(?:(?:el|la|the|conjunto|look|outfit|de)\s+)+/, '')
-        : null;
-      if (remainder === name) return look;
-    }
+  const { candidate } = choiceCandidate(message);
+  const matches = (suggestion?.looks || []).filter(
+    (look) => feedbackNormalize(look.name).replace(/\s/g, '') === candidate.replace(/\s/g, ''),
+  );
+  return matches.length === 1 ? matches[0] : null;
+}
+function editDistance(a, b) {
+  let row = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const next = [i];
+    for (let j = 1; j <= b.length; j++)
+      next[j] = Math.min(next[j - 1] + 1, row[j] + 1, row[j - 1] + (a[i - 1] !== b[j - 1]));
+    row = next;
   }
+  return row[b.length];
+}
+function choiceClarification(message, suggestion, language) {
+  if (!suggestion?.looks?.length) return null;
+  const { candidate, explicit } = choiceCandidate(message);
+  if (
+    !candidate ||
+    candidate.length > 80 ||
+    /\b(pero|sin|con|talla|presupuesto|menos|mas|but|without|size|budget|color)\b/.test(candidate)
+  )
+    return null;
+  // A request for a dress, colour or occasion is a new styling preference, not a failed name.
+  if (!stylistScopeViolation(candidate)) return null;
+  const compact = candidate.replace(/\s/g, '');
+  const near = suggestion.looks.filter((look) => {
+    const name = feedbackNormalize(look.name).replace(/\s/g, '');
+    return Math.min(name.length, compact.length) >= 7 && editDistance(name, compact) <= 2;
+  });
+  if (near.length === 1)
+    return language === 'es'
+      ? `¿Te refieres a ${near[0].name}? No he entendido bien el nombre. Puedes escribirlo en modo texto para que lo confirmemos.`
+      : `Do you mean ${near[0].name}? I did not quite catch the name. You can type it in text mode so we can confirm it.`;
+  if (explicit && candidate.split(' ').length <= 5)
+    return language === 'es'
+      ? 'No he entendido bien cuál eliges. ¿Puedes escribir el nombre del look? Pulsa «Cambiar a texto» y lo vemos juntos.'
+      : 'I did not quite catch which outfit you chose. Could you type its name? Tap “Switch to text” and we will check it together.';
   return null;
 }
 export function stylistConversationContext(messages) {
