@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-08",
+  "reportedByAuthor": "Dentro de Expo Go no graba ni transcribe en iPad, Android e iPhone.",
+  "readOnlyCounterCheck": {"usedActions": 101, "dailyLimit": 200},
+  "deployedStatus": {
+    "origins": ["https://kelsets-maison.vercel.app", "https://kelsets-maison-api.vercel.app"],
+    "http": 200,
+    "available": true,
+    "quotaDay": "2026-11-08",
+    "quotaAvailable": true,
+    "dailyActionLimit": 200,
+    "cacheControl": "no-store"
+  },
+  "regressions": "176 comprobaciones, build web y exportaciones iOS/Android correctos. Bloqueo del cliente por una cuota anterior reproducido con respuestas simuladas.",
+  "limits": "El estado público confirma margen y disponibilidad del servidor, no la grabación física. Se solicitó a la autora recargar Expo Go y comunicar el estado del botón. No se grabó micrófono ni se consumieron servicios de voz para verificar esta corrección."
+}
