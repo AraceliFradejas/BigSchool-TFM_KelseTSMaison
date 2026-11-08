@@ -308,3 +308,5 @@ He simplificado el pie del chat tras revisar la captura de la autora: el micróf
 ### Nombre aislado del look y petición de aclaración
 
 He corregido el reconocimiento de «Golden Hour» sin exigir «me quedo con». Una coincidencia dudosa pide confirmación o que se escriba el nombre; las nuevas preferencias siguen su recorrido y los temas bloqueados conservan sus controles. También he simplificado el aviso recurrente de voz, manteniendo la información del servicio externo al elegir micrófono. Las 147 pruebas pasan; la nueva aclaración se verifica localmente, sin gastar transcripción ni síntesis reales.
+
+He adaptado la pronunciación de la marca a «Kelsi TiEs Meison», como indica la autora, solo en el texto preparado para voz. La interfaz conserva KelseTS Maison. Verificación local de transformación, sin nueva síntesis real.

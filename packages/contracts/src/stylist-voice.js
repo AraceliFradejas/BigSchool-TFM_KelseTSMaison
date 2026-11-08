@@ -121,7 +121,10 @@ export function stylistSpeechText(message, language = 'es') {
         ? '¿Con cuál te ves más? Cuéntame qué te gusta y qué cambiarías; lo vamos afinando a tu gusto.'
         : 'Which one feels most like you? Tell me what you like or would change; we can refine it together.',
     );
-  return sections.filter(Boolean).join(' ');
+  return sections
+    .filter(Boolean)
+    .join(' ')
+    .replace(/\bKelseTS\s+Maison\b/gi, 'Kelsi TiEs Meison');
 }
 export function voiceError(code, language = 'es') {
   const es = language === 'es';
