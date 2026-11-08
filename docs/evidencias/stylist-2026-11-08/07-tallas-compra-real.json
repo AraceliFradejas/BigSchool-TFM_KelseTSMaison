@@ -1,0 +1,75 @@
+{
+  "initialContext": "Fixture of the author’s previously shown two interview outfits, budget 6000, size M and shoes 38. All following requests use the real production model.",
+  "turns": [
+    {
+      "message": "Me quedaría con Studio Interview. Pero ¿qué tallas tienes?",
+      "http": 200,
+      "result": {
+        "mode": "ai",
+        "reason": "sizes",
+        "message": "Conservamos Studio Interview. Tallas disponibles por pieza ahora: Blazer · The Man: S, M. Tu talla M está disponible. Pantalón · Mastermind: S, M. Tu talla M está disponible. Top · Clean: S, M. Tu talla M está disponible. Mocasines · Everything Has Changed: 36, 37, 39, 40. Tu talla 38 no está disponible. Comprueba la talla de cada pieza en su ficha; cambiar de talla no garantiza el mismo ajuste.",
+        "looks": [],
+        "preferences": {
+          "occasion": "television",
+          "color": "any",
+          "excludeBeauty": false,
+          "dressCode": "elegant",
+          "style": "Cena especial y reutilizable para entrevista, sin volantes\nAhora: Me quedaría con Studio Interview. Pero ¿qué tallas tienes?",
+          "budgetCents": 600000,
+          "size": "M",
+          "shoeSize": "38",
+          "language": "es"
+        },
+        "selectedLookId": "look-studio-interview",
+        "provider": "gemini"
+      }
+    },
+    {
+      "message": "¿Tienes a lo mejor una talla un poco más grande?",
+      "http": 200,
+      "result": {
+        "mode": "ai",
+        "reason": "sizes",
+        "message": "Conservamos Studio Interview. Tallas disponibles por pieza ahora: Blazer · The Man: S, M. Tu talla L no está disponible. Pantalón · Mastermind: S, M. Tu talla L no está disponible. Top · Clean: S, M. Tu talla L no está disponible. Mocasines · Everything Has Changed: 36, 37, 39, 40. Tu talla 38 no está disponible. Comprueba la talla de cada pieza en su ficha; cambiar de talla no garantiza el mismo ajuste.",
+        "looks": [],
+        "preferences": {
+          "occasion": "television",
+          "color": "any",
+          "excludeBeauty": false,
+          "dressCode": "elegant",
+          "style": "Cena especial y reutilizable para entrevista, sin volantes\nAhora: Me quedaría con Studio Interview. Pero ¿qué tallas tienes?\nAhora: ¿Tienes a lo mejor una talla un poco más grande?",
+          "budgetCents": 600000,
+          "size": "L",
+          "shoeSize": "38",
+          "language": "es"
+        },
+        "selectedLookId": "look-studio-interview",
+        "provider": "anthropic"
+      }
+    },
+    {
+      "message": "Me parece perfecto este outfit. ¿Qué tengo que hacer para comprarlo?",
+      "http": 200,
+      "result": {
+        "mode": "ai",
+        "reason": "purchase",
+        "message": "Conservamos Studio Interview. Abre cada pieza del conjunto desde sus fotos o enlaces de arriba, elige una variante disponible y añádela a la bolsa. Después abre la bolsa, revisa las piezas y accede a tu cuenta para continuar al pago DEMO. Es una compra de demostración, sin cobro real. Si alguna talla no está disponible, revisamos esa pieza antes de continuar.",
+        "looks": [],
+        "preferences": {
+          "occasion": "television",
+          "color": "any",
+          "excludeBeauty": false,
+          "dressCode": "elegant",
+          "style": "Cena especial y reutilizable para entrevista, sin volantes\nAhora: Me quedaría con Studio Interview. Pero ¿qué tallas tienes?\nAhora: ¿Tienes a lo mejor una talla un poco más grande?\nAhora: Me parece perfecto este outfit. ¿Qué tengo que hacer para comprarlo?",
+          "budgetCents": 600000,
+          "size": "L",
+          "shoeSize": "38",
+          "language": "es"
+        },
+        "selectedLookId": "look-studio-interview",
+        "provider": "anthropic"
+      }
+    }
+  ],
+  "scope": "Tres peticiones reales sobre un contexto inicial preparado; sin voz, bolsa ni pedidos. El aviso adicional de tallas agotadas en compra se añadió después y está verificado localmente."
+}

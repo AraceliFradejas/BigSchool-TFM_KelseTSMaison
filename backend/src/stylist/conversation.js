@@ -422,6 +422,7 @@ export async function converseStylist({
           'clarify',
         ),
       );
+    const missing = [];
     const lines = look.products
       .filter((product) => product.active)
       .map((product) => {
@@ -437,6 +438,8 @@ export async function converseStylist({
           : product.category === 'fashion'
             ? preferences.size
             : null;
+        if (requested && !available.includes(requested) && !available.includes('one'))
+          missing.push(`${product.name[input.language]} (${requested})`);
         const status = requested
           ? available.includes(requested) || available.includes('one')
             ? es
@@ -454,7 +457,13 @@ export async function converseStylist({
         : es
           ? `Conservamos ${look.name}. Abre cada pieza del conjunto desde sus fotos o enlaces de arriba, elige una variante disponible y añádela a la bolsa. Después abre la bolsa, revisa las piezas y accede a tu cuenta para continuar al pago DEMO. Es una compra de demostración, sin cobro real. Si alguna talla no está disponible, revisamos esa pieza antes de continuar.`
           : `Keeping ${look.name}. Open each piece using its photo or link above, choose an available variant and add it to your bag. Then open the bag, review the pieces and sign in to continue to DEMO checkout. This is a demonstration purchase with no real charge. If a size is unavailable, we can review that piece first.`;
-    return finish({ ...empty(message, intent.action), selectedLookId: look.id });
+    const availabilityNote =
+      intent.action === 'purchase' && missing.length
+        ? es
+          ? ` Antes de continuar, estas tallas no están disponibles: ${missing.join('; ')}. Podemos buscar alternativas para esas piezas.`
+          : ` Before continuing, these sizes are unavailable: ${missing.join('; ')}. We can find alternatives for those pieces.`
+        : '';
+    return finish({ ...empty(message + availabilityNote, intent.action), selectedLookId: look.id });
   }
   if (intent.action === 'complement' || (intent.action === 'select' && intent.selectedProductId)) {
     const selectedIds = [...input.context.selectedProductIds];
