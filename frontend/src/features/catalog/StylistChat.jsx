@@ -1,3 +1,4 @@
+import VoiceIcon from './VoiceIcon';
 import { SpeakButton, VoiceInput } from './StylistVoice';
 import { stylistScopeViolation, stylistScopeMessage } from '@maison/contracts/stylist-policy';
 import { useEffect, useRef, useState } from 'react';
@@ -5,6 +6,7 @@ import { Link } from 'react-router-dom';
 import {
   chatPreferences,
   stylistFeedback,
+  stylistConversationContext,
   stylistBudgetQuestion,
   stylistEditorialIntro,
 } from '@maison/contracts/stylist-chat';
@@ -61,10 +63,7 @@ export default function StylistChat({ conversation }) {
       text,
       messages.some((message) => message.result?.looks.length),
       language,
-      messages
-        .slice()
-        .reverse()
-        .find((message) => message.result?.looks.length)?.result,
+      stylistConversationContext(messages),
     );
     if (feedback) {
       say({ role: 'assistant', text: feedback });
@@ -266,6 +265,7 @@ export default function StylistChat({ conversation }) {
           placeholder={es ? 'Escribe a Maison Stylist…' : 'Message Maison Stylist…'}
         />
         <button className="button" disabled={busy || voiceBusy || !draft.trim()}>
+          <VoiceIcon send />
           {es ? 'Enviar' : 'Send'}
         </button>
       </form>

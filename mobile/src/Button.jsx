@@ -8,6 +8,7 @@ export default function Button({
   disabled,
   secondary,
   selected,
+  icon,
   ...props
 }) {
   return (
@@ -22,6 +23,7 @@ export default function Button({
       onPress={onPress}
       style={({ pressed }) => [
         s.button,
+        icon && s.withIcon,
         color && { backgroundColor: color, borderColor: color },
         secondary && s.secondary,
         selected && s.selected,
@@ -30,7 +32,15 @@ export default function Button({
       ]}
       {...props}
     >
-      <Text style={[s.buttonText, secondary && s.secondaryText, selected && s.selectedText]}>
+      {icon}
+      <Text
+        style={[
+          s.buttonText,
+          icon && { flexShrink: 1 },
+          secondary && s.secondaryText,
+          selected && s.selectedText,
+        ]}
+      >
         {children ?? title}
       </Text>
     </Pressable>
@@ -49,6 +59,7 @@ const s = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  withIcon: { flexDirection: 'row', gap: 8 },
   buttonText: { color: '#fff', fontSize: 15, fontWeight: '600' },
   secondary: { backgroundColor: '#eeeae3', borderColor: '#b8b2a7' },
   secondaryText: { color: '#242320' },

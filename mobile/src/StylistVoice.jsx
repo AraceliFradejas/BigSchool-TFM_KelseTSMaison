@@ -13,6 +13,7 @@ import * as Files from 'expo-file-system/legacy';
 import { voiceError, stylistSpeechText } from '@maison/contracts/stylist-voice';
 import { api } from './api';
 import Button from './Button';
+import VoiceIcon from './VoiceIcon';
 const erase = async (uri) => {
   if (uri) await Files.deleteAsync(uri, { idempotent: true }).catch(() => {});
 };
@@ -306,8 +307,8 @@ export function VoiceInput({
         <Text style={s.note}>
           {available
             ? es
-              ? 'Pediremos permiso de micrófono. No se graba hasta que pulses Dictar.'
-              : 'We will ask for microphone permission. Recording starts only when you press Dictate.'
+              ? 'Pediremos permiso de micrófono. No se graba hasta que pulses Hablar ahora.'
+              : 'We will ask for microphone permission. Recording starts only when you press Speak now.'
             : es
               ? 'La voz no está disponible ahora. Puedes escribir.'
               : 'Voice is unavailable now. You can type.'}
@@ -320,8 +321,13 @@ export function VoiceInput({
       <View style={s.actions}>
         <Text style={s.note}>{es ? 'Modo texto' : 'Text mode'}</Text>
         {available && (
-          <Button secondary disabled={disabled || phase === 'permission'} onPress={chooseVoice}>
-            {es ? 'Cambiar a voz' : 'Switch to voice'}
+          <Button
+            secondary
+            icon={<VoiceIcon color="#242320" />}
+            disabled={disabled || phase === 'permission'}
+            onPress={chooseVoice}
+          >
+            {es ? 'Hablar' : 'Talk'}
           </Button>
         )}
         {error && <Text>{error}</Text>}
@@ -347,21 +353,21 @@ export function VoiceInput({
       </View>
       <View style={s.actions}>
         <Button
-          secondary
+          icon={<VoiceIcon stop={phase === 'recording'} />}
           disabled={disabled || phase === 'busy' || phase === 'permission'}
           onPress={phase === 'recording' ? () => void stop() : record}
         >
           {phase === 'recording'
             ? es
-              ? `Detener (${Math.floor(recorderState.durationMillis / 1000)} s)`
-              : 'Stop recording'
+              ? `Terminar y enviar (${Math.floor(recorderState.durationMillis / 1000)} s)`
+              : 'Finish and send'
             : phase === 'permission'
               ? es
                 ? 'Esperando permiso…'
                 : 'Waiting for permission…'
               : es
-                ? 'Dictar mensaje'
-                : 'Dictate message'}
+                ? 'Hablar ahora'
+                : 'Speak now'}
         </Button>
         {phase === 'ready' && (
           <>

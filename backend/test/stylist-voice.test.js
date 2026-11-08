@@ -45,6 +45,7 @@ test('voice is opt-in, validates credentials and exposes no private values', asy
   const { app } = setup(t);
   const response = await request(app).get('/api/v1/stylist/voice/status');
   assert.equal(response.body.data.available, true);
+  assert.equal(response.body.data.dailyActionLimit, 2);
   assert.ok(!JSON.stringify(response.body).includes(voice.key));
   assert.ok(!JSON.stringify(response.body).includes(voice.voiceId));
 });

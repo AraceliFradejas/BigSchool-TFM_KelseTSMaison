@@ -26,7 +26,7 @@ test('voice reads complete outfit explanations, current variant prices and follo
     'Golden Hour',
     'elección luminosa',
     'Vestido dorado, Talla M',
-    '2.300,00',
+    'dos mil trescientos euros',
     '¿Con cuál',
   ])
     assert.ok(text.includes(expected), expected);
@@ -48,4 +48,24 @@ test('brand transcription correction preserves user names and recognises a spoke
     'Un concierto de Taylor Swift',
   );
   assert.match(stylistFeedback('Hola, Taylor', false), /Soy tAIlor/);
+});
+
+test('spoken prices name euros and cents without ambiguous thousands separators', async () => {
+  const { spokenMoney } = await import('@maison/contracts/stylist-voice');
+  assert.equal(spokenMoney(239500), 'dos mil trescientos noventa y cinco euros');
+  assert.equal(spokenMoney(5500), 'cincuenta y cinco euros');
+  assert.equal(
+    spokenMoney(239550),
+    'dos mil trescientos noventa y cinco euros con cincuenta céntimos',
+  );
+  assert.equal(spokenMoney(101), 'un euro con un céntimo');
+  assert.equal(
+    spokenMoney(239550, 'en'),
+    'two thousand three hundred and ninety-five euros and fifty cents',
+  );
+  assert.equal(spokenMoney(-1), '');
+  assert.equal(spokenMoney(100000), 'mil euros');
+  assert.equal(spokenMoney(10000), 'cien euros');
+  assert.equal(spokenMoney(2100), 'veintiún euros');
+  assert.equal(spokenMoney(1000000), 'diez mil euros');
 });

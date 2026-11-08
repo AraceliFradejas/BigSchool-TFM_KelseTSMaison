@@ -1,3 +1,4 @@
+import { stylistUnsafeText } from './stylist-policy.js';
 // The chat asks explicitly for a budget rather than silently assuming one.
 // These local rules identify common numeric constraints; style interpretation stays with the model.
 export function chatPreferences(message, previous = {}) {
@@ -81,6 +82,12 @@ export function stylistFeedback(message, hasSuggestion, language = 'es', suggest
     .replace(/\s+/g, ' ')
     .trim();
   const es = language === 'es';
+  if (stylistUnsafeText(message)) return null;
+  const selected = stylistChosenLook(message, suggestion);
+  if (selected)
+    return es
+      ? `¡Perfecto, nos quedamos con ${selected.name}! Abre sus piezas para revisar las tallas y añadir las que quieras a la bolsa. ¿Te ayudo con algún detalle más?`
+      : `Lovely choice! ${selected.name} can be your outfit for the occasion. Open its pieces to check sizes and add your favourites to the bag. Anything else you would like to refine?`;
   if (
     /^(?:eres (?:un |una )?(?:robot|bot|ia|inteligencia artificial|humano|humana)|quien eres|que eres|are you (?:a |an )?(?:robot|bot|ai|human)|who are you|what are you)$/.test(
       text,
@@ -128,7 +135,7 @@ export function stylistFeedback(message, hasSuggestion, language = 'es', suggest
       : 'Let’s adjust it. What would you change: style, colours, pieces or budget? For example: “something more casual, up to €2,000”.';
   // Accept combinations of acknowledgement phrases, but never swallow added constraints.
   if (
-    /^(?:(?:si|mucho|muchas gracias|gracias|me gusta|me ha gustado|me encanta|me ha encantado|perfecto|genial|la eleccion|yes|very much|i like it|love it|thanks|thank you)(?:\s+|$))+$/.test(
+    /^(?:(?:si|mucho|muchas gracias|gracias|me gusta|me ha gustado|me encanta|me ha encantado|perfecto|perfecta|genial|esta|todo|muy|bien|es|eso|por todo|la eleccion|all|everything|is|perfect|great|yes|very much|i like it|love it|thanks|thank you)(?:\s+|$))+$/.test(
       text,
     )
   )
@@ -138,6 +145,51 @@ export function stylistFeedback(message, hasSuggestion, language = 'es', suggest
         ? '¡Qué bien! Puedes abrir las piezas del look para elegir tu talla y añadir tus favoritas a la bolsa. Si quieres ajustar algo más, cuéntamelo.'
         : 'Lovely! Open the outfit pieces to choose your size and add your favourites to your bag. Tell me if you would like any changes.';
   return null;
+}
+
+const feedbackNormalize = (text) =>
+  String(text || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[¡!¿?.,;:]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+export function stylistChosenLook(message, suggestion) {
+  if (stylistUnsafeText(message)) return null;
+  const text = feedbackNormalize(message);
+  for (const look of suggestion?.looks || []) {
+    const name = feedbackNormalize(look.name);
+    const prefixes = [
+      'me quedo con',
+      'elijo',
+      'prefiero',
+      'me gusta',
+      'i choose',
+      'i prefer',
+      "i'll take",
+    ];
+    for (const prefix of prefixes) {
+      const remainder = text.startsWith(prefix + ' ')
+        ? text
+            .slice(prefix.length + 1)
+            .replace(/^(?:(?:el|la|the|conjunto|look|outfit|de)\s+)+/, '')
+        : null;
+      if (remainder === name) return look;
+    }
+  }
+  return null;
+}
+export function stylistConversationContext(messages) {
+  let result = null;
+  for (const message of messages) {
+    if (message.result) result = message.result;
+    if (message.role === 'user') {
+      const chosen = stylistChosenLook(message.text, result);
+      if (chosen) result = { ...result, looks: [chosen], selected: true };
+    }
+  }
+  return result;
 }
 
 function stylistFarewell(language, suggestion) {
@@ -154,6 +206,10 @@ function stylistFarewell(language, suggestion) {
   let wish = es ? '¡Que disfrutes mucho de tu plan!' : 'Have a wonderful time!';
   if (occasion === 'event' && /\b(boda|wedding)\b/.test(style))
     wish = es ? '¡Que disfrutes muchísimo de la boda!' : 'Have a wonderful time at the wedding!';
+  else if (occasion === 'dinner' && /negocios|business/.test(style))
+    wish = es
+      ? '¡Que vaya muy bien esa cena de negocios!'
+      : 'I hope your business dinner goes really well!';
   else if (occasion === 'television')
     wish = es ? '¡Mucha suerte en tu entrevista!' : 'Best of luck with your interview!';
   else {
@@ -170,8 +226,8 @@ function stylistFarewell(language, suggestion) {
   const last = names.pop();
   const choices = names.length ? `${names.join(', ')} ${es ? 'o' : 'or'} ${last}` : last;
   return es
-    ? `¡Gracias a ti! ${wish} Puedes revisar las piezas de ${choices} cuando te decidas. Aquí estará tu tAIlor si necesitas otro look. ✨`
-    : `Thank you! ${wish} You can review the pieces in ${choices} when you decide. Your tAIlor is here whenever you need another outfit. ✨`;
+    ? `¡Gracias a ti! ${wish} ${suggestion.selected ? `Puedes volver a las piezas de ${choices} cuando quieras.` : `Puedes revisar las piezas de ${choices} cuando te decidas.`} Aquí estará tu tAIlor si necesitas otro look. ✨`
+    : `Thank you! ${wish} ${suggestion.selected ? `You can revisit the pieces in ${choices} whenever you like.` : `You can review the pieces in ${choices} when you decide.`} Your tAIlor is here whenever you need another outfit. ✨`;
 }
 
 export function stylistBudgetQuestion(parsed, language = 'es') {

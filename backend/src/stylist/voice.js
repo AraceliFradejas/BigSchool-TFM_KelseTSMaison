@@ -108,6 +108,7 @@ export function voiceRouter(db, config, limiter, provider = requestVoice) {
   router.get('/stylist/voice/status', (req, res) =>
     send(res, {
       available: voiceAvailable(config),
+      dailyActionLimit: config.voice?.dailyLimit || 6,
       maxRecordingSeconds: 60,
       maxAudioBytes: 2 * 1024 * 1024,
       maxSpeechChars: 6000,

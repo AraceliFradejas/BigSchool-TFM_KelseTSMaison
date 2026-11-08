@@ -19,10 +19,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   chatPreferences,
   stylistFeedback,
+  stylistConversationContext,
   stylistBudgetQuestion,
   stylistEditorialIntro,
 } from '@maison/contracts/stylist-chat';
 import Button from './Button';
+import VoiceIcon from './VoiceIcon';
 import { api } from './api';
 import { useRemote } from './useRemote';
 import { imageUrl, money } from './model';
@@ -139,10 +141,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
       text,
       messages.some((message) => message.result?.looks.length),
       language,
-      messages
-        .slice()
-        .reverse()
-        .find((message) => message.result?.looks.length)?.result,
+      stylistConversationContext(messages),
     );
     if (feedback) {
       say({ role: 'assistant', text: feedback });
@@ -375,7 +374,11 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
           />
         )}
         {interactionMode !== null && (
-          <Button disabled={busy || voiceBusy || !draft.trim()} onPress={send}>
+          <Button
+            icon={<VoiceIcon send />}
+            disabled={busy || voiceBusy || !draft.trim()}
+            onPress={send}
+          >
             {es ? 'Enviar' : 'Send'}
           </Button>
         )}

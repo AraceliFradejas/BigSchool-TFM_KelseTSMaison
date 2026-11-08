@@ -3092,3 +3092,43 @@ main:focus {
 .stylist-voice-input > .text-link {
   margin-left: 12px;
 }
+
+.stylist-voice-control,
+.stylist-chat-composer .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  border-radius: 24px;
+  padding: 10px 16px;
+  font-size: 0.78rem;
+}
+.stylist-voice-control svg,
+.stylist-chat-composer .button svg {
+  flex-shrink: 0;
+}
+.stylist-voice-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.stylist-voice-input > .stylist-voice-control {
+  align-self: flex-start;
+}
+.stylist-voice-input > .fine-print {
+  margin-right: 8px;
+}
+.stylist-voice-input:has(> .fine-print + .stylist-voice-control) {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.stylist-record {
+  box-shadow: 0 4px 14px #b3152b22;
+}
+.stylist-record.is-recording {
+  background: #7a1020;
+  outline: 3px solid #b3152b33;
+  outline-offset: 2px;
+}

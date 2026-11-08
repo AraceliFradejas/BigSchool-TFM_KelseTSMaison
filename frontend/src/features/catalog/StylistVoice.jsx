@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import VoiceIcon from './VoiceIcon';
 import { api } from '../../shared/state';
 import { voiceError, stylistSpeechText } from '@maison/contracts/stylist-voice';
 
@@ -98,7 +99,12 @@ export function SpeakButton({ message, language, available, autoPlay, onAutoStar
   if (!available) return null;
   return (
     <div className="stylist-voice-play">
-      <button type="button" className="text-link" onClick={speak}>
+      <button
+        type="button"
+        className="button button-secondary stylist-voice-control"
+        onClick={speak}
+      >
+        <VoiceIcon speaker />
         {busy
           ? es
             ? 'Cancelar voz…'
@@ -357,8 +363,8 @@ export function VoiceInput({
         <p className="fine-print">
           {available
             ? es
-              ? 'Para usar la voz pediremos permiso de micrófono. No se graba hasta que pulses Dictar.'
-              : 'Voice mode asks for microphone permission. Recording starts only when you press Dictate.'
+              ? 'Para usar la voz pediremos permiso de micrófono. No se graba hasta que pulses Hablar ahora.'
+              : 'Voice mode asks for microphone permission. Recording starts only when you press Speak now.'
             : es
               ? 'La voz no está disponible ahora. Puedes continuar por escrito.'
               : 'Voice is unavailable now. You can keep typing.'}
@@ -372,12 +378,13 @@ export function VoiceInput({
         <span className="fine-print">{es ? 'Modo texto' : 'Text mode'}</span>
         {available && (
           <button
-            className="text-link"
+            className="button button-secondary stylist-voice-control"
             type="button"
             onClick={chooseVoice}
             disabled={disabled || phase === 'permission'}
           >
-            {es ? 'Cambiar a voz' : 'Switch to voice'}
+            <VoiceIcon />
+            {es ? 'Hablar' : 'Talk'}
           </button>
         )}
         {error && <p role="status">{error}</p>}
@@ -387,7 +394,11 @@ export function VoiceInput({
     return (
       <div className="stylist-voice-input">
         <p>{es ? 'La voz no está disponible ahora.' : 'Voice is unavailable now.'}</p>
-        <button className="text-link" type="button" onClick={chooseText}>
+        <button
+          className="button button-secondary stylist-voice-control"
+          type="button"
+          onClick={chooseText}
+        >
           {es ? 'Continuar escribiendo' : 'Continue typing'}
         </button>
       </div>
@@ -397,37 +408,48 @@ export function VoiceInput({
     <div className="stylist-voice-input">
       <div className="stylist-voice-actions">
         <span>{es ? 'Modo voz' : 'Voice mode'}</span>
-        <button type="button" className="text-link" onClick={chooseText}>
+        <button
+          type="button"
+          className="button button-secondary stylist-voice-control"
+          onClick={chooseText}
+        >
           {es ? 'Cambiar a texto' : 'Switch to text'}
         </button>
       </div>
       <div className="stylist-voice-actions">
         <button
           type="button"
-          className="text-link"
+          className={`button stylist-voice-control stylist-record ${phase === 'recording' ? 'is-recording' : ''}`}
+          aria-pressed={phase === 'recording'}
           onClick={phase === 'recording' ? () => stop() : record}
           disabled={disabled || phase === 'busy' || phase === 'permission'}
         >
+          <VoiceIcon stop={phase === 'recording'} />
           {phase === 'recording'
             ? es
-              ? 'Detener grabación'
-              : 'Stop recording'
+              ? 'Terminar y enviar'
+              : 'Finish and send'
             : phase === 'permission'
               ? es
                 ? 'Esperando permiso…'
                 : 'Waiting for permission…'
               : es
-                ? 'Dictar mensaje'
-                : 'Dictate message'}
+                ? 'Hablar ahora'
+                : 'Speak now'}
         </button>
         {phase === 'ready' && (
           <>
-            <button type="button" className="text-link" onClick={transcribe} disabled={disabled}>
+            <button
+              type="button"
+              className="button button-secondary stylist-voice-control"
+              onClick={transcribe}
+              disabled={disabled}
+            >
               {es ? 'Transcribir' : 'Transcribe'}
             </button>
             <button
               type="button"
-              className="text-link"
+              className="button button-secondary stylist-voice-control"
               onClick={() => {
                 blob.current = null;
                 setPhase('idle');
