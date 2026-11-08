@@ -1,3 +1,4 @@
+import { voiceRouter } from './stylist/voice.js';
 import { stylistRouter } from './modules/stylist.js';
 import express from 'express';
 import cookieParser from 'cookie-parser';
@@ -11,7 +12,15 @@ import { catalogRouter, teamCatalogRouter } from './modules/catalog.js';
 import { ordersRouter, teamOrdersRouter } from './modules/orders.js';
 import { mediaRouter, imageDeliveryRouter } from './modules/media.js';
 
-export function createApp({ db, config, limits = true, cloudStorage, imageFetch, stylistRequest }) {
+export function createApp({
+  db,
+  config,
+  limits = true,
+  cloudStorage,
+  imageFetch,
+  stylistRequest,
+  voiceRequest,
+}) {
   const app = express();
   app.disable('x-powered-by');
   if (config.trustProxy) app.set('trust proxy', 1);
@@ -19,6 +28,7 @@ export function createApp({ db, config, limits = true, cloudStorage, imageFetch,
     helmet({
       contentSecurityPolicy: {
         directives: {
+          'media-src': ["'self'", 'data:', 'blob:'],
           'img-src': ["'self'", 'data:', 'https://tile.openstreetmap.org'],
           'style-src': ["'self'", "'unsafe-inline'"],
           'upgrade-insecure-requests': config.production ? [] : null,
@@ -69,6 +79,7 @@ export function createApp({ db, config, limits = true, cloudStorage, imageFetch,
   app.use('/api/v1/auth', authRouter(db, config, limiter(20, 15 * 60 * 1000)));
   app.use(
     '/api/v1',
+    voiceRouter(db, config.stylist, limiter(12, 60 * 1000), voiceRequest),
     stylistRouter(db, config, limiter(8, 60 * 1000), stylistRequest),
     catalogRouter(db),
     ordersRouter(db),

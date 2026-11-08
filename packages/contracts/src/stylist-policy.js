@@ -29,8 +29,8 @@ export function stylistScopeViolation(text = '') {
 }
 export function stylistScopeMessage(language = 'es') {
   return language === 'en'
-    ? 'I can only help with Maison outfits, pieces, sizes and styling. Tell me your occasion, style and budget.'
-    : 'Solo puedo ayudarte con los outfits, las piezas, las tallas y el estilo de Maison. Cuéntame la ocasión, el estilo y tu presupuesto.';
+    ? 'That is outside my styling expertise, but I can help you find a KelseTS Maison outfit that feels like you. What are you planning?'
+    : 'Ahí no puedo orientarte. Con los looks de KelseTS Maison sí puedo echarte una mano. ¿Tienes algún plan en mente?';
 }
 export function stylistUnsafeExplanation(text) {
   return (

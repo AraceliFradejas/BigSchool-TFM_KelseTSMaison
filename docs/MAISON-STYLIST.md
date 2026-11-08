@@ -107,3 +107,10 @@ Los saludos y despedidas breves se responden localmente con el tono de tAIlor; n
 
 
 El saludo refleja la expresión recibida: hola, buenos días, buenas tardes o buenas noches, seguida de la presentación de tAIlor como estilista personal virtual de KelseTS Maison. La despedida utiliza la ocasión y los nombres de los últimos looks mostrados; en una boda desea disfrutar de la celebración y en una entrevista desea suerte. No presupone una elección ni una compra y no toma un plan antiguo cuando la última recomendación corresponde a otro. Todo se resuelve localmente, sin llamadas de IA.
+
+
+## Personalidad conversacional y voz preparada
+
+El modelo recibe la identidad de tAIlor, estilista personal virtual cercano y respetuoso, y devuelve una introducción breve `reply` junto a los looks. La API valida texto, ámbito y ausencia de afirmaciones monetarias o enlaces externos antes de mostrarlo. El formato mantiene campos explícitos y sin propiedades adicionales, según la [documentación oficial de OpenAI sobre salidas estructuradas](https://developers.openai.com/api/docs/guides/structured-outputs?api-mode=responses). No se añade una llamada de modelo por saludo o aclaración de presupuesto. Las preguntas locales reconocen el plan y el modo editorial utiliza una introducción más natural.
+
+La voz está preparada en ambos clientes y pendiente de activar y probar realmente: [recorrido, permisos, datos y límites](VOZ-TAILOR.md). Las claves no se exponen en la web o en Expo. La nueva introducción generada está probada con dobles; no se da por validada en los tres proveedores reales tras cambiar el esquema.

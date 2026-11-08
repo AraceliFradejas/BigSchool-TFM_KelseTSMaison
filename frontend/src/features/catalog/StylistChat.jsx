@@ -1,7 +1,13 @@
+import { SpeakButton, VoiceInput } from './StylistVoice';
 import { stylistScopeViolation, stylistScopeMessage } from '@maison/contracts/stylist-policy';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { chatPreferences, stylistFeedback } from '@maison/contracts/stylist-chat';
+import {
+  chatPreferences,
+  stylistFeedback,
+  stylistBudgetQuestion,
+  stylistEditorialIntro,
+} from '@maison/contracts/stylist-chat';
 import { useMaison, useResource, api } from '../../shared/state';
 import { Money, ProductGrid } from '../../shared/components';
 
@@ -9,7 +15,18 @@ export default function StylistChat({ conversation }) {
   const { language, user, errorText } = useMaison();
   const es = language === 'es';
   const availability = useResource('/stylist/status');
-  const { messages, setMessages, draft, setDraft, preferences, setPreferences } = conversation;
+  const voice = useResource('/stylist/voice/status');
+  const [voiceBusy, setVoiceBusy] = useState(false);
+  const {
+    messages,
+    setMessages,
+    draft,
+    setDraft,
+    preferences,
+    setPreferences,
+    interactionMode,
+    setInteractionMode,
+  } = conversation;
   const [busy, setBusy] = useState(false);
   const pending = useRef(null);
   const end = useRef(null);
@@ -26,7 +43,7 @@ export default function StylistChat({ conversation }) {
   async function send(event) {
     event.preventDefault();
     const text = draft.trim();
-    if (!text || busy) return;
+    if (!text || busy || voiceBusy || interactionMode === null) return;
     setDraft('');
     say({ role: 'user', text });
     const feedback = stylistFeedback(
@@ -51,13 +68,7 @@ export default function StylistChat({ conversation }) {
     if (parsed.needsBudget) {
       say({
         role: 'assistant',
-        text: parsed.invalidBudget
-          ? es
-            ? 'Dime un presupuesto entre 1 y 10.000 € para esta selección.'
-            : 'Please give me a budget between €1 and €10,000 for this selection.'
-          : es
-            ? '¿Cuál es tu presupuesto máximo para el look? Puedes decirme también tu talla y número de calzado.'
-            : 'What is your maximum outfit budget? You can also tell me your clothing and shoe sizes.',
+        text: stylistBudgetQuestion(parsed, language),
       });
       return;
     }
@@ -86,13 +97,7 @@ export default function StylistChat({ conversation }) {
           role: 'assistant',
           text:
             result.message ||
-            (result.looks.length
-              ? es
-                ? 'Estas combinaciones encajan con los filtros que he recogido. Puedes abrir cada pieza para elegir su variante.'
-                : 'These combinations match the filters I picked up. Open any piece to choose its variant.'
-              : es
-                ? 'No encuentro un conjunto completo con esos filtros. ¿Probamos otro presupuesto, talla o plan?'
-                : 'I could not find a complete outfit with those filters. Shall we try another budget, size or occasion?'),
+            stylistEditorialIntro(result.preferences, language, result.looks.length > 0),
           result,
         });
     } catch (error) {
@@ -103,11 +108,11 @@ export default function StylistChat({ conversation }) {
     }
   }
   return (
-    <div className="stylist-chat">
+    <div className={`stylist-chat ${interactionMode === null ? 'is-choosing-mode' : ''}`}>
       <p className="stylist-chat-intro">
         {es
-          ? 'Cuéntame qué necesitas: tu plan, el estilo que te apetece y tu presupuesto. Te sugeriré combinaciones de Maison con fotos y enlaces a sus piezas.'
-          : 'Tell me your plans, style and budget. I will suggest Maison outfits with photos and links to their pieces.'}
+          ? 'Soy tAIlor, tu estilista personal virtual de KelseTS Maison. Vamos a buscar tu próximo look juntos.'
+          : 'I’m tAIlor, your personal virtual stylist at KelseTS Maison. Let’s find your next outfit together.'}
       </p>
       <p className="mode-badge">
         {availability.data?.available
@@ -118,7 +123,7 @@ export default function StylistChat({ conversation }) {
             ? 'Selección editorial · IA todavía desactivada'
             : 'Editorial selection · AI currently disabled'}
       </p>
-      {!messages.length && (
+      {!messages.length && interactionMode === 'text' && (
         <div className="stylist-chat-examples">
           {[
             es
@@ -142,6 +147,18 @@ export default function StylistChat({ conversation }) {
               {message.role === 'user' ? (es ? 'Tú' : 'You') : 'Maison Stylist'}
             </span>
             <p>{message.text}</p>
+            {message.role === 'assistant' && (
+              <SpeakButton
+                key={JSON.stringify([
+                  language,
+                  message.text,
+                  message.result?.looks.map((look) => look.id),
+                ])}
+                message={message}
+                language={language}
+                available={voice.data?.available && interactionMode === 'voice'}
+              />
+            )}
             {message.login && (
               <Link className="button" to="/account">
                 {es ? 'Acceder a mi cuenta' : 'Sign in'}
@@ -185,8 +202,8 @@ export default function StylistChat({ conversation }) {
                 {message.result.looks.length > 0 && (
                   <p className="stylist-chat-followup">
                     {es
-                      ? '¿Te ha gustado la elección? Cuéntame qué mantendrías o qué cambiarías y seguimos buscando tu look.'
-                      : 'Do you like the selection? Tell me what you would keep or change and we can refine your outfit.'}
+                      ? '¿Con cuál te ves más? Cuéntame qué te gusta y qué cambiarías; lo vamos afinando a tu gusto.'
+                      : 'Which one feels most like you? Tell me what you like or would change; we can refine it together.'}
                   </p>
                 )}
               </>
@@ -199,7 +216,20 @@ export default function StylistChat({ conversation }) {
           </p>
         )}
       </div>
-      <form className="stylist-chat-composer" onSubmit={send}>
+      <VoiceInput
+        mode={interactionMode}
+        onModeChange={setInteractionMode}
+        language={language}
+        available={voice.data?.available}
+        disabled={busy}
+        onBusyChange={setVoiceBusy}
+        onTranscript={(text) => {
+          const combined = [draft.trim(), text].filter(Boolean).join(' ');
+          if (combined.length > 400) throw new Error('voice_transcript_invalid');
+          setDraft(combined);
+        }}
+      />
+      <form className="stylist-chat-composer" onSubmit={send} hidden={interactionMode === null}>
         <label className="sr-only" htmlFor="stylist-chat-message">
           {es ? 'Tu mensaje para Maison Stylist' : 'Your message to Maison Stylist'}
         </label>
@@ -208,17 +238,17 @@ export default function StylistChat({ conversation }) {
           maxLength={400}
           rows={1}
           value={draft}
-          disabled={busy}
+          disabled={busy || voiceBusy}
           onChange={(event) => setDraft(event.target.value)}
           onKeyDown={(event) => {
             if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
               event.preventDefault();
-              if (!busy && draft.trim()) event.currentTarget.form.requestSubmit();
+              if (!busy && !voiceBusy && draft.trim()) event.currentTarget.form.requestSubmit();
             }
           }}
           placeholder={es ? 'Escribe a Maison Stylist…' : 'Message Maison Stylist…'}
         />
-        <button className="button" disabled={busy || !draft.trim()}>
+        <button className="button" disabled={busy || voiceBusy || !draft.trim()}>
           {es ? 'Enviar' : 'Send'}
         </button>
       </form>

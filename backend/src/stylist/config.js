@@ -38,7 +38,22 @@ export function readStylistConfig(env) {
     chain.some((item) => !item.key?.trim() || !/^[a-zA-Z0-9._-]{1,100}$/.test(item.model || ''))
   )
     throw new Error('Configure each enabled stylist provider with its own API key and model.');
+  const voiceEnabled = env.STYLIST_VOICE_ENABLED === '1';
+  if (!['0', '1', undefined, ''].includes(env.STYLIST_VOICE_ENABLED))
+    throw new Error('Invalid STYLIST_VOICE_ENABLED');
+  if (
+    voiceEnabled &&
+    (!env.ELEVENLABS_API_KEY?.trim() ||
+      !/^[a-zA-Z0-9_-]{1,80}$/.test(env.ELEVENLABS_VOICE_ID || ''))
+  )
+    throw new Error('Configure ElevenLabs voice credentials.');
   return {
+    voice: {
+      enabled: voiceEnabled,
+      key: env.ELEVENLABS_API_KEY,
+      voiceId: env.ELEVENLABS_VOICE_ID,
+      dailyLimit: integer('STYLIST_VOICE_DAILY_LIMIT', 6, 1, 50),
+    },
     enabled,
     requireAccount: account === '1',
     expiresAt: expiration ? Date.parse(expiration) : null,

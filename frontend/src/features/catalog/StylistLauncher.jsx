@@ -10,10 +10,12 @@ export default function StylistLauncher() {
   const [messages, setMessages] = useState([]);
   const [draft, setDraft] = useState('');
   const [preferences, setPreferences] = useState({});
+  const [interactionMode, setInteractionMode] = useState(null);
   useEffect(() => {
     setMessages([]);
     setDraft('');
     setPreferences({});
+    setInteractionMode(null);
   }, [language, user?.id]);
   const dialog = useRef(null);
   const trigger = useRef(null);
@@ -82,7 +84,16 @@ export default function StylistLauncher() {
               </button>
             </header>
             <StylistChat
-              conversation={{ messages, setMessages, draft, setDraft, preferences, setPreferences }}
+              conversation={{
+                messages,
+                setMessages,
+                draft,
+                setDraft,
+                preferences,
+                setPreferences,
+                interactionMode,
+                setInteractionMode,
+              }}
             />
           </div>
         </dialog>

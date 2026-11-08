@@ -3044,3 +3044,51 @@ main:focus {
   font-size: 0.65rem;
   margin-top: 4px;
 }
+
+.stylist-voice-input {
+  flex: 0 0 auto;
+  padding: 8px 3px 0;
+}
+.stylist-voice-input .fine-print {
+  font-size: 0.62rem;
+  line-height: 1.4;
+  margin: 6px 0 0;
+}
+.stylist-voice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  font-size: 0.75rem;
+}
+.stylist-voice-play {
+  margin: 6px 0;
+  font-size: 0.72rem;
+}
+
+.stylist-chat-composer[hidden] {
+  display: none;
+}
+.stylist-chat.is-choosing-mode .stylist-chat-messages {
+  flex: 0;
+}
+.stylist-chat.is-choosing-mode .stylist-mode-choice {
+  margin: auto 0;
+  padding: 24px;
+  border-radius: 18px;
+  background: #fffcf7;
+}
+.stylist-mode-choice h3 {
+  font: 400 1.5rem var(--serif);
+  margin: 0 0 12px;
+}
+.stylist-mode-choice p {
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.stylist-mode-choice .stylist-voice-actions {
+  margin: 18px 0;
+}
+.stylist-voice-input > .text-link {
+  margin-left: 12px;
+}

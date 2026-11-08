@@ -205,3 +205,12 @@ test('farewell uses the displayed occasion and outfit names without assuming a p
   assert.doesNotMatch(stylistFeedback('gracias', false), /Bejeweled|boda/);
   assert.equal(stylistFeedback('gracias pero otro color', true, 'es', suggestion), null);
 });
+
+test('budget clarifications acknowledge the plan without adding a provider call', async () => {
+  const { stylistBudgetQuestion, stylistEditorialIntro } =
+    await import('@maison/contracts/stylist-chat');
+  assert.match(stylistBudgetQuestion(chatPreferences('Una cena, talla M')), /Para esa cena/);
+  assert.match(stylistBudgetQuestion(chatPreferences('presupuesto -2')), /ajustar ese presupuesto/);
+  assert.match(stylistEditorialIntro({ occasion: 'event' }, 'es', true), /celebración/);
+  assert.match(stylistEditorialIntro({ occasion: 'any' }, 'es', false), /no encuentro un conjunto/);
+});

@@ -329,7 +329,7 @@ test('scope guards reject forbidden topics and injection before catalogue, quota
     });
     assert.equal(result.reason, 'out_of_scope', text);
     assert.deepEqual(result.looks, []);
-    assert.match(result.message, /Solo puedo ayudarte/);
+    assert.match(result.message, /KelseTS Maison/);
     assert.equal(calls, 0);
   }
   assert.equal(db.prepare('SELECT count(*) AS n FROM stylist_usage').get().n, 0);
@@ -435,4 +435,27 @@ test('expiration switches a warm service to editorial without provider calls', a
   assert.equal(result.mode, 'editorial');
   assert.equal(calls, 0);
   assert.equal(db.prepare('SELECT count(*) AS n FROM stylist_usage').get().n, 0);
+});
+
+test('conversational provider introduction is validated before it reaches the chat', async (t) => {
+  const db = setup(t);
+  const good = await run(db, {
+    requestProvider: async (s, p) => ({
+      ...chosen(p),
+      reply: 'Para esa cena he buscado opciones con las que puedas sentirte a gusto.',
+    }),
+  });
+  assert.equal(good.mode, 'ai');
+  assert.match(good.message, /esa cena/);
+  for (const reply of [
+    'Todo cuesta 1 euro',
+    'Hablemos de política',
+    'Mira https://external.example',
+    'x'.repeat(301),
+  ]) {
+    const result = await run(db, { requestProvider: async (s, p) => ({ ...chosen(p), reply }) });
+    assert.equal(result.mode, 'editorial');
+    assert.equal(result.reason, 'invalid_response');
+    assert.notEqual(result.message, reply);
+  }
 });

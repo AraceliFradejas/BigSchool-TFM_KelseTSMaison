@@ -32,7 +32,15 @@
         }
       ],
       "expo-status-bar",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Permite a KelseTS Maison grabar tu petición solo cuando pulses Dictar. El audio se envía a ElevenLabs al pulsar Transcribir.",
+          "enableBackgroundRecording": false,
+          "enableBackgroundPlayback": false
+        }
+      ]
     ]
   }
 }

@@ -477,3 +477,15 @@ Se añaden respuestas locales de saludo y despedida y se amplían las expresione
 ## Saludo reflejado y despedida según las propuestas
 
 133 pruebas correctas (78 backend, 10 cliente HTTP, 7 frontend y 38 móvil). Se comprueban los cuatro saludos ES, presentación y saludo EN; despedidas con nombres de los looks mostrados para boda, cena y entrevista; ausencia de una compra o elección supuesta; cambio de boda a concierto sin arrastrar la ocasión anterior; y respuesta genérica sin propuestas previas. Los mensajes con nuevas restricciones siguen su recorrido de recomendación. Build y exportaciones iOS/Android correctos. No se gastan llamadas de IA para generar ni verificar estas respuestas locales; la comprobación física de esta última revisión en Expo Go queda pendiente.
+
+
+## Personalidad y voz preparada · 8 de noviembre
+
+143 pruebas correctas: 86 backend, 10 cliente HTTP, 7 frontend y 40 móvil. Se valida introducción conversacional segura y descarte de texto con precios, temas ajenos, URL o longitud excesiva. Las pruebas de voz con dobles cubren activación explícita, caducidad, cuenta, archivos, cuota independiente, errores, MP3 y resumen leído. Build, exportaciones iOS/Android, compatibilidad de dependencias Expo y chequeo local de producción correctos. No se ha consumido síntesis ni transcripción real.
+
+Safari local: pregunta contextual de presupuesto, talla M/calzado 38, propuestas y fotos; abrir una pieza y volver conserva chat; despedida contextual correcta. Se ven los controles de voz y el aviso de envío de audio a ElevenLabs. No se solicitó permiso de micrófono ni se verificó reproducción física. [Capturas y alcance](evidencias/stylist-2026-11-08/README.md). Lectura real de metadatos de voz: HTTP 401 `missing_permissions`, pendiente de ajuste por la autora.
+
+
+## Elección de modo y voz real
+
+144 pruebas correctas: 86 backend, 10 cliente HTTP, 7 frontend y 41 móvil. Se añade corrección de marca sin alterar Taylor Swift y saludo dirigido al nombre del asistente. Las pruebas reales de ElevenLabs autorizadas respondieron HTTP 200 (ES, EN y transcripción de audio sintético); no se capturó micrófono. [Resultados](evidencias/voz-2026-11-08.md). Selector inicial y modo texto revisados en Safari local, sin permiso de micrófono; se corrigió un defecto local de paso de estado detectado durante esta revisión. El nuevo recorrido de permisos y grabación física queda pendiente.

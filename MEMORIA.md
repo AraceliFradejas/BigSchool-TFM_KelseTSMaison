@@ -274,3 +274,17 @@ He probado el asesor publicado con una boda y presupuesto 6.000 € y he recibid
 ### Saludo reflejado y despedida con contexto
 
 He adaptado la bienvenida para que tAIlor responda al saludo recibido: hola, buenos días, buenas tardes o buenas noches. Se presenta como mi estilista personal virtual de Maison y pregunta en qué puede ayudar. La despedida toma el plan y los nombres de las últimas propuestas mostradas: desea disfrutar de la boda o la cena, o suerte en una entrevista. No afirma que haya elegido o comprado un conjunto. El contexto procede de la recomendación presentada, para no arrastrar un plan anterior cuando la conversación cambia. Son respuestas locales, sin consumir IA. Las 133 pruebas pasan y se generan las exportaciones nativas; la última interacción física queda pendiente.
+
+
+## Personalidad y voz de tAIlor · 8 de noviembre de 2026
+
+He refinado las preguntas y las respuestas de fuera de ámbito para que el asesor resulte más cercano. La petición al modelo incorpora la personalidad de tAIlor y una introducción breve junto a los looks. Ese texto se valida antes de mostrarlo y no sustituye las comprobaciones del catálogo, presupuesto o stock. Los saludos, aclaraciones sencillas y despedidas continúan siendo locales para no gastar una llamada en cada frase. El nuevo formato se ha comprobado con respuestas simuladas, todavía no con una nueva ejecución real de los tres proveedores.
+
+He preparado voz en web y app con ElevenLabs: dictado, revisión de transcripción y reproducción voluntaria de la respuesta resumida. No graba al abrir el chat y las claves permanecen en el backend. Utilizo una voz multilingüe y los módulos oficiales de audio de Expo. La voz sigue desactivada mientras se revisan permisos y se autoriza y verifica su uso real; no doy la exportación por prueba física de micrófono o altavoz. La [guía de voz](docs/VOZ-TAILOR.md) conserva límites y fuentes, y las [capturas locales](docs/evidencias/stylist-2026-11-08/README.md) distinguen la interfaz real de los proveedores simulados. Las 143 pruebas pasan.
+
+
+### Elección de texto o voz y prueba real
+
+He añadido como primer paso «¿Prefieres escribir o hablar con tAIlor?». Elegir texto no solicita micrófono. Elegir voz solicita permiso, sin grabar hasta pulsar Dictar; puedo cambiar de modo durante la conversación. El texto transcrito sigue siendo revisable antes de enviarlo. Safari local confirmó selector y entrada por escrito; no se grabó el micrófono en esa comprobación.
+
+Después de ajustar permisos, autoricé tres peticiones reales a ElevenLabs: frase castellana, frase inglesa y transcripción del audio generado. Todas devolvieron HTTP 200. La transcripción reconoció la frase pero escribió los nombres propios de forma fonética. He añadido una corrección local acotada para la marca, sin cambiar las menciones a Taylor Swift. No he repetido la llamada tras esa corrección ni validado todavía el micrófono y el altavoz en cada dispositivo. La [evidencia de voz](docs/evidencias/voz-2026-11-08.md) conserva resultados y límites. La suite actual supera 144 pruebas; la activación pública de voz sigue pendiente de autorización.

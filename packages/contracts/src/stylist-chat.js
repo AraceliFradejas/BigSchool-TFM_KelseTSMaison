@@ -90,7 +90,7 @@ export function stylistFeedback(message, hasSuggestion, language = 'es', suggest
       ? 'Soy tu tAIlor ✨, tu estilista personal virtual de KelseTS Maison. No coso botones, ¡pero sí te ayudo a encontrar un look a tu medida! ¿Qué tienes planeado?'
       : 'I’m your tAIlor ✨, your personal virtual stylist at KelseTS Maison. I don’t sew buttons, but I can help you find an outfit that suits you! What are you planning?';
   if (
-    /^(?:(?:hola|buenas|buenos dias|buenas tardes|buenas noches|hello|hi|hey|good morning|good afternoon|good evening)(?:\s+|$))+$/.test(
+    /^(?:(?:(?:hola|hello|hi)(?:\s+(?:tailor|taylor))?|buenas|buenos dias|buenas tardes|buenas noches|hey|good morning|good afternoon|good evening)(?:\s+|$))+$/.test(
       text,
     )
   ) {
@@ -172,4 +172,40 @@ function stylistFarewell(language, suggestion) {
   return es
     ? `¡Gracias a ti! ${wish} Puedes revisar las piezas de ${choices} cuando te decidas. Aquí estará tu tAIlor si necesitas otro look. ✨`
     : `Thank you! ${wish} You can review the pieces in ${choices} when you decide. Your tAIlor is here whenever you need another outfit. ✨`;
+}
+
+export function stylistBudgetQuestion(parsed, language = 'es') {
+  if (parsed.invalidBudget)
+    return language === 'es'
+      ? 'Vamos a ajustar ese presupuesto: puedo buscar conjuntos entre 1 y 10.000 €. ¿Qué máximo te viene bien?'
+      : 'Let’s adjust that budget: I can look for outfits between €1 and €10,000. What maximum works for you?';
+  const p = parsed.preferences;
+  const plans = {
+    dinner: ['Para esa cena', 'For your dinner'],
+    concert: ['Para ese concierto', 'For your concert'],
+    event: ['Para esa celebración', 'For your celebration'],
+    television: ['Para esa entrevista', 'For your interview'],
+    weekend: ['Para ese fin de semana', 'For your weekend'],
+  };
+  const plan = plans[p.occasion];
+  return language === 'es'
+    ? `${plan ? plan[0] + ', ¿qué' : '¿Qué'} presupuesto máximo te viene bien para el conjunto? Después afinamos los detalles a tu gusto.`
+    : `${plan ? plan[1] + ', what' : 'What'} maximum budget feels right for the whole outfit? We can fine-tune the details together.`;
+}
+export function stylistEditorialIntro(preferences, language = 'es', hasLooks = true) {
+  if (!hasLooks)
+    return language === 'es'
+      ? 'Con lo que me has contado no encuentro un conjunto completo disponible. ¿Revisamos la talla, el estilo o el presupuesto?'
+      : 'I could not find a complete available outfit for that request. Shall we revisit the size, style or budget?';
+  const plans = {
+    dinner: ['esa cena', 'your dinner'],
+    concert: ['ese concierto', 'your concert'],
+    event: ['esa celebración', 'your celebration'],
+    television: ['esa entrevista', 'your interview'],
+    weekend: ['el fin de semana', 'your weekend'],
+  };
+  const plan = plans[preferences.occasion];
+  return language === 'es'
+    ? `He reunido varias ideas${plan ? ' para ' + plan[0] : ' para tu look'}. Vamos a buscar una opción con la que te sientas a gusto.`
+    : `I’ve brought together a few ideas${plan ? ' for ' + plan[1] : ' for your outfit'}. Let’s find an option you feel comfortable wearing.`;
 }

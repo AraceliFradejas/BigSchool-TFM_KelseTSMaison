@@ -12,7 +12,8 @@
     "./fulfillment": "./src/fulfillment.js",
     "./boutiques": "./src/boutiques.js",
     "./stylist-chat": "./src/stylist-chat.js",
-    "./stylist-policy": "./src/stylist-policy.js"
+    "./stylist-policy": "./src/stylist-policy.js",
+    "./stylist-voice": "./src/stylist-voice.js"
   },
   "dependencies": {
     "zod": "^4.1.11"

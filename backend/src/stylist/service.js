@@ -1,3 +1,4 @@
+import { stylistEditorialIntro } from '@maison/contracts/stylist-chat';
 import { isStylistAvailable } from './config.js';
 import {
   stylistScopeViolation,
@@ -30,12 +31,16 @@ export async function recommendLooks({
       preferences,
     };
   const candidates = eligibleLooks(await getLooks(), preferences);
-  const editorial = async (reason = null, latest) => ({
-    mode: 'editorial',
-    reason,
-    looks: (latest ?? eligibleLooks(await getLooks(), preferences)).slice(0, 3),
-    preferences,
-  });
+  const editorial = async (reason = null, latest) => {
+    const looks = (latest ?? eligibleLooks(await getLooks(), preferences)).slice(0, 3);
+    return {
+      mode: 'editorial',
+      reason,
+      message: stylistEditorialIntro(preferences, preferences.language, looks.length > 0),
+      looks,
+      preferences,
+    };
+  };
   if (preferences.mode !== 'ai') return editorial(null, candidates);
   if (!isStylistAvailable(config))
     return editorial(config?.enabled ? 'expired' : 'not_configured', candidates);
@@ -52,7 +57,12 @@ export async function recommendLooks({
       selection = selectionSchema.parse(
         await requestProvider(settings, prompt, { ...config, signal }),
       );
-      if (selection.looks.some((item) => stylistUnsafeExplanation(item.explanation)))
+      if (
+        (selection.reply &&
+          (stylistUnsafeExplanation(selection.reply) ||
+            /https?:|<[^>]+>/i.test(selection.reply))) ||
+        selection.looks.some((item) => stylistUnsafeExplanation(item.explanation))
+      )
         throw new Error('unsafe_explanation');
       const ids = selection.looks.map((look) => look.lookId);
       if (
@@ -72,7 +82,15 @@ export async function recommendLooks({
       return look ? { ...look, explanation: item.explanation } : null;
     });
     if (selected.some((look) => !look)) return editorial('catalog_changed', latest);
-    return { mode: 'ai', provider: settings.provider, looks: selected, preferences };
+    return {
+      mode: 'ai',
+      provider: settings.provider,
+      message:
+        selection.reply ||
+        stylistEditorialIntro(preferences, preferences.language, selected.length > 0),
+      looks: selected,
+      preferences,
+    };
   }
   return editorial('unavailable', eligibleLooks(await getLooks(), preferences));
 }

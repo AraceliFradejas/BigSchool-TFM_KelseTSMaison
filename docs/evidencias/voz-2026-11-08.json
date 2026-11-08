@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-08",
+  "scope": "Up to 3 real ElevenLabs requests authorised; short ES and EN synthetic samples, then transcription of ES generated audio; no microphone; public voice remains off",
+  "results": [
+    {
+      "label": "castellano",
+      "kind": "speech",
+      "httpStatus": 200,
+      "elapsedMs": 12967,
+      "text": "Buenos días. Soy tAIlor, tu estilista personal de KelseTS Maison.",
+      "audioBytes": 18303
+    },
+    {
+      "label": "english",
+      "kind": "speech",
+      "httpStatus": 200,
+      "elapsedMs": 537,
+      "text": "Good morning. I am tAIlor, your personal stylist at KelseTS Maison.",
+      "audioBytes": 17153
+    },
+    {
+      "label": "transcripcion",
+      "kind": "transcribe",
+      "httpStatus": 200,
+      "elapsedMs": 733,
+      "transcript": "Buenos días. Soy Taylor, tu estilista personal de Kelsetes, Mason"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import { VoiceInput, useStylistSpeech } from './StylistVoice';
 import { stylistScopeViolation, stylistScopeMessage } from '@maison/contracts/stylist-policy';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -15,7 +16,12 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { chatPreferences, stylistFeedback } from '@maison/contracts/stylist-chat';
+import {
+  chatPreferences,
+  stylistFeedback,
+  stylistBudgetQuestion,
+  stylistEditorialIntro,
+} from '@maison/contracts/stylist-chat';
 import Button from './Button';
 import { api } from './api';
 import { useRemote } from './useRemote';
@@ -27,10 +33,12 @@ export default function Stylist({ visible, onClose, language, user, openAccount,
   const [messages, setMessages] = useState([]);
   const [draft, setDraft] = useState('');
   const [preferences, setPreferences] = useState({});
+  const [interactionMode, setInteractionMode] = useState(null);
   useEffect(() => {
     setMessages([]);
     setDraft('');
     setPreferences({});
+    setInteractionMode(null);
   }, [language, user?.id]);
   return (
     <Modal
@@ -51,7 +59,16 @@ export default function Stylist({ visible, onClose, language, user, openAccount,
         {visible && (
           <Chat
             language={language}
-            conversation={{ messages, setMessages, draft, setDraft, preferences, setPreferences }}
+            conversation={{
+              messages,
+              setMessages,
+              draft,
+              setDraft,
+              preferences,
+              setPreferences,
+              interactionMode,
+              setInteractionMode,
+            }}
             user={user}
             openAccount={openAccount}
             openProduct={openProduct}
@@ -64,7 +81,19 @@ export default function Stylist({ visible, onClose, language, user, openAccount,
 function Chat({ language, user, openAccount, openProduct, conversation }) {
   const es = language === 'es';
   const status = useRemote('/stylist/status');
-  const { messages, setMessages, draft, setDraft, preferences, setPreferences } = conversation;
+  const voice = useRemote('/stylist/voice/status');
+  const speech = useStylistSpeech(language);
+  const [voiceBusy, setVoiceBusy] = useState(false);
+  const {
+    messages,
+    setMessages,
+    draft,
+    setDraft,
+    preferences,
+    setPreferences,
+    interactionMode,
+    setInteractionMode,
+  } = conversation;
   const [busy, setBusy] = useState(false);
   const pending = useRef(null);
   const scroll = useRef(null);
@@ -76,8 +105,9 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
   const say = (message) => setMessages((old) => [...old.slice(-15), message]);
   async function send() {
     const text = draft.trim();
-    if (!text || busy) return;
+    if (!text || busy || voiceBusy || interactionMode === null) return;
     Keyboard.dismiss();
+    speech.stop();
     setDraft('');
     say({ role: 'user', text });
     const feedback = stylistFeedback(
@@ -102,13 +132,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
     if (parsed.needsBudget) {
       say({
         role: 'assistant',
-        text: parsed.invalidBudget
-          ? es
-            ? 'Dime un presupuesto entre 1 y 10.000 € para esta selección.'
-            : 'Please give me a budget between €1 and €10,000.'
-          : es
-            ? '¿Cuál es tu presupuesto máximo para el look? Puedes decirme también tu talla y número de calzado.'
-            : 'What is your maximum outfit budget? You can also tell me your clothing and shoe sizes.',
+        text: stylistBudgetQuestion(parsed, language),
       });
       return;
     }
@@ -137,13 +161,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
           role: 'assistant',
           text:
             result.message ||
-            (result.looks.length
-              ? es
-                ? 'Te propongo estas combinaciones. Abre cada pieza para elegir su variante.'
-                : 'Here are some combinations. Open any piece to choose its variant.'
-              : es
-                ? 'No encuentro un conjunto completo con esos filtros. ¿Probamos otro presupuesto, talla o plan?'
-                : 'No complete outfit matches those filters. Shall we try another budget, size or occasion?'),
+            stylistEditorialIntro(result.preferences, language, result.looks.length > 0),
           result,
         });
     } catch (error) {
@@ -154,6 +172,25 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
       if (pending.current === controller) pending.current = null;
     }
   }
+  const voiceControls = (
+    <VoiceInput
+      mode={interactionMode}
+      onModeChange={setInteractionMode}
+      language={language}
+      available={voice.data?.available}
+      disabled={busy}
+      onRecord={() => {
+        Keyboard.dismiss();
+        speech.stop();
+      }}
+      onBusyChange={setVoiceBusy}
+      onTranscript={(text) => {
+        const combined = [draft.trim(), text].filter(Boolean).join(' ');
+        if (combined.length > 400) throw new Error('voice_transcript_invalid');
+        setDraft(combined);
+      }}
+    />
+  );
   return (
     <KeyboardAvoidingView style={s.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView
@@ -163,8 +200,8 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
       >
         <Text style={s.intro}>
           {es
-            ? 'Cuéntame qué necesitas: tu plan, estilo y presupuesto. Te sugeriré looks de Maison con fotos y enlaces a sus piezas.'
-            : 'Tell me your plans, style and budget. I will suggest Maison outfits with photos and links to their pieces.'}
+            ? 'Soy tAIlor, tu estilista personal virtual de KelseTS Maison. Vamos a buscar tu próximo look juntos.'
+            : 'I’m tAIlor, your personal virtual stylist at KelseTS Maison. Let’s find your next outfit together.'}
         </Text>
         <Text style={s.mode}>
           {status.data?.available
@@ -175,7 +212,8 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
               ? 'Selección editorial · IA todavía desactivada'
               : 'Editorial selection · AI currently disabled'}
         </Text>
-        {!messages.length && (
+        {interactionMode === null && voiceControls}
+        {!messages.length && interactionMode === 'text' && (
           <Button
             secondary
             onPress={() =>
@@ -203,6 +241,27 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
               {message.role === 'user' ? (es ? 'Tú' : 'You') : 'Maison Stylist'}
             </Text>
             <Text style={s.body}>{message.text}</Text>
+            {message.role === 'assistant' &&
+              voice.data?.available &&
+              interactionMode === 'voice' && (
+                <Button
+                  secondary
+                  disabled={speech.busy !== null}
+                  onPress={() => speech.speak(message, index)}
+                >
+                  {speech.busy === index
+                    ? es
+                      ? 'Preparando voz…'
+                      : 'Preparing voice…'
+                    : speech.playing === index
+                      ? es
+                        ? 'Detener voz'
+                        : 'Stop voice'
+                      : es
+                        ? 'Escuchar'
+                        : 'Listen'}
+                </Button>
+              )}
             {message.login && (
               <Button onPress={openAccount}>{es ? 'Acceder a mi cuenta' : 'Sign in'}</Button>
             )}
@@ -257,8 +316,8 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
                 {message.result.looks.length > 0 && (
                   <Text style={s.followup}>
                     {es
-                      ? '¿Te ha gustado la elección? Cuéntame qué mantendrías o qué cambiarías y seguimos buscando tu look.'
-                      : 'Do you like the selection? Tell me what you would keep or change and we can refine your outfit.'}
+                      ? '¿Con cuál te ves más? Cuéntame qué te gusta y qué cambiarías; lo vamos afinando a tu gusto.'
+                      : 'Which one feels most like you? Tell me what you like or would change; we can refine it together.'}
                   </Text>
                 )}
               </>
@@ -273,21 +332,27 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
         )}
       </ScrollView>
       <View style={s.composer}>
-        <TextInput
-          value={draft}
-          onChangeText={setDraft}
-          editable={!busy}
-          multiline
-          maxLength={400}
-          style={s.input}
-          placeholder={es ? '¿Qué tienes planeado?' : 'What are you planning?'}
-          accessibilityLabel={
-            es ? 'Tu mensaje para Maison Stylist' : 'Your message to Maison Stylist'
-          }
-        />
-        <Button disabled={busy || !draft.trim()} onPress={send}>
-          {es ? 'Enviar' : 'Send'}
-        </Button>
+        {interactionMode !== null && voiceControls}
+        {speech.error ? <Text style={s.note}>{speech.error}</Text> : null}
+        {interactionMode !== null && (
+          <TextInput
+            value={draft}
+            onChangeText={setDraft}
+            editable={!busy && !voiceBusy}
+            multiline
+            maxLength={400}
+            style={s.input}
+            placeholder={es ? '¿Qué tienes planeado?' : 'What are you planning?'}
+            accessibilityLabel={
+              es ? 'Tu mensaje para Maison Stylist' : 'Your message to Maison Stylist'
+            }
+          />
+        )}
+        {interactionMode !== null && (
+          <Button disabled={busy || voiceBusy || !draft.trim()} onPress={send}>
+            {es ? 'Enviar' : 'Send'}
+          </Button>
+        )}
         <Text style={s.note}>
           {es
             ? 'No incluyas datos personales. Con IA activa, las preferencias se envían a los proveedores configurados. Las sugerencias no cambian tu bolsa.'

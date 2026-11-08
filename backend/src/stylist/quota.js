@@ -1,12 +1,14 @@
 // A persistent global daily ceiling also applies across Vercel instances.
 // Failed provider calls count: an HTTP timeout does not prove zero provider cost.
-export async function claimStylistCall(db, dailyLimit, now = new Date()) {
+export async function claimStylistCall(db, dailyLimit, now = new Date(), bucket = 'stylist_usage') {
+  if (!['stylist_usage', 'stylist_voice_usage'].includes(bucket))
+    throw new Error('Invalid quota bucket');
   const day = now.toISOString().slice(0, 10);
   if (db.kind === 'mongo') {
     try {
       return Boolean(
         await db
-          .collection('stylist_usage')
+          .collection(bucket)
           .findOneAndUpdate(
             { _id: day, calls: { $lt: dailyLimit } },
             { $inc: { calls: 1 } },
@@ -21,7 +23,7 @@ export async function claimStylistCall(db, dailyLimit, now = new Date()) {
   return Boolean(
     db
       .prepare(
-        `INSERT INTO stylist_usage (day,calls) VALUES (?,1)
+        `INSERT INTO ${bucket} (day,calls) VALUES (?,1)
     ON CONFLICT(day) DO UPDATE SET calls=calls+1 WHERE calls < ? RETURNING calls`,
       )
       .get(day, dailyLimit),
