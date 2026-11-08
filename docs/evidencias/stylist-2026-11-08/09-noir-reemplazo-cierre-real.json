@@ -1,0 +1,268 @@
+{
+  "scope": "Peticiones públicas reales desde contextos iniciales preparados. Sin grabación, bolsa, pedido ni cobro. Los cierres son respuestas locales del servidor, no de un proveedor.",
+  "sequence": {
+    "initialContext": "Fixture of the author’s shown Noir Premiere, before giving sizes. All subsequent responses are production HTTP calls; acknowledgements should be local without a provider.",
+    "limitation": "Las tarjetas y cierres fueron correctos; el texto generado del tercer turno mencionó otro conjunto. Se conservó como inconsistencia y se corrigió después.",
+    "turns": [
+      {
+        "message": "Me parece un conjunto y un outfit perfecto. Eh, mi talla es la M",
+        "http": 200,
+        "mode": "ai",
+        "provider": "gemini",
+        "action": "sizes",
+        "reason": "needs_sizes",
+        "reply": "Conservamos Noir Premiere. ¿Qué número de calzado necesitas?",
+        "selectedLookId": "look-noir-signature",
+        "preferences": {
+          "occasion": "event",
+          "color": "dark",
+          "excludeBeauty": true,
+          "dressCode": "elegant",
+          "style": "Funeral el próximo domingo, sobrio y formal.\nAhora: Me parece un conjunto y un outfit perfecto. Eh, mi talla es la M",
+          "budgetCents": 600000,
+          "language": "es",
+          "size": "M"
+        },
+        "looks": [],
+        "complements": []
+      },
+      {
+        "message": "Mi talla de calzado es un número treinta y ocho.",
+        "http": 200,
+        "mode": "ai",
+        "provider": "gemini",
+        "action": "sizes",
+        "reason": "sizes",
+        "reply": "Conservamos Noir Premiere. Tallas disponibles por pieza ahora: Blazer · End Game: S, M. Tu talla M está disponible. Pantalón · …Ready For It?: S, M. Tu talla M está disponible. Collar · This Love: talla única. Salones · Dress: 36, 37, 39, 40. Tu talla 38 no está disponible. Comprueba la talla de cada pieza en su ficha; cambiar de talla no garantiza el mismo ajuste.",
+        "selectedLookId": "look-noir-signature",
+        "preferences": {
+          "occasion": "event",
+          "color": "dark",
+          "excludeBeauty": true,
+          "dressCode": "elegant",
+          "style": "Funeral el próximo domingo, sobrio y formal.\nAhora: Me parece un conjunto y un outfit perfecto. Eh, mi talla es la M\nAhora: Mi talla de calzado es un número treinta y ocho.",
+          "budgetCents": 600000,
+          "size": "M",
+          "language": "es",
+          "shoeSize": "38"
+        },
+        "looks": [],
+        "complements": []
+      },
+      {
+        "message": "¿Qué otros zapatos negros tienes?",
+        "http": 200,
+        "mode": "ai",
+        "provider": "gemini",
+        "action": "complement",
+        "reason": "catalog_follow_up",
+        "reply": "Entiendo, lamento que el número 38 no esté disponible en el modelo inicial. Para mantener la sobriedad y formalidad requerida, te sugiero explorar el conjunto 'Gorgeous' que incluye mocasines negros, o bien puedo buscar otras opciones de calzado formal en negro que combinen con la elegancia necesaria para este evento.",
+        "selectedLookId": "look-noir-signature",
+        "preferences": {
+          "occasion": "event",
+          "budgetCents": 600000,
+          "color": "dark",
+          "excludeBeauty": true,
+          "mode": "editorial",
+          "language": "es",
+          "size": "M",
+          "shoeSize": "38",
+          "style": "Funeral el próximo domingo, sobrio y formal.\nAhora: Me parece un conjunto y un outfit perfecto. Eh, mi talla es la M\nAhora: Mi talla de calzado es un número treinta y ocho.\nAhora: ¿Qué otros zapatos negros tienes?",
+          "dressCode": "elegant",
+          "followUp": {
+            "pieceType": "shoes",
+            "pieceColor": "black",
+            "selectedProductIds": [],
+            "referenceLookId": "look-noir-signature"
+          }
+        },
+        "looks": [],
+        "complements": [
+          {
+            "id": "runway-metro-ciudad-2-4",
+            "name": {
+              "es": "Botines negros · Come In With the Rain",
+              "en": "Black ankle boots · Come In With the Rain"
+            },
+            "variant": {
+              "id": "runway-metro-ciudad-2-4-38",
+              "label": {
+                "es": "38",
+                "en": "38"
+              },
+              "priceCents": 79000,
+              "stock": 5
+            },
+            "totalWithLookCents": 569000
+          },
+          {
+            "id": "runway-elegancia-2-5",
+            "name": {
+              "es": "Mocasines negros · The Manuscript",
+              "en": "Black loafers · The Manuscript"
+            },
+            "variant": {
+              "id": "runway-elegancia-2-5-38",
+              "label": {
+                "es": "38",
+                "en": "38"
+              },
+              "priceCents": 79000,
+              "stock": 5
+            },
+            "totalWithLookCents": 569000
+          },
+          {
+            "id": "runway-eras-03-1-4",
+            "name": {
+              "es": "Botines negros · willow",
+              "en": "Black ankle boots · willow"
+            },
+            "variant": {
+              "id": "runway-eras-03-1-4-38",
+              "label": {
+                "es": "38",
+                "en": "38"
+              },
+              "priceCents": 79000,
+              "stock": 5
+            },
+            "totalWithLookCents": 569000
+          }
+        ]
+      },
+      {
+        "message": "ok",
+        "http": 200,
+        "mode": "editorial",
+        "provider": null,
+        "action": "answer",
+        "reason": "answer",
+        "reply": "De acuerdo. Mantengo lo que hemos visto; cuando quieras, seguimos desde aquí.",
+        "selectedLookId": "look-noir-signature",
+        "preferences": {
+          "occasion": "event",
+          "color": "dark",
+          "excludeBeauty": true,
+          "dressCode": "elegant",
+          "style": "Funeral el próximo domingo, sobrio y formal.\nAhora: Me parece un conjunto y un outfit perfecto. Eh, mi talla es la M\nAhora: Mi talla de calzado es un número treinta y ocho.\nAhora: ¿Qué otros zapatos negros tienes?",
+          "budgetCents": 600000,
+          "size": "M",
+          "shoeSize": "38",
+          "language": "es"
+        },
+        "looks": [],
+        "complements": []
+      },
+      {
+        "message": "muchas gracias",
+        "http": 200,
+        "mode": "editorial",
+        "provider": null,
+        "action": "thanks",
+        "reason": "thanks",
+        "reply": "Gracias a ti. Aquí estoy si necesitas revisar alguna pieza o algún detalle de tu look.",
+        "selectedLookId": "look-noir-signature",
+        "preferences": {
+          "occasion": "event",
+          "color": "dark",
+          "excludeBeauty": true,
+          "dressCode": "elegant",
+          "style": "Funeral el próximo domingo, sobrio y formal.\nAhora: Me parece un conjunto y un outfit perfecto. Eh, mi talla es la M\nAhora: Mi talla de calzado es un número treinta y ocho.\nAhora: ¿Qué otros zapatos negros tienes?",
+          "budgetCents": 600000,
+          "size": "M",
+          "shoeSize": "38",
+          "language": "es"
+        },
+        "looks": [],
+        "complements": []
+      }
+    ]
+  },
+  "finalCopyCheck": {
+    "initialContext": "Fixture of Noir Premiere, M/38, original shoe unavailable; one real production request after copy correction.",
+    "outcome": "Gemini interpretó complemento. El texto del servidor y las tres tarjetas conservan Noir Premiere, zapatos negros 38 con stock y total569000 céntimos.",
+    "turn": {
+      "message": "¿Qué otros zapatos negros tienes?",
+      "http": 200,
+      "mode": "ai",
+      "provider": "gemini",
+      "action": "complement",
+      "reason": "catalog_follow_up",
+      "reply": "Para completar Noir Premiere, estas opciones de zapatos respetan tu talla y presupuesto. El total incluye tu combinación con cada opción, sustituyendo esa pieza si ya la llevaba. ¿Cuál prefieres?",
+      "selectedLookId": "look-noir-signature",
+      "preferences": {
+        "occasion": "event",
+        "budgetCents": 600000,
+        "color": "dark",
+        "excludeBeauty": true,
+        "mode": "editorial",
+        "language": "es",
+        "size": "M",
+        "shoeSize": "38",
+        "style": "Funeral, sobrio y formal. El zapato original del conjunto no está disponible en el 38.\nAhora: ¿Qué otros zapatos negros tienes?",
+        "dressCode": "elegant",
+        "followUp": {
+          "pieceType": "shoes",
+          "pieceColor": "black",
+          "selectedProductIds": [],
+          "referenceLookId": "look-noir-signature"
+        }
+      },
+      "looks": [],
+      "complements": [
+        {
+          "id": "runway-metro-ciudad-2-4",
+          "name": {
+            "es": "Botines negros · Come In With the Rain",
+            "en": "Black ankle boots · Come In With the Rain"
+          },
+          "variant": {
+            "id": "runway-metro-ciudad-2-4-38",
+            "label": {
+              "es": "38",
+              "en": "38"
+            },
+            "priceCents": 79000,
+            "stock": 5
+          },
+          "totalWithLookCents": 569000
+        },
+        {
+          "id": "runway-elegancia-2-5",
+          "name": {
+            "es": "Mocasines negros · The Manuscript",
+            "en": "Black loafers · The Manuscript"
+          },
+          "variant": {
+            "id": "runway-elegancia-2-5-38",
+            "label": {
+              "es": "38",
+              "en": "38"
+            },
+            "priceCents": 79000,
+            "stock": 5
+          },
+          "totalWithLookCents": 569000
+        },
+        {
+          "id": "runway-eras-03-1-4",
+          "name": {
+            "es": "Botines negros · willow",
+            "en": "Black ankle boots · willow"
+          },
+          "variant": {
+            "id": "runway-eras-03-1-4-38",
+            "label": {
+              "es": "38",
+              "en": "38"
+            },
+            "priceCents": 79000,
+            "stock": 5
+          },
+          "totalWithLookCents": 569000
+        }
+      ]
+    }
+  }
+}
