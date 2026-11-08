@@ -1,0 +1,177 @@
+{
+  "scope": "Pruebas reales de producción, sin audio, bolsa ni pedidos. El caso Noir parte de una fixture; el flujo final completo comienza sin contexto preparado.",
+  "earlierPilot": {
+    "outcome": "Se detuvo antes de confirmar talla porque no aparecieron propuestas en el tercer turno. No se considera prueba satisfactoria.",
+    "turns": [
+      {
+        "message": "Hola. Necesito un look superformal porque tengo que asistir a un funeral este próximo domingo.",
+        "http": 200,
+        "mode": "ai",
+        "provider": "gemini",
+        "reason": "needs_budget",
+        "reply": "¿Qué presupuesto máximo te viene bien para el conjunto?",
+        "selectedLookId": null,
+        "preferences": {
+          "occasion": "event",
+          "color": "dark",
+          "excludeBeauty": true,
+          "dressCode": "elegant",
+          "style": "Ahora: Hola. Necesito un look superformal porque tengo que asistir a un funeral este próximo domingo.",
+          "language": "es"
+        },
+        "looks": []
+      },
+      {
+        "message": "No me querría gastar más de 5.000 euros.",
+        "http": 200,
+        "mode": "ai",
+        "provider": "gemini",
+        "reason": null,
+        "reply": "No puedo confirmar esas propuestas con los filtros actuales. Podemos buscar otras opciones manteniendo tu presupuesto.",
+        "selectedLookId": null,
+        "preferences": {
+          "occasion": "event",
+          "budgetCents": 500000,
+          "color": "dark",
+          "excludeBeauty": true,
+          "mode": "editorial",
+          "language": "es",
+          "style": "Ahora: Hola. Necesito un look superformal porque tengo que asistir a un funeral este próximo domingo.\nAhora: No me querría gastar más de 5.000 euros.",
+          "dressCode": "elegant"
+        },
+        "looks": []
+      },
+      {
+        "message": "Bueno, podría gastarme 6.000 euros.",
+        "http": 200,
+        "mode": "ai",
+        "provider": "gemini",
+        "reason": null,
+        "reply": "No puedo confirmar esas propuestas con los filtros actuales. Podemos buscar otras opciones manteniendo tu presupuesto.",
+        "selectedLookId": null,
+        "preferences": {
+          "occasion": "event",
+          "budgetCents": 600000,
+          "color": "dark",
+          "excludeBeauty": true,
+          "mode": "editorial",
+          "language": "es",
+          "style": "Ahora: Hola. Necesito un look superformal porque tengo que asistir a un funeral este próximo domingo.\nAhora: No me querría gastar más de 5.000 euros.\nAhora: Bueno, podría gastarme 6.000 euros.",
+          "dressCode": "elegant"
+        },
+        "looks": []
+      }
+    ]
+  },
+  "exactNoirReference": {
+    "initialContext": "Fixture of the author’s displayed Noir Premiere, followed by one live production request.",
+    "turn": {
+      "message": "Me parece perfecto. Eh, ¿te digo y te confirmo mi talla?",
+      "http": 200,
+      "mode": "ai",
+      "provider": "gemini",
+      "reason": "clarify",
+      "reply": "Por favor, indícame tu talla de ropa (de la XS a la XXL) y tu número de calzado para que pueda verificar la disponibilidad de las piezas del conjunto Noir Premiere y confirmar si es el ajuste perfecto para ti.",
+      "selectedLookId": "look-noir-signature",
+      "preferences": {
+        "occasion": "event",
+        "color": "dark",
+        "excludeBeauty": true,
+        "dressCode": "elegant",
+        "style": "Funeral este próximo domingo, elegante y sobrio.\nAhora: Me parece perfecto. Eh, ¿te digo y te confirmo mi talla?",
+        "budgetCents": 600000,
+        "language": "es"
+      },
+      "looks": []
+    }
+  },
+  "finalFullConversation": {
+    "scope": "Full real production sequence using the author’s wording as a test scenario. No audio, bag or orders.",
+    "outcome": "Cuatro respuestas de Gemini, última sin tarjetas y con referencia al conjunto inmediatamente mostrado.",
+    "turns": [
+      {
+        "message": "Hola. Necesito un look superformal porque tengo que asistir a un funeral este próximo domingo.",
+        "http": 200,
+        "mode": "ai",
+        "provider": "gemini",
+        "reason": "clarify",
+        "reply": "Siento mucho tu pérdida. Para un funeral, busco algo sobrio y respetuoso. ¿Podrías indicarme cuál es tu presupuesto máximo para el conjunto?",
+        "selectedLookId": null,
+        "preferences": {
+          "occasion": "event",
+          "color": "dark",
+          "excludeBeauty": false,
+          "dressCode": "elegant",
+          "style": "Ahora: Hola. Necesito un look superformal porque tengo que asistir a un funeral este próximo domingo.",
+          "language": "es"
+        },
+        "looks": []
+      },
+      {
+        "message": "No me querría gastar más de 5.000 euros.",
+        "http": 200,
+        "mode": "ai",
+        "provider": "gemini",
+        "reason": null,
+        "reply": "No puedo confirmar esas propuestas con los filtros actuales. Podemos buscar otras opciones manteniendo tu presupuesto.",
+        "selectedLookId": null,
+        "preferences": {
+          "occasion": "event",
+          "budgetCents": 500000,
+          "color": "dark",
+          "excludeBeauty": false,
+          "mode": "editorial",
+          "language": "es",
+          "style": "Ahora: Hola. Necesito un look superformal porque tengo que asistir a un funeral este próximo domingo.\nAhora: No me querría gastar más de 5.000 euros.",
+          "dressCode": "elegant"
+        },
+        "looks": []
+      },
+      {
+        "message": "Bueno, podría gastarme 6.000 euros.",
+        "http": 200,
+        "mode": "ai",
+        "provider": "gemini",
+        "reason": null,
+        "reply": "Estas opciones siguen disponibles con tu presupuesto y talla.",
+        "selectedLookId": null,
+        "preferences": {
+          "occasion": "event",
+          "budgetCents": 600000,
+          "color": "dark",
+          "excludeBeauty": false,
+          "mode": "editorial",
+          "language": "es",
+          "style": "Ahora: Hola. Necesito un look superformal porque tengo que asistir a un funeral este próximo domingo.\nAhora: No me querría gastar más de 5.000 euros.\nAhora: Bueno, podría gastarme 6.000 euros.",
+          "dressCode": "elegant"
+        },
+        "looks": [
+          {
+            "id": "look-midnight-presentation",
+            "name": "Midnight Presentation",
+            "totalCents": 570000
+          }
+        ]
+      },
+      {
+        "message": "Me parece perfecto. Eh, ¿te digo y te confirmo mi talla?",
+        "http": 200,
+        "mode": "ai",
+        "provider": "gemini",
+        "reason": "clarify",
+        "reply": "Por supuesto. Para poder confirmarte la disponibilidad y los detalles, por favor indícame tu talla de ropa (de la XS a la XXL) y tu número de calzado, si lo necesitas. En cuanto los tenga, verificaré todo para ti.",
+        "selectedLookId": "look-midnight-presentation",
+        "preferences": {
+          "occasion": "event",
+          "color": "dark",
+          "excludeBeauty": false,
+          "dressCode": "elegant",
+          "style": "Ahora: Hola. Necesito un look superformal porque tengo que asistir a un funeral este próximo domingo.\nAhora: No me querría gastar más de 5.000 euros.\nAhora: Bueno, podría gastarme 6.000 euros.\nAhora: Me parece perfecto. Eh, ¿te digo y te confirmo mi talla?",
+          "budgetCents": 600000,
+          "language": "es"
+        },
+        "looks": []
+      }
+    ]
+  }
+}
