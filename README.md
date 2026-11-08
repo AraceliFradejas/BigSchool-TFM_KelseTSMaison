@@ -3,6 +3,10 @@
 Voz de tAIlor: dictado por turnos de hasta un minuto y lectura completa de la respuesta en web y app. [Funcionamiento, límites y verificaciones](docs/VOZ-TAILOR.md).
 Chat de tAIlor con interpretación generativa del mensaje y contexto, validación de catálogo en backend y cuotas independientes de IA y voz. [Diseño y verificaciones](docs/CHAT-GENERATIVO-TAILOR.md).
 
+Actualización del 8/11/2026: voz en producción con 200 acciones globales por día UTC, confirmaciones breves de talla y spinner de espera en web, iOS y Android. Pronunciación castellana del asistente: «téilor»; grafía visible: tAIlor. [Capturas originales de la prueba de la autora](docs/evidencias/stylist-2026-11-08/capturas-autora/README.md).
+
+[Guía editable para preparar la defensa de 30 minutos](docs/KelseTS_Maison_Guia_Completa_Defensa_TFM_30min.docx). Es una base de ensayo; revisar los estados y las evidencias actuales antes de la entrega.
+
 
 [Versión en castellano](#versión-en-castellano) · [English version](#english-version)
 

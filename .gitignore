@@ -21,3 +21,6 @@ backend/runtime/
 playwright-report/
 test-results/
 __pycache__/
+
+# Archivos temporales de Microsoft Office
+~$*
