@@ -72,6 +72,7 @@ test('generative conversation receives an unparsed budget answer and bounded his
       return intent({
         action: 'recommend',
         reply: 'Busquemos una propuesta a la altura de esa gala.',
+        lookIds: ['look-runway-gala-1', 'look-runway-gala-2'],
         updates: { ...updates, budgetCents: 1000000, occasion: 'event', dressCode: 'gala' },
       });
     },
@@ -112,6 +113,7 @@ test('complete generative sequence preserves chosen outfit, asks shoes and confi
     intent({
       action: 'recommend',
       reply: 'Vamos a buscar un look especial para esa gala.',
+      lookIds: ['look-runway-gala-1', 'look-runway-gala-2'],
       updates: { ...updates, budgetCents: 1000000 },
     }),
   );
@@ -258,4 +260,56 @@ test('a weekend alone cannot become a casual recommendation even if the model su
   assert.equal(result.reason, 'needs_plan');
   assert.deepEqual(result.looks, []);
   assert.match(result.message, /planeado/);
+});
+
+test('reuse for an interview replaces the previous gala constraint and show both binds to the last actual options', async (t) => {
+  const db = setup(t);
+  const messages = [];
+  let preferences = {
+    budgetCents: 600000,
+    occasion: 'event',
+    dressCode: 'gala',
+    style: 'Una cena de gala en un restaurante Michelin',
+  };
+  const turn = async (text, response) => {
+    const input = stylistConversationRequest(text, { preferences, messages, language: 'es' });
+    const result = await run(db, input, response);
+    messages.push({ role: 'user', text }, { role: 'assistant', text: result.message, result });
+    preferences = result.preferences;
+    return result;
+  };
+  const workIds = ['look-studio-interview', 'look-midnight-presentation'];
+  const reusable = await turn(
+    '¿Tienes algo que luego pudiera reutilizar en una entrevista de trabajo?',
+    intent({
+      action: 'answer',
+      reply: 'Podemos comparar opciones versátiles.',
+      lookIds: workIds,
+      updates: { ...updates, occasion: 'television' },
+    }),
+  );
+  assert.deepEqual(
+    reusable.looks.map((look) => look.id),
+    workIds,
+  );
+  assert.equal(reusable.preferences.occasion, 'television');
+  assert.equal(reusable.preferences.dressCode, 'elegant');
+  const shown = await turn('Sí, por favor, enséñame las dos', (data) => {
+    assert.deepEqual(data.context.currentLookIds, workIds);
+    return intent({
+      action: 'recommend',
+      referToCurrent: true,
+      reply: 'Enchanted y Bejeweled son vestidos de gala.',
+      lookIds: ['look-runway-gala-1', 'look-runway-gala-2'],
+      updates: { ...updates, occasion: 'event', dressCode: 'gala' },
+    });
+  });
+  assert.deepEqual(
+    shown.looks.map((look) => look.id),
+    workIds,
+  );
+  assert.equal(shown.preferences.occasion, 'television');
+  assert.equal(shown.preferences.dressCode, 'elegant');
+  assert.doesNotMatch(shown.message, /Enchanted|Bejeweled/);
+  for (const look of shown.looks) assert.ok(look.totalCents <= 600000);
 });

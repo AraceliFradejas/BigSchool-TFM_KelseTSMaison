@@ -284,6 +284,7 @@ test('AI route requires an account, exposes no secret configuration, and editori
   assert.deepEqual(status.body.data, {
     available: true,
     conversational: true,
+    conversationVersion: 2,
     dailyActionLimit: 20,
     requiresAccount: true,
     providers: ['gemini', 'anthropic', 'openai'],

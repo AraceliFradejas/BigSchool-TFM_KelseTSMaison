@@ -521,3 +521,7 @@ Safari local: en fixture interactiva con componentes reales y cuota SQLite váli
 ## Chat generativo con contexto
 
 158 comprobaciones correctas: 93 backend, 10 cliente HTTP, 7 frontend y 48 móvil. Nuevo endpoint de conversación probado con proveedor simulado: recibe «Mmm, ¿diez mil?» sin preprocesarlo mediante reglas, conserva historial acotado y preferencias, recomienda para gala, continúa con zapatos, confirma la pieza y se despide sin repetir cards. Se verifican temas bloqueados antes del proveedor, IDs inventados, agotamiento de cuota con respuesta explícita sin propuestas y rechazo de importes manipulados. Se mantienen build web, exportaciones iOS/Android y smoke local correctos. Prueba generativa real pendiente tras desplegar; no se afirma validación física de transcripción o voz.
+
+## Reutilización para entrevista y referencias ordinales
+
+161 comprobaciones correctas (96 backend, 10 cliente, 7 frontend, 48 móvil). Se prueba la secuencia gala → reutilizar para entrevista → mostrar las dos. Los IDs de Studio Interview y Midnight Presentation se conservan, sus precios actuales caben en 6.000 €, la preferencia de gala se flexibiliza con el cambio de objetivo y una referencia a las opciones actuales no acepta una vuelta silenciosa a vestidos anteriores. Verificación pública generativa pendiente de completar tras desplegar esta revisión.

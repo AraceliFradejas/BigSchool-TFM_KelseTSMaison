@@ -12,6 +12,7 @@ export function stylistRouter(db, config, limiter, requestProvider) {
     send(res, {
       available: isStylistAvailable(config.stylist),
       conversational: true,
+      conversationVersion: 2,
       dailyActionLimit: config.stylist?.dailyLimit || 20,
       requiresAccount: config.stylist?.requireAccount !== false,
       providers: isStylistAvailable(config.stylist)
