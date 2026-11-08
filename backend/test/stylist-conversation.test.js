@@ -238,3 +238,24 @@ test('a model echo of the understood budget cannot turn an otherwise valid clari
   assert.match(result.message, /planeado/);
   assert.doesNotMatch(result.message, /10.000|euros/);
 });
+
+test('a weekend alone cannot become a casual recommendation even if the model suggests ranking looks', async (t) => {
+  const db = setup(t);
+  const result = await run(
+    db,
+    {
+      message: 'Mmm, ¿diez mil?',
+      preferences: { occasion: 'weekend', style: 'Una cita especial este fin de semana' },
+    },
+    intent({
+      action: 'recommend',
+      reply: 'Te propongo estas opciones para el fin de semana.',
+      updates: { ...updates, budgetCents: 1000000 },
+    }),
+  );
+  assert.equal(result.mode, 'ai');
+  assert.equal(result.preferences.budgetCents, 1000000);
+  assert.equal(result.reason, 'needs_plan');
+  assert.deepEqual(result.looks, []);
+  assert.match(result.message, /planeado/);
+});

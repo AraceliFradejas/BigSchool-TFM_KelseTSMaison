@@ -209,8 +209,7 @@ export async function converseStylist({
     if (!(await claimStylistCall(db, config.dailyLimit))) return unavailable('daily_limit');
     try {
       intent = intentSchema.parse(await requestProvider(settings, prompt, { ...config, signal }));
-      if (stylistUnsafeText(intent.reply) || /https?:|<[^>]+>/i.test(intent.reply))
-        throw Error('unsafe_reply');
+
       if (intent.referenceLookId && !looks.some((look) => look.id === intent.referenceLookId))
         throw Error('unknown_look');
       if (intent.lookIds.some((id) => !looks.some((look) => look.id === id)))
@@ -222,7 +221,8 @@ export async function converseStylist({
         )
       )
         throw Error('unknown_option');
-      monetaryReply = stylistUnsafeExplanation(intent.reply);
+      monetaryReply =
+        stylistUnsafeExplanation(intent.reply) || /https?:|<[^>]+>/i.test(intent.reply);
       provider = settings.provider;
       break;
     } catch (error) {
@@ -300,6 +300,20 @@ export async function converseStylist({
         'needs_budget',
       ),
     );
+  if (
+    intent.action === 'recommend' &&
+    ['any', 'weekend'].includes(preferences.occasion) &&
+    preferences.dressCode === 'any'
+  ) {
+    return finish(
+      empty(
+        es
+          ? 'Ya tengo el presupuesto. Para acertar con el look, ¿qué tienes planeado: una cena especial, un paseo o algo más informal?'
+          : 'I have noted your budget. To find the right outfit, what do you have planned: a special dinner, a walk or something more casual?',
+        'needs_plan',
+      ),
+    );
+  }
   if (intent.action === 'recommend') {
     const parsed = stylistSchema.parse({ ...preferences, mode: 'editorial' });
     const result = await recommendLooks({
