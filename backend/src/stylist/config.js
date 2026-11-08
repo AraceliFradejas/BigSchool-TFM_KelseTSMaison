@@ -52,7 +52,7 @@ export function readStylistConfig(env) {
       enabled: voiceEnabled,
       key: env.ELEVENLABS_API_KEY,
       voiceId: env.ELEVENLABS_VOICE_ID,
-      dailyLimit: integer('STYLIST_VOICE_DAILY_LIMIT', 6, 1, 100),
+      dailyLimit: integer('STYLIST_VOICE_DAILY_LIMIT', 6, 1, 200),
     },
     enabled,
     requireAccount: account === '1',

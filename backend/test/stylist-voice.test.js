@@ -41,7 +41,8 @@ const mp4 = Buffer.concat([Buffer.from([0, 0, 0, 24]), Buffer.from('ftypM4A '), 
 test('voice is opt-in, validates credentials and exposes no private values', async (t) => {
   assert.equal(readStylistConfig({}).voice.enabled, false);
   assert.equal(readStylistConfig({ STYLIST_VOICE_DAILY_LIMIT: '100' }).voice.dailyLimit, 100);
-  assert.throws(() => readStylistConfig({ STYLIST_VOICE_DAILY_LIMIT: '101' }));
+  assert.equal(readStylistConfig({ STYLIST_VOICE_DAILY_LIMIT: '200' }).voice.dailyLimit, 200);
+  assert.throws(() => readStylistConfig({ STYLIST_VOICE_DAILY_LIMIT: '201' }));
   assert.throws(() => readStylistConfig({ STYLIST_VOICE_ENABLED: '1' }));
   assert.throws(() => readStylistConfig({ STYLIST_VOICE_DAILY_LIMIT: '1000' }));
   const { app } = setup(t);
@@ -193,4 +194,16 @@ test('speech accepts bounded MP3 output and rejects a successful non-audio respo
       ),
     (error) => error.code === 'voice_unavailable',
   );
+});
+
+test('raising the voice ceiling to 200 preserves the 100 actions already consumed', async (t) => {
+  const { app, db } = setup(t, { ...settings, voice: { ...voice, dailyLimit: 200 } });
+  const day = new Date().toISOString().slice(0, 10);
+  db.prepare('INSERT INTO stylist_voice_usage (day,calls) VALUES (?,100)').run(day);
+  const result = await post(app, 'speech').send({
+    text: 'Probamos una respuesta.',
+    language: 'es',
+  });
+  assert.equal(result.status, 200);
+  assert.equal(db.prepare('SELECT calls FROM stylist_voice_usage WHERE day=?').get(day).calls, 101);
 });
