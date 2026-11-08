@@ -11,6 +11,8 @@ import {
   chatPreferences,
   stylistFeedback,
   stylistConversationContext,
+  stylistFollowUp,
+  stylistDisplayOptions,
   stylistBudgetQuestion,
   stylistEditorialIntro,
 } from '@maison/contracts/stylist-chat';
@@ -112,7 +114,13 @@ export default function StylistChat({ conversation }) {
       const result = await api.request('/stylist', {
         method: 'POST',
         signal: controller.signal,
-        body: { ...parsed.preferences, message: text, language, mode: ai ? 'ai' : 'editorial' },
+        body: {
+          ...parsed.preferences,
+          message: text,
+          language,
+          mode: ai ? 'ai' : 'editorial',
+          followUp: stylistFollowUp(text, stylistConversationContext(messages)) || undefined,
+        },
       });
       if (!controller.signal.aborted)
         say({
@@ -222,11 +230,20 @@ export default function StylistChat({ conversation }) {
                     ? ` · ${es ? 'Calzado' : 'Shoes'} ${message.result.preferences.shoeSize}`
                     : ''}
                 </p>
-                {message.result.looks.map((look) => (
+                {stylistDisplayOptions(message.result, language).map((look) => (
                   <section className="stylist-chat-look" key={look.id}>
                     <h3>{look.name}</h3>
                     <p>
-                      {es ? 'Total del look' : 'Outfit total'}:{' '}
+                      {message.result.complements
+                        ? message.result.referenceLook
+                          ? `${es ? 'Total con' : 'Total with'} ${message.result.referenceLook.name}`
+                          : es
+                            ? 'Precio de la pieza'
+                            : 'Piece price'
+                        : es
+                          ? 'Total del look'
+                          : 'Outfit total'}
+                      :{' '}
                       <strong>
                         <Money cents={look.totalCents} />
                       </strong>

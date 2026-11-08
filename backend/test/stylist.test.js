@@ -459,3 +459,70 @@ test('conversational provider introduction is validated before it reaches the ch
     assert.notEqual(result.message, reply);
   }
 });
+
+test('reported Midnight Velvet trouser follow-up returns real complements rather than repeating looks', async (t) => {
+  const db = setup(t);
+  const requested = {
+    ...preferences,
+    language: 'es',
+    size: 'M',
+    message: 'Me gusta la combinación de Midnight Velvet, pero ¿tienes pantalones?',
+    followUp: { pieceType: 'trousers', referenceLookId: 'look-midnight-velvet' },
+  };
+  const result = await run(db, {
+    preferences: requested,
+    config: { ...config, dailyLimit: 0 },
+    requestProvider: async () => {
+      throw Error('must not consume provider');
+    },
+  });
+  assert.equal(result.mode, 'editorial');
+  assert.equal(result.referenceLook.id, 'look-midnight-velvet');
+  assert.match(result.message, /completar Midnight Velvet/);
+  assert.deepEqual(result.looks, []);
+  assert.ok(result.complements.length > 0);
+  for (const option of result.complements) {
+    assert.match(option.product.name.es, /pantal[oó]n/i);
+    assert.doesNotMatch(option.product.name.es, /deportivo/i);
+    assert.ok(option.variant.stock > 0);
+    assert.match(option.variant.label.es, /M/);
+    assert.equal(
+      option.totalWithLookCents,
+      result.referenceLook.totalCents + option.variant.priceCents,
+    );
+    assert.ok(option.totalWithLookCents <= requested.budgetCents);
+  }
+  assert.equal(db.prepare('SELECT count(*) AS n FROM stylist_usage').get().n, 0);
+});
+test('follow-up cannot invent a reference, overrun the remaining budget or return sold-out trousers', async (t) => {
+  const db = setup(t);
+  for (const referenceLookId of ['look-does-not-exist', 'look-midnight-velvet']) {
+    const result = await run(db, {
+      preferences: {
+        ...preferences,
+        language: 'es',
+        budgetCents: 416500,
+        followUp: { pieceType: 'trousers', referenceLookId },
+      },
+    });
+    assert.equal(result.complements.length, 0);
+    assert.deepEqual(result.looks, []);
+  }
+  db.prepare(
+    "UPDATE variants SET stock=0 WHERE product_id IN (SELECT id FROM products WHERE data LIKE '%Pantalón%')",
+  ).run();
+  const result = await run(db, {
+    preferences: {
+      ...preferences,
+      followUp: { pieceType: 'trousers', referenceLookId: 'look-midnight-velvet' },
+    },
+  });
+  assert.equal(result.complements.length, 0);
+  assert.equal(
+    stylistSchema.safeParse({
+      ...preferences,
+      followUp: { pieceType: 'trousers', referenceLookId: 'look-midnight-velvet', priceCents: 1 },
+    }).success,
+    false,
+  );
+});

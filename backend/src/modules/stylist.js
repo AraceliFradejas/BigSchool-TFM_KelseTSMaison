@@ -2,7 +2,7 @@ import { isStylistAvailable } from '../stylist/config.js';
 import { Router } from 'express';
 import { stylistSchema } from '@maison/contracts';
 import { parse, send, HttpError } from '../http.js';
-import { getLooks } from './catalog.js';
+import { getLooks, allProducts } from './catalog.js';
 import { recommendLooks } from '../stylist/service.js';
 
 export function stylistRouter(db, config, limiter, requestProvider) {
@@ -35,6 +35,7 @@ export function stylistRouter(db, config, limiter, requestProvider) {
         db,
         config: config.stylist,
         getLooks: () => getLooks(db),
+        getProducts: () => allProducts(db),
         preferences,
         requestProvider,
         signal: controller.signal,

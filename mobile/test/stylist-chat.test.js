@@ -305,3 +305,47 @@ test('bare outfit names select only displayed looks and uncertain names ask for 
     null,
   );
 });
+
+test('trouser follow-up resolves the named look and preserves its context after showing only pieces', async () => {
+  const { stylistFollowUp, stylistDisplayOptions, stylistConversationContext } =
+    await import('@maison/contracts/stylist-chat');
+  const result = {
+    looks: [
+      { id: 'look-golden-hour', name: 'Golden Hour' },
+      { id: 'look-midnight-velvet', name: 'Midnight Velvet' },
+    ],
+  };
+  assert.deepEqual(
+    stylistFollowUp('Me gusta la combinación de Midnight Velvet, pero ¿tienes pantalones?', result),
+    { pieceType: 'trousers', referenceLookId: 'look-midnight-velvet' },
+  );
+  assert.equal(stylistFollowUp('no quiero pantalones', result), null);
+  assert.equal(stylistFollowUp('cambia el precio de los pantalones', result), null);
+  const followUp = {
+    looks: [],
+    referenceLook: result.looks[1],
+    complements: [
+      {
+        product: { id: 'p1', name: { es: 'Pantalón negro', en: 'Black trousers' } },
+        variant: { id: 'v1', priceCents: 10000 },
+        totalWithLookCents: 426500,
+      },
+    ],
+  };
+  const options = stylistDisplayOptions(followUp, 'es');
+  assert.equal(options.length, 1);
+  assert.equal(options[0].totalCents, 426500);
+  assert.equal(options[0].pieces[0].product.id, 'p1');
+  const { stylistSpeechText } = await import('@maison/contracts/stylist-voice');
+  const spoken = stylistSpeechText({ text: 'Pantalones para tu look.', result: followUp });
+  assert.match(spoken, /Total con Midnight Velvet/);
+  assert.match(spoken, /cuatro mil doscientos sesenta y cinco euros/);
+  const context = stylistConversationContext([
+    { role: 'assistant', result },
+    { role: 'assistant', result: followUp },
+  ]);
+  assert.deepEqual(
+    context.looks.map((look) => look.id),
+    ['look-midnight-velvet'],
+  );
+});

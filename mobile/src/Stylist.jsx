@@ -24,6 +24,8 @@ import {
   chatPreferences,
   stylistFeedback,
   stylistConversationContext,
+  stylistFollowUp,
+  stylistDisplayOptions,
   stylistBudgetQuestion,
   stylistEditorialIntro,
 } from '@maison/contracts/stylist-chat';
@@ -190,7 +192,13 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
       const result = await api.request('/stylist', {
         method: 'POST',
         signal: controller.signal,
-        body: { ...parsed.preferences, message: text, language, mode: ai ? 'ai' : 'editorial' },
+        body: {
+          ...parsed.preferences,
+          message: text,
+          language,
+          mode: ai ? 'ai' : 'editorial',
+          followUp: stylistFollowUp(text, stylistConversationContext(messages)) || undefined,
+        },
       });
       if (!controller.signal.aborted)
         say({
@@ -319,13 +327,22 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
                     ? ` · ${es ? 'Calzado' : 'Shoes'} ${message.result.preferences.shoeSize}`
                     : ''}
                 </Text>
-                {message.result.looks.map((look) => (
+                {stylistDisplayOptions(message.result, language).map((look) => (
                   <View key={look.id} style={s.look}>
                     <Text accessibilityRole="header" style={s.lookTitle}>
                       {look.name}
                     </Text>
                     <Text style={s.total}>
-                      {es ? 'Total del look' : 'Outfit total'} · {money(look.totalCents, language)}
+                      {message.result.complements
+                        ? message.result.referenceLook
+                          ? `${es ? 'Total con' : 'Total with'} ${message.result.referenceLook.name}`
+                          : es
+                            ? 'Precio de la pieza'
+                            : 'Piece price'
+                        : es
+                          ? 'Total del look'
+                          : 'Outfit total'}{' '}
+                      · {money(look.totalCents, language)}
                     </Text>
                     {look.explanation && <Text style={s.body}>{look.explanation}</Text>}
                     {look.pieces.map(({ product, variant }) => (

@@ -1,3 +1,4 @@
+import { recommendComplements } from './complements.js';
 import { stylistEditorialIntro } from '@maison/contracts/stylist-chat';
 import { isStylistAvailable } from './config.js';
 import {
@@ -15,6 +16,7 @@ export async function recommendLooks({
   db,
   config,
   getLooks,
+  getProducts,
   preferences,
   signal,
   requestProvider = requestStylistProvider,
@@ -30,6 +32,7 @@ export async function recommendLooks({
       looks: [],
       preferences,
     };
+  if (preferences.followUp) return recommendComplements({ getLooks, getProducts, preferences });
   const candidates = eligibleLooks(await getLooks(), preferences);
   const editorial = async (reason = null, latest) => {
     const looks = (latest ?? eligibleLooks(await getLooks(), preferences)).slice(0, 3);

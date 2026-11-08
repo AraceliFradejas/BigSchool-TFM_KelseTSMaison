@@ -1,3 +1,4 @@
+import { stylistDisplayOptions } from './stylist-chat.js';
 // Prices come from validated catalogue cents; speech uses words, never currency symbols.
 function numberWords(n, language) {
   const es = language === 'es';
@@ -99,11 +100,11 @@ export function spokenMoney(cents, language = 'es') {
 export function stylistSpeechText(message, language = 'es') {
   const es = language === 'es';
   const sections = [String(message.text || '').trim()];
-  for (const look of message.result?.looks || []) {
+  for (const look of stylistDisplayOptions(message.result, language)) {
     sections.push(
       look.name,
       look.explanation,
-      `${es ? 'Total del look' : 'Outfit total'}: ${spokenMoney(look.totalCents, language)}.`,
+      `${message.result?.complements ? (message.result.referenceLook ? `${es ? 'Total con' : 'Total with'} ${message.result.referenceLook.name}` : es ? 'Precio de la pieza' : 'Piece price') : es ? 'Total del look' : 'Outfit total'}: ${spokenMoney(look.totalCents, language)}.`,
     );
     for (const piece of look.pieces || []) {
       const name = piece.product?.name;

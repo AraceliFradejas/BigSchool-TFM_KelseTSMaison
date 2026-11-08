@@ -94,5 +94,15 @@ export const stylistSchema = z
     shoeSize: z.enum(['35', '36', '37', '38', '39', '40', '41', '42']).optional(),
     style: z.string().trim().max(1200).default(''),
     message: z.string().trim().max(1200).optional(),
+    followUp: z
+      .object({
+        pieceType: z.literal('trousers'),
+        referenceLookId: z
+          .string()
+          .regex(/^[a-z0-9-]{1,100}$/)
+          .optional(),
+      })
+      .strict()
+      .optional(),
   })
   .strict();

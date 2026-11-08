@@ -214,7 +214,10 @@ function choiceClarification(message, suggestion, language) {
 export function stylistConversationContext(messages) {
   let result = null;
   for (const message of messages) {
-    if (message.result) result = message.result;
+    if (message.result)
+      result = message.result.referenceLook
+        ? { ...message.result, looks: [message.result.referenceLook], selected: true }
+        : message.result;
     if (message.role === 'user') {
       const chosen = stylistChosenLook(message.text, result);
       if (chosen) result = { ...result, looks: [chosen], selected: true };
@@ -295,4 +298,30 @@ export function stylistEditorialIntro(preferences, language = 'es', hasLooks = t
   return language === 'es'
     ? `He reunido varias ideas${plan ? ' para ' + plan[0] : ' para tu look'}. Vamos a buscar una opción con la que te sientas a gusto.`
     : `I’ve brought together a few ideas${plan ? ' for ' + plan[1] : ' for your outfit'}. Let’s find an option you feel comfortable wearing.`;
+}
+
+// Resolve a requested addition from the displayed catalogue context, never from client prices.
+export function stylistFollowUp(message, suggestion) {
+  if (!suggestion?.looks?.length || stylistUnsafeText(message)) return null;
+  const text = feedbackNormalize(message);
+  if (
+    !/\b(pantalon(?:es)?|trousers|pants)\b/.test(text) ||
+    /\b(?:sin|no quiero|no me gustan|without|no|don't want)\s+(?:los?\s+)?(?:pantalon(?:es)?|trousers|pants)\b/.test(
+      text,
+    )
+  )
+    return null;
+  const mentioned = suggestion.looks.filter((look) => text.includes(feedbackNormalize(look.name)));
+  if (mentioned.length > 1) return null;
+  const reference = mentioned[0] || (suggestion.looks.length === 1 ? suggestion.looks[0] : null);
+  return { pieceType: 'trousers', ...(reference ? { referenceLookId: reference.id } : {}) };
+}
+export function stylistDisplayOptions(result, language = 'es') {
+  if (!result?.complements) return result?.looks || [];
+  return result.complements.map(({ product, variant, totalWithLookCents }) => ({
+    id: product.id,
+    name: product.name[language],
+    totalCents: totalWithLookCents,
+    pieces: [{ product, variant }],
+  }));
 }
