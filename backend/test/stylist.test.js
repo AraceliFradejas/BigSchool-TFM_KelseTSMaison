@@ -6,7 +6,7 @@ import { openDatabase, seedDatabase } from '../src/db.js';
 import { createApp } from '../src/app.js';
 import { getLooks } from '../src/modules/catalog.js';
 import { stylistSchema } from '@maison/contracts';
-import { eligibleLooks } from '../src/stylist/editorial.js';
+import { eligibleLooks, rankEditorialLooks } from '../src/stylist/editorial.js';
 import { recommendLooks } from '../src/stylist/service.js';
 import { readStylistConfig, isStylistAvailable } from '../src/stylist/config.js';
 import { claimStylistCall } from '../src/stylist/quota.js';
@@ -525,4 +525,29 @@ test('follow-up cannot invent a reference, overrun the remaining budget or retur
     }).success,
     false,
   );
+});
+
+test('formal dinner editorial fallback prioritises dress and tailoring over casual pieces', async (t) => {
+  const db = setup(t);
+  const result = await run(db, {
+    config: { enabled: false },
+    preferences: {
+      ...preferences,
+      occasion: 'dinner',
+      style: 'algo más elegante, voy a un restaurante Michelin',
+    },
+  });
+  const casual = [{ id: 'casual', pieces: [] }];
+  assert.deepEqual(rankEditorialLooks(casual, { style: 'algo informal' }), casual);
+  assert.deepEqual(rankEditorialLooks(casual, { style: 'algo elegante' }), []);
+  assert.ok(result.looks.length > 0);
+  for (const look of result.looks)
+    assert.ok(
+      look.pieces.some(
+        (piece) =>
+          piece.product.category === 'fashion' &&
+          /vestido|blazer|americana|sastre/i.test(piece.product.name.es),
+      ),
+      look.name,
+    );
 });

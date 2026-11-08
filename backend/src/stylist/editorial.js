@@ -42,3 +42,23 @@ export function eligibleLooks(looks, preferences) {
     })
     .filter((look) => look.valid);
 }
+
+// A request for a formal dinner should not fall back to the first casual combinations.
+export function rankEditorialLooks(looks, preferences) {
+  const latest = (preferences.style || '').split(/Ahora:/).at(-1);
+  if (!/\b(?:elegant\w*|formal\w*|gala|michelin)\b|fine dining/i.test(latest)) return looks;
+  const score = (look) =>
+    look.pieces
+      .filter((piece) => piece.product.category === 'fashion')
+      .reduce((sum, piece) => {
+        const text = `${piece.product.name.es} ${piece.product.name.en} ${piece.product.description?.es || ''}`;
+        return (
+          sum +
+          (/vestido|dress|blazer|americana|sastre|tailor/i.test(text) ? 2 : 0) +
+          (/satin|saten|seda|silk|velvet|terciopelo/i.test(text) ? 1 : 0) -
+          (/deportiv|sport|jogger/i.test(text) ? 10 : 0)
+        );
+      }, 0);
+  const formal = looks.filter((look) => score(look) >= 2).sort((a, b) => score(b) - score(a));
+  return formal;
+}

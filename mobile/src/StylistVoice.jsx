@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { AppState, Text, View, StyleSheet, Pressable } from 'react-native';
 import {
   useAudioRecorder,
@@ -10,14 +10,35 @@ import {
   setAudioModeAsync,
 } from 'expo-audio';
 import * as Files from 'expo-file-system/legacy';
-import { voiceError, stylistSpeechText } from '@maison/contracts/stylist-voice';
+import {
+  voiceError,
+  stylistSpeechText,
+  voiceQuotaReached,
+  markVoiceQuotaReached,
+  subscribeVoiceQuota,
+} from '@maison/contracts/stylist-voice';
 import { api } from './api';
 import Button from './Button';
 import VoiceIcon from './VoiceIcon';
 const erase = async (uri) => {
   if (uri) await Files.deleteAsync(uri, { idempotent: true }).catch(() => {});
 };
+function useVoiceQuotaHint(language) {
+  const blocked = useSyncExternalStore(subscribeVoiceQuota, voiceQuotaReached, () => false);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    if (!visible) return;
+    const timer = setTimeout(() => setVisible(false), 5000);
+    return () => clearTimeout(timer);
+  }, [visible]);
+  return {
+    blocked,
+    show: () => setVisible(true),
+    hint: visible ? voiceError('voice_daily_limit', language) : '',
+  };
+}
 export function useStylistSpeech(language) {
+  const quota = useVoiceQuotaHint(language);
   const player = useAudioPlayer(null),
     status = useAudioPlayerStatus(player);
   const [busy, setBusy] = useState(null),
@@ -52,7 +73,11 @@ export function useStylistSpeech(language) {
     setBusy(null);
     setPlaying(null);
   };
-  async function speak(message, index) {
+  async function speak(message, index, automatic = false) {
+    if (quota.blocked && !cache.current.has(stylistSpeechText(message, language))) {
+      if (!automatic) quota.show();
+      return;
+    }
     if (playing === index) {
       stop();
       return;
@@ -99,12 +124,16 @@ export function useStylistSpeech(language) {
       player.play();
       setPlaying(index);
     } catch (err) {
-      if (alive.current && err.name !== 'AbortError') setError(voiceError(err.code, language));
+      if (err.code === 'voice_daily_limit') {
+        markVoiceQuotaReached();
+        if (!automatic) quota.show();
+      } else if (alive.current && err.name !== 'AbortError')
+        setError(voiceError(err.code, language));
     } finally {
       if (alive.current && pending.current === controller) setBusy(null);
     }
   }
-  return { speak, stop, busy, playing, error };
+  return { speak, stop, busy, playing, error, quotaReached: quota.blocked, hint: quota.hint };
 }
 export function VoiceInput({
   mode,
@@ -117,6 +146,7 @@ export function VoiceInput({
   disabled,
 }) {
   const es = language === 'es';
+  const quota = useVoiceQuotaHint(language);
   const modeRef = useRef(mode);
   modeRef.current = mode;
   const recorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY),
@@ -174,6 +204,10 @@ export function VoiceInput({
     }
   }
   async function record() {
+    if (quota.blocked) {
+      quota.show();
+      return;
+    }
     setError('');
     onBusyChange(true);
     setPhase('permission');
@@ -239,7 +273,13 @@ export function VoiceInput({
       uri.current = null;
       setPhase('idle');
     } catch (err) {
-      if (alive.current && err.name !== 'AbortError') {
+      if (err.code === 'voice_daily_limit') {
+        markVoiceQuotaReached();
+        quota.show();
+        await erase(uri.current);
+        uri.current = null;
+        setPhase('idle');
+      } else if (alive.current && err.name !== 'AbortError') {
         setError(voiceError(err.code, language));
         setPhase('ready');
       }
@@ -248,6 +288,10 @@ export function VoiceInput({
     }
   }
   async function chooseVoice() {
+    if (quota.blocked) {
+      quota.show();
+      return;
+    }
     setPhase('permission');
     setError('');
     onBusyChange(true);
@@ -313,6 +357,11 @@ export function VoiceInput({
               ? 'La voz no está disponible ahora. Puedes escribir.'
               : 'Voice is unavailable now. You can type.'}
         </Text>
+        {quota.hint ? (
+          <Text accessibilityLiveRegion="polite" style={s.tooltip}>
+            {quota.hint}
+          </Text>
+        ) : null}
         {error && <Text accessibilityLiveRegion="polite">{error}</Text>}
       </View>
     );
@@ -330,6 +379,11 @@ export function VoiceInput({
             {es ? 'Hablar' : 'Talk'}
           </Button>
         )}
+        {quota.hint ? (
+          <Text accessibilityLiveRegion="polite" style={s.tooltip}>
+            {quota.hint}
+          </Text>
+        ) : null}
         {error && <Text>{error}</Text>}
       </View>
     );
@@ -394,6 +448,11 @@ export function VoiceInput({
           ? 'Hasta un minuto por mensaje. Al terminar, se envía automáticamente y tAIlor responde con voz.'
           : 'Up to one minute per message. Finish to send automatically and hear tAIlor’s reply.'}
       </Text>
+      {quota.hint ? (
+        <Text accessibilityLiveRegion="polite" style={s.tooltip}>
+          {quota.hint}
+        </Text>
+      ) : null}
       {error && (
         <Text accessibilityLiveRegion="polite" style={s.note}>
           {error}
@@ -403,6 +462,19 @@ export function VoiceInput({
   );
 }
 const s = StyleSheet.create({
+  tooltip: {
+    position: 'absolute',
+    bottom: '100%',
+    left: 0,
+    right: 0,
+    zIndex: 4,
+    padding: 12,
+    backgroundColor: '#332723',
+    color: '#fffaf4',
+    borderRadius: 12,
+    fontSize: 12,
+    lineHeight: 18,
+  },
   choice: { padding: 18, gap: 14, backgroundColor: '#fffcf7', borderRadius: 18 },
   title: { fontSize: 20, color: '#4b1423', fontFamily: 'Georgia' },
   box: {

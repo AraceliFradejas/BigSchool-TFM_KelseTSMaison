@@ -1,3 +1,4 @@
+import { normalizeSpokenBudget } from './stylist-budget.js';
 // Deterministic minimum scope checks, shared for immediate UX and enforced again by the API.
 // These rules are an extra layer, not a complete semantic moderation system.
 const normalize = (text = '') =>
@@ -14,7 +15,7 @@ export function stylistUnsafeText(text) {
   return excludedTopics.test(value) || injection.test(value);
 }
 export function stylistScopeViolation(text = '') {
-  const value = normalize(text).trim();
+  const value = normalizeSpokenBudget(text).trim();
   if (!value) return false; // The detailed preference form does not require free text.
   if (stylistUnsafeText(value)) return true;
   if (/^(hola|hello|hi|buenas|buenos dias|buenas tardes)[!.\s]*$/.test(value)) return false;

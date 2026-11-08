@@ -149,3 +149,30 @@ export function normalizeStylistTranscript(text) {
     'KelseTS Maison',
   );
 }
+
+// Shared in-memory quota knowledge: a 429 stops automatic retries until the next UTC day.
+let blockedVoiceDay = null;
+const quotaListeners = new Set();
+let quotaTimer;
+export const voiceQuotaReached = (now = new Date()) =>
+  blockedVoiceDay === now.toISOString().slice(0, 10);
+export function markVoiceQuotaReached(now = new Date()) {
+  blockedVoiceDay = now.toISOString().slice(0, 10);
+  for (const listener of quotaListeners) listener();
+}
+export function subscribeVoiceQuota(listener) {
+  quotaListeners.add(listener);
+  if (!quotaTimer) {
+    quotaTimer = setInterval(() => {
+      for (const fn of quotaListeners) fn();
+    }, 60000);
+    quotaTimer.unref?.();
+  }
+  return () => {
+    quotaListeners.delete(listener);
+    if (!quotaListeners.size) {
+      clearInterval(quotaTimer);
+      quotaTimer = null;
+    }
+  };
+}

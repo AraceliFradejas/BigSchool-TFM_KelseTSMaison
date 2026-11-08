@@ -1,12 +1,10 @@
+import { normalizeSpokenBudget } from './stylist-budget.js';
 import { stylistUnsafeText, stylistScopeViolation } from './stylist-policy.js';
 // The chat asks explicitly for a budget rather than silently assuming one.
 // These local rules identify common numeric constraints; style interpretation stays with the model.
 export function chatPreferences(message, previous = {}) {
   const text = message.trim();
-  const normalized = text
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase();
+  const normalized = normalizeSpokenBudget(text);
   const preferences = {
     occasion: 'any',
     color: 'any',
@@ -48,7 +46,7 @@ export function chatPreferences(message, previous = {}) {
   if (size) preferences.size = size[1].toUpperCase();
   if (shoes) preferences.shoeSize = shoes[1];
   const occasions = [
-    ['dinner', /\b(cena|cenar|dinner)\b/],
+    ['dinner', /\b(cena|cenar|dinner|restaurante|restaurant|michelin)\b/],
     ['concert', /\b(concierto|concert)\b/],
     ['weekend', /fin de semana|weekend/],
     ['everyday', /dia a dia|cada dia|everyday/],
@@ -83,6 +81,11 @@ export function stylistFeedback(message, hasSuggestion, language = 'es', suggest
     .trim();
   const es = language === 'es';
   if (stylistUnsafeText(message)) return null;
+  const chosenPiece = stylistChosenComplement(message, suggestion);
+  if (chosenPiece)
+    return es
+      ? `¡Perfecto! Nos quedamos con ${suggestion.referenceLook?.name || suggestion.looks?.[0]?.name || 'tu conjunto'} y ${chosenPiece.product.name.es}. Puedes abrir la pieza para revisar tu talla y añadirla a la bolsa. ¿Te ayudo con algún detalle más?`
+      : `Perfect! We will keep ${suggestion.referenceLook?.name || suggestion.looks?.[0]?.name || 'your outfit'} with ${chosenPiece.product.name.en}. Open the piece to check your size and add it to your bag. Anything else you would like to refine?`;
   const selected = stylistChosenLook(message, suggestion);
   if (selected)
     return es
@@ -211,6 +214,43 @@ function choiceClarification(message, suggestion, language) {
       : 'I did not quite catch which outfit you chose. Could you type its name? Tap “Switch to text” and we will check it together.';
   return null;
 }
+// Confirm only a single option actually shown. A question or change of constraints is not a choice.
+export function stylistChosenComplement(message, suggestion) {
+  if (!suggestion?.complements?.length || stylistUnsafeText(message)) return null;
+  const text = feedbackNormalize(message)
+    .replace(/[^a-z0-9 ]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (
+    /\b(tienes|hay|busco|puedes|pero|sin|otro|otra|mas|menos|presupuesto|talla|budget|size|without|instead|show)\b/.test(
+      text,
+    )
+  )
+    return null;
+  const selected =
+    /\b(me quedaria|me quedo|elijo|prefiero|me gusta|este pantalon|ese pantalon|i choose|i prefer|i ll take)\b/.test(
+      text,
+    );
+  const matches = suggestion.complements.filter((option) => {
+    const aliases = Object.values(option.product.name)
+      .flatMap((name) => [name.split('·').at(-1), name])
+      .map((name) =>
+        feedbackNormalize(name)
+          .replace(/[^a-z0-9 ]/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim(),
+      );
+    return aliases.some((alias) => {
+      const spoken =
+        alias === 'ready for it' ? text.replace(/\bready por it\b/g, 'ready for it') : text;
+      return (
+        alias.length >= 4 &&
+        (spoken === alias || (selected && ` ${spoken} `.includes(` ${alias} `)))
+      );
+    });
+  });
+  return matches.length === 1 ? matches[0] : null;
+}
 export function stylistConversationContext(messages) {
   let result = null;
   for (const message of messages) {
@@ -219,6 +259,8 @@ export function stylistConversationContext(messages) {
         ? { ...message.result, looks: [message.result.referenceLook], selected: true }
         : message.result;
     if (message.role === 'user') {
+      const piece = stylistChosenComplement(message.text, result);
+      if (piece) result = { ...result, selectedComplement: piece, selected: true };
       const chosen = stylistChosenLook(message.text, result);
       if (chosen) result = { ...result, looks: [chosen], selected: true };
     }
@@ -257,8 +299,11 @@ function stylistFarewell(language, suggestion) {
     if (wishes[occasion]) wish = wishes[occasion][es ? 0 : 1];
   }
   const names = suggestion.looks.slice(0, 3).map((look) => String(look.name).slice(0, 120));
+  if (suggestion.selectedComplement)
+    names.push(suggestion.selectedComplement.product.name[language]);
   const last = names.pop();
-  const choices = names.length ? `${names.join(', ')} ${es ? 'o' : 'or'} ${last}` : last;
+  const conjunction = suggestion.selectedComplement ? (es ? 'y' : 'and') : es ? 'o' : 'or';
+  const choices = names.length ? `${names.join(', ')} ${conjunction} ${last}` : last;
   return es
     ? `¡Gracias a ti! ${wish} ${suggestion.selected ? `Puedes volver a las piezas de ${choices} cuando quieras.` : `Puedes revisar las piezas de ${choices} cuando te decidas.`} Aquí estará tu tAIlor si necesitas otro look. ✨`
     : `Thank you! ${wish} ${suggestion.selected ? `You can revisit the pieces in ${choices} whenever you like.` : `You can review the pieces in ${choices} when you decide.`} Your tAIlor is here whenever you need another outfit. ✨`;
@@ -302,7 +347,12 @@ export function stylistEditorialIntro(preferences, language = 'es', hasLooks = t
 
 // Resolve a requested addition from the displayed catalogue context, never from client prices.
 export function stylistFollowUp(message, suggestion) {
-  if (!suggestion?.looks?.length || stylistUnsafeText(message)) return null;
+  if (
+    !suggestion?.looks?.length ||
+    stylistUnsafeText(message) ||
+    stylistChosenComplement(message, suggestion)
+  )
+    return null;
   const text = feedbackNormalize(message);
   if (
     !/\b(pantalon(?:es)?|trousers|pants)\b/.test(text) ||

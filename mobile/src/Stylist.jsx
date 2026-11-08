@@ -119,7 +119,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
       setMessages((old) =>
         old.map((item) => (item.id === message.id ? { ...item, autoSpeak: false } : item)),
       );
-      void speech.speak(message, messages.length - 1);
+      if (!speech.quotaReached) void speech.speak(message, messages.length - 1, true);
     });
     return () => {
       active = false;
@@ -387,6 +387,11 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
       </ScrollView>
       <View style={s.composer}>
         {interactionMode !== null && voiceControls}
+        {speech.hint ? (
+          <Text accessibilityLiveRegion="polite" style={s.note}>
+            {speech.hint}
+          </Text>
+        ) : null}
         {speech.error ? <Text style={s.note}>{speech.error}</Text> : null}
         {interactionMode === 'text' && (
           <TextInput

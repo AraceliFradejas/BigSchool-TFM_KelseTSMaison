@@ -7,7 +7,7 @@ import {
   stylistScopeMessage,
   stylistUnsafeExplanation,
 } from '@maison/contracts/stylist-policy';
-import { eligibleLooks } from './editorial.js';
+import { eligibleLooks, rankEditorialLooks } from './editorial.js';
 import { claimStylistCall } from './quota.js';
 import { selectionSchema, stylistPrompt } from './prompt.js';
 import { requestStylistProvider } from './providers.js';
@@ -33,9 +33,12 @@ export async function recommendLooks({
       preferences,
     };
   if (preferences.followUp) return recommendComplements({ getLooks, getProducts, preferences });
-  const candidates = eligibleLooks(await getLooks(), preferences);
+  const candidates = rankEditorialLooks(eligibleLooks(await getLooks(), preferences), preferences);
   const editorial = async (reason = null, latest) => {
-    const looks = (latest ?? eligibleLooks(await getLooks(), preferences)).slice(0, 3);
+    const looks = rankEditorialLooks(
+      latest ?? eligibleLooks(await getLooks(), preferences),
+      preferences,
+    ).slice(0, 3);
     return {
       mode: 'editorial',
       reason,

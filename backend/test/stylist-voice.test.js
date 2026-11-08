@@ -40,6 +40,8 @@ const post = (app, path) =>
 const mp4 = Buffer.concat([Buffer.from([0, 0, 0, 24]), Buffer.from('ftypM4A '), Buffer.alloc(24)]);
 test('voice is opt-in, validates credentials and exposes no private values', async (t) => {
   assert.equal(readStylistConfig({}).voice.enabled, false);
+  assert.equal(readStylistConfig({ STYLIST_VOICE_DAILY_LIMIT: '100' }).voice.dailyLimit, 100);
+  assert.throws(() => readStylistConfig({ STYLIST_VOICE_DAILY_LIMIT: '101' }));
   assert.throws(() => readStylistConfig({ STYLIST_VOICE_ENABLED: '1' }));
   assert.throws(() => readStylistConfig({ STYLIST_VOICE_DAILY_LIMIT: '1000' }));
   const { app } = setup(t);

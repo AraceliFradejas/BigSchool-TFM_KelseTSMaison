@@ -1,6 +1,6 @@
 # Voz de tAIlor · integración preparada
 
-Estado del 8 de noviembre de 2026: elección inicial entre texto y voz implementada en web y app, 146 pruebas correctas y exportaciones iOS/Android correctas. Tres pruebas reales de ElevenLabs (voz ES, voz EN y transcripción de audio generado) respondieron HTTP 200. La autora ha autorizado los secretos de producción y treinta acciones diarias; la verificación del despliegue se registra al final de este documento. La grabación y reproducción físicas en los dispositivos siguen pendientes.
+Estado del 8 de noviembre de 2026: elección inicial entre texto y voz implementada en web y app, 154 pruebas correctas y exportaciones iOS/Android correctas. Tres pruebas reales de ElevenLabs (voz ES, voz EN y transcripción de audio generado) respondieron HTTP 200. La autora ha autorizado los secretos de producción y cien acciones diarias; la verificación del despliegue se registra al final de este documento. La grabación y reproducción físicas en los dispositivos siguen pendientes.
 
 ## Recorrido
 
@@ -16,13 +16,13 @@ La misma voz puede leer textos ES/EN. Web utiliza MediaRecorder y Audio; la app 
 
 Solo backend: `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`, `STYLIST_VOICE_ENABLED=0` por defecto y `STYLIST_VOICE_DAILY_LIMIT=6`. Los valores reales están fuera de Git. Los permisos necesarios son Text to Speech, Speech to Text y lectura de Voices para comprobar la voz; no se necesita administración o borrado de voces.
 
-La autora ha ampliado el máximo global separado a treinta intentos de voz por día UTC, compartido entre síntesis y transcripción, incluidos fallos. La cuota se guarda atómicamente en SQLite/MongoDB y no consume la cuota de los modelos de outfits. La fecha de vencimiento del asesor también desactiva las llamadas de voz. La activación está autorizada hasta finalizar el 31/12/2026 en Madrid; disponer de una clave no demuestra saldo ni todos los permisos.
+La autora ha ampliado el máximo global separado a cien intentos de voz por día UTC, compartido entre síntesis y transcripción, incluidos fallos. La cuota se guarda atómicamente en SQLite/MongoDB y no consume la cuota de los modelos de outfits. La fecha de vencimiento del asesor también desactiva las llamadas de voz. La activación está autorizada hasta finalizar el 31/12/2026 en Madrid; disponer de una clave no demuestra saldo ni todos los permisos.
 
 ## Límites y datos
 
 El servidor admite archivos de hasta 2 MiB y reconoce firmas MP4, WebM, Ogg, WAV y MP3, sin fiarse del nombre. El minuto se controla en el cliente; no se afirma validar la duración del códec en el servidor. Se admiten transcripciones y mensajes de hasta 1.200 caracteres y síntesis de hasta 6.000 caracteres, sin recortar silenciosamente la respuesta. El audio de salida se limita a 3 MiB; timeout de 45 segundos para síntesis y 30 para transcripción. El modelo Multilingual v2 admite hasta 10.000 caracteres según su [documentación oficial](https://elevenlabs.io/docs/overview/models); Maison mantiene un límite inferior.
 
-La lectura completa consume más créditos que el resumen anterior. Se conserva el máximo global de treinta acciones diarias entre transcripción y síntesis, incluidos fallos, sin reintentos automáticos de proveedor. Una intervención hablada con respuesta consume normalmente dos acciones de voz y, si pide nuevas recomendaciones, también un intento de IA de la cuota separada. No equivale a treinta conversaciones ni a un tope monetario.
+La lectura completa consume más créditos que el resumen anterior. Se conserva el máximo global de cien acciones diarias entre transcripción y síntesis, incluidos fallos, sin reintentos automáticos de proveedor. Una intervención hablada con respuesta consume normalmente dos acciones de voz y, si pide nuevas recomendaciones, también un intento de IA de la cuota separada. No equivale a cien conversaciones ni a un tope monetario.
 
 Se comprueban temas bloqueados, instrucciones maliciosas y permisos, los campos no admitidos se rechazan y los errores externos no se copian a respuestas ni logs. El audio no se guarda en la base de datos de Maison. Se mantiene temporalmente en memoria/caché para grabación y reproducción, con limpieza al terminar o cerrar. El cliente no recibe la clave. La retención de ElevenLabs depende de la cuenta y sus condiciones; no se ha habilitado ni acreditado retención cero del proveedor. La conversación por texto sigue disponible si la voz falla, se deniega el permiso o se agota la cuota.
 
@@ -60,3 +60,11 @@ Se acepta el nombre aislado de un look presentado, también sin espacios («Gold
 El aviso habitual de voz termina en «tAIlor responde con voz». La información sobre el servicio externo se conserva en el paso previo a elegir micrófono. Los tests comprueban el texto de aclaración y reconocimiento local; no se ha grabado ni repetido una transcripción real para validar cómo se reconoce un acento concreto.
 
 La autora ha indicado la pronunciación «Kelsi TiEs Meison». La preparación compartida del texto para síntesis sustituye únicamente la marca KelseTS Maison por esa grafía fonética; el texto visible y los datos del catálogo conservan la marca. Se comprobó la transformación sin consumir una nueva síntesis; la escucha física queda pendiente.
+
+## Cuota de cien acciones y aviso bajo demanda
+
+La autora autorizó ampliar la voz a **100 acciones globales por día UTC**, con el mismo vencimiento al terminar el 31/12/2026 en Madrid y créditos existentes. Se conserva el valor por defecto de seis para nuevas instalaciones; el máximo de configuración pasa a cien. No se amplía la cuota independiente de los modelos de looks ni se compra saldo. Las acciones ya usadas en el día no se reinician.
+
+Tras recibir `voice_daily_limit`, los clientes recuerdan el límite durante la carga actual de la aplicación hasta el siguiente día UTC. Se detienen los intentos automáticos de voz y no se añade una frase de aviso a cada respuesta. Al pulsar Hablar o pedir un audio nuevo, aparece un aviso durante cinco segundos; grabaciones en curso que fallen por cuota también lo muestran una vez. El texto sigue disponible. Los audios ya preparados pueden reproducirse sin otra síntesis. Recargar puede requerir una nueva respuesta de cuota para conocerla, pero no restablece el contador del servidor.
+
+Safari se probó con una cuota válida agotada en SQLite aislado: una petición de síntesis recibió el límite, cero llamadas a proveedor; el clic posterior de Hablar mostró y ocultó el tooltip sin nuevas peticiones ni micrófono. La vista temporal se eliminó. [Regresiones y contadores](evidencias/stylist-2026-11-08/05-regresiones-presupuesto-eleccion-cuota.json). El ajuste se guardó en Vercel Production; el estado público de cien se verifica tras desplegar.

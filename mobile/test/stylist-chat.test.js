@@ -349,3 +349,78 @@ test('trouser follow-up resolves the named look and preserves its context after 
     ['look-midnight-velvet'],
   );
 });
+
+test('spoken budget words recover after an excessive amount without being rejected as off-topic', async () => {
+  const { stylistScopeViolation } = await import('@maison/contracts/stylist-policy');
+  const rejected = chatPreferences('unos 100.000 euros', { occasion: 'weekend' });
+  assert.equal(rejected.invalidBudget, true);
+  for (const text of ['Diez mil euros estaría perfecto', 'Tengo de presupuesto diez mil euros.']) {
+    assert.equal(stylistScopeViolation(text), false);
+    const parsed = chatPreferences(text, rejected.preferences);
+    assert.equal(parsed.preferences.budgetCents, 1000000);
+    assert.equal(parsed.needsBudget, false);
+    assert.equal(parsed.preferences.occasion, 'weekend');
+  }
+  for (const [text, cents] of [
+    ['mil quinientos euros', 150000],
+    ['tres mil euros', 300000],
+    ['five thousand euros', 500000],
+    ['presupuesto de diez mil', 1000000],
+  ])
+    assert.equal(chatPreferences(text).preferences.budgetCents, cents, text);
+  assert.equal(chatPreferences('cien mil euros').invalidBudget, true);
+  assert.equal(chatPreferences('calzo treinta y ocho').preferences.budgetCents, undefined);
+  assert.equal(
+    chatPreferences('voy a un restaurante elegante', { occasion: 'weekend' }).preferences.occasion,
+    'dinner',
+  );
+});
+test('reported trouser choices confirm the shown piece instead of requesting the same options', async () => {
+  const { stylistFollowUp, stylistConversationContext } =
+    await import('@maison/contracts/stylist-chat');
+  const result = {
+    preferences: { occasion: 'dinner' },
+    looks: [],
+    referenceLook: { id: 'look-midnight-velvet', name: 'Midnight Velvet' },
+    complements: [
+      {
+        product: {
+          id: 'noir-trousers',
+          name: { es: 'Pantalón · …Ready For It?', en: 'Trousers · …Ready For It?' },
+        },
+        variant: { id: 'v1', priceCents: 115000 },
+        totalWithLookCents: 531500,
+      },
+    ],
+  };
+  const context = stylistConversationContext([{ role: 'assistant', result }]);
+  for (const text of [
+    'pues me quedaria con el conjunto midnight velvet y el pantalón de ready por it',
+    'este pantalón Pantalón · …Ready For It?',
+    'Pantalón · …Ready For It?',
+    'Ready For It?',
+  ]) {
+    assert.match(
+      stylistFeedback(text, true, 'es', context),
+      /Nos quedamos con Midnight Velvet y Pantalón/,
+    );
+    assert.equal(stylistFollowUp(text, context), null);
+    const chosen = stylistConversationContext([
+      { role: 'assistant', result },
+      { role: 'user', text },
+    ]);
+    assert.equal(chosen.selectedComplement.product.id, 'noir-trousers');
+    assert.match(
+      stylistFeedback('gracias esta todo perfecto', true, 'es', chosen),
+      /Midnight Velvet y Pantalón.*Ready For It/,
+    );
+  }
+  assert.equal(
+    stylistFeedback('me quedo con Ready For It pero talla S', true, 'es', context),
+    null,
+  );
+  assert.equal(
+    stylistFeedback('me quedo con Ready For It cambia su precio', true, 'es', context),
+    null,
+  );
+});

@@ -1,10 +1,32 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import VoiceIcon from './VoiceIcon';
 import { api } from '../../shared/state';
-import { voiceError, stylistSpeechText } from '@maison/contracts/stylist-voice';
+import {
+  voiceError,
+  stylistSpeechText,
+  voiceQuotaReached,
+  markVoiceQuotaReached,
+  subscribeVoiceQuota,
+} from '@maison/contracts/stylist-voice';
 
+function useVoiceQuotaHint(language) {
+  const blocked = useSyncExternalStore(subscribeVoiceQuota, voiceQuotaReached, () => false);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    if (!visible) return;
+    const timer = setTimeout(() => setVisible(false), 5000);
+    return () => clearTimeout(timer);
+  }, [visible]);
+  const tooltip = visible ? (
+    <span className="stylist-quota-tooltip" role="status">
+      {voiceError('voice_daily_limit', language)}
+    </span>
+  ) : null;
+  return { blocked, show: () => setVisible(true), tooltip };
+}
 export function SpeakButton({ message, language, available, autoPlay, onAutoStart }) {
   const es = language === 'es';
+  const quota = useVoiceQuotaHint(language);
   const [busy, setBusy] = useState(false),
     [playing, setPlaying] = useState(false),
     [error, setError] = useState('');
@@ -37,7 +59,11 @@ export function SpeakButton({ message, language, available, autoPlay, onAutoStar
       setPlaying(false);
     }
   }, [available]);
-  async function speak() {
+  async function speak(automatic = false) {
+    if (quota.blocked && !uri.current) {
+      if (!automatic) quota.show();
+      return;
+    }
     if (busy) {
       pending.current?.abort();
       setBusy(false);
@@ -70,7 +96,10 @@ export function SpeakButton({ message, language, available, autoPlay, onAutoStar
       await audio.current.play();
       if (alive.current && !audio.current.paused) setPlaying(true);
     } catch (err) {
-      if (alive.current && err.name !== 'AbortError')
+      if (err.code === 'voice_daily_limit') {
+        markVoiceQuotaReached();
+        if (!automatic) quota.show();
+      } else if (alive.current && err.name !== 'AbortError')
         setError(
           err.name === 'NotAllowedError'
             ? es
@@ -90,19 +119,19 @@ export function SpeakButton({ message, language, available, autoPlay, onAutoStar
       if (!active || autoStarted.current) return;
       autoStarted.current = true;
       onAutoStart?.();
-      void speak();
+      void speak(true);
     });
     return () => {
       active = false;
     };
-  }, [autoPlay, available]);
+  }, [autoPlay, available, quota.blocked]);
   if (!available) return null;
   return (
     <div className="stylist-voice-play">
       <button
         type="button"
         className="button button-secondary stylist-voice-control"
-        onClick={speak}
+        onClick={() => void speak(false)}
       >
         <VoiceIcon speaker />
         {busy
@@ -117,6 +146,7 @@ export function SpeakButton({ message, language, available, autoPlay, onAutoStar
               ? 'Escuchar'
               : 'Listen'}
       </button>
+      {quota.tooltip}
       {error && (
         <p role="status" className="fine-print">
           {error}
@@ -135,6 +165,7 @@ export function VoiceInput({
   disabled,
 }) {
   const es = language === 'es';
+  const quota = useVoiceQuotaHint(language);
   const modeRef = useRef(mode);
   modeRef.current = mode;
   const [phase, setPhase] = useState('idle'),
@@ -177,6 +208,10 @@ export function VoiceInput({
     stream.current?.getTracks().forEach((track) => track.stop());
   }
   async function record() {
+    if (quota.blocked) {
+      quota.show();
+      return;
+    }
     setError('');
     if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
       setError(
@@ -282,7 +317,12 @@ export function VoiceInput({
         setPhase('idle');
       }
     } catch (err) {
-      if (alive.current && err.name !== 'AbortError') {
+      if (err.code === 'voice_daily_limit') {
+        markVoiceQuotaReached();
+        quota.show();
+        blob.current = null;
+        setPhase('idle');
+      } else if (alive.current && err.name !== 'AbortError') {
         setError(voiceError(err.code, language));
         setPhase('ready');
       }
@@ -291,6 +331,10 @@ export function VoiceInput({
     }
   }
   async function chooseVoice() {
+    if (quota.blocked) {
+      quota.show();
+      return;
+    }
     setError('');
     setPhase('permission');
     onBusyChange(true);
@@ -369,6 +413,7 @@ export function VoiceInput({
               ? 'La voz no está disponible ahora. Puedes continuar por escrito.'
               : 'Voice is unavailable now. You can keep typing.'}
         </p>
+        {quota.tooltip}
         {error && <p role="status">{error}</p>}
       </div>
     );
@@ -387,6 +432,7 @@ export function VoiceInput({
             {es ? 'Hablar' : 'Talk'}
           </button>
         )}
+        {quota.tooltip}
         {error && <p role="status">{error}</p>}
       </div>
     );
@@ -462,6 +508,7 @@ export function VoiceInput({
           ? 'Hasta un minuto por mensaje. Al terminar, se envía automáticamente y tAIlor responde con voz.'
           : 'Up to one minute per message. Finish to send automatically and hear tAIlor’s reply.'}
       </p>
+      {quota.tooltip}
       {error && (
         <p role="status" className="fine-print">
           {error}

@@ -69,3 +69,12 @@ test('spoken prices name euros and cents without ambiguous thousands separators'
   assert.equal(spokenMoney(2100), 'veintiún euros');
   assert.equal(spokenMoney(1000000), 'diez mil euros');
 });
+
+test('known voice quota blocks further automatic attempts only for its UTC day', async () => {
+  const { voiceQuotaReached, markVoiceQuotaReached } =
+    await import('@maison/contracts/stylist-voice');
+  const day = new Date('2020-01-01T23:59:59Z');
+  markVoiceQuotaReached(day);
+  assert.equal(voiceQuotaReached(day), true);
+  assert.equal(voiceQuotaReached(new Date('2020-01-02T00:00:00Z')), false);
+});

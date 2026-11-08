@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-08",
+  "scope": "Local automated regressions and Safari UI with a simulated exhausted voice quota",
+  "tests": {"backend":89,"apiClient":10,"frontend":7,"mobile":48,"total":154,"failed":0},
+  "reportedBudgetPhrases": ["Diez mil euros estaría perfecto","Tengo de presupuesto diez mil euros."],
+  "parsedBudgetCents": 1000000,
+  "reportedSelections": ["pues me quedaria con el conjunto midnight velvet y el pantalón de ready por it","este pantalón Pantalón · …Ready For It?"],
+  "selectionResult": "Local confirmation of the shown trouser option, without another catalogue request",
+  "quotaUiFixture": {
+    "setup": "Isolated SQLite quota with one allowed action already used; no real voice credentials",
+    "initialPersistentWarning": false,
+    "warningOnSpeakClick": true,
+    "warningDisappearedAfterSeconds": 5,
+    "beforeClick": {"speechRequests":1,"transcribeRequests":0,"providerCalls":0},
+    "afterClick": {"speechRequests":1,"transcribeRequests":0,"providerCalls":0},
+    "microphoneRequested": false
+  },
+  "notVerified": ["Physical speech transcription for these phrases","Physical playback in native devices","Provider monetary balances"]
+}

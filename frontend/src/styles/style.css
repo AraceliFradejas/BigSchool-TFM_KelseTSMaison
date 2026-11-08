@@ -3219,3 +3219,23 @@ main:focus {
 .stylist-chat:has(.stylist-voice-welcome) .stylist-chat-messages {
   flex: 0;
 }
+
+.stylist-voice-input,
+.stylist-voice-play {
+  position: relative;
+}
+.stylist-quota-tooltip {
+  position: absolute;
+  z-index: 4;
+  bottom: calc(100% + 8px);
+  left: 0;
+  width: max-content;
+  max-width: min(320px, 85vw);
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #332723;
+  color: #fffaf4;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  box-shadow: 0 6px 22px #33272322;
+}
