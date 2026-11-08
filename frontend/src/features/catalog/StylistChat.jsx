@@ -39,11 +39,22 @@ export default function StylistChat({ conversation }) {
     () => end.current?.scrollIntoView({ block: 'nearest', behavior: 'instant' }),
     [messages, busy],
   );
-  const say = (message) => setMessages((old) => [...old.slice(-15), message]);
-  async function send(event) {
+  const say = (message) =>
+    setMessages((old) => [
+      ...old.slice(-15),
+      {
+        ...message,
+        id: `${Date.now()}-${Math.random()}`,
+        autoSpeak: message.role === 'assistant' && interactionMode === 'voice',
+      },
+    ]);
+  function send(event) {
     event.preventDefault();
-    const text = draft.trim();
-    if (!text || busy || voiceBusy || interactionMode === null) return;
+    void sendText(draft.trim());
+  }
+  async function sendText(text, fromVoice = false) {
+    if (!text || busy || (voiceBusy && !fromVoice) || interactionMode === null) return;
+    window.dispatchEvent(new Event('maison-voice-stop'));
     setDraft('');
     say({ role: 'user', text });
     const feedback = stylistFeedback(
@@ -140,7 +151,7 @@ export default function StylistChat({ conversation }) {
         {messages.map((message, index) => (
           <article
             ref={index === messages.length - 1 ? end : null}
-            key={index}
+            key={message.id || index}
             className={`stylist-chat-message ${message.role === 'user' ? 'is-user' : ''}`}
           >
             <span className="stylist-chat-speaker">
@@ -155,6 +166,14 @@ export default function StylistChat({ conversation }) {
                   message.result?.looks.map((look) => look.id),
                 ])}
                 message={message}
+                autoPlay={message.autoSpeak}
+                onAutoStart={() =>
+                  setMessages((old) =>
+                    old.map((item) =>
+                      item.id === message.id ? { ...item, autoSpeak: false } : item,
+                    ),
+                  )
+                }
                 language={language}
                 available={voice.data?.available && interactionMode === 'voice'}
               />
@@ -224,9 +243,7 @@ export default function StylistChat({ conversation }) {
         disabled={busy}
         onBusyChange={setVoiceBusy}
         onTranscript={(text) => {
-          const combined = [draft.trim(), text].filter(Boolean).join(' ');
-          if (combined.length > 400) throw new Error('voice_transcript_invalid');
-          setDraft(combined);
+          void sendText(text, true);
         }}
       />
       <form className="stylist-chat-composer" onSubmit={send} hidden={interactionMode === null}>
@@ -235,7 +252,7 @@ export default function StylistChat({ conversation }) {
         </label>
         <textarea
           id="stylist-chat-message"
-          maxLength={400}
+          maxLength={1200}
           rows={1}
           value={draft}
           disabled={busy || voiceBusy}

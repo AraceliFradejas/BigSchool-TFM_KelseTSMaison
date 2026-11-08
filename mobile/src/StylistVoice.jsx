@@ -29,7 +29,9 @@ export function useStylistSpeech(language) {
     alive.current = true;
     const listener = AppState.addEventListener('change', (state) => {
       if (state !== 'active') {
+        pending.current?.abort();
         player.pause();
+        setBusy(null);
         setPlaying(null);
       }
     });
@@ -128,7 +130,12 @@ export function VoiceInput({
   useEffect(() => {
     alive.current = true;
     const listener = AppState.addEventListener('change', (state) => {
-      if (state !== 'active' && recording.current) void stop();
+      if (state !== 'active') {
+        pending.current?.abort();
+        if (recording.current) void stop(false);
+        onBusyChange(false);
+        setPhase('idle');
+      }
     });
     return () => {
       alive.current = false;
@@ -139,19 +146,23 @@ export function VoiceInput({
       void erase(uri.current);
     };
   }, []);
-  async function stop() {
+  async function stop(submit = true) {
     if (!recording.current) return;
     recording.current = false;
     clearTimeout(timer.current);
     try {
       await recorder.stop();
       const file = recorder.uri;
-      if (!alive.current || modeRef.current !== 'voice') {
+      if (!alive.current || modeRef.current !== 'voice' || !submit) {
         await erase(file);
         return;
       }
       uri.current = file;
       setPhase(file ? 'ready' : 'idle');
+      if (file) {
+        onBusyChange(false);
+        await transcribe();
+      }
     } catch {
       if (alive.current) {
         setError(voiceError('', language));
@@ -190,10 +201,10 @@ export function VoiceInput({
       if (!alive.current || modeRef.current !== 'voice') return;
       await recorder.prepareToRecordAsync();
       if (!alive.current || modeRef.current !== 'voice') return;
-      recorder.record({ forDuration: 20 });
+      recorder.record();
       recording.current = true;
       setPhase('recording');
-      timer.current = setTimeout(() => void stop(), 20000);
+      timer.current = setTimeout(() => void stop(), 60000);
     } catch {
       if (alive.current) {
         setError(voiceError('', language));
@@ -211,7 +222,7 @@ export function VoiceInput({
     pending.current = controller;
     try {
       const info = await Files.getInfoAsync(uri.current);
-      if (!info.exists || info.size > 768 * 1024) throw Error('invalid audio');
+      if (!info.exists || info.size > 2 * 1024 * 1024) throw Error('invalid audio');
       const body = new FormData();
       body.append('language', language);
       body.append('audio', { uri: uri.current, name: 'recording.m4a', type: 'audio/mp4' });
@@ -221,7 +232,7 @@ export function VoiceInput({
         body,
         signal: controller.signal,
       });
-      if (!alive.current) return;
+      if (!alive.current || controller.signal.aborted || modeRef.current !== 'voice') return;
       onTranscript(result.text);
       await erase(uri.current);
       uri.current = null;
@@ -259,7 +270,7 @@ export function VoiceInput({
     }
   }
   function chooseText() {
-    if (recording.current) void stop();
+    if (recording.current) void stop(false);
     pending.current?.abort();
     void erase(uri.current);
     uri.current = null;
@@ -373,8 +384,8 @@ export function VoiceInput({
       </View>
       <Text style={s.note}>
         {es
-          ? 'Graba hasta 20 segundos. El audio se procesa fuera del dispositivo para transcribirlo. Revisa el texto antes de enviarlo y evita incluir datos personales.'
-          : 'Record up to 20 seconds. Audio is processed outside your device for transcription. Review the text before sending it and avoid personal details.'}
+          ? 'Graba hasta un minuto. Al detener, tu petición se transcribe y se envía automáticamente; tAIlor te responderá con voz. El audio se procesa fuera del dispositivo. Evita incluir datos personales.'
+          : 'Record up to one minute. When you stop, your request is transcribed and sent automatically; tAIlor replies with voice. Audio is processed outside your device. Avoid personal details.'}
       </Text>
       {error && (
         <Text accessibilityLiveRegion="polite" style={s.note}>

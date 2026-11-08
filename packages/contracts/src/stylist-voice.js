@@ -1,10 +1,30 @@
+import { formatMoney } from './money.js';
 export function stylistSpeechText(message, language = 'es') {
-  const names = message.result?.looks?.map((look) => look.name).filter(Boolean) || [];
-  const intro = String(message.text || '').trim();
-  const list = names.length
-    ? `${language === 'es' ? 'Mis propuestas son' : 'My suggestions are'} ${names.join(', ')}.`
-    : '';
-  return [intro, list].filter(Boolean).join(' ').slice(0, 600);
+  const es = language === 'es';
+  const sections = [String(message.text || '').trim()];
+  for (const look of message.result?.looks || []) {
+    sections.push(
+      look.name,
+      look.explanation,
+      `${es ? 'Total del look' : 'Outfit total'}: ${formatMoney(look.totalCents)}.`,
+    );
+    for (const piece of look.pieces || []) {
+      const name = piece.product?.name;
+      const label = typeof name === 'object' ? name[language] : name;
+      const variant = piece.variant?.label?.[language];
+      if (label && Number.isInteger(piece.variant?.priceCents))
+        sections.push(
+          `${label}${variant ? ', ' + variant : ''}: ${formatMoney(piece.variant.priceCents)}.`,
+        );
+    }
+  }
+  if (message.result?.looks?.length)
+    sections.push(
+      es
+        ? '¿Con cuál te ves más? Cuéntame qué te gusta y qué cambiarías; lo vamos afinando a tu gusto.'
+        : 'Which one feels most like you? Tell me what you like or would change; we can refine it together.',
+    );
+  return sections.filter(Boolean).join(' ');
 }
 export function voiceError(code, language = 'es') {
   const es = language === 'es';

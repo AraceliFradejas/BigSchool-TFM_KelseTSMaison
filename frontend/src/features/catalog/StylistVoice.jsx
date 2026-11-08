@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { api } from '../../shared/state';
 import { voiceError, stylistSpeechText } from '@maison/contracts/stylist-voice';
 
-export function SpeakButton({ message, language, available }) {
+export function SpeakButton({ message, language, available, autoPlay, onAutoStart }) {
   const es = language === 'es';
   const [busy, setBusy] = useState(false),
     [playing, setPlaying] = useState(false),
@@ -28,7 +28,20 @@ export function SpeakButton({ message, language, available }) {
       window.removeEventListener('maison-voice-stop', stop);
     };
   }, []);
+  useEffect(() => {
+    if (!available) {
+      pending.current?.abort();
+      audio.current?.pause();
+      setBusy(false);
+      setPlaying(false);
+    }
+  }, [available]);
   async function speak() {
+    if (busy) {
+      pending.current?.abort();
+      setBusy(false);
+      return;
+    }
     if (playing) {
       audio.current?.pause();
       setPlaying(false);
@@ -68,14 +81,28 @@ export function SpeakButton({ message, language, available }) {
       if (alive.current) setBusy(false);
     }
   }
+  const autoStarted = useRef(false);
+  useEffect(() => {
+    if (!autoPlay || !available || autoStarted.current) return;
+    let active = true;
+    queueMicrotask(() => {
+      if (!active || autoStarted.current) return;
+      autoStarted.current = true;
+      onAutoStart?.();
+      void speak();
+    });
+    return () => {
+      active = false;
+    };
+  }, [autoPlay, available]);
   if (!available) return null;
   return (
     <div className="stylist-voice-play">
-      <button type="button" className="text-link" onClick={speak} disabled={busy}>
+      <button type="button" className="text-link" onClick={speak}>
         {busy
           ? es
-            ? 'Preparando voz…'
-            : 'Preparing voice…'
+            ? 'Cancelar voz…'
+            : 'Cancel voice…'
           : playing
             ? es
               ? 'Detener voz'
@@ -111,11 +138,23 @@ export function VoiceInput({
     blob = useRef(null),
     timer = useRef(null),
     pending = useRef(null),
-    alive = useRef(true);
+    alive = useRef(true),
+    submitOnStop = useRef(true);
   useEffect(() => {
     alive.current = true;
+    const background = () => {
+      if (document.hidden) {
+        stop(false);
+        pending.current?.abort();
+        blob.current = null;
+        onBusyChange(false);
+        setPhase('idle');
+      }
+    };
+    document.addEventListener('visibilitychange', background);
     return () => {
       alive.current = false;
+      document.removeEventListener('visibilitychange', background);
       clearTimeout(timer.current);
       pending.current?.abort();
       if (recorder.current) {
@@ -125,7 +164,8 @@ export function VoiceInput({
       stream.current?.getTracks().forEach((track) => track.stop());
     };
   }, []);
-  function stop() {
+  function stop(submit = true) {
+    submitOnStop.current = submit;
     clearTimeout(timer.current);
     if (recorder.current?.state === 'recording') recorder.current.stop();
     stream.current?.getTracks().forEach((track) => track.stop());
@@ -161,13 +201,14 @@ export function VoiceInput({
         audioBitsPerSecond: 64000,
       });
       recorder.current = recording;
+      submitOnStop.current = true;
       const chunks = [];
       let bytes = 0;
       recording.ondataavailable = (event) => {
         if (event.data.size) {
           chunks.push(event.data);
           bytes += event.data.size;
-          if (bytes > 768 * 1024) stop();
+          if (bytes > 2 * 1024 * 1024) stop();
         }
       };
       recording.onstop = () => {
@@ -175,21 +216,21 @@ export function VoiceInput({
         clearTimeout(timer.current);
         if (!alive.current) return;
         onBusyChange(false);
-        if (modeRef.current !== 'voice') {
+        if (modeRef.current !== 'voice' || !submitOnStop.current) {
           blob.current = null;
           setPhase('idle');
           return;
         }
-        if (!bytes || bytes > 768 * 1024) {
+        if (!bytes || bytes > 2 * 1024 * 1024) {
           setError(voiceError('voice_transcript_invalid', language));
           setPhase('idle');
           return;
         }
         blob.current = new Blob(chunks, { type: recording.mimeType });
-        setPhase('ready');
+        void transcribe();
       };
       recording.onerror = () => {
-        stop();
+        stop(false);
         if (alive.current) {
           setError(voiceError('', language));
           onBusyChange(false);
@@ -198,7 +239,7 @@ export function VoiceInput({
       };
       recording.start(250);
       setPhase('recording');
-      timer.current = setTimeout(stop, 20000);
+      timer.current = setTimeout(() => stop(), 60000);
     } catch {
       if (alive.current) {
         setError(
@@ -229,7 +270,7 @@ export function VoiceInput({
         body: data,
         signal: controller.signal,
       });
-      if (alive.current) {
+      if (alive.current && !controller.signal.aborted && modeRef.current === 'voice') {
         onTranscript(result.text);
         blob.current = null;
         setPhase('idle');
@@ -269,7 +310,7 @@ export function VoiceInput({
     }
   }
   function chooseText() {
-    stop();
+    stop(false);
     pending.current?.abort();
     blob.current = null;
     setPhase('idle');
@@ -364,7 +405,7 @@ export function VoiceInput({
         <button
           type="button"
           className="text-link"
-          onClick={phase === 'recording' ? stop : record}
+          onClick={phase === 'recording' ? () => stop() : record}
           disabled={disabled || phase === 'busy' || phase === 'permission'}
         >
           {phase === 'recording'
@@ -400,8 +441,8 @@ export function VoiceInput({
       </div>
       <p className="fine-print">
         {es
-          ? 'Graba hasta 20 segundos. El audio se procesa fuera del dispositivo para transcribirlo. Revisa el texto antes de enviarlo y evita incluir datos personales.'
-          : 'Record up to 20 seconds. Audio is processed outside your device for transcription. Review the text before sending it and avoid personal details.'}
+          ? 'Graba hasta un minuto. Al detener, tu petición se transcribe y se envía automáticamente; tAIlor te responderá con voz. El audio se procesa fuera del dispositivo. Evita incluir datos personales.'
+          : 'Record up to one minute. When you stop, your request is transcribed and sent automatically; tAIlor replies with voice. Audio is processed outside your device. Avoid personal details.'}
       </p>
       {error && (
         <p role="status" className="fine-print">

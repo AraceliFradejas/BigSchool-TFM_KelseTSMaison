@@ -303,7 +303,7 @@ test('AI route requires an account, exposes no secret configuration, and editori
   assert.equal(result.status, 200);
   assert.equal(result.body.data.mode, 'ai');
   assert.equal(calls, 1);
-  assert.equal((await post('/stylist', { ...preferences, style: 'x'.repeat(401) })).status, 400);
+  assert.equal((await post('/stylist', { ...preferences, style: 'x'.repeat(1201) })).status, 400);
   assert.equal(calls, 1);
 });
 

@@ -1,13 +1,14 @@
 # Voz de tAIlor · integración preparada
 
-Estado del 8 de noviembre de 2026: elección inicial entre texto y voz implementada en web y app, 144 pruebas correctas y exportaciones iOS/Android correctas. Tres pruebas reales de ElevenLabs (voz ES, voz EN y transcripción de audio generado) respondieron HTTP 200. La voz pública permanece desactivada hasta autorizar sus secretos y cuota en Vercel. La grabación y reproducción físicas en los dispositivos siguen pendientes.
+Estado del 8 de noviembre de 2026: elección inicial entre texto y voz implementada en web y app, 144 pruebas correctas y exportaciones iOS/Android correctas. Tres pruebas reales de ElevenLabs (voz ES, voz EN y transcripción de audio generado) respondieron HTTP 200. La autora ha autorizado los secretos de producción y seis acciones diarias; la verificación del despliegue se registra al final de este documento. La grabación y reproducción físicas en los dispositivos siguen pendientes.
 
 ## Recorrido
 
 1. Al abrir el chat se pregunta «¿Prefieres escribir o hablar con tAIlor?». Escribir abre el campo sin solicitar micrófono. Elegir voz solicita permiso; la grabación empieza solo al pulsar Dictar, no al conceder el permiso. El modo se conserva durante la navegación y se puede cambiar.
-2. La interfaz limita la grabación a veinte segundos. Se puede detener antes.
-3. «Transcribir» envía el audio a ElevenLabs Scribe v2 a través de la API de Maison. Se puede descartar antes. El texto se incorpora al borrador para revisarlo antes de «Enviar»; no crea automáticamente una consulta de outfit.
-4. «Escuchar» convierte en voz la respuesta y los nombres de los looks mostrados mediante Eleven Multilingual v2. Es un resumen, no una lectura de todos los precios y variantes. La reproducción es voluntaria; Safari puede exigir otro toque tras preparar el audio.
+2. La interfaz limita cada grabación a un minuto y permite detenerla antes. Cerrar o pasar a segundo plano no envía la grabación pendiente.
+3. Al detener, se transcribe mediante Scribe v2 a través del backend y se envía automáticamente al chat. La petición queda visible como texto; si hay un error se puede volver a intentar o continuar escribiendo.
+4. En modo voz, la nueva respuesta se sintetiza automáticamente una sola vez: introducción, nombres, explicaciones, totales, piezas con su variante y precio, y pregunta final. Se puede detener y volver a escuchar. No se reproduce de nuevo automáticamente al reabrir el chat. Safari puede exigir pulsar «Escuchar» cuando bloquea la reproducción automática.
+
 
 La misma voz puede leer textos ES/EN. Web utiliza MediaRecorder y Audio; la app utiliza los módulos oficiales expo-audio y expo-file-system compatibles con SDK 58 y disponibles en Expo Go. La exportación no acredita permisos ni audio físico de cada dispositivo. El mensaje de permiso personalizado corresponde a un futuro binario propio; Expo Go presenta sus permisos.
 
@@ -15,11 +16,13 @@ La misma voz puede leer textos ES/EN. Web utiliza MediaRecorder y Audio; la app 
 
 Solo backend: `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`, `STYLIST_VOICE_ENABLED=0` por defecto y `STYLIST_VOICE_DAILY_LIMIT=6`. Los valores reales están fuera de Git. Los permisos necesarios son Text to Speech, Speech to Text y lectura de Voices para comprobar la voz; no se necesita administración o borrado de voces.
 
-Se propone un máximo global separado de seis intentos de voz por día UTC, compartido entre síntesis y transcripción, incluidos fallos. La cuota se guarda atómicamente en SQLite/MongoDB y no consume la cuota de los modelos de outfits. La fecha de vencimiento del asesor también desactiva las llamadas de voz. La activación de producción y el consumo real requieren autorización; disponer de una clave no demuestra saldo ni todos los permisos.
+La autora ha autorizado un máximo global separado de seis intentos de voz por día UTC, compartido entre síntesis y transcripción, incluidos fallos. La cuota se guarda atómicamente en SQLite/MongoDB y no consume la cuota de los modelos de outfits. La fecha de vencimiento del asesor también desactiva las llamadas de voz. La activación está autorizada hasta finalizar el 31/12/2026 en Madrid; disponer de una clave no demuestra saldo ni todos los permisos.
 
 ## Límites y datos
 
-El servidor admite un archivo de hasta 768 KiB y reconoce firmas MP4, WebM, Ogg, WAV y MP3, sin fiarse de su nombre. La duración de veinte segundos se controla en el cliente; no se afirma una validación de duración del códec en el servidor. Transcripciones de más de 400 caracteres se rechazan; voz de salida limitada a 600 caracteres y respuesta de audio de hasta 1 MiB. Los destinos externos son fijos, las redirecciones se rechazan y hay timeout de veinte segundos.
+El servidor admite archivos de hasta 2 MiB y reconoce firmas MP4, WebM, Ogg, WAV y MP3, sin fiarse del nombre. El minuto se controla en el cliente; no se afirma validar la duración del códec en el servidor. Se admiten transcripciones y mensajes de hasta 1.200 caracteres y síntesis de hasta 6.000 caracteres, sin recortar silenciosamente la respuesta. El audio de salida se limita a 3 MiB; timeout de 45 segundos para síntesis y 30 para transcripción. El modelo Multilingual v2 admite hasta 10.000 caracteres según su [documentación oficial](https://elevenlabs.io/docs/overview/models); Maison mantiene un límite inferior.
+
+La lectura completa consume más créditos que el resumen anterior. Se conserva el máximo global de seis acciones diarias entre transcripción y síntesis, incluidos fallos, sin reintentos automáticos de proveedor. Una intervención hablada con respuesta consume normalmente dos acciones de voz y, si pide nuevas recomendaciones, también un intento de IA de la cuota separada. No equivale a seis conversaciones ni a un tope monetario.
 
 Se comprueban temas bloqueados, instrucciones maliciosas y permisos, los campos no admitidos se rechazan y los errores externos no se copian a respuestas ni logs. El audio no se guarda en la base de datos de Maison. Se mantiene temporalmente en memoria/caché para grabación y reproducción, con limpieza al terminar o cerrar. El cliente no recibe la clave. La retención de ElevenLabs depende de la cuenta y sus condiciones; no se ha habilitado ni acreditado retención cero del proveedor. La conversación por texto sigue disponible si la voz falla, se deniega el permiso o se agota la cuota.
 

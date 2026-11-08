@@ -1,5 +1,7 @@
 # KelseTS Maison
 
+Voz de tAIlor: dictado por turnos de hasta un minuto y lectura completa de la respuesta en web y app. [Funcionamiento, límites y verificaciones](docs/VOZ-TAILOR.md).
+
 [Versión en castellano](#versión-en-castellano) · [English version](#english-version)
 
 ## Versión en castellano

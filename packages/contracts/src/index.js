@@ -92,7 +92,7 @@ export const stylistSchema = z
     language: z.enum(['es', 'en']).default('es'),
     size: z.enum(['XS', 'S', 'M', 'L', 'XL', 'XXL']).optional(),
     shoeSize: z.enum(['35', '36', '37', '38', '39', '40', '41', '42']).optional(),
-    style: z.string().trim().max(400).default(''),
-    message: z.string().trim().max(400).optional(),
+    style: z.string().trim().max(1200).default(''),
+    message: z.string().trim().max(1200).optional(),
   })
   .strict();

@@ -489,3 +489,8 @@ Safari local: pregunta contextual de presupuesto, talla M/calzado 38, propuestas
 ## Elección de modo y voz real
 
 144 pruebas correctas: 86 backend, 10 cliente HTTP, 7 frontend y 41 móvil. Se añade corrección de marca sin alterar Taylor Swift y saludo dirigido al nombre del asistente. Las pruebas reales de ElevenLabs autorizadas respondieron HTTP 200 (ES, EN y transcripción de audio sintético); no se capturó micrófono. [Resultados](evidencias/voz-2026-11-08.md). Selector inicial y modo texto revisados en Safari local, sin permiso de micrófono; se corrigió un defecto local de paso de estado detectado durante esta revisión. El nuevo recorrido de permisos y grabación física queda pendiente.
+
+
+### Voz por turnos y lectura completa · 8 de noviembre
+
+A petición de la autora, el dictado pasa a un minuto. Al detener, se transcribe y envía automáticamente; en modo voz la nueva respuesta se lee una sola vez con explicaciones, totales, piezas, variantes, precios y pregunta final. El texto y las fotos permanecen disponibles. Se conserva la cuota de seis acciones diarias de voz y el cierre al finalizar el 31/12/2026. Normalmente cada turno hablado requiere dos acciones. Safari puede requerir pulsar Escuchar si bloquea la reproducción automática. La autora ha autorizado los secretos de producción; la comprobación física del recorrido automático sigue pendiente y no se han repetido las tres llamadas reales ya consumidas. La suite de 144 pruebas, build web y exportaciones iOS/Android pasan con el nuevo contrato de límites.

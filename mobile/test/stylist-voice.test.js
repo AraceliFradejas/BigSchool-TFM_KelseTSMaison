@@ -1,20 +1,38 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { stylistSpeechText, voiceError } from '@maison/contracts/stylist-voice';
-test('voice summary reads only the assistant reply and look names within its bound', () => {
-  const text = stylistSpeechText(
-    {
-      text: 'He pensado en tu cena.',
-      result: {
-        looks: [{ name: 'Golden Hour', totalCents: 230000, pieces: [{ secret: 'not spoken' }] }],
-      },
+test('voice reads complete outfit explanations, current variant prices and follow-up in both languages', () => {
+  const message = {
+    text: 'He pensado en tu cena.',
+    result: {
+      looks: [
+        {
+          name: 'Golden Hour',
+          explanation: 'Una elección luminosa para tu cena.',
+          totalCents: 230000,
+          pieces: [
+            {
+              product: { name: { es: 'Vestido dorado', en: 'Golden dress' } },
+              variant: { label: { es: 'Talla M', en: 'Size M' }, priceCents: 230000 },
+              secret: 'not spoken',
+            },
+          ],
+        },
+      ],
     },
-    'es',
-  );
-  assert.match(text, /Golden Hour/);
-  assert.ok(!text.includes('230000'));
+  };
+  const text = stylistSpeechText(message, 'es');
+  for (const expected of [
+    'Golden Hour',
+    'elección luminosa',
+    'Vestido dorado, Talla M',
+    '2.300,00',
+    '¿Con cuál',
+  ])
+    assert.ok(text.includes(expected), expected);
   assert.ok(!text.includes('not spoken'));
-  assert.ok(stylistSpeechText({ text: 'x'.repeat(1000) }).length <= 600);
+  assert.match(stylistSpeechText(message, 'en'), /Golden dress, Size M/);
+  assert.equal(stylistSpeechText({ text: 'x'.repeat(1000) }).length, 1000);
   assert.match(voiceError('voice_daily_limit', 'es'), /seguir escribiendo/);
 });
 

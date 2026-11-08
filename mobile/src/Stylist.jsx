@@ -102,10 +102,35 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
     pending.current?.abort();
     setBusy(false);
   }, [language, user?.id]);
-  const say = (message) => setMessages((old) => [...old.slice(-15), message]);
-  async function send() {
-    const text = draft.trim();
-    if (!text || busy || voiceBusy || interactionMode === null) return;
+  useEffect(() => {
+    const message = messages.at(-1);
+    if (!message?.autoSpeak || interactionMode !== 'voice' || !voice.data?.available) return;
+    let active = true;
+    queueMicrotask(() => {
+      if (!active) return;
+      setMessages((old) =>
+        old.map((item) => (item.id === message.id ? { ...item, autoSpeak: false } : item)),
+      );
+      void speech.speak(message, messages.length - 1);
+    });
+    return () => {
+      active = false;
+    };
+  }, [messages.at(-1)?.id, interactionMode, voice.data?.available]);
+  const say = (message) =>
+    setMessages((old) => [
+      ...old.slice(-15),
+      {
+        ...message,
+        id: `${Date.now()}-${Math.random()}`,
+        autoSpeak: message.role === 'assistant' && interactionMode === 'voice',
+      },
+    ]);
+  function send() {
+    void sendText(draft.trim());
+  }
+  async function sendText(text, fromVoice = false) {
+    if (!text || busy || (voiceBusy && !fromVoice) || interactionMode === null) return;
     Keyboard.dismiss();
     speech.stop();
     setDraft('');
@@ -175,7 +200,10 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
   const voiceControls = (
     <VoiceInput
       mode={interactionMode}
-      onModeChange={setInteractionMode}
+      onModeChange={(mode) => {
+        speech.stop();
+        setInteractionMode(mode);
+      }}
       language={language}
       available={voice.data?.available}
       disabled={busy}
@@ -185,9 +213,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
       }}
       onBusyChange={setVoiceBusy}
       onTranscript={(text) => {
-        const combined = [draft.trim(), text].filter(Boolean).join(' ');
-        if (combined.length > 400) throw new Error('voice_transcript_invalid');
-        setDraft(combined);
+        void sendText(text, true);
       }}
     />
   );
@@ -229,7 +255,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
         )}
         {messages.map((message, index) => (
           <View
-            key={index}
+            key={message.id || index}
             onLayout={(event) => {
               if (index === messages.length - 1)
                 scroll.current?.scrollTo({ y: event.nativeEvent.layout.y, animated: false });
@@ -340,7 +366,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
             onChangeText={setDraft}
             editable={!busy && !voiceBusy}
             multiline
-            maxLength={400}
+            maxLength={1200}
             style={s.input}
             placeholder={es ? '¿Qué tienes planeado?' : 'What are you planning?'}
             accessibilityLabel={

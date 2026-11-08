@@ -9,7 +9,7 @@ import { stylistUnsafeText } from '@maison/contracts/stylist-policy';
 export const voiceAvailable = (config, now = Date.now()) =>
   Boolean(config?.voice?.enabled && (config.expiresAt == null || now < config.expiresAt));
 const speechSchema = z
-  .object({ text: z.string().trim().min(1).max(600), language: z.enum(['es', 'en']) })
+  .object({ text: z.string().trim().min(1).max(6000), language: z.enum(['es', 'en']) })
   .strict();
 const languageSchema = z.object({ language: z.enum(['es', 'en']) }).strict();
 export function audioFormat(buffer) {
@@ -53,7 +53,10 @@ export async function requestVoice(kind, payload, config, signal, fetcher = fetc
     method: 'POST',
     redirect: 'error',
     headers: { 'xi-api-key': config.key },
-    signal: AbortSignal.any([AbortSignal.timeout(20000), ...(signal ? [signal] : [])]),
+    signal: AbortSignal.any([
+      AbortSignal.timeout(kind === 'speech' ? 45000 : 30000),
+      ...(signal ? [signal] : []),
+    ]),
   };
   let url;
   if (kind === 'speech') {
@@ -76,7 +79,7 @@ export async function requestVoice(kind, payload, config, signal, fetcher = fetc
   }
   try {
     const response = await fetcher(url, options);
-    const buffer = await boundedBody(response, kind === 'speech' ? 1024 * 1024 : 65536);
+    const buffer = await boundedBody(response, kind === 'speech' ? 3 * 1024 * 1024 : 65536);
     if (kind === 'speech') {
       if (
         !/^audio\//i.test(response.headers.get('content-type') || '') ||
@@ -89,10 +92,10 @@ export async function requestVoice(kind, payload, config, signal, fetcher = fetc
       return { audioBase64: buffer.toString('base64'), mimeType: 'audio/mpeg' };
     }
     const result = JSON.parse(buffer.toString());
-    if (typeof result.text !== 'string' || !result.text.trim() || result.text.trim().length > 400)
+    if (typeof result.text !== 'string' || !result.text.trim() || result.text.trim().length > 1200)
       throw new HttpError(422, 'voice_transcript_invalid');
     const text = normalizeStylistTranscript(result.text.trim());
-    if (text.length > 400) throw new HttpError(422, 'voice_transcript_invalid');
+    if (text.length > 1200) throw new HttpError(422, 'voice_transcript_invalid');
     return { text };
   } catch (error) {
     if (signal?.aborted) throw error;
@@ -105,9 +108,9 @@ export function voiceRouter(db, config, limiter, provider = requestVoice) {
   router.get('/stylist/voice/status', (req, res) =>
     send(res, {
       available: voiceAvailable(config),
-      maxRecordingSeconds: 20,
-      maxAudioBytes: 768 * 1024,
-      maxSpeechChars: 600,
+      maxRecordingSeconds: 60,
+      maxAudioBytes: 2 * 1024 * 1024,
+      maxSpeechChars: 6000,
     }),
   );
   const ready = (req, res, next) => {
@@ -118,7 +121,7 @@ export function voiceRouter(db, config, limiter, provider = requestVoice) {
   };
   const upload = multer({
     storage: multer.memoryStorage(),
-    limits: { fileSize: 768 * 1024, files: 1, fields: 1, parts: 2 },
+    limits: { fileSize: 2 * 1024 * 1024, files: 1, fields: 1, parts: 2 },
   }).single('audio');
   async function run(req, res, kind, payload) {
     if (!voiceAvailable(config)) throw new HttpError(503, 'voice_disabled');

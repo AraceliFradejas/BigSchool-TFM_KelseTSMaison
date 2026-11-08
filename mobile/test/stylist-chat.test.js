@@ -45,7 +45,7 @@ test('follow-up style context is bounded and can update occasion without changin
   const next = chatPreferences('Mejor para un concierto. ' + 'a'.repeat(500), first.preferences);
   assert.equal(next.preferences.occasion, 'concert');
   assert.equal(next.preferences.budgetCents, 300000);
-  assert.ok(next.preferences.style.length <= 400);
+  assert.ok(next.preferences.style.length <= 1200);
 });
 
 test('short feedback receives a local response only after an outfit suggestion', () => {

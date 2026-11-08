@@ -67,7 +67,7 @@ export function chatPreferences(message, previous = {}) {
   if (!/^\d[\d.,]*\s*(?:€|euros?)?$/.test(normalized))
     preferences.style = (
       previous.style ? `${previous.style.slice(-190)}\nAhora: ${text}` : text
-    ).slice(-400);
+    ).slice(-1200);
   return { preferences, needsBudget: !preferences.budgetCents || invalidBudget, invalidBudget };
 }
 
