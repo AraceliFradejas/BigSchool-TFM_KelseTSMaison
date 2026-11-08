@@ -201,13 +201,15 @@ export async function converseStylist({
   if (!looks.length) return unavailable('catalog_unavailable');
   const prompt = conversationPrompt(input, looks, products);
   if (Buffer.byteLength(prompt.input, 'utf8') > 64000) return unavailable('input_limit');
-  let intent, provider;
+  let intent,
+    provider,
+    monetaryReply = false;
   for (const settings of config.chain) {
     if (!isStylistAvailable(config) || signal?.aborted) return unavailable('expired');
     if (!(await claimStylistCall(db, config.dailyLimit))) return unavailable('daily_limit');
     try {
       intent = intentSchema.parse(await requestProvider(settings, prompt, { ...config, signal }));
-      if (stylistUnsafeExplanation(intent.reply) || /https?:|<[^>]+>/i.test(intent.reply))
+      if (stylistUnsafeText(intent.reply) || /https?:|<[^>]+>/i.test(intent.reply))
         throw Error('unsafe_reply');
       if (intent.referenceLookId && !looks.some((look) => look.id === intent.referenceLookId))
         throw Error('unknown_look');
@@ -220,11 +222,25 @@ export async function converseStylist({
         )
       )
         throw Error('unknown_option');
+      monetaryReply = stylistUnsafeExplanation(intent.reply);
       provider = settings.provider;
       break;
     } catch (error) {
       if (['unavailable', 'invalid_response'].includes(error.kind)) continue;
-      return unavailable(error.kind === 'refusal' ? 'refusal' : 'invalid_response');
+      return {
+        ...unavailable(error.kind === 'refusal' ? 'refusal' : 'invalid_response'),
+        diagnostic:
+          error instanceof z.ZodError
+            ? {
+                code: 'intent_schema',
+                fields: error.issues.map((issue) => issue.path.join('.')).slice(0, 6),
+              }
+            : {
+                code: ['unsafe_reply', 'unknown_look', 'unknown_option'].includes(error.message)
+                  ? error.message
+                  : error.kind || 'invalid_response',
+              },
+      };
     }
   }
   if (!intent) return unavailable('unavailable');
@@ -242,6 +258,37 @@ export async function converseStylist({
     provider,
     preferences: result.preferences || preferences,
   });
+  // A model echoing a budget must not invalidate the understood intent. Monetary facts remain server-owned.
+  if (monetaryReply) {
+    const replies = es
+      ? {
+          clarify: !preferences.budgetCents
+            ? '¿Qué presupuesto máximo te viene bien?'
+            : /cita|date/i.test(preferences.style) &&
+                ['any', 'weekend'].includes(preferences.occasion)
+              ? 'Tomo ese presupuesto como máximo. ¿Qué tenéis planeado para esa cita: cena, paseo u otra ocasión?'
+              : 'Perfecto. ¿Hay algún color o talla que quieras tener en cuenta?',
+          recommend: stylistEditorialIntro(preferences, input.language, true),
+          complement: 'Te muestro opciones del catálogo para completar ese look.',
+          select:
+            '¡Perfecto, conservamos esa elección! Puedes abrir la pieza para revisar tu talla.',
+          thanks: '¡Gracias a ti! Que disfrutes muchísimo de ese plan especial.',
+          answer:
+            'Puedes consultar el precio actualizado en la ficha de cada pieza. ¿Qué detalle de estilo te gustaría revisar?',
+        }
+      : {
+          clarify: !preferences.budgetCents
+            ? 'What maximum budget works for you?'
+            : 'I have noted that budget. What do you have planned for the occasion?',
+          recommend: stylistEditorialIntro(preferences, input.language, true),
+          complement: 'Here are catalogue options to complete that outfit.',
+          select: 'Perfect, we will keep that choice. Open the piece to check your size.',
+          thanks: 'Thank you! Enjoy your special occasion.',
+          answer:
+            'The current price is shown on each product page. What styling detail would you like to review?',
+        };
+    intent.reply = replies[intent.action] || stylistScopeMessage(input.language);
+  }
   if (intent.action === 'out_of_scope')
     return finish(empty(stylistScopeMessage(input.language), 'out_of_scope'));
   if (['recommend', 'complement', 'select'].includes(intent.action) && !preferences.budgetCents)

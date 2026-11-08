@@ -218,3 +218,23 @@ test('chat endpoint is guest-aware, rejects client prices and never leaks config
     .send({ message: 'Hola', priceCents: 1 });
   assert.equal(bad.status, 400);
 });
+
+test('a model echo of the understood budget cannot turn an otherwise valid clarification into unavailable AI', async (t) => {
+  const db = setup(t);
+  const result = await run(
+    db,
+    {
+      message: 'Mmm, ¿diez mil?',
+      preferences: { occasion: 'weekend', style: 'Una cita con una persona especial' },
+    },
+    intent({
+      reply: 'Perfecto, con 10.000 euros podemos preparar un look especial. ¿Qué plan tenéis?',
+      updates: { ...updates, budgetCents: 1000000 },
+    }),
+  );
+  assert.equal(result.mode, 'ai');
+  assert.equal(result.preferences.budgetCents, 1000000);
+  assert.equal(result.reason, 'clarify');
+  assert.match(result.message, /planeado/);
+  assert.doesNotMatch(result.message, /10.000|euros/);
+});
