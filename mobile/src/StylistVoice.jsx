@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AppState, Text, View, StyleSheet } from 'react-native';
+import { AppState, Text, View, StyleSheet, Pressable } from 'react-native';
 import {
   useAudioRecorder,
   useAudioRecorderState,
@@ -345,14 +345,15 @@ export function VoiceInput({
 
   return (
     <View style={s.box}>
-      <View style={s.actions}>
-        <Text style={s.note}>{es ? 'Modo voz' : 'Voice mode'}</Text>
-        <Button secondary onPress={chooseText}>
-          {es ? 'Cambiar a texto' : 'Switch to text'}
-        </Button>
+      <View style={s.modeHeader}>
+        <Text style={s.note}>{es ? 'Conversación por voz' : 'Voice conversation'}</Text>
+        <Pressable accessibilityRole="button" onPress={chooseText} style={s.modeSwitch}>
+          <Text style={s.modeSwitchText}>{es ? 'Cambiar a texto' : 'Switch to text'}</Text>
+        </Pressable>
       </View>
-      <View style={s.actions}>
+      <View style={[s.actions, { justifyContent: 'center' }]}>
         <Button
+          color="#821b32"
           icon={<VoiceIcon stop={phase === 'recording'} />}
           disabled={disabled || phase === 'busy' || phase === 'permission'}
           onPress={phase === 'recording' ? () => void stop() : record}
@@ -390,8 +391,8 @@ export function VoiceInput({
       </View>
       <Text style={s.note}>
         {es
-          ? 'Graba hasta un minuto. Al detener, tu petición se transcribe y se envía automáticamente; tAIlor te responderá con voz. El audio se procesa fuera del dispositivo. Evita incluir datos personales.'
-          : 'Record up to one minute. When you stop, your request is transcribed and sent automatically; tAIlor replies with voice. Audio is processed outside your device. Avoid personal details.'}
+          ? 'Hasta un minuto por mensaje. Al terminar, se envía automáticamente y tAIlor responde con voz. El audio se procesa fuera del dispositivo.'
+          : 'Up to one minute per message. Finish to send automatically and hear tAIlor’s reply. Audio is processed outside your device.'}
       </Text>
       {error && (
         <Text accessibilityLiveRegion="polite" style={s.note}>
@@ -404,7 +405,30 @@ export function VoiceInput({
 const s = StyleSheet.create({
   choice: { padding: 18, gap: 14, backgroundColor: '#fffcf7', borderRadius: 18 },
   title: { fontSize: 20, color: '#4b1423', fontFamily: 'Georgia' },
-  box: { gap: 6 },
+  box: {
+    gap: 18,
+    padding: 16,
+    marginBottom: 12,
+    backgroundColor: '#fffcf7',
+    borderColor: '#ddd5ca',
+    borderWidth: 1,
+    borderRadius: 20,
+  },
+  modeHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  modeSwitch: {
+    minHeight: 44,
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: '#d9c5c8',
+    borderRadius: 8,
+  },
+  modeSwitchText: { color: '#6f1527', fontSize: 12 },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   note: { fontSize: 11, lineHeight: 16, color: '#6c625d' },
 });

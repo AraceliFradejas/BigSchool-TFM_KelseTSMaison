@@ -405,18 +405,14 @@ export function VoiceInput({
     );
 
   return (
-    <div className="stylist-voice-input">
-      <div className="stylist-voice-actions">
-        <span>{es ? 'Modo voz' : 'Voice mode'}</span>
-        <button
-          type="button"
-          className="button button-secondary stylist-voice-control"
-          onClick={chooseText}
-        >
+    <div className="stylist-voice-input stylist-voice-panel">
+      <div className="stylist-voice-mode-header">
+        <span>{es ? 'Conversación por voz' : 'Voice conversation'}</span>
+        <button type="button" className="stylist-mode-switch" onClick={chooseText}>
           {es ? 'Cambiar a texto' : 'Switch to text'}
         </button>
       </div>
-      <div className="stylist-voice-actions">
+      <div className="stylist-voice-actions stylist-voice-main-action">
         <button
           type="button"
           className={`button stylist-voice-control stylist-record ${phase === 'recording' ? 'is-recording' : ''}`}
@@ -463,8 +459,8 @@ export function VoiceInput({
       </div>
       <p className="fine-print">
         {es
-          ? 'Graba hasta un minuto. Al detener, tu petición se transcribe y se envía automáticamente; tAIlor te responderá con voz. El audio se procesa fuera del dispositivo. Evita incluir datos personales.'
-          : 'Record up to one minute. When you stop, your request is transcribed and sent automatically; tAIlor replies with voice. Audio is processed outside your device. Avoid personal details.'}
+          ? 'Hasta un minuto por mensaje. Al terminar, se envía automáticamente y tAIlor responde con voz. El audio se procesa fuera del dispositivo.'
+          : 'Up to one minute per message. Finish to send automatically and hear tAIlor’s reply. Audio is processed outside your device.'}
       </p>
       {error && (
         <p role="status" className="fine-print">

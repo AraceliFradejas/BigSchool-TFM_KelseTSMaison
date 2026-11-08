@@ -3132,3 +3132,90 @@ main:focus {
   outline: 3px solid #b3152b33;
   outline-offset: 2px;
 }
+
+/* Voice has one primary action; switching mode remains a quiet, separate control. */
+.stylist-voice-panel {
+  background: #fffcf7;
+  border: 1px solid #ddd5ca;
+  border-radius: 20px;
+  padding: 14px 18px 16px;
+  gap: 18px;
+  margin: 10px 0 14px;
+}
+.stylist-voice-mode-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.stylist-voice-mode-header > span {
+  font-size: 0.7rem;
+  color: #6c625d;
+}
+.stylist-mode-switch {
+  background: transparent;
+  color: #6f1527;
+  border: 1px solid #d9c5c8;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.7rem;
+  min-height: 44px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.stylist-mode-switch:hover {
+  background: #f5eaeb;
+}
+.stylist-mode-switch:focus-visible {
+  outline: 2px solid #971d36;
+  outline-offset: 3px;
+}
+.stylist-voice-main-action {
+  justify-content: center;
+  gap: 12px;
+}
+.stylist-voice-panel .stylist-record {
+  background: #821b32;
+  border: 1px solid #821b32;
+  color: white;
+  min-height: 54px;
+  padding-inline: 24px;
+}
+.stylist-voice-panel > .fine-print {
+  max-width: 410px;
+  align-self: center;
+  text-align: center;
+  margin: 0;
+}
+.stylist-voice-play .stylist-voice-control {
+  background: transparent;
+  color: #6f1527;
+  border: 1px solid #d9c5c8;
+  box-shadow: none;
+  min-height: 36px;
+  padding: 6px 12px;
+}
+.stylist-voice-welcome {
+  text-align: center;
+  margin: auto;
+  max-width: 350px;
+  padding: 26px 14px;
+  color: #6c625d;
+}
+.stylist-voice-welcome > svg {
+  width: 32px;
+  height: 32px;
+  color: #821b32;
+}
+.stylist-voice-welcome h3 {
+  font: 400 1.5rem var(--serif);
+  color: #332723;
+  margin: 16px 0 10px;
+}
+.stylist-voice-welcome p {
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+.stylist-chat:has(.stylist-voice-welcome) .stylist-chat-messages {
+  flex: 0;
+}

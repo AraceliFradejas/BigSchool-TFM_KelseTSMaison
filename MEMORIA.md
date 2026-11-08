@@ -300,3 +300,7 @@ He autorizado la activación pública de voz con seis acciones diarias. Vercel p
 ### Elección, agradecimiento, precios hablados y controles
 
 La prueba real de la autora detectó falsos rechazos al elegir Golden Hour y agradecer, además de pronunciación confusa de precios y cuota de voz insuficiente. He corregido las respuestas locales y la continuidad del look elegido; precios para síntesis en palabras con euros y céntimos ES/EN, manteniendo los importes del catálogo. Los controles son botones con iconos de micrófono/envío y acción «Terminar y enviar». La autora autorizó ampliar de seis a treinta acciones de voz diarias con el mismo cierre; no se aumenta la cuota de los modelos ni se compra saldo. Las 146 pruebas pasan (86 backend, 10 cliente, 7 frontend, 43 móvil). Safari local reprodujo elección y despedida correctas y mostró los botones; no se usaron proveedores reales en esta revisión ni se acredita aún la nueva pronunciación física. [Evidencia](docs/evidencias/stylist-2026-11-08/04-eleccion-despedida-botones-local.png).
+
+### Jerarquía visual de voz y texto
+
+He simplificado el pie del chat tras revisar la captura de la autora: el micrófono es la acción principal del modo voz y cambiar a texto tiene un tratamiento secundario. El campo de escritura y Enviar aparecen solo en modo texto, conservando el borrador al alternar. La web añade un mensaje de bienvenida al estado vacío. Build y exportaciones nativas correctos; inspección visual de una vista estática local con el componente real, sin grabar ni consumir IA.

@@ -146,6 +146,17 @@ export default function StylistChat({ conversation }) {
           ))}
         </div>
       )}
+      {!messages.length && interactionMode === 'voice' && (
+        <div className="stylist-voice-welcome">
+          <VoiceIcon />
+          <h3>{es ? 'Cuéntame qué tienes en mente' : 'Tell me what you have in mind'}</h3>
+          <p>
+            {es
+              ? 'Tu plan, tu estilo, esa ocasión especial… Empezamos cuando tú quieras.'
+              : 'Your plans, your style, that special occasion… Start whenever you are ready.'}
+          </p>
+        </div>
+      )}
       <div className="stylist-chat-messages" aria-live="polite" aria-busy={busy}>
         {messages.map((message, index) => (
           <article
@@ -245,7 +256,7 @@ export default function StylistChat({ conversation }) {
           void sendText(text, true);
         }}
       />
-      <form className="stylist-chat-composer" onSubmit={send} hidden={interactionMode === null}>
+      <form className="stylist-chat-composer" onSubmit={send} hidden={interactionMode !== 'text'}>
         <label className="sr-only" htmlFor="stylist-chat-message">
           {es ? 'Tu mensaje para Maison Stylist' : 'Your message to Maison Stylist'}
         </label>

@@ -359,7 +359,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
       <View style={s.composer}>
         {interactionMode !== null && voiceControls}
         {speech.error ? <Text style={s.note}>{speech.error}</Text> : null}
-        {interactionMode !== null && (
+        {interactionMode === 'text' && (
           <TextInput
             value={draft}
             onChangeText={setDraft}
@@ -373,7 +373,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
             }
           />
         )}
-        {interactionMode !== null && (
+        {interactionMode === 'text' && (
           <Button
             icon={<VoiceIcon send />}
             disabled={busy || voiceBusy || !draft.trim()}
