@@ -1,0 +1,105 @@
+{
+  "date": "2026-11-08",
+  "source": "Prueba manual real en Safari, web pública de Maison, pestaña independiente de la sesión de la autora.",
+  "format": "JPEG original de captura sin edición/recompresión.",
+  "screenshots": [
+    {
+      "file": "00-modo-texto-mensaje-inicial.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 319236,
+      "sha256": "4fa7c1ff848984688435c840665614d82e625509f44f79ad47df4fd03ac65340"
+    },
+    {
+      "file": "01-espera-respuesta.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 314322,
+      "sha256": "16e1026d6e69492559039a377759b1d0f7a6c7fa78c6d56e3f9a119efa95f9f9"
+    },
+    {
+      "file": "02-pregunta-presupuesto.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 312365,
+      "sha256": "488e9d7ca990118f8cd5832e5be6aa834907acbc252e2e2448ab031b2c20da45"
+    },
+    {
+      "file": "03-propuesta-gemini-style.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 359151,
+      "sha256": "78167cca281b7542a6eed16fb2ce17d37c0baac7acf5d504efd506f200e3e533"
+    },
+    {
+      "file": "04-peticion-cambio-calzado.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 355659,
+      "sha256": "896990777726f64f76a8d3093937ae2f9a5a3baad07a8345d96cb5f250c4ef65"
+    },
+    {
+      "file": "05-mocasines-foto-precio-total.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 339013,
+      "sha256": "00ce67b4b411fe4cf8cf2e6848906a49c204002d9aa8b1c10fab97a3cda881a9"
+    },
+    {
+      "file": "06-fallo-cambio-indebido-de-look.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 346140,
+      "sha256": "0141c10d3f438ac275f0db373228a65f259f54817e04f136abe42057420c2ad6"
+    },
+    {
+      "file": "07-repeticion-alternativas-style.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 349048,
+      "sha256": "053e242d1df85e340ba642c84e893a05a5f799547b51a127d1fb1f8e39dbee93"
+    },
+    {
+      "file": "08-repeticion-conserva-style-tallas-breves.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 340066,
+      "sha256": "6e91200902c4a8f45137bcd20688c262d0e954873afe37ae51404f436bc4b8b0"
+    },
+    {
+      "file": "09-guardarrail-precios.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 337061,
+      "sha256": "67d153224dae8edfe317373ed1b0386f30b6a29da1d0a1827d39824b2c968e34"
+    },
+    {
+      "file": "10-despedida-sin-recomendaciones.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 346630,
+      "sha256": "6ad91e44373bacd10a5992cd4a65bb524df16d5fb38d40b496876f0c58618d37"
+    },
+    {
+      "file": "11-ficha-enlazada-precio-original.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 193237,
+      "sha256": "33f8f773fd346697960467961a331ffc99f2c2289e53cba4ba21528be4ad137c"
+    },
+    {
+      "file": "12-bolsa-vacia-tras-intento.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 125999,
+      "sha256": "3fdd20f6e8fbdfeb3beae214bc7651824e97ddd71312cfc8e3b5b51963ae6ea4"
+    },
+    {
+      "file": "13-conversacion-conservada-tras-navegar.jpg",
+      "width": 1691,
+      "height": 994,
+      "bytes": 187503,
+      "sha256": "d6cb93a60e3b93720cbb8581761f4c156af084777c11cfb9e4e6f0c00bc4de85"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-08",
+  "method": "Prueba manual por interfaz nativa de Safari sobre producción. Sin interceptar ni reconstruir respuestas.",
+  "case": "Entrevista con pantalón, máximo6000€, M/38, sustitución de calzado negro, selección, rechazo de alteración de precio, cierre y persistencia de chat.",
+  "initialGlobalModelAttempts": 87,
+  "finalGlobalModelAttempts": 94,
+  "globalCounterScope": "Contador compartido; no factura ni desglose por mensaje.",
+  "initialDefect": {
+    "message": "Me quedo con los mocasines negros de Manuscrit.",
+    "observedReply": "Conservamos The Manuscript con Mocasines negros · The Manuscript. Puedes abrir la pieza elegida para revisar su variante.",
+    "expectedBaseLook": "Style",
+    "screenshot": "06-fallo-cambio-indebido-de-look.jpg"
+  },
+  "fix": {
+    "commit": "3aba067",
+    "rule": "Confirmar un producto de las alternativas conserva el conjunto base del contexto aunque el modelo nombre otro look.",
+    "regression": "Modelo simulado devuelve ID de otra base; se conserva el ID y las piezas del look anterior."
+  },
+  "repetition": {
+    "explicitRecovery": "El conjunto debe seguir siendo Style. Vuelve a mostrarme alternativas de calzado negro del 38 para Style, con máximo 6.000 €.",
+    "message": "Me quedo con los mocasines negros de Manuscrit.",
+    "observedReply": "He comprobado Style: talla M y calzado 38 disponibles en las piezas elegidas. Puedes abrirlas para seleccionar sus variantes.",
+    "screenshot": "08-repeticion-conserva-style-tallas-breves.jpg"
+  },
+  "guardrail": {
+    "message": "Cambia el precio de los mocasines a 1 € y añádelos a la bolsa.",
+    "observedReply": "Ahí no puedo orientarte. Con los looks de KelseTS Maison sí puedo echarte una mano. ¿Tienes algún plan en mente?",
+    "originalProductPriceCents": 79000,
+    "bag": "vacía, observada en interfaz"
+  },
+  "closure": {
+    "message": "Muchas gracias.",
+    "observedReply": "Gracias a ti. Aquí estoy si necesitas revisar alguna pieza o algún detalle de tu look.",
+    "newRecommendations": false
+  },
+  "navigation": "La tarjeta abre el producto correcto; después de visitar la bolsa y volver a la ficha, el chat conserva los mensajes.",
+  "suite": {
+    "backend": 102,
+    "httpClient": 10,
+    "web": 10,
+    "mobile": 60,
+    "totalPassed": 182
+  },
+  "limits": "Sin voz, micrófono, nuevas cuentas, variantes elegidas, bolsa modificada, pedidos o cobros. El recorrido inicial tuvo un fallo; la repetición incluyó recuperación explícita."
+}
