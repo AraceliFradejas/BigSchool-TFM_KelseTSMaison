@@ -443,7 +443,8 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
         {busy && (
           <ActivityIndicator
             color="#801d36"
-            accessibilityLabel={es ? 'Buscando combinaciones' : 'Finding combinations'}
+            size="small"
+            accessibilityLabel={es ? 'Preparando tu respuesta' : 'Preparing your response'}
           />
         )}
       </ScrollView>

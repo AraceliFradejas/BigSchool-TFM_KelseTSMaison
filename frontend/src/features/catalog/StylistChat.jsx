@@ -330,7 +330,12 @@ export default function StylistChat({ conversation }) {
           </article>
         ))}
         {busy && (
-          <p role="status">{es ? 'Estoy preparando tu respuesta…' : 'Preparing your response…'}</p>
+          <div className="stylist-chat-loading" role="status">
+            <span className="stylist-chat-spinner" aria-hidden="true" />
+            <span className="sr-only">
+              {es ? 'Preparando tu respuesta' : 'Preparing your response'}
+            </span>
+          </div>
         )}
       </div>
       <VoiceInput
