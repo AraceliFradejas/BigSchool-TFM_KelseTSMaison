@@ -159,12 +159,57 @@ function History({ language, open }) {
       <Text style={s.heading}>{t.messages}</Text>
       {messages.error && <Button title={t.retry} onPress={messages.reload} />}
       {(messages.data || []).map((message) => (
-        <Text key={message.id} style={s.notice}>
-          {message.title?.[language] + ' · ' + message.body?.[language]}
-        </Text>
+        <MessagePreview key={message.id} message={message} language={language} />
       ))}
       {messages.data?.length === 0 && <Text>{t.noMessages}</Text>}
     </>
+  );
+}
+function MessagePreview({ message, language }) {
+  const [expanded, setExpanded] = useState(false);
+  const es = language === 'es';
+  return (
+    <View style={s.notice}>
+      <Text>{message.title?.[language] + ' · ' + message.body?.[language]}</Text>
+      {message.email && (
+        <>
+          <Button
+            title={
+              expanded
+                ? es
+                  ? 'Cerrar correo'
+                  : 'Close email'
+                : es
+                  ? 'Ver correo simulado'
+                  : 'Preview simulated email'
+            }
+            onPress={() => setExpanded(!expanded)}
+          />
+          {expanded && (
+            <>
+              <Text>{es ? 'Simulación · No enviado' : 'Simulation · Not sent'}</Text>
+              <Text>
+                {es ? 'De' : 'From'}: {message.email.from}
+              </Text>
+              <Text>
+                {es ? 'Para (ficticio)' : 'To (fictional)'}: {message.email.to}
+              </Text>
+              <Text style={{ fontWeight: '600', marginVertical: 12 }}>
+                {message.email.subject[language]}
+              </Text>
+              {message.sandboxDelivery?.state === 'captured' && (
+                <Text>
+                  {es
+                    ? 'Capturado en el buzón de pruebas Mailtrap.'
+                    : 'Captured in the Mailtrap test inbox.'}
+                </Text>
+              )}
+              <Text>{message.email.body[language]}</Text>
+            </>
+          )}
+        </>
+      )}
+    </View>
   );
 }
 export function Account({ commerce, language, open }) {

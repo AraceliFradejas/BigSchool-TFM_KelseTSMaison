@@ -1,0 +1,28 @@
+{
+  "environment": "isolated-local-sqlite",
+  "date": "2026-11-09T12:46:41.761Z",
+  "orders": [
+    {
+      "id": "de879cf8-3c7b-46c6-acc0-bd0cd5e1523f",
+      "status": "cancelled",
+      "total_cents": 185000
+    }
+  ],
+  "stock": 6,
+  "communications": [
+    {
+      "orderId": "de879cf8-3c7b-46c6-acc0-bd0cd5e1523f",
+      "status": "pending",
+      "mode": "simulation",
+      "deliveryStatus": "not_sent"
+    },
+    {
+      "orderId": "de879cf8-3c7b-46c6-acc0-bd0cd5e1523f",
+      "status": "cancelled",
+      "mode": "simulation",
+      "deliveryStatus": "not_sent"
+    }
+  ],
+  "otherCustomerMessages": 0,
+  "assertions": "passed"
+}

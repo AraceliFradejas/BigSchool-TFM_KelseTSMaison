@@ -67,6 +67,34 @@ export default function Account() {
                     </p>
                     <h3>{message.title[language]}</h3>
                     <p>{message.body[language]}</p>
+                    {message.email && (
+                      <details className="email-preview">
+                        <summary>
+                          {language === 'es' ? 'Ver correo simulado' : 'Preview simulated email'}
+                        </summary>
+                        <p className="eyebrow">
+                          {language === 'es' ? 'Simulación · No enviado' : 'Simulation · Not sent'}
+                        </p>
+                        <p>
+                          <strong>{language === 'es' ? 'De' : 'From'}:</strong> {message.email.from}
+                        </p>
+                        <p>
+                          <strong>
+                            {language === 'es' ? 'Para (ficticio)' : 'To (fictional)'}:
+                          </strong>{' '}
+                          {message.email.to}
+                        </p>
+                        {message.sandboxDelivery?.state === 'captured' && (
+                          <p>
+                            {language === 'es'
+                              ? 'Capturado en el buzón de pruebas Mailtrap.'
+                              : 'Captured in the Mailtrap test inbox.'}
+                          </p>
+                        )}
+                        <h4>{message.email.subject[language]}</h4>
+                        <p className="email-preview-body">{message.email.body[language]}</p>
+                      </details>
+                    )}
                     <Link className="underlined" to={`/orders/${message.orderId}`}>
                       {t.viewOrder}
                     </Link>
@@ -129,7 +157,7 @@ export function OrderDetail() {
                 <Money cents={order.totalCents} />
               </strong>
             </p>
-            <PaymentReceipt payment={order.payment} cancelled={order.status==='cancelled'} />
+            <PaymentReceipt payment={order.payment} cancelled={order.status === 'cancelled'} />
             <p className="demo-notice">{t.orderNotice}</p>
           </>
         )}

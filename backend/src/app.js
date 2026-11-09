@@ -20,6 +20,7 @@ export function createApp({
   imageFetch,
   stylistRequest,
   voiceRequest,
+  emailRequest,
 }) {
   const app = express();
   app.disable('x-powered-by');
@@ -82,12 +83,12 @@ export function createApp({
     voiceRouter(db, config.stylist, limiter(12, 60 * 1000), voiceRequest),
     stylistRouter(db, config, limiter(8, 60 * 1000), stylistRequest),
     catalogRouter(db),
-    ordersRouter(db),
+    ordersRouter(db, config.emailSandbox, emailRequest),
   );
   app.use(
     '/api/v1/team',
     teamCatalogRouter(db, config),
-    teamOrdersRouter(db),
+    teamOrdersRouter(db, config.emailSandbox, emailRequest),
     mediaRouter(config.uploadDir, { db, config, cloudStorage }),
   );
   app.use('/api', (req, res, next) => next(new HttpError(404, 'not_found')));

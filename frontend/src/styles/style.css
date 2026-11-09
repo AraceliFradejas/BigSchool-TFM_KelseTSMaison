@@ -992,6 +992,24 @@ main:focus {
 .order-detail {
   max-width: 900px;
 }
+.email-preview {
+  margin: 18px 0;
+  padding: 20px;
+  border: 1px solid var(--line);
+  background: #fffaf3;
+}
+.email-preview summary {
+  cursor: pointer;
+  color: var(--red);
+}
+.email-preview p {
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+.email-preview-body {
+  white-space: pre-wrap;
+  line-height: 1.7;
+}
 .order-meta {
   display: flex;
   gap: 30px;

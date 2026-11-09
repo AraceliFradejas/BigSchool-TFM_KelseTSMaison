@@ -23,6 +23,9 @@ export function openDatabase(filename = ':memory:') {
     CREATE TABLE IF NOT EXISTS stylist_voice_usage (day TEXT PRIMARY KEY, calls INTEGER NOT NULL CHECK(calls > 0));
     CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), order_id TEXT REFERENCES orders(id), data TEXT NOT NULL, created_at TEXT NOT NULL);
     CREATE INDEX IF NOT EXISTS messages_user ON messages(user_id);`);
+  db.exec(
+    `CREATE TABLE IF NOT EXISTS email_deliveries (id TEXT PRIMARY KEY REFERENCES messages(id), order_id TEXT NOT NULL, order_status TEXT NOT NULL, state TEXT NOT NULL, attempted_at TEXT)`,
+  );
   return db;
 }
 export function transaction(db, action) {

@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-09",
+  "tests": {
+    "backend": 111,
+    "apiClient": 10,
+    "web": 10,
+    "mobile": 60,
+    "total": 191,
+    "failures": 0
+  },
+  "webBuild": "passed",
+  "iosAndroidExport": "passed",
+  "screenshotCount": 30,
+  "smtp": "real Sandbox captures, fictional recipients",
+  "productionSMTP": "not enabled by this work"
+}

@@ -1,0 +1,94 @@
+[
+  {
+    "name": "02 · Login cliente",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t568 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t596 text { \"success\" :  true , \"data\" : { \"id\" :  \"preview-customer\" , \"name\" :  \"Maison Demo\" , \"email\" :  \"preview@maison.example\" , \"role\" :  \"customer\" } }"
+  },
+  {
+    "name": "03 · Catálogo antes",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t576 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t602 text { \"success\" :  true , \"data\" : { \"id\" :  \"satin-story\" , \"name\" : { \"es\" :  \"Vestido · Enchanted\" , \"en\" :  \"Dress · Enchanted\" }, \"description\" : { \"es\" :  \"Vestido midi de satén ficticio, con escote suave y caída fluida. Una pieza para las cenas que se alargan y los recuerdos que empiezan al atardecer.\" , \"en\" :  \"A fictional satin midi dress with a soft neckline and fluid drape. For long dinners and memories that begin at sunset.\" }, \"category\" :  \"fashion\" , \"collectionId\" :  \"golden-hour\" , \"image\" :  \"/media/satin-story.webp\" , \"active\" :  true , \"tags\" : [ \"dinner\" , \"gold\" ], \"revision\" :  1 , \"variants\" : [ { \"id\" :  \"satin-story-1\" , \"label\" : { \"es\" :  \"S · Champán\" , \"en\" :  \"S · Champagne\" }, \"priceCents\" :  185000 , \"stock\" :  6 }, { \"id\" :  \"satin-story-2\" , \"label\" : { \"es\" :  \"M · Champán\" , \"en\" :  \"M · Champagne\" }, \"priceCents\" :  185000 , \"stock\" :  8 }, { \"id\" :  \"satin-story-3\" , \"label\" : { \"es\" :  \"L · Champán\" , \"en\" :  \"L · Champagne\" }, \"priceCents\" :  185000 , \"stock\" :  0 } ] } }"
+  },
+  {
+    "name": "04 · Mis comunicaciones antes",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t582 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t608 text { \"success\" :  true , \"data\" : [] }"
+  },
+  {
+    "name": "05 · Crear pedido DEMO",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t588 text 201 Created\n\t\t\t\t\t\t\t\t\t\t\t\t614 text { \"success\" :  true , \"data\" : { \"id\" :  \"de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\" , \"lines\" : [ { \"productId\" :  \"satin-story\" , \"variantId\" :  \"satin-story-1\" , \"name\" : { \"es\" :  \"Vestido · Enchanted\" , \"en\" :  \"Dress · Enchanted\" }, \"variantLabel\" : { \"es\" :  \"S · Champán\" , \"en\" :  \"S · Champagne\" }, \"image\" :  \"/media/satin-story.webp\" , \"quantity\" :  1 , \"unitPriceCents\" :  185000 , \"subtotalCents\" :  185000 } ], \"totalCents\" :  185000 , \"status\" :  \"pending\" , \"createdAt\" :  \"2026-11-09T12:43:30.559Z\" , \"updatedAt\" :  \"2026-11-09T12:43:30.559Z\" , \"demo\" :  true , \"payment\" :  null } }"
+  },
+  {
+    "name": "06 · Repetir operación idéntica",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t595 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t621 text { \"success\" :  true , \"data\" : { \"id\" :  \"de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\" , \"lines\" : [ { \"productId\" :  \"satin-story\" , \"variantId\" :  \"satin-story-1\" , \"name\" : { \"es\" :  \"Vestido · Enchanted\" , \"en\" :  \"Dress · Enchanted\" }, \"variantLabel\" : { \"es\" :  \"S · Champán\" , \"en\" :  \"S · Champagne\" }, \"image\" :  \"/media/satin-story.webp\" , \"quantity\" :  1 , \"unitPriceCents\" :  185000 , \"subtotalCents\" :  185000 } ], \"totalCents\" :  185000 , \"status\" :  \"pending\" , \"createdAt\" :  \"2026-11-09T12:43:30.559Z\" , \"updatedAt\" :  \"2026-11-09T12:43:30.559Z\" , \"demo\" :  true , \"payment\" :  null } }"
+  },
+  {
+    "name": "07 · Manipular precio",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t602 text 400 Bad Request\n\t\t\t\t\t\t\t\t\t\t\t\t628 text { \"success\" :  false , \"error\" :  \"invalid_input\" }"
+  },
+  {
+    "name": "08 · Ver pedido propio",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t610 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t636 text { \"success\" :  true , \"data\" : [ { \"id\" :  \"de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\" , \"lines\" : [ { \"productId\" :  \"satin-story\" , \"variantId\" :  \"satin-story-1\" , \"name\" : { \"es\" :  \"Vestido · Enchanted\" , \"en\" :  \"Dress · Enchanted\" }, \"variantLabel\" : { \"es\" :  \"S · Champán\" , \"en\" :  \"S · Champagne\" }, \"image\" :  \"/media/satin-story.webp\" , \"quantity\" :  1 , \"unitPriceCents\" :  185000 , \"subtotalCents\" :  185000 } ], \"totalCents\" :  185000 , \"status\" :  \"pending\" , \"createdAt\" :  \"2026-11-09T12:43:30.559Z\" , \"updatedAt\" :  \"2026-11-09T12:43:30.559Z\" , \"demo\" :  true , \"payment\" :  null } ] }"
+  },
+  {
+    "name": "09 · Correos tras compra",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t616 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t642 text { \"success\" :  true , \"data\" : [ { \"id\" :  \"154db4ce-9b59-4344-af7d-93faa24c9556\" , \"orderId\" :  \"de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\" , \"createdAt\" :  \"2026-11-09T12:43:30.559Z\" , \"title\" : { \"es\" :  \"Tu selección ya tiene una historia\" , \"en\" :  \"Your selection has a story now\" }, \"body\" : { \"es\" :  \"Hemos registrado tu pedido de demostración. No se ha realizado ningún cobro ni se enviarán productos.\" , \"en\" :  \"Your demonstration order has been recorded. No payment has been taken and no products will be shipped.\" }, \"email\" : { \"mode\" :  \"simulation\" , \"deliveryStatus\" :  \"not_sent\" , \"from\" :  \"KelseTS Maison <boutique@maison.example>\" , \"to\" :  \"cliente@maison.example\" , \"subject\" : { \"es\" :  \"[DEMO] Tu selección ya tiene una historia · de879cf8\" , \"en\" :  \"[DEMO] Your selection has a story now · de879cf8\" }, \"body\" : { \"es\" :  \"KelseTS Maison\\n\\nSIMULACIÓN · Este correo no se ha enviado.\\n\\nHemos registrado tu pedido de demostración. No se ha realizado ningún cobro ni se enviarán productos.\\n\\nPedido DEMO: de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\\n\\n1 × Vestido · Enchanted · S · Champán · 1.850,00 €\\n\\nTotal del pedido: 1.850,00 €\\n\\nCargo real: 0,00 €\\n\\nNo habrá cobro ni envío real. Consulta el pedido en tu cuenta Maison.\" , \"en\" :  \"KelseTS Maison\\n\\nSIMULATION · This email has not been sent.\\n\\nYour demonstration order has been recorded. No payment has been taken and no products will be shipped.\\n\\nDEMO order: de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\\n\\n1 × Dress · Enchanted · S · Champagne · 1.850,00 €\\n\\nOrder total: 1.850,00 €\\n\\nActual charge: 0,00 €\\n\\nThere is no real charge or shipment. View the order in your Maison account.\" }, \"orderStatus\" :  \"pending\" } } ] }"
+  },
+  {
+    "name": "10 · Cliente intenta cancelar",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t624 text 403 Forbidden\n\t\t\t\t\t\t\t\t\t\t\t\t650 text { \"success\" :  false , \"error\" :  \"permission_denied\" }"
+  },
+  {
+    "name": "08 · Ver pedido propio",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t624 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t650 text { \"success\" :  true , \"data\" : [ { \"id\" :  \"de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\" , \"lines\" : [ { \"productId\" :  \"satin-story\" , \"variantId\" :  \"satin-story-1\" , \"name\" : { \"es\" :  \"Vestido · Enchanted\" , \"en\" :  \"Dress · Enchanted\" }, \"variantLabel\" : { \"es\" :  \"S · Champán\" , \"en\" :  \"S · Champagne\" }, \"image\" :  \"/media/satin-story.webp\" , \"quantity\" :  1 , \"unitPriceCents\" :  185000 , \"subtotalCents\" :  185000 } ], \"totalCents\" :  185000 , \"status\" :  \"pending\" , \"createdAt\" :  \"2026-11-09T12:43:30.559Z\" , \"updatedAt\" :  \"2026-11-09T12:43:30.559Z\" , \"demo\" :  true , \"payment\" :  null } ] }"
+  },
+  {
+    "name": "08 · Ver pedido propio",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t622 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t648 text { \"success\" :  true , \"data\" : { \"id\" :  \"de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\" , \"lines\" : [ { \"productId\" :  \"satin-story\" , \"variantId\" :  \"satin-story-1\" , \"name\" : { \"es\" :  \"Vestido · Enchanted\" , \"en\" :  \"Dress · Enchanted\" }, \"variantLabel\" : { \"es\" :  \"S · Champán\" , \"en\" :  \"S · Champagne\" }, \"image\" :  \"/media/satin-story.webp\" , \"quantity\" :  1 , \"unitPriceCents\" :  185000 , \"subtotalCents\" :  185000 } ], \"totalCents\" :  185000 , \"status\" :  \"pending\" , \"createdAt\" :  \"2026-11-09T12:43:30.559Z\" , \"updatedAt\" :  \"2026-11-09T12:43:30.559Z\" , \"demo\" :  true , \"payment\" :  null } }"
+  },
+  {
+    "name": "11 · Cerrar sesión cliente",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t632 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t660 text { \"success\" :  true , \"data\" :  null }"
+  },
+  {
+    "name": "12 · Login otra cuenta",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t639 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t667 text { \"success\" :  true , \"data\" : { \"id\" :  \"preview-other\" , \"name\" :  \"Maison Demo\" , \"email\" :  \"other@maison.example\" , \"role\" :  \"customer\" } }"
+  },
+  {
+    "name": "13 · Pedido ajeno",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t643 text 404 Not Found\n\t\t\t\t\t\t\t\t\t\t\t\t669 text { \"success\" :  false , \"error\" :  \"not_found\" }"
+  },
+  {
+    "name": "14 · Correos ajenos",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t653 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t679 text { \"success\" :  true , \"data\" : [] }"
+  },
+  {
+    "name": "15 · Cerrar otra sesión",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t660 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t688 text { \"success\" :  true , \"data\" :  null }"
+  },
+  {
+    "name": "16 · Login Team local",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t666 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t694 text { \"success\" :  true , \"data\" : { \"id\" :  \"preview-team\" , \"name\" :  \"Maison Demo\" , \"email\" :  \"team@maison.example\" , \"role\" :  \"team\" } }"
+  },
+  {
+    "name": "17 · Cancelar pedido",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t671 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t697 text { \"success\" :  true , \"data\" : { \"id\" :  \"de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\" , \"lines\" : [ { \"productId\" :  \"satin-story\" , \"variantId\" :  \"satin-story-1\" , \"name\" : { \"es\" :  \"Vestido · Enchanted\" , \"en\" :  \"Dress · Enchanted\" }, \"variantLabel\" : { \"es\" :  \"S · Champán\" , \"en\" :  \"S · Champagne\" }, \"image\" :  \"/media/satin-story.webp\" , \"quantity\" :  1 , \"unitPriceCents\" :  185000 , \"subtotalCents\" :  185000 } ], \"totalCents\" :  185000 , \"status\" :  \"cancelled\" , \"createdAt\" :  \"2026-11-09T12:43:30.559Z\" , \"updatedAt\" :  \"2026-11-09T12:45:55.864Z\" , \"demo\" :  true , \"payment\" :  null } }"
+  },
+  {
+    "name": "18 · Repetir cancelación",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t679 text 409 Conflict\n\t\t\t\t\t\t\t\t\t\t\t\t705 text { \"success\" :  false , \"error\" :  \"invalid_transition\" }"
+  },
+  {
+    "name": "19 · Stock repuesto",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t688 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t714 text { \"success\" :  true , \"data\" : { \"id\" :  \"satin-story\" , \"name\" : { \"es\" :  \"Vestido · Enchanted\" , \"en\" :  \"Dress · Enchanted\" }, \"description\" : { \"es\" :  \"Vestido midi de satén ficticio, con escote suave y caída fluida. Una pieza para las cenas que se alargan y los recuerdos que empiezan al atardecer.\" , \"en\" :  \"A fictional satin midi dress with a soft neckline and fluid drape. For long dinners and memories that begin at sunset.\" }, \"category\" :  \"fashion\" , \"collectionId\" :  \"golden-hour\" , \"image\" :  \"/media/satin-story.webp\" , \"active\" :  true , \"tags\" : [ \"dinner\" , \"gold\" ], \"revision\" :  3 , \"variants\" : [ { \"id\" :  \"satin-story-1\" , \"label\" : { \"es\" :  \"S · Champán\" , \"en\" :  \"S · Champagne\" }, \"priceCents\" :  185000 , \"stock\" :  6 }, { \"id\" :  \"satin-story-2\" , \"label\" : { \"es\" :  \"M · Champán\" , \"en\" :  \"M · Champagne\" }, \"priceCents\" :  185000 , \"stock\" :  8 }, { \"id\" :  \"satin-story-3\" , \"label\" : { \"es\" :  \"L · Champán\" , \"en\" :  \"L · Champagne\" }, \"priceCents\" :  185000 , \"stock\" :  0 } ] } }"
+  },
+  {
+    "name": "20 · Cerrar Team",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t695 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t723 text { \"success\" :  true , \"data\" :  null }"
+  },
+  {
+    "name": "21 · Volver al comprador",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t701 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t729 text { \"success\" :  true , \"data\" : { \"id\" :  \"preview-customer\" , \"name\" :  \"Maison Demo\" , \"email\" :  \"preview@maison.example\" , \"role\" :  \"customer\" } }"
+  },
+  {
+    "name": "22 · Correos finales",
+    "response": "\t\t\t\t\t\t\t\t\t\t\t707 text 200 OK\n\t\t\t\t\t\t\t\t\t\t\t\t733 text { \"success\" :  true , \"data\" : [ { \"id\" :  \"07c08693-ee97-405f-9557-1d76af00e3f9\" , \"orderId\" :  \"de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\" , \"createdAt\" :  \"2026-11-09T12:45:55.864Z\" , \"title\" : { \"es\" :  \"Pedido de demostración cancelado\" , \"en\" :  \"Demonstration order cancelled\" }, \"body\" : { \"es\" :  \"El pedido se ha cancelado y sus unidades vuelven a estar disponibles en el catálogo de demostración.\" , \"en\" :  \"The order has been cancelled and its units are available again in the demonstration catalogue.\" }, \"email\" : { \"mode\" :  \"simulation\" , \"deliveryStatus\" :  \"not_sent\" , \"from\" :  \"KelseTS Maison <boutique@maison.example>\" , \"to\" :  \"cliente@maison.example\" , \"subject\" : { \"es\" :  \"[DEMO] Pedido de demostración cancelado · de879cf8\" , \"en\" :  \"[DEMO] Demonstration order cancelled · de879cf8\" }, \"body\" : { \"es\" :  \"KelseTS Maison\\n\\nSIMULACIÓN · Este correo no se ha enviado.\\n\\nEl pedido se ha cancelado y sus unidades vuelven a estar disponibles en el catálogo de demostración.\\n\\nPedido DEMO: de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\\n\\n1 × Vestido · Enchanted · S · Champán · 1.850,00 €\\n\\nTotal del pedido: 1.850,00 €\\n\\nCargo real: 0,00 €\\n\\nNo habrá cobro ni envío real. Consulta el pedido en tu cuenta Maison.\" , \"en\" :  \"KelseTS Maison\\n\\nSIMULATION · This email has not been sent.\\n\\nThe order has been cancelled and its units are available again in the demonstration catalogue.\\n\\nDEMO order: de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\\n\\n1 × Dress · Enchanted · S · Champagne · 1.850,00 €\\n\\nOrder total: 1.850,00 €\\n\\nActual charge: 0,00 €\\n\\nThere is no real charge or shipment. View the order in your Maison account.\" }, \"orderStatus\" :  \"cancelled\" } }, { \"id\" :  \"154db4ce-9b59-4344-af7d-93faa24c9556\" , \"orderId\" :  \"de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\" , \"createdAt\" :  \"2026-11-09T12:43:30.559Z\" , \"title\" : { \"es\" :  \"Tu selección ya tiene una historia\" , \"en\" :  \"Your selection has a story now\" }, \"body\" : { \"es\" :  \"Hemos registrado tu pedido de demostración. No se ha realizado ningún cobro ni se enviarán productos.\" , \"en\" :  \"Your demonstration order has been recorded. No payment has been taken and no products will be shipped.\" }, \"email\" : { \"mode\" :  \"simulation\" , \"deliveryStatus\" :  \"not_sent\" , \"from\" :  \"KelseTS Maison <boutique@maison.example>\" , \"to\" :  \"cliente@maison.example\" , \"subject\" : { \"es\" :  \"[DEMO] Tu selección ya tiene una historia · de879cf8\" , \"en\" :  \"[DEMO] Your selection has a story now · de879cf8\" }, \"body\" : { \"es\" :  \"KelseTS Maison\\n\\nSIMULACIÓN · Este correo no se ha enviado.\\n\\nHemos registrado tu pedido de demostración. No se ha realizado ningún cobro ni se enviarán productos.\\n\\nPedido DEMO: de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\\n\\n1 × Vestido · Enchanted · S · Champán · 1.850,00 €\\n\\nTotal del pedido: 1.850,00 €\\n\\nCargo real: 0,00 €\\n\\nNo habrá cobro ni envío real. Consulta el pedido en tu cuenta Maison.\" , \"en\" :  \"KelseTS Maison\\n\\nSIMULATION · This email has not been sent.\\n\\nYour demonstration order has been recorded. No payment has been taken and no products will be shipped.\\n\\nDEMO order: de879cf8-3c7b-46c6-acc0-bd0cd5e1523f\\n\\n1 × Dress · Enchanted · S · Champagne · 1.850,00 €\\n\\nOrder total: 1.850,00 €\\n\\nActual charge: 0,00 €\\n\\nThere is no real charge or shipment. View the order in your Maison account.\" }, \"orderStatus\" :  \"pending\" } } ]"
+  }
+]

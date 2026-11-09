@@ -1,3 +1,4 @@
+import { deliverSandboxEmails } from '../src/email/sandbox.js';
 import { claimStylistCall } from '../src/stylist/quota.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -178,7 +179,28 @@ test(
           (await db.getProduct('satin-story')).variants[0].stock,
           before.variants[0].stock - 1,
         );
-        assert.equal((await db.getMessages(user.id)).length, 1);
+        const communications = await db.getMessages(user.id);
+        assert.equal(communications.length, 1);
+        assert.equal(communications[0].email.mode, 'simulation');
+        assert.equal(communications[0].email.orderStatus, 'pending');
+        assert.match(communications[0].email.body.en, /Actual charge: 0,00/);
+        assert.ok(communications[0].email.body.es.includes(order.id));
+        let sandboxCalls = 0;
+        const sandboxRequest = async () => {
+          sandboxCalls++;
+          return { accepted: true };
+        };
+        const sandboxConfig = { enabled: true, host: 'sandbox.smtp.mailtrap.io', language: 'es' };
+        await Promise.all([
+          deliverSandboxEmails(db, order.id, 'pending', sandboxConfig, sandboxRequest),
+          deliverSandboxEmails(db, order.id, 'pending', sandboxConfig, sandboxRequest),
+        ]);
+        assert.equal(sandboxCalls, 1);
+        assert.equal(
+          (await db.collection('email_deliveries').findOne({ id: communications[0].id })).state,
+          'captured',
+        );
+
         const conflict = await mutation(
           app,
           'post',

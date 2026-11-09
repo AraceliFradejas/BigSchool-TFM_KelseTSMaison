@@ -1,5 +1,7 @@
 # KelseTS Maison
 
+Correos DEMO: previsualización ES/EN en web y app; pruebas de compra, idempotencia, permisos y cancelación con Insomnia en una base aislada. SMTP de Mailtrap Sandbox comprobado con compra/cancelación ES/EN, logo, fotos y precios de catálogo; activación en Vercel pendiente. [Pruebas y evidencias](docs/evidencias/emails-2026-11-09/README.md).
+
 Voz de tAIlor: dictado por turnos de hasta un minuto y lectura completa de la respuesta en web y app. [Funcionamiento, límites y verificaciones](docs/VOZ-TAILOR.md).
 Chat de tAIlor con interpretación generativa del mensaje y contexto, validación de catálogo en backend y cuotas independientes de IA y voz. [Diseño y verificaciones](docs/CHAT-GENERATIVO-TAILOR.md).
 
@@ -22,7 +24,21 @@ KelseTS Maison es una boutique ficticia de moda, accesorios y belleza. Puedes ex
 
 **Web:** [Abrir KelseTS Maison](https://kelsets-maison.vercel.app) · **API:** [Comprobar el servicio](https://kelsets-maison-api.vercel.app/api/v1/health).
 
-**Estado:** primera versión publicada en [Vercel](https://kelsets-maison.vercel.app), con MongoDB y Cloudinary propios. Maison Stylist tiene una prueba de IA activada también para visitantes, con un límite global de tres intentos de proveedor al día. Quedan parte de las pruebas físicas, una evaluación más amplia del asesor y el ajuste de la presentación.
+**Estado:** primera versión publicada en [Vercel](https://kelsets-maison.vercel.app), con MongoDB y Cloudinary propios. Maison Stylist tiene una prueba de IA activada también para visitantes, con un límite global de 100 intentos de proveedor al día. Quedan parte de las pruebas físicas, una evaluación más amplia del asesor y el ajuste de la presentación.
+
+
+### Correos y evidencias reales · 9/11/2026
+
+He comprobado en Mailtrap Sandbox la recepción por SMTP de compra y cancelación en castellano e inglés. Los correos muestran el logo de Maison, fotos incrustadas de las cuatro piezas de Studio Interview, variantes, cantidades y precios históricos del pedido, con total de **4.840,00 €**. La aclaración de demostración queda en el pie; no se realizan cobros, envíos ni reembolsos bancarios reales.
+
+| Evidencia | Captura real |
+| --- | --- |
+| Compra ES: marca y piezas | [Ver escritorio](docs/evidencias/emails-2026-11-09/mailtrap/outfits/01-compra-es-logo-piezas.jpg) |
+| Compra ES: detalle y total | [Ver total](docs/evidencias/emails-2026-11-09/mailtrap/outfits/02-compra-es-total.jpg) |
+| Cancelación EN: importe cancelado | [Ver escritorio](docs/evidencias/emails-2026-11-09/mailtrap/outfits/08-cancelacion-en-total.jpg) |
+| Correo en pantalla estrecha | [Ver móvil emulado](docs/evidencias/emails-2026-11-09/mailtrap/outfits/10-movil-corregido-piezas.jpg) |
+
+Las capturas son JPG originales del correo recibido en Mailtrap, con vistas de escritorio y emulación móvil; no son mockups ni capturas de una app de correo en un teléfono físico. [Índice completo ES/EN](docs/evidencias/emails-2026-11-09/README.md) · [Configuración y límites](docs/CORREOS-DEMO.md) · [Pruebas de Insomnia](docs/api/README.md). La conexión SMTP se ha comprobado desde una base aislada; los secretos de Mailtrap todavía no están configurados en Vercel.
 
 ### Una historia personal
 
@@ -49,7 +65,7 @@ El pago es una simulación académica: puedo elegir una cuenta bancaria ficticia
 
 «Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. El chat de [Maison Stylist](docs/MAISON-STYLIST.md), accesible desde un botón flotante en web y app, añade una conversación con burbujas y un campo de escritura fijo. Pide presupuesto cuando falta y muestra fotografías del catálogo, totales y enlaces a las fichas para elegir variantes. Después pregunta si gusta la elección; las valoraciones breves se responden localmente, sin consumir IA. El formulario de filtros detallados sigue disponible. La [voz opcional](docs/VOZ-TAILOR.md) está activa en web y preparada en app, con síntesis ES/EN y transcripción verificadas. Los controles incluyen micrófono, lectura de precios en palabras y reconocimiento local del look elegido; queda pendiente validar físicamente esta última revisión de voz. El asesor limita la conversación a outfits y aplica controles de ámbito e intentos de manipular instrucciones o precios, también en el servidor.
 
-El servicio tiene preparada la integración **Gemini → Claude → OpenAI**, probada individualmente con tres consultas autorizadas sobre datos ficticios. La prueba de IA está **activada en producción también para visitantes**, con un máximo global de tres intentos de proveedor al día, incluidos fallos y respaldos. La prueba termina al finalizar el 31/12/2026, en horario de Madrid; después continúa el modo editorial. Cuando no se obtiene una respuesta válida o se agota la cuota, se muestran selecciones editoriales identificadas como tales. La evaluación conversacional en producción sigue en curso. El backend valida disponibilidad, tallas y presupuesto y no añade piezas a la bolsa automáticamente. La [guía del asesor](docs/MAISON-STYLIST.md) explica configuración, referencias y límites.
+El servicio tiene preparada la integración **Gemini → Claude → OpenAI**, probada individualmente con tres consultas autorizadas sobre datos ficticios. La prueba de IA está **activada en producción también para visitantes**, con un máximo global de 100 intentos de proveedor al día, incluidos fallos y respaldos. La prueba termina al finalizar el 31/12/2026, en horario de Madrid; después continúa el modo editorial. Cuando no se obtiene una respuesta válida o se agota la cuota, se muestran selecciones editoriales identificadas como tales. La evaluación conversacional en producción sigue en curso. El backend valida disponibilidad, tallas y presupuesto y no añade piezas a la bolsa automáticamente. La [guía del asesor](docs/MAISON-STYLIST.md) explica configuración, referencias y límites.
 
 ### Entrega y boutiques de demostración
 
@@ -192,7 +208,7 @@ npm run build
 npm run check:production
 ```
 
-Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. Las últimas 162 comprobaciones automáticas han pasado (8 de noviembre de 2026). Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
+Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. Las últimas 191 comprobaciones automáticas han pasado (9 de noviembre de 2026). Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
 
 ### Capturas de la web publicada
 
@@ -260,6 +276,9 @@ KelseTS es una marca ficticia de **Araceli Fradejas Muñoz**. Maison es un proye
 
 ## English version
 
+**Email evidence, 9 November 2026:** purchase and cancellation emails were received through SMTP in Mailtrap Sandbox in Spanish and English. They include the Maison logo, embedded product photos, variants, quantities and the recorded catalogue total of **4.840,00 €**. [Original JPG screenshots](docs/evidencias/emails-2026-11-09/README.md) cover desktop and Mailtrap’s mobile emulation, not a physical phone email client. SMTP production secrets are still pending configuration; this integration never sends mail to real customers. The full automated suite passes 191 checks.
+
+
 Full stack project for the **BigSchool final project**, created by **Araceli Fradejas Muñoz**.
 
 > **Your style tells a story.**
@@ -268,7 +287,7 @@ KelseTS Maison is a fictional fashion, accessories and beauty boutique. Explore 
 
 **Website:** [Open KelseTS Maison](https://kelsets-maison.vercel.app) · **API:** [Check the service](https://kelsets-maison-api.vercel.app/api/v1/health).
 
-**Status:** first version published on [Vercel](https://kelsets-maison.vercel.app), with Maison MongoDB and Cloudinary services. Maison Stylist has an AI trial enabled for visitors as well, with a global limit of three provider attempts per day. Some physical-device checks, broader stylist evaluation and presentation revisions remain pending.
+**Status:** first version published on [Vercel](https://kelsets-maison.vercel.app), with Maison MongoDB and Cloudinary services. Maison Stylist has an AI trial enabled for visitors as well, with a global limit of 100 provider attempts per day. Some physical-device checks, broader stylist evaluation and presentation revisions remain pending.
 
 ### A personal story
 
@@ -295,7 +314,7 @@ Payment is an academic simulation: fictional bank account, fictional card or sim
 
 “Complete your look” uses manual selections and actual catalogue availability. The [Maison Stylist](docs/MAISON-STYLIST.md) chat, available from a floating button on web and native app, adds message bubbles and a fixed composer. It asks for a missing budget and displays catalogue photos, totals and product links for choosing variants. It then asks for feedback; short reactions receive local replies without consuming AI calls. Detailed filters remain available. [Optional voice](docs/VOZ-TAILOR.md) is active on web and prepared on native app, with ES/EN speech and transcription verified. Controls include a microphone, prices written as spoken words and local recognition of the chosen outfit; physical voice checks for this latest revision remain pending. The adviser limits conversation to outfits and checks scope and attempts to manipulate instructions or prices, including on the server.
 
-The service includes a prepared **Gemini → Claude → OpenAI** integration, tested individually through three authorised queries using fictional data. The AI trial is **enabled in production for visitors as well**, with a global maximum of three provider attempts per day, including failures and fallback attempts. The trial ends after 31 December 2026 in Madrid time; editorial mode remains available afterwards. Invalid responses or exhausted quota return explicitly labelled editorial selections. Production conversation evaluation remains in progress. The backend validates availability, sizes and budget, and never adds products to the bag automatically. The [stylist guide](docs/MAISON-STYLIST.md) records configuration, references and limitations.
+The service includes a prepared **Gemini → Claude → OpenAI** integration, tested individually through three authorised queries using fictional data. The AI trial is **enabled in production for visitors as well**, with a global maximum of 100 provider attempts per day, including failures and fallback attempts. The trial ends after 31 December 2026 in Madrid time; editorial mode remains available afterwards. Invalid responses or exhausted quota return explicitly labelled editorial selections. Production conversation evaluation remains in progress. The backend validates availability, sizes and budget, and never adds products to the bag automatically. The [stylist guide](docs/MAISON-STYLIST.md) records configuration, references and limitations.
 
 ### Demonstration delivery and boutiques
 

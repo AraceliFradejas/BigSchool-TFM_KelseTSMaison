@@ -1,5 +1,13 @@
 # Seguimiento de la entrega BigSchool
 
+## Estado verificado · 9 de noviembre de 2026
+
+La web y la API están publicadas en Vercel. tAIlor tiene conversación generativa y voz por turnos en web y Expo Go; Gemini → Claude → OpenAI, 100 intentos globales de modelo al día y 200 acciones de voz al día UTC, hasta finalizar el 31/12/2026 en Madrid. La autora confirmó voz en iOS y funcionamiento en Android; esas comprobaciones no acreditan todos los recorridos en cada dispositivo. Véanse [chat](CHAT-GENERATIVO-TAILOR.md) y [voz](VOZ-TAILOR.md).
+
+Hoy se han añadido previsualizaciones bilingües de correo de compra y cambios de estado a Mis comunicaciones, en web y app. Compra y cancelación comprobadas en Safari local; recorrido HTTP en Insomnia con SQLite aislado y contraste directo de la base. No se han enviado correos a clientes reales. Se ha comprobado SMTP real en Mailtrap Sandbox con cuatro muestras ilustradas: compra y cancelación en ES/EN, logo, fotografías y total de catálogo de 4.840,00 €. La integración todavía no está activada en Vercel. Las vistas móviles se han exportado, pero falta su comprobación física específica.
+
+Las secciones de evolución que siguen contienen resultados de etapas anteriores; este estado y los registros fechados más recientes prevalecen. Pendientes: autorizar y comprobar la activación SMTP en Vercel, publicación de este cambio, revisión física de comunicaciones y cierre de presentación/vídeo/paquete de entrega. La autora conserva la mejora visual del PDF. No se ha entregado en el campus.
+
 La web y la API están publicadas; existe además una app nativa en desarrollo con recorrido privado implementado, pendiente de validación física completa. El objetivo de trabajo sigue siendo cerrar el domingo **8 de noviembre de 2026** para una entrega manual el lunes **9 de noviembre**. Es mi objetivo de preparación, no una fecha impuesta por el enunciado.
 
 ## Requisitos de entrega

@@ -1,5 +1,8 @@
-// Shared order-status communication policy, independent of HTTP and persistence.
-export function orderMessage(status) {
+import { formatMoney } from '@maison/contracts/money';
+import { looks } from '../../../data/catalog.js';
+
+// A stored preview only: no mail transport and no real customer address.
+export function orderMessage(status, order) {
   const titles = {
     pending: { es: 'Tu selección ya tiene una historia', en: 'Your selection has a story now' },
     confirmed: { es: 'Selección confirmada', en: 'Selection confirmed' },
@@ -29,5 +32,59 @@ export function orderMessage(status) {
       en: 'The order has been cancelled and its units are available again in the demonstration catalogue.',
     },
   };
-  return { title: titles[status], body: descriptions[status] };
+  const message = { title: titles[status], body: descriptions[status] };
+  if (!order) return message;
+  const body = Object.fromEntries(
+    ['es', 'en'].map((language) => {
+      const es = language === 'es';
+      return [
+        language,
+        [
+          'KelseTS Maison',
+          es
+            ? 'SIMULACIÓN · Este correo no se ha enviado.'
+            : 'SIMULATION · This email has not been sent.',
+          descriptions[status][language],
+          `${es ? 'Pedido DEMO' : 'DEMO order'}: ${order.id}`,
+          ...order.lines.map(
+            (line) =>
+              `${line.quantity} × ${line.name[language]} · ${line.variantLabel[language]} · ${formatMoney(line.subtotalCents)}`,
+          ),
+          `${es ? 'Total del pedido' : 'Order total'}: ${formatMoney(order.totalCents)}`,
+          `${es ? 'Cargo real' : 'Actual charge'}: ${formatMoney(0)}`,
+          es
+            ? 'No habrá cobro ni envío real. Consulta el pedido en tu cuenta Maison.'
+            : 'There is no real charge or shipment. View the order in your Maison account.',
+        ].join('\n\n'),
+      ];
+    }),
+  );
+  return {
+    ...message,
+    email: {
+      mode: 'simulation',
+      deliveryStatus: 'not_sent',
+      from: 'KelseTS Maison <boutique@maison.example>',
+      to: 'cliente@maison.example',
+      subject: Object.fromEntries(
+        ['es', 'en'].map((language) => [
+          language,
+          `[DEMO] ${titles[status][language]} · ${order.id.slice(0, 8)}`,
+        ]),
+      ),
+      body,
+      orderStatus: status,
+      order: {
+        id: order.id,
+        totalCents: order.totalCents,
+        lines: structuredClone(order.lines),
+        lookName:
+          looks.find(
+            (look) =>
+              look.productIds.length === order.lines.length &&
+              look.productIds.every((id) => order.lines.some((line) => line.productId === id)),
+          )?.name || null,
+      },
+    },
+  };
 }

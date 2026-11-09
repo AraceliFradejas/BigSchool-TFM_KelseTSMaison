@@ -1,4 +1,9 @@
 import { orderMessage } from '../domain/order-messages.js';
+import {
+  queueSandboxEmail,
+  deliverSandboxEmails,
+  sandboxDeliveryStatus,
+} from '../email/sandbox.js';
 import { checkoutHash, demoReceipt } from './demo-payment.js';
 import { Router } from 'express';
 import { randomUUID } from 'node:crypto';
@@ -25,13 +30,16 @@ export const publicOrder = (row, db) => ({
 });
 
 function message(db, userId, orderId, status) {
+  const messageId = randomUUID();
+  const order = publicOrder(db.prepare('SELECT * FROM orders WHERE id=?').get(orderId), db);
   db.prepare('INSERT INTO messages VALUES (?,?,?,?,?)').run(
-    randomUUID(),
+    messageId,
     userId,
     orderId,
-    JSON.stringify(orderMessage(status)),
+    JSON.stringify(orderMessage(status, order)),
     new Date().toISOString(),
   );
+  queueSandboxEmail(db, messageId, orderId, status);
 }
 export function createOrder(db, userId, input) {
   if (db.kind === 'mongo') return db.createOrder(userId, input);
@@ -113,16 +121,18 @@ export function transitionOrder(db, id, status) {
     return publicOrder(db.prepare('SELECT * FROM orders WHERE id=?').get(id), db);
   });
 }
-export function ordersRouter(db) {
+export function ordersRouter(db, emailSandbox, emailRequest) {
   const router = Router();
   router.use(requireUser);
   router.post('/checkout/demo', async (req, res) => {
     const input = parse(demoCheckoutSchema, req.body);
     const result = await createOrder(db, req.user.id, input);
+    await deliverSandboxEmails(db, result.order.id, 'pending', emailSandbox, emailRequest);
     send(res, result.order, result.replay ? 200 : 201);
   });
   router.post('/orders', async (req, res) => {
     const result = await createOrder(db, req.user.id, req.body);
+    await deliverSandboxEmails(db, result.order.id, 'pending', emailSandbox, emailRequest);
     send(res, result.order, result.replay ? 200 : 201);
   });
   router.get('/orders', async (req, res) =>
@@ -148,9 +158,8 @@ export function ordersRouter(db) {
     if (!row) throw new HttpError(404, 'not_found');
     send(res, publicOrder(row, db));
   });
-  router.get('/messages', async (req, res) =>
-    send(
-      res,
+  router.get('/messages', async (req, res) => {
+    const messages =
       db.kind === 'mongo'
         ? await db.getMessages(req.user.id)
         : db
@@ -161,12 +170,20 @@ export function ordersRouter(db) {
               orderId: row.order_id,
               createdAt: row.created_at,
               ...JSON.parse(row.data),
-            })),
-    ),
-  );
+            }));
+    send(
+      res,
+      await Promise.all(
+        messages.map(async (message) => ({
+          ...message,
+          sandboxDelivery: await sandboxDeliveryStatus(db, message.id),
+        })),
+      ),
+    );
+  });
   return router;
 }
-export function teamOrdersRouter(db) {
+export function teamOrdersRouter(db, emailSandbox, emailRequest) {
   const router = Router();
   router.use(requireTeam);
   router.get('/orders', async (req, res) =>
@@ -184,7 +201,9 @@ export function teamOrdersRouter(db) {
   );
   router.patch('/orders/:id', async (req, res) => {
     const input = parse(z.object({ status: z.enum(orderStatuses) }).strict(), req.body);
-    send(res, await transitionOrder(db, req.params.id, input.status));
+    const order = await transitionOrder(db, req.params.id, input.status);
+    await deliverSandboxEmails(db, order.id, input.status, emailSandbox, emailRequest);
+    send(res, order);
   });
   return router;
 }

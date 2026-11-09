@@ -1,0 +1,512 @@
+{
+  "info": {
+    "name": "KelseTS Maison · pedidos, permisos y emails DEMO",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Importable en Insomnia. Solo copia aislada; no usar Production. Peticiones manuales ordenadas con cookie jar. No incluye secretos. No se ha ejecutado por generar este archivo. Tras crear el pedido, sustituir REEMPLAZAR_ID_PEDIDO en las cinco URLs por su ID: se evita una variable vacía de ruta observada al importar en Insomnia 13.3.1."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:3179/api/v1"
+    },
+    {
+      "key": "customer_email",
+      "value": "preview@maison.example"
+    },
+    {
+      "key": "other_email",
+      "value": "other@maison.example"
+    },
+    {
+      "key": "team_email",
+      "value": "team@maison.example"
+    },
+    {
+      "key": "test_password",
+      "value": ""
+    },
+    {
+      "key": "operation_id",
+      "value": "e7056e27-d60d-4dbd-b03a-9f99cdc11e20"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 · Salud",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{base_url}}/health",
+        "description": "200. Solo la copia aislada local."
+      }
+    },
+    {
+      "name": "02 · Login cliente",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/auth/login",
+        "description": "200. Cookie local HttpOnly; no exportar la cookie.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{customer_email}}\",\n  \"password\": \"{{test_password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "03 · Catálogo antes",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{base_url}}/products/satin-story",
+        "description": "Anotar stock de satin-story-1 y precio del servidor."
+      }
+    },
+    {
+      "name": "04 · Mis comunicaciones antes",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{base_url}}/messages",
+        "description": "Anotar número inicial de comunicaciones."
+      }
+    },
+    {
+      "name": "05 · Crear pedido DEMO",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/orders",
+        "description": "201. Sustituir REEMPLAZAR_ID_PEDIDO en las URLs 08, 10, 13, 17 y 18 por data.id. Guardar stock y correo pending. Esta ruta básica crea pedido DEMO sin pasarela; checkout/demo se comprueba en la suite automatizada.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idempotencyKey\": \"{{operation_id}}\",\n  \"lines\": [\n    {\n      \"variantId\": \"satin-story-1\",\n      \"quantity\": 1\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "06 · Repetir operación idéntica",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/orders",
+        "description": "200. Mismo ID; una sola reducción de stock y un correo pending.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idempotencyKey\": \"{{operation_id}}\",\n  \"lines\": [\n    {\n      \"variantId\": \"satin-story-1\",\n      \"quantity\": 1\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "07 · Manipular precio",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/orders",
+        "description": "400. Campo ajeno al contrato; sin cambios en base de datos.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idempotencyKey\": \"{{operation_id}}\",\n  \"lines\": [\n    {\n      \"variantId\": \"satin-story-1\",\n      \"quantity\": 1\n    }\n  ],\n  \"priceCents\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "08 · Ver pedido propio",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{base_url}}/orders/REEMPLAZAR_ID_PEDIDO",
+        "description": "200; precios y líneas copiados por backend."
+      }
+    },
+    {
+      "name": "09 · Correos tras compra",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{base_url}}/messages",
+        "description": "Un nuevo email mode=simulation, deliveryStatus=not_sent; ES/EN; Cargo real 0,00 €."
+      }
+    },
+    {
+      "name": "10 · Cliente intenta cancelar",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/team/orders/REEMPLAZAR_ID_PEDIDO",
+        "description": "403. Cliente no tiene permisos Team; sin cambio de stock ni comunicación.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"cancelled\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "11 · Cerrar sesión cliente",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/auth/logout",
+        "description": "200. Revoca cookie; no reutilizar cookies exportadas.",
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "12 · Login otra cuenta",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/auth/login",
+        "description": "200. Cuenta de prueba distinta.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{other_email}}\",\n  \"password\": \"{{test_password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "13 · Pedido ajeno",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{base_url}}/orders/REEMPLAZAR_ID_PEDIDO",
+        "description": "404. No revela las líneas de otro cliente."
+      }
+    },
+    {
+      "name": "14 · Correos ajenos",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{base_url}}/messages",
+        "description": "200. No contiene las comunicaciones de la primera cuenta."
+      }
+    },
+    {
+      "name": "15 · Cerrar otra sesión",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/auth/logout",
+        "description": "",
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "16 · Login Team local",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/auth/login",
+        "description": "200. El rol Team se crea solo en la base local aislada, nunca desde una ruta pública.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{team_email}}\",\n  \"password\": \"{{test_password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "17 · Cancelar pedido",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/team/orders/REEMPLAZAR_ID_PEDIDO",
+        "description": "200. Repone una unidad y crea un correo cancelled en la cuenta del comprador.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"cancelled\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "18 · Repetir cancelación",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/team/orders/REEMPLAZAR_ID_PEDIDO",
+        "description": "409. Sin reposición ni comunicación duplicadas.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"cancelled\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "19 · Stock repuesto",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{base_url}}/products/satin-story",
+        "description": "Mismo stock inicial. Contrastarlo con SQLite en entorno local."
+      }
+    },
+    {
+      "name": "20 · Cerrar Team",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/auth/logout",
+        "description": "",
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "21 · Volver al comprador",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/auth/login",
+        "description": "",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{customer_email}}\",\n  \"password\": \"{{test_password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "22 · Correos finales",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "url": "{{base_url}}/messages",
+        "description": "Dos nuevos mensajes: compra y cancelación, cada uno con su snapshot ES/EN. Los mensajes previos se conservan."
+      }
+    }
+  ]
+}

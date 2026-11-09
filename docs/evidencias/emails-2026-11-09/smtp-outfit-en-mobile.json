@@ -1,0 +1,93 @@
+{
+  "date": "2026-11-09T13:09:52.478Z",
+  "environment": "isolated in-memory SQLite",
+  "transport": "SMTP with TLS to Mailtrap Sandbox",
+  "look": "Studio Interview",
+  "orders": [
+    {
+      "language": "en",
+      "id": "73df362c-8fd2-44e0-ad30-04d5de57d6af",
+      "totalCents": 484000,
+      "lines": [
+        {
+          "productId": "ivory-interview",
+          "variantId": "ivory-interview-2",
+          "name": {
+            "es": "Blazer · The Man",
+            "en": "Blazer · The Man"
+          },
+          "variantLabel": {
+            "es": "M · Marfil",
+            "en": "M · Ivory"
+          },
+          "image": "/media/ivory-interview.webp",
+          "quantity": 1,
+          "unitPriceCents": 225000,
+          "subtotalCents": 225000
+        },
+        {
+          "productId": "ivory-lines",
+          "variantId": "ivory-lines-2",
+          "name": {
+            "es": "Pantalón · Mastermind",
+            "en": "Trousers · Mastermind"
+          },
+          "variantLabel": {
+            "es": "M · Marfil",
+            "en": "M · Ivory"
+          },
+          "image": "/media/ivory-lines.webp",
+          "quantity": 1,
+          "unitPriceCents": 95000,
+          "subtotalCents": 95000
+        },
+        {
+          "productId": "studio-satin",
+          "variantId": "studio-satin-2",
+          "name": {
+            "es": "Top · Clean",
+            "en": "Top · Clean"
+          },
+          "variantLabel": {
+            "es": "M · Marfil",
+            "en": "M · Ivory"
+          },
+          "image": "/media/studio-satin.webp",
+          "quantity": 1,
+          "unitPriceCents": 65000,
+          "subtotalCents": 65000
+        },
+        {
+          "productId": "coffee-loafers",
+          "variantId": "coffee-loafers-2",
+          "name": {
+            "es": "Mocasines · Everything Has Changed",
+            "en": "Loafers · Everything Has Changed"
+          },
+          "variantLabel": {
+            "es": "37 · Burdeos",
+            "en": "37 · Burgundy"
+          },
+          "image": "/media/coffee-loafers.webp",
+          "quantity": 1,
+          "unitPriceCents": 99000,
+          "subtotalCents": 99000
+        }
+      ],
+      "events": [
+        {
+          "order_status": "cancelled",
+          "state": "captured"
+        },
+        {
+          "order_status": "pending",
+          "state": "captured"
+        }
+      ]
+    }
+  ],
+  "attempts": 2,
+  "replayExtraAttempts": 0,
+  "realChargeCents": 0,
+  "stockRestored": true
+}

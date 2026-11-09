@@ -5,6 +5,7 @@ import { products, collections, looks } from '../../../data/catalog.js';
 import { productSchema, checkoutSchema, transitions } from '@maison/contracts';
 import { HttpError, parse } from '../http.js';
 import { orderMessage } from '../domain/order-messages.js';
+import { queueSandboxEmail } from '../email/sandbox.js';
 
 const clean = (row) => {
   if (!row) return null;
@@ -65,6 +66,7 @@ export class MongoStore {
       'looks',
       'orders',
       'messages',
+      'email_deliveries',
       'images',
     ])
       await this.collection(name).createIndex({ id: 1 }, { unique: true });
@@ -290,16 +292,21 @@ export class MongoStore {
     }
   }
   async message(userId, orderId, status) {
+    const messageId = randomUUID();
+    const order = publicOrder(
+      await this.collection('orders').findOne({ id: orderId }, this.options()),
+    );
     await this.collection('messages').insertOne(
       {
-        id: randomUUID(),
+        id: messageId,
         userId,
         orderId,
-        ...orderMessage(status),
+        ...orderMessage(status, order),
         createdAt: new Date().toISOString(),
       },
       this.options(),
     );
+    await queueSandboxEmail(this, messageId, orderId, status);
   }
   async createOrder(userId, input) {
     const checkout = parse(checkoutSchema, input);

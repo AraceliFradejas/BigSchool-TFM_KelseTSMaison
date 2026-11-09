@@ -1,5 +1,13 @@
 # Memoria del proyecto KelseTS Maison
 
+## Estado verificado · 9 de noviembre de 2026
+
+La web y la API están publicadas en Vercel. tAIlor tiene conversación generativa y voz por turnos en web y Expo Go; Gemini → Claude → OpenAI, 100 intentos globales de modelo al día y 200 acciones de voz al día UTC, hasta finalizar el 31/12/2026 en Madrid. La autora confirmó voz en iOS y funcionamiento en Android; esas comprobaciones no acreditan todos los recorridos en cada dispositivo. Véanse [chat](docs/CHAT-GENERATIVO-TAILOR.md) y [voz](docs/VOZ-TAILOR.md).
+
+Hoy se han añadido previsualizaciones bilingües de correo de compra y cambios de estado a Mis comunicaciones, en web y app. Compra y cancelación comprobadas en Safari local; recorrido HTTP en Insomnia con SQLite aislado y contraste directo de la base. No se han enviado correos a clientes reales. Se ha comprobado SMTP real en Mailtrap Sandbox con cuatro muestras ilustradas: compra y cancelación en ES/EN, logo, fotografías y total de catálogo de 4.840,00 €. La integración todavía no está activada en Vercel. Las vistas móviles se han exportado, pero falta su comprobación física específica.
+
+Las secciones de evolución que siguen contienen resultados de etapas anteriores; este estado y los registros fechados más recientes prevalecen. Pendientes: autorizar y comprobar la activación SMTP en Vercel, publicación de este cambio, revisión física de comunicaciones y cierre de presentación/vídeo/paquete de entrega. La autora conserva la mejora visual del PDF. No se ha entregado en el campus.
+
 | Dato        | Información                                                             |
 | ----------- | ----------------------------------------------------------------------- |
 | Proyecto    | Boutique ficticia de moda, accesorios y belleza                         |
@@ -7,6 +15,16 @@
 | Autora      | Araceli Fradejas Muñoz                                                  |
 | Tecnologías | JavaScript, React, Node.js, Express, MongoDB y Cloudinary; SQLite local |
 | Estado      | Primera versión publicada en Vercel, pendiente de cierre final          |
+
+## Correos ilustrados y evidencias · 9/11/2026
+
+He añadido correos con la identidad visual de Maison para el registro de compra y los cambios de estado. El logotipo, la tipografía editorial, el marfil y el burdeos conectan el mensaje con la boutique. Cada pieza conserva su fotografía, variante, cantidad y precio del pedido; el total utiliza los importes del catálogo, sin sustituirlos por cero. El aviso de que se trata de una demostración queda en el pie y las cancelaciones muestran el importe cancelado sin presentarlo como un reembolso bancario.
+
+He probado la recepción SMTP en Mailtrap Sandbox de compra y cancelación en castellano e inglés con el conjunto Studio Interview: blazer, pantalón, top y mocasines, por 4.840,00 €. El logo y las fotos se adjuntan por CID. La prueba se realiza sobre SQLite aislado y devuelve el stock de las cuatro variantes al cancelar; repetir la creación no añade otro correo. No he utilizado pedidos ni datos personales de producción.
+
+He guardado las capturas reales en JPG, tanto de escritorio como de la vista móvil emulada por Mailtrap. En esta última encontré un pequeño desbordamiento horizontal, lo corregí y conservé la evidencia anterior junto a la comprobación posterior. No confundo esta emulación con una prueba de un cliente de correo en un teléfono físico. [Capturas ES/EN y registros](docs/evidencias/emails-2026-11-09/README.md).
+
+El recorrido manual de Insomnia comprueba pedidos, permisos, privacidad, importes y reposición de existencias; sus respuestas se contrastan con SQLite. Las verificaciones automatizadas también cubren MongoDB y los fallos del proveedor de correo. La suite actual suma 191 pruebas correctas. La activación de los secretos SMTP en Vercel y la validación física de la nueva vista de comunicaciones en Expo Go siguen pendientes. [Diseño, recuperación y límites](docs/CORREOS-DEMO.md).
 
 ## 1 Contexto y motivación
 
@@ -20,9 +38,9 @@ La música, las historias compartidas y el deporte inspiran el universo creativo
 
 El recorrido principal conecta portada, catálogo, ficha, elección de variante, bolsa y pedido de demostración. La cuenta permite conservar favoritos y consultar pedidos y comunicaciones. Team gestiona el catálogo y los estados del pedido.
 
-La diferencia editorial está en «Completa tu look»: dieciséis colecciones reúnen prendas, calzado, bolsos, joyería y propuestas de belleza en veintiuna selecciones manuales y los treinta y seis looks de la pasarela. El buscador de combinaciones comprueba ocasión, paleta, presupuesto y stock. La versión pública utiliza reglas y selecciones manuales. Maison Stylist añade un chat con fotos y enlaces, con la integración de modelos preparada y ensayada de forma individual, todavía desactivada en producción.
+La diferencia editorial está en «Completa tu look»: dieciséis colecciones reúnen prendas, calzado, bolsos, joyería y propuestas de belleza en veintiuna selecciones manuales y los treinta y seis looks de la pasarela. El buscador de combinaciones comprueba ocasión, paleta, presupuesto y stock. Las selecciones editoriales conviven con tAIlor: un chat con interpretación generativa y voz por turnos, fotos, precios y enlaces validados en backend; las verificaciones y sus límites están registrados en los documentos actuales.
 
-La web tiene textos en castellano e inglés y CSS responsive. La app nativa tiene catálogo, outfits, sesión, bolsa por cuenta, pago simulado, pedidos y boutiques, descritos más adelante; falta completar la validación física de ese recorrido. He incorporado boutiques ficticias con mapa y entrega simulada. La integración Gemini → Claude → OpenAI está preparada y se ha probado con datos ficticios; quedan pendientes su activación pública, una evaluación más amplia y las citas. La web ya está publicada en [Vercel](https://kelsets-maison.vercel.app); las slides finales y las ampliaciones siguen pendientes de cierre.
+La web tiene textos en castellano e inglés y CSS responsive. La app nativa tiene catálogo, outfits, sesión, bolsa por cuenta, pago simulado, pedidos y boutiques, descritos más adelante; falta completar la validación física de ese recorrido. He incorporado boutiques ficticias con mapa y entrega simulada. La integración Gemini → Claude → OpenAI está preparada y se ha probado con datos ficticios; la IA está activada en producción con cuotas y caducidad; siguen pendientes una evaluación más amplia y las citas. La web ya está publicada en [Vercel](https://kelsets-maison.vercel.app); las slides finales y las ampliaciones siguen pendientes de cierre.
 
 ## 3 Organización técnica
 

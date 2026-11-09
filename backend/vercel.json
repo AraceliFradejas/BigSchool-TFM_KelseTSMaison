@@ -5,6 +5,7 @@
   "functions": {
     "api/index.js": {
       "maxDuration": 60,
+      "includeFiles": "assets/email/**",
       "excludeFiles": "{../frontend/public/**,../frontend/dist/**,runtime/**,test/**}"
     }
   },

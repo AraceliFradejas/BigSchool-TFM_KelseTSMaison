@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-09T13:02:42.039Z",
+  "environment": "isolated in-memory SQLite",
+  "transport": "SMTP with TLS to Mailtrap Sandbox",
+  "orderId": "ad004283-64d2-49b1-9c44-3ca1372c9a8f",
+  "creationLanguage": "es",
+  "cancellationLanguage": "en",
+  "attempts": 2,
+  "events": [
+    {
+      "order_status": "cancelled",
+      "state": "captured"
+    },
+    {
+      "order_status": "pending",
+      "state": "captured"
+    }
+  ],
+  "replayExtraAttempts": 0,
+  "stockRestored": true,
+  "realChargeCents": 0,
+  "externalRecipient": "fictional, captured only in Sandbox"
+}

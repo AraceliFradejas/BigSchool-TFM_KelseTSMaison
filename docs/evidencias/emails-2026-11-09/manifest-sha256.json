@@ -1,0 +1,122 @@
+[
+  {
+    "file": "01-compra-es.jpg",
+    "sha256": "5eb90a080e7a6d98f89714f0c74f3d5dc66bfb8d47c72bd36d1c3fa21fb876e8"
+  },
+  {
+    "file": "02-cancelacion-es.jpg",
+    "sha256": "85122eb05a95c1040d4e643f9bc0f88702147c9480788cf9f6dd4619f659ed45"
+  },
+  {
+    "file": "03-cancelacion-en.jpg",
+    "sha256": "0f42c65833d0ec0949911b39111e4beb61fba56e2540191e8b18abea61cf2295"
+  },
+  {
+    "file": "insomnia/04-pedido-creado.jpg",
+    "sha256": "eb250fea29425ce1a19a016568ee4c871a1083a5ee5927855a052e13e4c84f9b"
+  },
+  {
+    "file": "insomnia/05-reintento.jpg",
+    "sha256": "f760c4c819369ad99975d436679fb60aa56673e798f7bf9de2e7267a89b1c230"
+  },
+  {
+    "file": "insomnia/06-precio-rechazado.jpg",
+    "sha256": "e02e95f068f8a845eb2d080ea7f29f5c50cf2da735517476918044b4a15fbcde"
+  },
+  {
+    "file": "insomnia/07-correo-pending.jpg",
+    "sha256": "172f4b049bd14551ef61ea05762db99c8139f3f228d2f31dbd5666536fe2eedf"
+  },
+  {
+    "file": "insomnia/08-permiso-denegado.jpg",
+    "sha256": "beebf6586768043c7c4390c1024fc7b3719965cb428c2e7257d7271ea92ffd37"
+  },
+  {
+    "file": "insomnia/09-detalle-propio.jpg",
+    "sha256": "5a1d2f9c3c7fb630775c106dfecad7e6caeff57fc32507f719cbf8d21fb4079b"
+  },
+  {
+    "file": "insomnia/10-pedido-ajeno.jpg",
+    "sha256": "dbc7b43085b570b30e7e771139a3ae66ba6133e23fe0c676ff3b7391a5174105"
+  },
+  {
+    "file": "insomnia/11-correos-aislados.jpg",
+    "sha256": "7eae63d87f5baff96daa455eaa320eedae4aaece9eb39ebf5f627cbd12e98182"
+  },
+  {
+    "file": "insomnia/12-cancelado.jpg",
+    "sha256": "29334da577c4542db1e1802181dbc16f60793de56e358045783f615fbe4e09c1"
+  },
+  {
+    "file": "insomnia/13-cancelacion-repetida.jpg",
+    "sha256": "51c0bad18e48f182f509e22fa3af1718846ca974ebe23b6d8bc6fc6b751fbe35"
+  },
+  {
+    "file": "insomnia/14-stock-repuesto.jpg",
+    "sha256": "5298f13f08d31f4d98d39a1a26ebb17c12f0531bffc94fdd352c5b3907e832d7"
+  },
+  {
+    "file": "insomnia/15-correos-finales.jpg",
+    "sha256": "95c3b30f9a0b8d0737bce9b8e65b219532848efe9b8cf9b9bb040f00c5d64fe7"
+  },
+  {
+    "file": "mailtrap/01-compra-es-recibida.jpg",
+    "sha256": "5af188eacdaeea6d87eb2b192eabc8af8605780d26a0431c47de3d6988a1fe97"
+  },
+  {
+    "file": "mailtrap/02-compra-es-final.jpg",
+    "sha256": "f1cee027adff764042c83581df03ede2126ed743bba1ed2828133346d577ce0a"
+  },
+  {
+    "file": "mailtrap/03-cancelacion-en-final.jpg",
+    "sha256": "ab634360f853882be048cc17b5046a2a2a468c734359b14d94505404494f1316"
+  },
+  {
+    "file": "mailtrap/04-cancelacion-texto.jpg",
+    "sha256": "80f5a09d813e139da45fe2037a16640529a9d8a446a9bac8d2ef1c3e162a05bc"
+  },
+  {
+    "file": "mailtrap/outfits/01-compra-es-logo-piezas.jpg",
+    "sha256": "84141e527d79d42c957fb49599e3d2a4378cfa1e27033ebeebde19ef79d290eb"
+  },
+  {
+    "file": "mailtrap/outfits/02-compra-es-total.jpg",
+    "sha256": "ca3df957b9177005435a862354149a98f5b6699a54d14c488978864108e85f19"
+  },
+  {
+    "file": "mailtrap/outfits/03-cancelacion-es-logo.jpg",
+    "sha256": "54eee948bd9f7e84cd2b3a2030b1103ec0c946a7092bc616c5a57aa1bc044586"
+  },
+  {
+    "file": "mailtrap/outfits/04-cancelacion-es-total.jpg",
+    "sha256": "fd1bc163eb194e90f83a7a4474c52695a715ad7df158f3d5479f4c4d6596a441"
+  },
+  {
+    "file": "mailtrap/outfits/05-compra-en-logo-piezas.jpg",
+    "sha256": "dd688737f97fd0e822663e5d8a7968e10fd54ace5da9cc8142722bd9595f93da"
+  },
+  {
+    "file": "mailtrap/outfits/06-compra-en-total.jpg",
+    "sha256": "cb34c19d40b95006e772e25607af5363c8a3cb6a7a3777072f6a7321694139ae"
+  },
+  {
+    "file": "mailtrap/outfits/07-cancelacion-en-logo.jpg",
+    "sha256": "edb438e6d6facadb1d1baa6d5e96819a271482c3e6a2c10bba9f4fec2faa9a94"
+  },
+  {
+    "file": "mailtrap/outfits/08-cancelacion-en-total.jpg",
+    "sha256": "356fea496181c9b1f1a6c6ecce741aaaf7af8f5d3934e06064466bff97c270c7"
+  },
+  {
+    "file": "mailtrap/outfits/09-cancelacion-en-vista-movil.jpg",
+    "sha256": "10f0dcfd4bb5252d8b1d78e69d89528e47bacc129867b8e0373a5698c6748310"
+  },
+  {
+    "file": "mailtrap/outfits/10-movil-corregido-piezas.jpg",
+    "sha256": "e3fe9aaa40d67866d82eb575a7f7c57fcc5ba4cec17a46f9bd2c1d34e2e66333"
+  },
+  {
+    "file": "mailtrap/outfits/11-movil-corregido-total.jpg",
+    "sha256": "da9f54c5f00e8260e829450fb1b18942f7fc7b12680b56f7a45b768b14f44e22"
+  }
+]
