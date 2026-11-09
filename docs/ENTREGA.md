@@ -1,14 +1,23 @@
 # Seguimiento de la entrega BigSchool
 
+**Evidencias de dispositivos · 9/11/2026:** 29 fotogramas extraídos de cinco vídeos de la autora, con tiempos y pies de imagen: escritorio, iPhone, Android e iPad en inglés. En iPhone se observa el correo de compra desplegado en Mis comunicaciones con indicación de captura en Mailtrap. Esta revisión acredita ese paso físico concreto; no completa todos los correos o dispositivos ni una auditoría del audio. [Galería, selección para slides y hallazgos](evidencias/videos-2026-11-09/README.md).
+
+
 ## Estado verificado · 9 de noviembre de 2026
 
 La web y la API están publicadas en Vercel. tAIlor tiene conversación generativa y voz por turnos en web y Expo Go; Gemini → Claude → OpenAI, 100 intentos globales de modelo al día y 200 acciones de voz al día UTC, hasta finalizar el 31/12/2026 en Madrid. La autora confirmó voz en iOS y funcionamiento en Android; esas comprobaciones no acreditan todos los recorridos en cada dispositivo. Véanse [chat](CHAT-GENERATIVO-TAILOR.md) y [voz](VOZ-TAILOR.md).
 
-Hoy se han añadido previsualizaciones bilingües de correo de compra y cambios de estado a Mis comunicaciones, en web y app. Compra y cancelación comprobadas en Safari local; recorrido HTTP en Insomnia con SQLite aislado y contraste directo de la base. No se han enviado correos a clientes reales. Se ha comprobado SMTP real en Mailtrap Sandbox con cuatro muestras ilustradas: compra y cancelación en ES/EN, logo, fotografías y total de catálogo de 4.840,00 €. La integración todavía no está activada en Vercel. Las vistas móviles se han exportado, pero falta su comprobación física específica.
+Hoy se han añadido previsualizaciones bilingües de correo de compra y cambios de estado a Mis comunicaciones, en web y app. Compra y cancelación comprobadas en Safari local; recorrido HTTP en Insomnia con SQLite aislado y contraste directo de la base. No se han enviado correos a clientes reales. Se ha comprobado SMTP real en Mailtrap Sandbox con cuatro muestras ilustradas: compra y cancelación en ES/EN, logo, fotografías y total de catálogo de 4.840,00 €. La integración está activada en Production de Vercel y se ha comprobado con compra/cancelación DEMO, dos correos recibidos en Mailtrap y stock repuesto. Las vistas móviles se han exportado, pero falta su comprobación física específica.
 
-Las secciones de evolución que siguen contienen resultados de etapas anteriores; este estado y los registros fechados más recientes prevalecen. Pendientes: autorizar y comprobar la activación SMTP en Vercel, publicación de este cambio, revisión física de comunicaciones y cierre de presentación/vídeo/paquete de entrega. La autora conserva la mejora visual del PDF. No se ha entregado en el campus.
+Las secciones de evolución que siguen contienen resultados de etapas anteriores; este estado y los registros fechados más recientes prevalecen. Pendientes: revisión física de comunicaciones y cierre de presentación/vídeo/paquete de entrega. La autora conserva la mejora visual del PDF. No se ha entregado en el campus.
 
 La web y la API están publicadas; existe además una app nativa en desarrollo con recorrido privado implementado, pendiente de validación física completa. El objetivo de trabajo sigue siendo cerrar el domingo **8 de noviembre de 2026** para una entrega manual el lunes **9 de noviembre**. Es mi objetivo de preparación, no una fecha impuesta por el enunciado.
+
+## Cuenta preparada para el evaluador · 9/11/2026
+
+Cuenta exclusiva creada mediante el registro público de Maison, con rol cliente. Verificación HTTPS: acceso 200, denegación de Team 403 y, tras cerrar sesión, recurso privado 401. No se han creado pedidos ni consumido IA/voz con esta cuenta. Usuario, contraseña e instrucciones se conservan exclusivamente en `docbase/ACCESO-PRIVADO-EVALUADOR-MAISON.md`, ignorado por Git, para incluirlos manualmente en la entrega privada al profesor. No se han enviado al campus ni a terceros.
+
+El acceso al asesor depende de sus cuotas globales; IA y voz tienen cierre configurado al finalizar el 31/12/2026 en Madrid. Esa fecha no es una caducidad de la cuenta de cliente. El acceso a Expo Go y su distribución deben documentarse por separado del inicio de sesión.
 
 ## Requisitos de entrega
 

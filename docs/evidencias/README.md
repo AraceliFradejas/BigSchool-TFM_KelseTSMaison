@@ -2,6 +2,8 @@
 
 ## Cierre del 9 de noviembre de 2026
 
+- [29 capturas de los vídeos de escritorio, iPhone, Android e iPad: galería y tiempos](videos-2026-11-09/README.md).
+
 - [Mailtrap activado en Vercel: compra/cancelación publicadas y siete capturas](mailtrap-vercel-2026-11-09/README.md).
 
 - [Correos ilustrados ES/EN recibidos en Mailtrap e Insomnia básico](emails-2026-11-09/README.md).

@@ -1,5 +1,14 @@
 # Revisión de Maison y criterios de cierre
 
+## Cierre documentado · 9/11/2026
+
+La revisión original siguiente es histórica (7/11). Los cambios de ese día ya se publicaron; desde entonces se han documentado 191 comprobaciones automáticas, dos rondas de 24 casos manuales de pago/estados con SQLite y MongoDB, SMTP activo en Vercel con compra/cancelación recibidas y stock repuesto, consulta de Atlas y 29 fotogramas de cinco vídeos físicos/de escritorio. tAIlor generativo y voz están activos con cuotas. [Estado de entrega](ENTREGA.md) · [Pruebas](VALIDACION.md) · [Galería y hallazgos](evidencias/videos-2026-11-09/README.md).
+
+Pendientes: corregir y volver a comprobar los ajustes visuales observados en iPhone y el texto de correo capturado/no enviado; completar los recorridos físicos que faltan, revisar el audio, cerrar slides, vídeo y paquete privado del evaluador. La cuenta cliente del evaluador está creada y su acceso/denegación de Team se han verificado; sus credenciales no están en Git. No se ha entregado en el campus.
+
+## Revisión original del 7/11
+
+
 Revisión del 7 de noviembre de 2026 sobre el trabajo local posterior a `e933006`. Los cambios de esta revisión todavía no están publicados. Las evidencias del 18 de octubre corresponden a aquella versión; no se trasladan automáticamente a esta.
 
 ## Alcance y evidencias

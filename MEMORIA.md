@@ -1,5 +1,8 @@
 # Memoria del proyecto KelseTS Maison
 
+**Evidencias de dispositivos · 9/11/2026:** 29 fotogramas extraídos de cinco vídeos de la autora, con tiempos y pies de imagen: escritorio, iPhone, Android e iPad en inglés. En iPhone se observa el correo de compra desplegado en Mis comunicaciones con indicación de captura en Mailtrap. Esta revisión acredita ese paso físico concreto; no completa todos los correos o dispositivos ni una auditoría del audio. [Galería, selección para slides y hallazgos](docs/evidencias/videos-2026-11-09/README.md).
+
+
 **Mailtrap publicado · 9/11/2026:** activado en Production de `kelsets-maison-api`, despliegue `FH94XhjDT`. Compra DEMO de Studio Interview por 4.840,00 €, cargo real 0,00 €, reintento sin duplicado y cancelación del mismo pedido; dos correos recibidos y stock repuesto. [Registro y siete capturas](docs/evidencias/mailtrap-vercel-2026-11-09/README.md).
 
 
@@ -31,6 +34,70 @@ He probado la recepción SMTP en Mailtrap Sandbox de compra y cancelación en ca
 He guardado las capturas reales en JPG, tanto de escritorio como de la vista móvil emulada por Mailtrap. En esta última encontré un pequeño desbordamiento horizontal, lo corregí y conservé la evidencia anterior junto a la comprobación posterior. No confundo esta emulación con una prueba de un cliente de correo en un teléfono físico. [Capturas ES/EN y registros](docs/evidencias/emails-2026-11-09/README.md).
 
 El recorrido manual de Insomnia comprueba pedidos, permisos, privacidad, importes y reposición de existencias; sus respuestas se contrastan con SQLite. Las verificaciones automatizadas también cubren MongoDB y los fallos del proveedor de correo. La suite actual suma 191 pruebas correctas. La activación de los secretos SMTP en Vercel y la recepción desde la API publicada ya se han comprobado; queda la validación física de la nueva vista de comunicaciones en Expo Go. [Diseño, recuperación y límites](docs/CORREOS-DEMO.md).
+
+## Recorrido visual de la versión que presento
+
+Las figuras siguientes enlazan decisiones de producto con evidencias reales. Los fotogramas proceden de mis grabaciones y conservan el encuadre, las barras del sistema y los controles de Expo. Las pruebas técnicas usan sus propios entornos, identificados en cada pie. [Índice completo con tiempos y límites](docs/evidencias/videos-2026-11-09/README.md).
+
+### Figura 1 · Identidad y entrada a la boutique
+
+![Portada de Maison](docs/evidencias/videos-2026-11-09/01-web-portada.jpg)
+
+*Escritorio, desktop1.mov, 00:03.* La película y el catálogo comparten identidad visual; el acceso flotante permite encontrar el asesor. Las imágenes de producto son representaciones de una boutique ficticia, no fotografías de mercancía real.
+
+### Figura 2 · Colecciones con menos recorrido vertical
+
+![Carrusel editorial de colecciones](docs/evidencias/videos-2026-11-09/04-web-carrusel.jpg)
+
+*Escritorio, desktop1.mov, 01:00.* El carrusel organiza dieciséis colecciones con fotografía, descripción y enlace. La posición 06/16 y las flechas hacen visible que existen más opciones. Esta revisión nace de mi prueba de la portada: la cuadrícula anterior requería demasiado scroll.
+
+### Figura 3 · Una experiencia en distintos dispositivos
+
+| iPhone | Android | iPad en inglés |
+| --- | --- | --- |
+| <img src="docs/evidencias/videos-2026-11-09/11-iphone-catalogo.jpg" width="230" alt="Catálogo nativo en iPhone" /> | <img src="docs/evidencias/videos-2026-11-09/19-android-catalogo.jpg" width="230" alt="Catálogo nativo en Android" /> | <img src="docs/evidencias/videos-2026-11-09/25-ipad-catalogo-en.jpg" width="380" alt="Catálogo horizontal en inglés en iPad" /> |
+
+*iPhone 00:20; Android 00:20; iPad 01:00, en sus respectivas grabaciones.* Se observan búsqueda, categorías, fotografías y navegación nativa. Esto acredita esas pantallas físicas, no todos los casos de compra, conectividad o accesibilidad. El despliegue móvil sigue siendo de desarrollo en Expo Go y Metro.
+
+### Figura 4 · Conversación vinculada a productos verificables
+
+![Respuesta contextual y propuesta Style de Gemini](docs/evidencias/videos-2026-11-09/08-web-tailor-gemini.jpg)
+
+*Escritorio, desktop2.mov, 05:00.* El usuario pide renovar el armario para distintas actividades; tAIlor distingue propuestas formales y cotidianas. Style aparece por 4.380 € dentro de 10.000 €. Los IDs, precios y existencias se comprueban en el servidor: el texto generado no autoriza cambios de precio o permisos. El estado visual de voz no permite evaluar la pronunciación a partir de este fotograma.
+
+### Figura 5 · Seguimiento de la selección en móvil
+
+<img src="docs/evidencias/videos-2026-11-09/18-iphone-tailor-tallas.jpg" width="340" alt="tAIlor conserva Cruel Summer y confirma talla M y calzado 40" />
+
+*iPhone, Iphone.MP4, 07:20.* La respuesta conserva Cruel Summer al confirmar M/40. La disponibilidad indicada corresponde al momento de la consulta; no es una reserva ni una garantía de ajuste. El solapamiento de la cabecera con la barra de estado se conserva como hallazgo pendiente de corregir, sin retocar la imagen.
+
+### Figura 6 · Comunicación consultada físicamente en iPhone
+
+<img src="docs/evidencias/videos-2026-11-09/14-iphone-correo.jpg" width="340" alt="Previsualización del correo de compra en iPhone con estado capturado en Mailtrap" />
+
+*iPhone, Iphone.MP4, 03:30.* El usuario despliega la compra en Mis comunicaciones y se ve el estado de captura en Mailtrap. Esta evidencia completa la comprobación física de esa previsualización, no la de todos los eventos o dispositivos. También muestra un texto histórico No enviado junto a Capturado: queda pendiente aclarar la diferencia entre destinatario ficticio y captura técnica en Sandbox.
+
+### Figura 7 · Correo recibido desde la API publicada
+
+<img src="docs/evidencias/mailtrap-vercel-2026-11-09/05-mailtrap-compra-total.jpg" width="900" alt="Correo recibido en Mailtrap desde Vercel con total de 4.840 euros" />
+
+*Safari, Mailtrap Sandbox, prueba publicada del 9/11.* Studio Interview reúne cuatro piezas por 4.840,00 €; el justificante de la API acredita cargo real cero. Compra y cancelación del mismo pedido quedaron capturadas y se repuso el stock. Esta prueba tiene un pedido distinto al del vídeo de iPhone: no los presento como un recorrido único. [Registro HTTPS y capturas](docs/evidencias/mailtrap-vercel-2026-11-09/README.md).
+
+### Figura 8 · Probar el reintento y contrastar sus efectos
+
+<img src="docs/evidencias/insomnia-mongodb-2026-11-09/06-pago-idempotente.jpg" width="900" alt="Insomnia muestra el mismo pedido y justificante al repetir el pago DEMO contra MongoDB local" />
+
+*Insomnia 13.3.1, MongoDB temporal, API loopback 3181.* El reintento devuelve 200 con el mismo pedido. La lectura directa de la base confirma una compra de 1.850,00 €, una comunicación y stock 6 → 5, sin duplicados. Esta base es aislada; no se atribuye el resultado a Atlas. [24 casos, incidencias y contraste](docs/evidencias/insomnia-mongodb-2026-11-09/README.md).
+
+### Figura 9 · Persistencia publicada e índices
+
+<img src="docs/evidencias/atlas-2026-11-09/05-indices-variantes.jpg" width="900" alt="Índices de variantes en Atlas: id único y consulta por productId" />
+
+*Safari, Atlas, consulta de solo lectura del 9/11.* `_id_` e `id_1` son únicos; `productId_1` permite consultar variantes por producto. La pantalla muestra índices READY. No se han modificado datos para obtenerla ni se han expuesto documentos de usuarios o sesiones. [Catálogo, variantes y límites de la consulta](docs/evidencias/atlas-2026-11-09/README.md).
+
+### Cómo relaciono estas pruebas con el curso
+
+La [matriz de revisión y cierre](docs/REVISION-Y-CIERRE.md#cambios-justificados-por-el-curso) enlaza las lecciones revisadas de responsabilidades, inversión de dependencias, variables de entorno y secretos, autenticación/autorización y mapa de pruebas. Aplico sus criterios al separar contratos, dominio y transporte; mantener secretos fuera del cliente y Git; comprobar propiedad y roles en backend; y distinguir tests automatizados, API manual, persistencia y observación física. Las imágenes ilustran esos resultados concretos, sin presentar una captura como prueba completa de seguridad o calidad.
 
 ## 1 Contexto y motivación
 
@@ -84,7 +151,7 @@ Las líneas guardan una copia del nombre, variante, imagen y precio del momento.
 
 ## 7 Comunicaciones y administración
 
-La creación del pedido y cada cambio válido de estado generan una comunicación para su cliente. Los mensajes tienen versiones ES/EN y se guardan junto con el cambio dentro de la misma transacción. No se envían correos externos en esta versión.
+La creación del pedido y cada cambio válido de estado generan una comunicación para su cliente. Los mensajes tienen versiones ES/EN y se guardan junto con el cambio dentro de la misma transacción. Desde el 9/11, el adaptador SMTP puede capturarlos en Mailtrap Sandbox; no se envían a clientes reales. La captura se registra por separado de la comunicación interna.
 
 Team puede crear y editar productos, ocultarlos del catálogo, cambiar variantes y existencias y subir imágenes. El servidor comprueba el formato real de las imágenes y Sharp las decodifica, orienta, reduce y convierte a WebP. Las imágenes originales subidas no se conservan. Una variante de un pedido pendiente o confirmado no se puede eliminar, porque sería necesaria para devolver el stock si se cancela.
 
@@ -100,7 +167,7 @@ La primera decisión ha sido mantener la aplicación utilizable sin servicios co
 
 La disponibilidad afecta a varias pantallas, aunque se decide en un único lugar: el servidor. Un producto visto hace unos minutos puede haberse agotado y una pantalla de Team puede tener datos antiguos. Las transacciones, las respuestas de conflicto y la revisión del producto cubren esas situaciones.
 
-Antes de cerrar el TFM quiero completar la revisión en dispositivos reales y preparar las slides sobre lo que he construido. Los servicios de Maison ya están configurados en Vercel y la app nativa tiene una primera versión. La integración de IA sigue pendiente.
+Antes de cerrar el TFM quiero completar la revisión en dispositivos reales y preparar las slides sobre lo que he construido. Los servicios de Maison ya están configurados en Vercel y la app nativa tiene una primera versión. La integración generativa y la voz están activadas con cuotas; quedan una evaluación más amplia y el montaje de la defensa.
 
 La ampliación swiftie añade vestidos de gala, sastrería, cuadros, botas, denim y punto. La selección de lujo incluye gabardinas, cachemir, lana, tul, terciopelo, piel, satén y joyería. Los looks se exploran por eventos, entrevistas y TV, estilo de calle o día a día. El buscador contempla verdes y plateados y mantiene la comprobación de presupuesto y existencias. Los precios y materiales describen artículos ficticios; no acreditan mercancía real.
 
@@ -174,7 +241,7 @@ Para estas pruebas he utilizado **Expo Go 57.0.9**. La app está en la versión 
 
 La exportación genera los paquetes Hermes de iOS y Android y Expo Doctor supera sus 21 comprobaciones. Las pruebas automáticas de formato recorren las 996 variantes del catálogo y cantidades desde cero hasta millones en ambos idiomas. Estas comprobaciones técnicas complementan la revisión en los dispositivos; no sustituyen el recorrido manual completo.
 
-Por ahora ejecuto la app con Expo Go y Metro. Quiero completar las capturas nativas, comprobar la conservación de la bolsa al cerrar y abrir, los cambios de conexión y la accesibilidad en cada dispositivo. Acceso, favoritos, pedidos e historial de cuenta, Team e IA siguen pendientes en la app, al igual que la distribución en tiendas. La [guía móvil](mobile/README.md) recoge el arranque y la [validación](docs/VALIDACION.md) conserva el detalle de las comprobaciones.
+Por ahora ejecuto la app con Expo Go y Metro. Quiero completar las capturas nativas, comprobar la conservación de la bolsa al cerrar y abrir, los cambios de conexión y la accesibilidad en cada dispositivo. En esa etapa de octubre estaban pendientes acceso, favoritos, pedidos e IA. Las ampliaciones posteriores de sesión, bolsa, pedidos y tAIlor se documentan en los registros de noviembre; Team nativo y distribución en tiendas no se dan por implementados. La [guía móvil](mobile/README.md) recoge el arranque y la [validación](docs/VALIDACION.md) conserva el detalle de las comprobaciones.
 
 ## Ampliación: pago académico simulado en web y app
 

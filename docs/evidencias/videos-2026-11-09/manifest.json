@@ -1,0 +1,468 @@
+{
+  "extractionDate": "2026-11-09",
+  "method": "ffmpeg -ss TIME -i SOURCE -frames:v 1 -q:v 2; original displayed resolution; automatic metadata orientation; no resizing/cropping/retouching",
+  "sources": [
+    {
+      "file": "Android.mp4",
+      "durationSeconds": 494.263628,
+      "bytes": 174820185,
+      "sha256": "642085612bd13ff9203b982d4f3f6384d10882df5c9236147051690b3a5145a2",
+      "streams": [
+        {
+          "codec_type": "audio"
+        },
+        {
+          "codec_type": "video",
+          "width": 720,
+          "height": 1560
+        }
+      ]
+    },
+    {
+      "file": "Ipad.MP4",
+      "durationSeconds": 260.185011,
+      "bytes": 250503879,
+      "sha256": "3aeca8c21597ed762184ed2543bb10e88c025d56bccb6e6d0eb3189ddee7fbad",
+      "streams": [
+        {
+          "codec_type": "audio"
+        },
+        {
+          "codec_type": "video",
+          "width": 1440,
+          "height": 1920,
+          "side_data_list": [
+            {}
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Iphone.MP4",
+      "durationSeconds": 488.21,
+      "bytes": 164151237,
+      "sha256": "309802206ba2d182aec5f9c09e4c6aaebdb569f25aa2c33adf5eb573ba5338f0",
+      "streams": [
+        {
+          "codec_type": "audio"
+        },
+        {
+          "codec_type": "video",
+          "width": 1170,
+          "height": 2532
+        }
+      ]
+    },
+    {
+      "file": "desktop1.mov",
+      "durationSeconds": 82.38,
+      "bytes": 108100126,
+      "sha256": "fd842c50f7539aaeb023cb4f3f256a798b7c6d7aaeb84e35e684b5d26d93604a",
+      "streams": [
+        {
+          "codec_type": "video",
+          "width": 1904,
+          "height": 872
+        },
+        {
+          "codec_type": "audio"
+        }
+      ]
+    },
+    {
+      "file": "desktop2.mov",
+      "durationSeconds": 390.113292,
+      "bytes": 332170888,
+      "sha256": "240ead095bfbf6c4ef5552038d70378344bc1e4ff1faa0c993ae5f55c1e39765",
+      "streams": [
+        {
+          "codec_type": "video",
+          "width": 1916,
+          "height": 898
+        },
+        {
+          "codec_type": "audio"
+        }
+      ]
+    }
+  ],
+  "frames": [
+    {
+      "file": "01-web-portada.jpg",
+      "source": "desktop1.mov",
+      "timeSeconds": 3,
+      "time": "00:03",
+      "title": "Portada e identidad visual",
+      "caption": "Portada de Maison con película, navegación y acceso flotante al asesor.",
+      "use": "presentacion",
+      "width": 1904,
+      "height": 872,
+      "bytes": 389874,
+      "sha256": "03639fe111e608680d80dbe08f183e19a59ff6f7fd67c5e83e81b76f52a340f5"
+    },
+    {
+      "file": "02-web-peliculas.jpg",
+      "source": "desktop1.mov",
+      "timeSeconds": 20,
+      "time": "00:20",
+      "title": "Universo visual de la marca",
+      "caption": "Cuatro películas editoriales y enlaces para explorar sus looks; el título superior queda parcialmente fuera del encuadre.",
+      "use": "memoria",
+      "width": 1904,
+      "height": 872,
+      "bytes": 292382,
+      "sha256": "cce1185e4866c3afeb11ba8e1eb41e6de9a7b15c17b9a3919ec8961032d93ed6"
+    },
+    {
+      "file": "03-web-seleccion.jpg",
+      "source": "desktop1.mov",
+      "timeSeconds": 40,
+      "time": "00:40",
+      "title": "Selección de producto",
+      "caption": "Selección de moda, accesorios y belleza integrada en la portada.",
+      "use": "memoria",
+      "width": 1904,
+      "height": 872,
+      "bytes": 129714,
+      "sha256": "8aba0bb8f8feabb453bdec0243af914f83e67ea78c4aa025fe15c9af09b84f3f"
+    },
+    {
+      "file": "04-web-carrusel.jpg",
+      "source": "desktop1.mov",
+      "timeSeconds": 60,
+      "time": "01:00",
+      "title": "Carrusel de colecciones",
+      "caption": "Colecciones con fotografía, descripción, enlace y controles de desplazamiento; posición 06/16.",
+      "use": "presentacion",
+      "width": 1904,
+      "height": 872,
+      "bytes": 161336,
+      "sha256": "cf5d2f4c9637e4c254113891cb957fd3ab8002165edba579b5115a722ba62eb7"
+    },
+    {
+      "file": "05-web-comunicaciones.jpg",
+      "source": "desktop2.mov",
+      "timeSeconds": 20,
+      "time": "00:20",
+      "title": "Historial y comunicaciones",
+      "caption": "Pedido cancelado y previsualización interna de correo; no demuestra por sí sola recepción SMTP de ese pedido.",
+      "use": "memoria",
+      "width": 1916,
+      "height": 898,
+      "bytes": 94123,
+      "sha256": "0278bfc2cbee7af9ce395f125a681410066b5412e6495f9f45b10a7f59aad155"
+    },
+    {
+      "file": "06-web-variantes-outfit.jpg",
+      "source": "desktop2.mov",
+      "timeSeconds": 140,
+      "time": "02:20",
+      "title": "Variantes por pieza",
+      "caption": "Selección de tallas por pieza de All Too Well; el botón de conjunto está desactivado mientras falta una variante.",
+      "use": "memoria",
+      "width": 1916,
+      "height": 898,
+      "bytes": 99027,
+      "sha256": "71be3868687f4b77e31e918a8bd7ced9df627fc03d49cb3df4cdf680ce9aec11"
+    },
+    {
+      "file": "07-web-selector-tailor.jpg",
+      "source": "desktop2.mov",
+      "timeSeconds": 220,
+      "time": "03:40",
+      "title": "Texto o voz",
+      "caption": "El usuario elige cómo comenzar la conversación con tAIlor.",
+      "use": "presentacion",
+      "width": 1916,
+      "height": 898,
+      "bytes": 134929,
+      "sha256": "bd95ac054f2db2f6995317d7c32b0188aacfd258b9f3f73518ea50b7be89cb07"
+    },
+    {
+      "file": "08-web-tailor-gemini.jpg",
+      "source": "desktop2.mov",
+      "timeSeconds": 300,
+      "time": "05:00",
+      "title": "Propuesta contextual",
+      "caption": "Respuesta de Gemini para usos formales y cotidianos, presupuesto de 10.000 € y propuesta Style de 4.380 €.",
+      "use": "presentacion",
+      "width": 1916,
+      "height": 898,
+      "bytes": 161091,
+      "sha256": "002b0537f616e848e22f75a2163b5538a9e149f3576b028c9d9d40b18e4d4cf1"
+    },
+    {
+      "file": "09-web-tailor-pieza.jpg",
+      "source": "desktop2.mov",
+      "timeSeconds": 340,
+      "time": "05:40",
+      "title": "Tarjeta con producto",
+      "caption": "Fotografía, nombre y precio de las zapatillas del look long story short.",
+      "use": "memoria",
+      "width": 1916,
+      "height": 898,
+      "bytes": 142126,
+      "sha256": "e32a85562797c1484dc0b4021aec0c65285baaa72c82c4740f1ad061a4963308"
+    },
+    {
+      "file": "10-web-tailor-despedida.jpg",
+      "source": "desktop2.mov",
+      "timeSeconds": 380,
+      "time": "06:20",
+      "title": "Cierre conversacional",
+      "caption": "El asesor respeta que el usuario quiera pensarlo y cierra sin repetir los conjuntos.",
+      "use": "memoria",
+      "width": 1916,
+      "height": 898,
+      "bytes": 146584,
+      "sha256": "1aa761781c4f2139e08a2b53e2a60d9c592758126d11df091daa8f5dfec19854"
+    },
+    {
+      "file": "11-iphone-catalogo.jpg",
+      "source": "Iphone.MP4",
+      "timeSeconds": 20,
+      "time": "00:20",
+      "title": "Catálogo en iPhone",
+      "caption": "Búsqueda, categorías, tarjetas con precio y navegación nativa.",
+      "use": "presentacion",
+      "width": 1170,
+      "height": 2532,
+      "bytes": 280917,
+      "sha256": "872d35012efce1c3b8d8e78cda51ba60a1e1c19080c4c3015616e597ce8d53a5"
+    },
+    {
+      "file": "12-iphone-outfits.jpg",
+      "source": "Iphone.MP4",
+      "timeSeconds": 60,
+      "time": "01:00",
+      "title": "Outfits en iPhone",
+      "caption": "Looks ilustrados con número de piezas y acceso a su selección.",
+      "use": "memoria",
+      "width": 1170,
+      "height": 2532,
+      "bytes": 287153,
+      "sha256": "fee3b641ab0006462847b954dee4b99e051faee16afe63b402a6d273afe92339"
+    },
+    {
+      "file": "13-iphone-mapa.jpg",
+      "source": "Iphone.MP4",
+      "timeSeconds": 80,
+      "time": "01:20",
+      "title": "Mapa de boutiques",
+      "caption": "Mapa con boutiques ficticias; no se interpreta como prueba de precisión del GPS.",
+      "use": "memoria",
+      "width": 1170,
+      "height": 2532,
+      "bytes": 468819,
+      "sha256": "78c0a8b7c6eb8467e3aa6719bef0a7278286165a19e4e4e69bc16ff7b749f4d3"
+    },
+    {
+      "file": "14-iphone-correo.jpg",
+      "source": "Iphone.MP4",
+      "timeSeconds": 210,
+      "time": "03:30",
+      "title": "Correo abierto en iPhone",
+      "caption": "Previsualización de compra desplegada, destinatario ficticio e indicación de captura en Mailtrap; pedido 94d2ea2c.",
+      "use": "presentacion",
+      "width": 1170,
+      "height": 2532,
+      "bytes": 361642,
+      "sha256": "2c80281f800ddf619bc548d8b387274a9d9604c80e5457c2bde2ff36b9ba4f95"
+    },
+    {
+      "file": "15-iphone-grabacion.jpg",
+      "source": "Iphone.MP4",
+      "timeSeconds": 240,
+      "time": "04:00",
+      "title": "Grabación por turnos",
+      "caption": "Contador de grabación y botón Terminar y enviar; el fotograma no permite juzgar la calidad del audio.",
+      "use": "memoria",
+      "width": 1170,
+      "height": 2532,
+      "bytes": 203061,
+      "sha256": "0d8c1332e4a91293593b9a6934cd5a0300ab8ae87b1cc8ed9b9d4dfc56b04e94"
+    },
+    {
+      "file": "16-iphone-tailor-propuesta.jpg",
+      "source": "Iphone.MP4",
+      "timeSeconds": 300,
+      "time": "05:00",
+      "title": "Recomendación con presupuesto",
+      "caption": "Gemini propone Ready for It? por 3.920 € dentro de un presupuesto de 5.000 €.",
+      "use": "presentacion",
+      "width": 1170,
+      "height": 2532,
+      "bytes": 279668,
+      "sha256": "4ce4e45d15fe557af9609e8f26a0b20d9add31e1263f3a7d287089a59e2dc365"
+    },
+    {
+      "file": "17-iphone-bolsa-modal.jpg",
+      "source": "Iphone.MP4",
+      "timeSeconds": 380,
+      "time": "06:20",
+      "title": "Confirmación al añadir",
+      "caption": "Modal nativa de confirmación al añadir una pieza a la bolsa.",
+      "use": "memoria",
+      "width": 1170,
+      "height": 2532,
+      "bytes": 184930,
+      "sha256": "0e36bbb620690d682dd830d93c1db16dfb02b6581d8e631b03363207e90fcb60"
+    },
+    {
+      "file": "18-iphone-tailor-tallas.jpg",
+      "source": "Iphone.MP4",
+      "timeSeconds": 440,
+      "time": "07:20",
+      "title": "Continuidad de elección y tallas",
+      "caption": "Se conserva Cruel Summer al confirmar talla M y calzado 40, con disponibilidad indicada en la conversación.",
+      "use": "memoria",
+      "width": 1170,
+      "height": 2532,
+      "bytes": 258349,
+      "sha256": "2c24a59337987eb1c3f5fea94446c3d1c1eca6e13b23563023447e337c92b2cb"
+    },
+    {
+      "file": "19-android-catalogo.jpg",
+      "source": "Android.mp4",
+      "timeSeconds": 20,
+      "time": "00:20",
+      "title": "Catálogo en Android",
+      "caption": "Productos, categorías, precios y acceso flotante al asesor; conserva la marca de la grabadora.",
+      "use": "presentacion",
+      "width": 720,
+      "height": 1560,
+      "bytes": 148080,
+      "sha256": "beae35567a6d9a45a1ae729902b58392640260958b96c10af8502b49b4eb5bfc"
+    },
+    {
+      "file": "20-android-outfits.jpg",
+      "source": "Android.mp4",
+      "timeSeconds": 40,
+      "time": "00:40",
+      "title": "Outfits en Android",
+      "caption": "Listado de conjuntos ilustrados y navegación inferior.",
+      "use": "memoria",
+      "width": 720,
+      "height": 1560,
+      "bytes": 142217,
+      "sha256": "79f436bef6375fbf35f2479bfcd0d7d27b17c7ce42048cf17bcdbf2c655140c4"
+    },
+    {
+      "file": "21-android-bolsa.jpg",
+      "source": "Android.mp4",
+      "timeSeconds": 120,
+      "time": "02:00",
+      "title": "Bolsa y variantes",
+      "caption": "Líneas con talla, precio, cantidad y controles para quitar o incrementar unidades.",
+      "use": "memoria",
+      "width": 720,
+      "height": 1560,
+      "bytes": 122393,
+      "sha256": "08401722e035e7774cf539d68d670e019c26fc9af89105205ae542a101f83a7a"
+    },
+    {
+      "file": "22-android-checkout.jpg",
+      "source": "Android.mp4",
+      "timeSeconds": 320,
+      "time": "05:20",
+      "title": "Entrega de demostración",
+      "caption": "Pantalla de datos y entrega: total de 5.860 €, cuenta de evaluación y aviso explícito de ausencia de cobro. No acredita la confirmación de pago.",
+      "use": "presentacion",
+      "width": 720,
+      "height": 1560,
+      "bytes": 147297,
+      "sha256": "34a68a762f586f93845cc7b9874fae8a4dda03c5ffcd7c4a1213ea8fb19d7303"
+    },
+    {
+      "file": "23-android-tailor-propuesta.jpg",
+      "source": "Android.mp4",
+      "timeSeconds": 420,
+      "time": "07:00",
+      "title": "Chat generativo en Android",
+      "caption": "Propuesta Gorgeous por 4.380 € con proveedor Gemini visible y controles de texto.",
+      "use": "presentacion",
+      "width": 720,
+      "height": 1560,
+      "bytes": 145699,
+      "sha256": "bdae938af937086f8b20194aa8afd5c4b8fba2ef7408c64233e4bb53ae5dd7cc"
+    },
+    {
+      "file": "24-android-tailor-seguimiento.jpg",
+      "source": "Android.mp4",
+      "timeSeconds": 440,
+      "time": "07:20",
+      "title": "Seguimiento natural",
+      "caption": "Tras Me encanta, el asistente solicita talla de ropa y calzado sin volver a listar todos los conjuntos.",
+      "use": "memoria",
+      "width": 720,
+      "height": 1560,
+      "bytes": 135006,
+      "sha256": "05bb2c0448e80a088a2c6816a2442fb70e95bcdbbb370407998b51e3766d9d33"
+    },
+    {
+      "file": "25-ipad-catalogo-en.jpg",
+      "source": "Ipad.MP4",
+      "timeSeconds": 60,
+      "time": "01:00",
+      "title": "Catálogo inglés en iPad",
+      "caption": "Interfaz nativa en horizontal con textos ingleses y tarjetas en dos columnas.",
+      "use": "presentacion",
+      "width": 1920,
+      "height": 1440,
+      "bytes": 184744,
+      "sha256": "38e51cd358c31e461005bc1b6992b1df092043280534d3ff7dca7d9dc360aac1"
+    },
+    {
+      "file": "26-ipad-voz-en.jpg",
+      "source": "Ipad.MP4",
+      "timeSeconds": 135,
+      "time": "02:15",
+      "title": "Controles de voz en inglés",
+      "caption": "Voice conversation, Speak now y Switch to text en iPad.",
+      "use": "memoria",
+      "width": 1920,
+      "height": 1440,
+      "bytes": 116910,
+      "sha256": "9583bbad093e7e1d9bccc8af85fbc70c4e971b471e887a62771da542ff0b357c"
+    },
+    {
+      "file": "27-ipad-saludo-en.jpg",
+      "source": "Ipad.MP4",
+      "timeSeconds": 160,
+      "time": "02:40",
+      "title": "Saludo en inglés",
+      "caption": "Conversación con Hi y respuesta del asesor solicitando ocasión y presupuesto.",
+      "use": "memoria",
+      "width": 1920,
+      "height": 1440,
+      "bytes": 181917,
+      "sha256": "fd57e9587944b334d3cd4ae4a4261ec3521e57b8dcaf818ade69c71e31eb5968"
+    },
+    {
+      "file": "28-ipad-transcripcion-en.jpg",
+      "source": "Ipad.MP4",
+      "timeSeconds": 200,
+      "time": "03:20",
+      "title": "Transcripción y espera",
+      "caption": "Petición transcrita en inglés con presupuesto de 5.000 euros y spinner de espera.",
+      "use": "memoria",
+      "width": 1920,
+      "height": 1440,
+      "bytes": 174176,
+      "sha256": "9b335e3d1c8256489c80b299226ba3048d163eed626ed3b87f5c5c7e339e54f7"
+    },
+    {
+      "file": "29-ipad-respuesta-en.jpg",
+      "source": "Ipad.MP4",
+      "timeSeconds": 240,
+      "time": "04:00",
+      "title": "Respuesta generativa en inglés",
+      "caption": "Tras un resultado previo sin propuesta, presupuesto de 6.000 euros y respuesta identificada como Gemini. No se ven aquí las tarjetas completas.",
+      "use": "memoria",
+      "width": 1920,
+      "height": 1440,
+      "bytes": 188349,
+      "sha256": "7b00c2ff57b5dcc8ac9c9a333d29b460ecdb416b4baaa101a41114862f97777e"
+    }
+  ]
+}

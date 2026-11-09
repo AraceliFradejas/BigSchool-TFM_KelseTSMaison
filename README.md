@@ -1,19 +1,18 @@
 # KelseTS Maison
 
-**Mailtrap publicado · 9/11/2026:** activado en Production de `kelsets-maison-api`, despliegue `FH94XhjDT`. Compra DEMO de Studio Interview por 4.840,00 €, cargo real 0,00 €, reintento sin duplicado y cancelación del mismo pedido; dos correos recibidos y stock repuesto. [Registro y siete capturas](docs/evidencias/mailtrap-vercel-2026-11-09/README.md).
+Boutique ficticia de moda, accesorios y belleza · TFM de BigSchool de **Araceli Fradejas Muñoz**.
 
+**[Abrir Maison](https://kelsets-maison.vercel.app)** · [API](https://kelsets-maison-api.vercel.app/api/v1/health) · [Memoria](MEMORIA.md) · [Seguimiento de entrega](docs/ENTREGA.md)
 
-Correos DEMO: previsualización ES/EN en web y app; pruebas de compra, idempotencia, permisos y cancelación con Insomnia en una base aislada. SMTP de Mailtrap Sandbox comprobado con compra/cancelación ES/EN, logo, fotos y precios de catálogo; activación en Production de Vercel comprobada el 9/11. [Pruebas y evidencias](docs/evidencias/emails-2026-11-09/README.md).
+![Portada de KelseTS Maison, navegación y acceso al asesor](docs/evidencias/videos-2026-11-09/01-web-portada.jpg)
 
-También he ejecutado los 24 casos de pago DEMO y estados desde Insomnia tanto con SQLite como con MongoDB temporal: rechazo sin efectos, total manipulado, compra, reintento sin duplicado, justificante y transiciones hasta entregado. Las lecturas directas de ambas bases confirman un pedido de 1.850,00 €, cargo real 0,00 €, cuatro comunicaciones y stock 6 → 5. He guardado 31 capturas de estas dos rondas y cinco de Atlas en Safari, consultado solo en lectura. Evidencias separadas: [SQLite](docs/evidencias/insomnia-checkout-2026-11-09/README.md), [MongoDB local](docs/evidencias/insomnia-mongodb-2026-11-09/README.md) y [Atlas](docs/evidencias/atlas-2026-11-09/README.md).
+*Portada actual: fotograma de la grabación de escritorio de la autora, 00:03. Boutique académica, sin ventas ni cobros reales.*
 
-Voz de tAIlor: dictado por turnos de hasta un minuto y lectura completa de la respuesta en web y app. [Funcionamiento, límites y verificaciones](docs/VOZ-TAILOR.md).
-Chat de tAIlor con interpretación generativa del mensaje y contexto, validación de catálogo en backend y cuotas independientes de IA y voz. [Diseño y verificaciones](docs/CHAT-GENERATIVO-TAILOR.md).
+**Estado comprobado · 9/11/2026:** web/API publicadas, app en Expo Go, tAIlor generativo con voz por turnos y Mailtrap Sandbox activo en Production. La suite registrada suma 191 comprobaciones automáticas correctas. Se han recorrido 24 casos manuales de pago DEMO y estados tanto con SQLite como con MongoDB local; sus efectos se contrastaron directamente en cada base.
 
-Actualización del 8/11/2026: voz en producción con 200 acciones globales por día UTC, confirmaciones breves de talla y spinner de espera en web, iOS y Android. Pronunciación castellana del asistente: «téilor»; grafía visible: tAIlor. [Capturas originales de la prueba de la autora](docs/evidencias/stylist-2026-11-08/capturas-autora/README.md).
+Las pruebas físicas y sus límites están documentados por paso: los vídeos aportados permiten ilustrar iPhone, Android e iPad, incluido el correo desplegado en iPhone. Siguen pendientes los ajustes visuales observados, completar ciertos recorridos por dispositivo, revisar el audio del montaje y cerrar presentación/vídeo/paquete de entrega. [Evidencias](docs/evidencias/README.md) · [Validación](docs/VALIDACION.md).
 
-[Guía editable para preparar la defensa de 30 minutos](docs/KelseTS_Maison_Guia_Completa_Defensa_TFM_30min.docx). Es una base de ensayo; revisar los estados y las evidencias actuales antes de la entrega.
-
+La cuenta del evaluador y su contraseña se facilitan por separado en la entrega privada; no se publican en este repositorio. La app usa Metro para desarrollo: un enlace LAN no es una distribución permanente.
 
 [Versión en castellano](#versión-en-castellano) · [English version](#english-version)
 
@@ -44,6 +43,42 @@ He comprobado en Mailtrap Sandbox la recepción por SMTP de compra y cancelació
 | Correo en pantalla estrecha | [Ver móvil emulado](docs/evidencias/emails-2026-11-09/mailtrap/outfits/10-movil-corregido-piezas.jpg) |
 
 Las capturas son JPG originales del correo recibido en Mailtrap, con vistas de escritorio y emulación móvil; no son mockups ni capturas de una app de correo en un teléfono físico. [Índice completo ES/EN](docs/evidencias/emails-2026-11-09/README.md) · [Configuración y límites](docs/CORREOS-DEMO.md) · [Pruebas de Insomnia](docs/api/README.md). La conexión SMTP se ha comprobado desde una base aislada; los secretos de Mailtrap están configurados en Production de Vercel y su recepción se ha comprobado.
+
+### Maison en imágenes
+
+El carrusel sustituye la cuadrícula extensa de texto por portadas editoriales, con enlaces a sus colecciones y controles de desplazamiento.
+
+![Carrusel de colecciones con fotografías y enlaces](docs/evidencias/videos-2026-11-09/04-web-carrusel.jpg)
+
+*Spotlight, Studio Ivory y City Pages; grabación de escritorio 01:00. Las imágenes del carrusel son recursos propios de esta sección.*
+
+La misma boutique se recorre con componentes nativos en móvil y tablet. Estas imágenes proceden de los dispositivos de la autora, no de emulación de escritorio.
+
+| iPhone · catálogo | Android · catálogo | iPad · inglés |
+| --- | --- | --- |
+| <img src="docs/evidencias/videos-2026-11-09/11-iphone-catalogo.jpg" width="230" alt="Catálogo de Maison en iPhone" /> | <img src="docs/evidencias/videos-2026-11-09/19-android-catalogo.jpg" width="230" alt="Catálogo de Maison en Android" /> | <img src="docs/evidencias/videos-2026-11-09/25-ipad-catalogo-en.jpg" width="380" alt="Catálogo en inglés de Maison en iPad horizontal" /> |
+
+*Se conservan las proporciones y los indicadores originales. Apertura y pantallas visibles no equivalen a una validación completa de cada dispositivo.*
+
+### De una petición a un look con tAIlor
+
+El asesor recoge ocasión y presupuesto, interpreta el contexto y muestra piezas del catálogo con fotos y enlaces. El backend valida precios, variantes y disponibilidad; una recomendación no añade productos a la bolsa ni realiza una compra.
+
+![tAIlor propone Style dentro del presupuesto y explica su elección](docs/evidencias/videos-2026-11-09/08-web-tailor-gemini.jpg)
+
+*Grabación de escritorio 05:00: Gemini, presupuesto de 10.000 € y Style por 4.380 €. La respuesta distingue uso formal y cotidiano. El control Detener voz está visible; una imagen no certifica la calidad del audio.*
+
+Gemini → Claude → OpenAI, con máximo global de 100 intentos de modelo y 200 acciones de voz al día UTC. La prueba de IA/voz termina al finalizar el 31/12/2026 en Madrid. [Diseño del chat](docs/CHAT-GENERATIVO-TAILOR.md) · [Voz y límites](docs/VOZ-TAILOR.md).
+
+### Compra DEMO y correo recibido
+
+La prueba de la API publicada creó Studio Interview por **4.840,00 €**, con cargo real **0,00 €**. Repetir la operación conservó el mismo pedido; al cancelarlo se repusieron sus cuatro variantes. Compra y cancelación llegaron a My Sandbox, con logo, fotografías y precios históricos.
+
+<img src="docs/evidencias/mailtrap-vercel-2026-11-09/05-mailtrap-compra-total.jpg" width="900" alt="Correo de compra recibido en Mailtrap con total de 4.840 euros y aviso académico" />
+
+*Correo observado en Safari después de activar SMTP en Vercel. La prueba externa termina en Mailtrap Sandbox, nunca en la dirección real de un cliente. [Despliegue, resultados y capturas](docs/evidencias/mailtrap-vercel-2026-11-09/README.md).*
+
+La carpeta de evidencias reúne 29 fotogramas de cinco vídeos, con minuto de origen, pies y selección de diez imágenes para slides. [Índice y hallazgos](docs/evidencias/videos-2026-11-09/README.md) · [Galería HTML para abrir localmente](docs/evidencias/videos-2026-11-09/galeria.html). Los vídeos originales y las credenciales quedan fuera de Git.
 
 ### Una historia personal
 
@@ -187,7 +222,7 @@ Las instalaciones nuevas ya incluyen el catálogo actual. Para una base local an
 
 En MongoDB también puedes configurar `ADMIN_EMAIL` y una contraseña propia en `ADMIN_PASSWORD` dentro del `.env` privado y ejecutar `npm run team:create`. Es una acción explícita: no se ejecuta al arrancar ni publica credenciales, y no modifica una cuenta que ya exista.
 
-Puedes registrarte con un correo ficticio y una contraseña propia de al menos diez caracteres. No se envían correos externos. Las cuentas nuevas siempre tienen el rol de cliente; no existen contraseñas ni cuentas administradoras predefinidas en el código.
+Puedes registrarte con un correo ficticio y una contraseña propia de al menos diez caracteres. No se envían correos a clientes reales; los eventos de pedido se pueden capturar en Mailtrap Sandbox. Las cuentas nuevas siempre tienen el rol de cliente; no existen contraseñas ni cuentas administradoras predefinidas en el código.
 
 Para dar acceso a Team a una cuenta que hayas registrado en tu instalación:
 

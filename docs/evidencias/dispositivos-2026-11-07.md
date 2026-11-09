@@ -1,5 +1,10 @@
 # Pruebas físicas de Maison · 7 de noviembre de 2026
 
+## Ampliación de evidencia · 9/11/2026
+
+La autora aporta cinco vídeos de escritorio e iPhone/Android/iPad. Se han extraído 29 fotogramas originales: [índice, tiempos y alcance](videos-2026-11-09/README.md). iPhone 03:30 muestra el correo de compra desplegado y el estado Capturado en el buzón de pruebas Mailtrap. Android muestra bolsa y datos de entrega; iPad, catálogo y diálogo en inglés. Se observan grabación/transcripción y propuestas, sin certificar aquí calidad del audio o reproducción automática. Se conservan los hallazgos de solapamiento de cabecera en iPhone y textos ajustados de navegación. El histórico siguiente es del 7/11 y no describe la evidencia incorporada hoy.
+
+
 Versión local de desarrollo: Expo 58.0.23 (SDK 58), React Native 0.88.1, React 19.3.0. API utilizada por la app: la web HTTPS publicada de Maison; el backend publicado incorpora la sesión nativa del commit 9dfe14b. Acceso a la app por Metro LAN: no es una distribución permanente.
 
 Resultados comunicados por Araceli durante la prueba. No hay nuevas capturas físicas incorporadas todavía; no se sustituyen por imágenes de escritorio o emulación. Modelos y versiones de sistema de hoy no revalidados; el registro del 18/10 se conserva como histórico.

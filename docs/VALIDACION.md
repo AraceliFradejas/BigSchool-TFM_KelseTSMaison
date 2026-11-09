@@ -1,5 +1,8 @@
 # Validación de la primera versión de Maison
 
+**Evidencias de dispositivos · 9/11/2026:** 29 fotogramas extraídos de cinco vídeos de la autora, con tiempos y pies de imagen: escritorio, iPhone, Android e iPad en inglés. En iPhone se observa el correo de compra desplegado en Mis comunicaciones con indicación de captura en Mailtrap. Esta revisión acredita ese paso físico concreto; no completa todos los correos o dispositivos ni una auditoría del audio. [Galería, selección para slides y hallazgos](evidencias/videos-2026-11-09/README.md).
+
+
 **Mailtrap publicado · 9/11/2026:** activado en Production de `kelsets-maison-api`, despliegue `FH94XhjDT`. Compra DEMO de Studio Interview por 4.840,00 €, cargo real 0,00 €, reintento sin duplicado y cancelación del mismo pedido; dos correos recibidos y stock repuesto. [Registro y siete capturas](evidencias/mailtrap-vercel-2026-11-09/README.md).
 
 
