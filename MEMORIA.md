@@ -6,7 +6,10 @@ La web y la API están publicadas en Vercel. tAIlor tiene conversación generati
 
 Hoy se han añadido previsualizaciones bilingües de correo de compra y cambios de estado a Mis comunicaciones, en web y app. Compra y cancelación comprobadas en Safari local; recorrido HTTP en Insomnia con SQLite aislado y contraste directo de la base. No se han enviado correos a clientes reales. Se ha comprobado SMTP real en Mailtrap Sandbox con cuatro muestras ilustradas: compra y cancelación en ES/EN, logo, fotografías y total de catálogo de 4.840,00 €. La integración todavía no está activada en Vercel. Las vistas móviles se han exportado, pero falta su comprobación física específica.
 
-Las secciones de evolución que siguen contienen resultados de etapas anteriores; este estado y los registros fechados más recientes prevalecen. Pendientes: autorizar y comprobar la activación SMTP en Vercel, publicación de este cambio, revisión física de comunicaciones y cierre de presentación/vídeo/paquete de entrega. La autora conserva la mejora visual del PDF. No se ha entregado en el campus.
+
+También he ejecutado los 24 casos de pago DEMO y estados desde Insomnia tanto con SQLite como con MongoDB temporal: rechazo sin efectos, total manipulado, compra, reintento sin duplicado, justificante y transiciones hasta entregado. Las lecturas directas de ambas bases confirman un pedido de 1.850,00 €, cargo real 0,00 €, cuatro comunicaciones y stock 6 → 5. He guardado 31 capturas de estas dos rondas y cinco de Atlas en Safari, consultado solo en lectura. Evidencias separadas: [SQLite](docs/evidencias/insomnia-checkout-2026-11-09/README.md), [MongoDB local](docs/evidencias/insomnia-mongodb-2026-11-09/README.md) y [Atlas](docs/evidencias/atlas-2026-11-09/README.md).
+
+Las secciones de evolución que siguen contienen resultados de etapas anteriores; este estado y los registros fechados más recientes prevalecen. Pendientes: autorizar y comprobar la activación SMTP en Vercel, revisión física de comunicaciones y cierre de presentación/vídeo/paquete de entrega. La autora conserva la mejora visual del PDF. No se ha entregado en el campus.
 
 | Dato        | Información                                                             |
 | ----------- | ----------------------------------------------------------------------- |

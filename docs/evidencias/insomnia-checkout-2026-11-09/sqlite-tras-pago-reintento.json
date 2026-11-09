@@ -1,0 +1,7 @@
+{
+  "stage": "after_approved_and_replay",
+  "orders": 1,
+  "payments": 1,
+  "messages": 1,
+  "stock": 5
+}

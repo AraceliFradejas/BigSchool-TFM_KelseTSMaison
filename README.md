@@ -2,6 +2,8 @@
 
 Correos DEMO: previsualización ES/EN en web y app; pruebas de compra, idempotencia, permisos y cancelación con Insomnia en una base aislada. SMTP de Mailtrap Sandbox comprobado con compra/cancelación ES/EN, logo, fotos y precios de catálogo; activación en Vercel pendiente. [Pruebas y evidencias](docs/evidencias/emails-2026-11-09/README.md).
 
+También he ejecutado los 24 casos de pago DEMO y estados desde Insomnia tanto con SQLite como con MongoDB temporal: rechazo sin efectos, total manipulado, compra, reintento sin duplicado, justificante y transiciones hasta entregado. Las lecturas directas de ambas bases confirman un pedido de 1.850,00 €, cargo real 0,00 €, cuatro comunicaciones y stock 6 → 5. He guardado 31 capturas de estas dos rondas y cinco de Atlas en Safari, consultado solo en lectura. Evidencias separadas: [SQLite](docs/evidencias/insomnia-checkout-2026-11-09/README.md), [MongoDB local](docs/evidencias/insomnia-mongodb-2026-11-09/README.md) y [Atlas](docs/evidencias/atlas-2026-11-09/README.md).
+
 Voz de tAIlor: dictado por turnos de hasta un minuto y lectura completa de la respuesta en web y app. [Funcionamiento, límites y verificaciones](docs/VOZ-TAILOR.md).
 Chat de tAIlor con interpretación generativa del mensaje y contexto, validación de catálogo en backend y cuotas independientes de IA y voz. [Diseño y verificaciones](docs/CHAT-GENERATIVO-TAILOR.md).
 
@@ -520,3 +522,5 @@ The final project will include code, README, application access and slides. [Del
 ### Academic notice and author
 
 KelseTS is a fictional brand by **Araceli Fradejas Muñoz**. Maison is an educational and portfolio project without commercial activity, affiliation, sponsorship or endorsement by celebrities, brands or sporting organisations. Its products, collections, prices and operations are fictional. Photorealistic catalogue images are generated representations of fictional products, not photographs of real merchandise. Font credits and licences are in [Resources](docs/RECURSOS.md).
+
+**Additional API evidence, 9 November:** all 24 DEMO checkout and state cases were exercised manually in Insomnia against isolated SQLite and MongoDB, with direct database assertions. The 31 screenshots and five read-only Atlas screenshots are documented separately; no Atlas order was changed. [API test guide](docs/api/README.md).

@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-09",
+  "format": "Original CUA screenshots, JPEG; no compositing",
+  "files": [
+    {
+      "file": "01-proyecto-maison.jpg",
+      "bytes": 244496,
+      "sha256": "e0e21ea358bc693649d7afb090a6cd27164edad4d47ec1ded7f65c7a9a9232d6"
+    },
+    {
+      "file": "02-colecciones.jpg",
+      "bytes": 190817,
+      "sha256": "8fab8f80e53a65e27e21eb64ec40d040a4fbd1a89ebdee828f5b5ca20264bb4c"
+    },
+    {
+      "file": "03-producto-bilingue.jpg",
+      "bytes": 182244,
+      "sha256": "4b8b13ed25f7fa81b0f303da360fea51dbd44b2b72786983e23100c2b2e15cee"
+    },
+    {
+      "file": "04-variantes-stock.jpg",
+      "bytes": 197503,
+      "sha256": "2bcf5f485456e31acd31ca468843742c0256a3991e02f46d3a53880d6fa598ea"
+    },
+    {
+      "file": "05-indices-variantes.jpg",
+      "bytes": 189168,
+      "sha256": "971b36bc1338bbd290175b3f94135c6250f937ec799bca5222f53bf617615ca9"
+    }
+  ]
+}

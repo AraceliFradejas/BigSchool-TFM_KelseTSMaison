@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-09T13:22:41.576Z",
+  "stage": "final",
+  "orders": [
+    {
+      "id": "c6473398-1734-4f1b-96b7-eb335ea7e5a0",
+      "status": "delivered",
+      "total_cents": 185000
+    }
+  ],
+  "payments": [
+    {
+      "orderId": "c6473398-1734-4f1b-96b7-eb335ea7e5a0",
+      "reference": "DEMO-C6473398-1734-4F1B-96B7-EB335EA7E5A0",
+      "amountCents": 185000,
+      "chargedCents": 0,
+      "mode": "demo"
+    }
+  ],
+  "messages": [
+    "pending",
+    "confirmed",
+    "dispatched",
+    "delivered"
+  ],
+  "deliveries": [
+    {
+      "order_status": "pending",
+      "state": "pending"
+    },
+    {
+      "order_status": "confirmed",
+      "state": "pending"
+    },
+    {
+      "order_status": "dispatched",
+      "state": "pending"
+    },
+    {
+      "order_status": "delivered",
+      "state": "pending"
+    }
+  ],
+  "stock": 5,
+  "assertions": "passed",
+  "externalEmail": "disabled in isolated sandbox"
+}

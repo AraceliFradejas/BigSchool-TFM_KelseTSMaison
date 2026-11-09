@@ -1,0 +1,545 @@
+{
+  "info": {
+    "name": "KelseTS Maison · pago DEMO y estados",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Segunda ronda local aislada. SMTP e IA desactivados. Sustituir REEMPLAZAR_ID_PEDIDO en las URLs por data.id de la operación 09. Ejecución manual en orden con cookie jar."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:3179/api/v1"
+    },
+    {
+      "key": "customer_email",
+      "value": "preview@maison.example"
+    },
+    {
+      "key": "team_email",
+      "value": "team@maison.example"
+    },
+    {
+      "key": "test_password",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "P01 · Acceder cliente",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/auth/login",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "description": "200. Solo cuentas de la copia local.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{customer_email}}\",\n  \"password\": \"{{test_password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "P02 · Stock inicial",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/products/satin-story",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "description": "200. satin-story-1: stock6."
+      }
+    },
+    {
+      "name": "P03 · Comunicaciones iniciales",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/messages",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "description": "200. Vacías en una base nueva."
+      }
+    },
+    {
+      "name": "P04 · Pago DEMO rechazado",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/checkout/demo",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "description": "409 demo_payment_declined. Sin pedido, pago, correo ni stock consumido.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idempotencyKey\": \"cd414d7f-b001-4f54-bfa7-01966b8921f7\",\n  \"lines\": [\n    {\n      \"variantId\": \"satin-story-1\",\n      \"quantity\": 1\n    }\n  ],\n  \"expectedTotalCents\": 185000,\n  \"payment\": {\n    \"mode\": \"demo\",\n    \"method\": \"card\",\n    \"acknowledged\": true,\n    \"outcome\": \"declined\",\n    \"fulfillment\": {\n      \"method\": \"pickup\",\n      \"recipientName\": \"Cliente ficticio Maison\",\n      \"boutiqueId\": \"madrid-milla-oro\"\n    }\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "P05 · Pedidos tras rechazo",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/orders",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "description": "200. Lista vacía."
+      }
+    },
+    {
+      "name": "P06 · Correos tras rechazo",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/messages",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "description": "200. Lista vacía."
+      }
+    },
+    {
+      "name": "P07 · Stock tras rechazo",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/products/satin-story",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "description": "200. Stock6 intacto."
+      }
+    },
+    {
+      "name": "P08 · Total manipulado",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/checkout/demo",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "description": "409 price_changed. Sin efectos en base.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idempotencyKey\": \"cd414d7f-b002-4f54-bfa7-01966b8921f7\",\n  \"lines\": [\n    {\n      \"variantId\": \"satin-story-1\",\n      \"quantity\": 1\n    }\n  ],\n  \"expectedTotalCents\": 1,\n  \"payment\": {\n    \"mode\": \"demo\",\n    \"method\": \"card\",\n    \"acknowledged\": true,\n    \"outcome\": \"approved\",\n    \"fulfillment\": {\n      \"method\": \"pickup\",\n      \"recipientName\": \"Cliente ficticio Maison\",\n      \"boutiqueId\": \"madrid-milla-oro\"\n    }\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "P09 · Pago DEMO aceptado",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/checkout/demo",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "description": "201. Sustituir REEMPLAZAR_ID_PEDIDO en P11,P15–P19,P22 por data.id. Justificante de 185000 céntimos; cargo real0.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idempotencyKey\": \"cd414d7f-b003-4f54-bfa7-01966b8921f7\",\n  \"lines\": [\n    {\n      \"variantId\": \"satin-story-1\",\n      \"quantity\": 1\n    }\n  ],\n  \"expectedTotalCents\": 185000,\n  \"payment\": {\n    \"mode\": \"demo\",\n    \"method\": \"card\",\n    \"acknowledged\": true,\n    \"outcome\": \"approved\",\n    \"fulfillment\": {\n      \"method\": \"pickup\",\n      \"recipientName\": \"Cliente ficticio Maison\",\n      \"boutiqueId\": \"madrid-milla-oro\"\n    }\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "P10 · Repetir pago aceptado",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/checkout/demo",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "description": "200. Mismo pedido y justificante; un descuento de stock y un correo.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idempotencyKey\": \"cd414d7f-b003-4f54-bfa7-01966b8921f7\",\n  \"lines\": [\n    {\n      \"variantId\": \"satin-story-1\",\n      \"quantity\": 1\n    }\n  ],\n  \"expectedTotalCents\": 185000,\n  \"payment\": {\n    \"mode\": \"demo\",\n    \"method\": \"card\",\n    \"acknowledged\": true,\n    \"outcome\": \"approved\",\n    \"fulfillment\": {\n      \"method\": \"pickup\",\n      \"recipientName\": \"Cliente ficticio Maison\",\n      \"boutiqueId\": \"madrid-milla-oro\"\n    }\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "P11 · Pedido con justificante",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/orders/REEMPLAZAR_ID_PEDIDO",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "description": "200. DEMO, pago simulado, cargo real0."
+      }
+    },
+    {
+      "name": "P12 · Correo único de compra",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/messages",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "description": "200. Una comunicación pending; Sandbox pending no significa enviado, SMTP está apagado."
+      }
+    },
+    {
+      "name": "P13 · Cerrar cliente",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/auth/logout",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "description": "",
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "P14 · Acceder Team",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/auth/login",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "description": "",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{team_email}}\",\n  \"password\": \"{{test_password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "P15 · Saltar a entregado",
+      "request": {
+        "method": "PATCH",
+        "url": "{{base_url}}/team/orders/REEMPLAZAR_ID_PEDIDO",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "description": "409 invalid_transition; sin correo.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"delivered\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "P16 · Confirmar pedido",
+      "request": {
+        "method": "PATCH",
+        "url": "{{base_url}}/team/orders/REEMPLAZAR_ID_PEDIDO",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "description": "200. Una comunicación confirmed.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"confirmed\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "P17 · Marcar enviado simulado",
+      "request": {
+        "method": "PATCH",
+        "url": "{{base_url}}/team/orders/REEMPLAZAR_ID_PEDIDO",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "description": "200. Una comunicación dispatched; no hay envío real.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"dispatched\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "P18 · Cancelar tras envío",
+      "request": {
+        "method": "PATCH",
+        "url": "{{base_url}}/team/orders/REEMPLAZAR_ID_PEDIDO",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "description": "409 invalid_transition. Sin reposición ni correo.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"cancelled\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "P19 · Marcar entregado simulado",
+      "request": {
+        "method": "PATCH",
+        "url": "{{base_url}}/team/orders/REEMPLAZAR_ID_PEDIDO",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "description": "200. Una comunicación delivered.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"delivered\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "P20 · Cerrar Team",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/auth/logout",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "description": "",
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "P21 · Volver al comprador",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/auth/login",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "description": "",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{customer_email}}\",\n  \"password\": \"{{test_password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "P22 · Pedido entregado y justificante",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/orders/REEMPLAZAR_ID_PEDIDO",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "description": "200. delivered; mismo justificante y precios históricos."
+      }
+    },
+    {
+      "name": "P23 · Cuatro comunicaciones finales",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/messages",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "description": "200. pending,confirmed,dispatched,delivered. No mensajes de operaciones rechazadas."
+      }
+    },
+    {
+      "name": "P24 · Stock final",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/products/satin-story",
+        "header": [
+          {
+            "key": "X-Maison-Request",
+            "value": "1"
+          }
+        ],
+        "description": "200. Stock5: una unidad consumida por el pedido entregado; no repuesta por cancelación inválida."
+      }
+    }
+  ]
+}

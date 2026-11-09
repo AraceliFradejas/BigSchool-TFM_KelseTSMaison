@@ -1,0 +1,63 @@
+{
+  "date": "2026-11-09T13:31:41.776Z",
+  "stage": "tras-pago-reintento",
+  "database": "maison_insomnia_demo",
+  "source": "local disposable MongoDB replica set; not Atlas",
+  "orders": [
+    {
+      "id": "b9214811-b0af-4a86-9a96-b3409bae2309",
+      "totalCents": 185000,
+      "status": "pending",
+      "payment": {
+        "mode": "demo",
+        "status": "simulated",
+        "method": "card",
+        "reference": "DEMO-B9214811-B0AF-4A86-9A96-B3409BAE2309",
+        "amountCents": 185000,
+        "chargedCents": 0,
+        "currency": "EUR",
+        "fulfillment": {
+          "method": "pickup",
+          "recipientName": "Cliente ficticio Maison",
+          "boutiqueId": "madrid-milla-oro",
+          "boutique": {
+            "id": "madrid-milla-oro",
+            "name": "Maison · Milla de Oro",
+            "city": "Madrid",
+            "location": {
+              "es": "Calle de Serrano · Barrio de Salamanca, Madrid",
+              "en": "Calle de Serrano · Salamanca district, Madrid"
+            },
+            "latitude": 40.4272,
+            "longitude": -3.6878,
+            "image": "/media/boutique-madrid.webp",
+            "photo": {
+              "author": "Lourdes Cardenal",
+              "license": "CC BY-SA 4.0",
+              "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+              "sourceUrl": "https://commons.wikimedia.org/wiki/File:01b_Madrid_Calle_de_Serrano_by_Lou.jpg"
+            }
+          },
+          "shippingCents": 0,
+          "estimatedFrom": "2026-11-10",
+          "estimatedTo": "2026-11-11"
+        },
+        "createdAt": "2026-11-09T13:31:18.150Z"
+      }
+    }
+  ],
+  "messages": [
+    {
+      "orderId": "b9214811-b0af-4a86-9a96-b3409bae2309"
+    }
+  ],
+  "deliveries": [
+    {
+      "orderStatus": "pending",
+      "state": "pending"
+    }
+  ],
+  "stock": 5,
+  "assertions": "passed",
+  "externalServices": "disabled"
+}

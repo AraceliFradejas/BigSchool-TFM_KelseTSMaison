@@ -1,0 +1,86 @@
+{
+  "date": "2026-11-09",
+  "format": "Original CUA screenshots, JPEG; no compositing",
+  "files": [
+    {
+      "file": "01-stock-inicial.jpg",
+      "bytes": 574442,
+      "sha256": "0e60236389e1a91eb447c4c1d2d582dcde498c65555d674391c2a134fc71d493"
+    },
+    {
+      "file": "02-pago-rechazado.jpg",
+      "bytes": 413134,
+      "sha256": "c17846389fce056751c0e89b6de18adf224ab0d454b5c7ca578b88ead45244f6"
+    },
+    {
+      "file": "03-sin-pedidos.jpg",
+      "bytes": 401273,
+      "sha256": "c786a5fde285bfd2c2f8ab8295860ec5d4fae08ceae98fbd3751a91010992859"
+    },
+    {
+      "file": "04-total-manipulado.jpg",
+      "bytes": 410343,
+      "sha256": "55cc10b4fc59c9ffab0e8d9b77da0a3afd5ae3a72b4452fd489ef151c6aed654"
+    },
+    {
+      "file": "05-pago-aceptado.jpg",
+      "bytes": 597365,
+      "sha256": "b404c01343c48d1f66bcca1a8b016d83432ce63c6568918c9a531c72a109876f"
+    },
+    {
+      "file": "06-pago-idempotente.jpg",
+      "bytes": 596635,
+      "sha256": "811436410f8e6c2464431a0d0fca1f8d888adf8824c9d0dbf008ddff126c086b"
+    },
+    {
+      "file": "07-justificante.jpg",
+      "bytes": 603115,
+      "sha256": "a933fc9510b051f458461a891bf28497899db4dc11e33c832aec8da798d98ae3"
+    },
+    {
+      "file": "08-correo-unico.jpg",
+      "bytes": 730855,
+      "sha256": "44288dc130f04b7877690a3e32ea57edb4e63f7f733a017900675815aae417a4"
+    },
+    {
+      "file": "09-salto-estado-rechazado.jpg",
+      "bytes": 421699,
+      "sha256": "c685996e212e73013024c1cb1824266b60c8c044bd1c73e2b864dc192cbb8022"
+    },
+    {
+      "file": "10-confirmado.jpg",
+      "bytes": 607519,
+      "sha256": "a29429a18275f201f763fa11133b0e0403a62da4c94181d0f96a446af332bdea"
+    },
+    {
+      "file": "11-enviado-simulado.jpg",
+      "bytes": 607993,
+      "sha256": "a66f612d91787f3ea4201894f4aa8db821ef56f2af5274eb8c209dcba07b3007"
+    },
+    {
+      "file": "12-cancelacion-no-permitida.jpg",
+      "bytes": 421931,
+      "sha256": "4b4941fa85ea9c5730a138048f9c579d4a7aeb1f6f0b2145d16d95b529796bf4"
+    },
+    {
+      "file": "13-entregado-simulado.jpg",
+      "bytes": 607351,
+      "sha256": "5f52b69b761cba24dea381029ae78204cb582efef6492f8ebdd505f2f909b2d7"
+    },
+    {
+      "file": "14-historico-justificante.jpg",
+      "bytes": 604886,
+      "sha256": "fdf1299ce325f9f6cd200daa44a6b4bcd9712c8c1a68b9fb9946835358bbc01f"
+    },
+    {
+      "file": "15-cuatro-comunicaciones.jpg",
+      "bytes": 717332,
+      "sha256": "5c135f1701d02c15407f55f892aa154665468596dbab00d5dc60fab6648e3cb3"
+    },
+    {
+      "file": "16-stock-final.jpg",
+      "bytes": 573487,
+      "sha256": "9d37df7f18456156180667e7054fae5e68a26fb794be251ad8c764a440dd1a8e"
+    }
+  ]
+}
