@@ -1,15 +1,18 @@
 # Validación de la primera versión de Maison
 
+**Mailtrap publicado · 9/11/2026:** activado en Production de `kelsets-maison-api`, despliegue `FH94XhjDT`. Compra DEMO de Studio Interview por 4.840,00 €, cargo real 0,00 €, reintento sin duplicado y cancelación del mismo pedido; dos correos recibidos y stock repuesto. [Registro y siete capturas](evidencias/mailtrap-vercel-2026-11-09/README.md).
+
+
 ## Estado verificado · 9 de noviembre de 2026
 
 La web y la API están publicadas en Vercel. tAIlor tiene conversación generativa y voz por turnos en web y Expo Go; Gemini → Claude → OpenAI, 100 intentos globales de modelo al día y 200 acciones de voz al día UTC, hasta finalizar el 31/12/2026 en Madrid. La autora confirmó voz en iOS y funcionamiento en Android; esas comprobaciones no acreditan todos los recorridos en cada dispositivo. Véanse [chat](CHAT-GENERATIVO-TAILOR.md) y [voz](VOZ-TAILOR.md).
 
-Hoy se han añadido previsualizaciones bilingües de correo de compra y cambios de estado a Mis comunicaciones, en web y app. Compra y cancelación comprobadas en Safari local; recorrido HTTP en Insomnia con SQLite aislado y contraste directo de la base. No se han enviado correos a clientes reales. Se ha comprobado SMTP real en Mailtrap Sandbox con cuatro muestras ilustradas: compra y cancelación en ES/EN, logo, fotografías y total de catálogo de 4.840,00 €. La integración todavía no está activada en Vercel. Las vistas móviles se han exportado, pero falta su comprobación física específica.
+Hoy se han añadido previsualizaciones bilingües de correo de compra y cambios de estado a Mis comunicaciones, en web y app. Compra y cancelación comprobadas en Safari local; recorrido HTTP en Insomnia con SQLite aislado y contraste directo de la base. No se han enviado correos a clientes reales. Se ha comprobado SMTP real en Mailtrap Sandbox con cuatro muestras ilustradas: compra y cancelación en ES/EN, logo, fotografías y total de catálogo de 4.840,00 €. La integración se ha activado y comprobado en Production de Vercel: compra y cancelación recibidas en Mailtrap, sin cargo real y con stock repuesto. Las vistas móviles se han exportado, pero falta su comprobación física específica.
 
 
 También he ejecutado los 24 casos de pago DEMO y estados desde Insomnia tanto con SQLite como con MongoDB temporal: rechazo sin efectos, total manipulado, compra, reintento sin duplicado, justificante y transiciones hasta entregado. Las lecturas directas de ambas bases confirman un pedido de 1.850,00 €, cargo real 0,00 €, cuatro comunicaciones y stock 6 → 5. He guardado 31 capturas de estas dos rondas y cinco de Atlas en Safari, consultado solo en lectura. Evidencias separadas: [SQLite](evidencias/insomnia-checkout-2026-11-09/README.md), [MongoDB local](evidencias/insomnia-mongodb-2026-11-09/README.md) y [Atlas](evidencias/atlas-2026-11-09/README.md).
 
-Las secciones de evolución que siguen contienen resultados de etapas anteriores; este estado y los registros fechados más recientes prevalecen. Pendientes: autorizar y comprobar la activación SMTP en Vercel, revisión física de comunicaciones y cierre de presentación/vídeo/paquete de entrega. La autora conserva la mejora visual del PDF. No se ha entregado en el campus.
+Las secciones de evolución que siguen contienen resultados de etapas anteriores; este estado y los registros fechados más recientes prevalecen. Pendientes: revisión física de comunicaciones y cierre de presentación/vídeo/paquete de entrega. La autora conserva la mejora visual del PDF. No se ha entregado en el campus.
 
 ## Revisión local de cierre · 7 de noviembre de 2026
 

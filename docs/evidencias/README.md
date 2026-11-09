@@ -2,6 +2,8 @@
 
 ## Cierre del 9 de noviembre de 2026
 
+- [Mailtrap activado en Vercel: compra/cancelación publicadas y siete capturas](mailtrap-vercel-2026-11-09/README.md).
+
 - [Correos ilustrados ES/EN recibidos en Mailtrap e Insomnia básico](emails-2026-11-09/README.md).
 - [Pago DEMO, idempotencia y estados en SQLite: 24 casos, 15 capturas](insomnia-checkout-2026-11-09/README.md).
 - [Mismos 24 casos en MongoDB local: 16 capturas y contraste directo](insomnia-mongodb-2026-11-09/README.md).

@@ -1,5 +1,8 @@
 # Correos de Maison · simulación y Mailtrap Sandbox
 
+**Mailtrap publicado · 9/11/2026:** activado en Production de `kelsets-maison-api`, despliegue `FH94XhjDT`. Compra DEMO de Studio Interview por 4.840,00 €, cargo real 0,00 €, reintento sin duplicado y cancelación del mismo pedido; dos correos recibidos y stock repuesto. [Registro y siete capturas](evidencias/mailtrap-vercel-2026-11-09/README.md).
+
+
 ## Qué está implementado
 
 Cada pedido nuevo y cada transición válida crea una comunicación ES/EN y su registro de entrega en la misma transacción de SQLite o MongoDB. La comunicación guarda las líneas, nombres, variantes e importes del pedido, sin recalcular su precio desde el catálogo actual. Los eventos son registro, confirmación, envío simulado, entrega simulada y cancelación.
@@ -18,7 +21,7 @@ El cuerpo HTML escapa el texto del catálogo y tiene alternativa de texto plano.
 
 La muestra prueba ambos idiomas explícitamente. El idioma de envío de la integración actual se configura en el servidor; no se ha implementado todavía una preferencia persistente de correo por cliente. Las previsualizaciones conservan siempre ambas traducciones.
 
-Activar con MAIL_ENABLED=true solo en el entorno autorizado. El adaptador comprueba host Sandbox, puerto/TLS, remitente ficticio y credenciales sin imprimirlas. La configuración local no crea secretos automáticamente en Vercel. La activación SMTP publicada sigue pendiente de autorización y comprobación.
+Activar con MAIL_ENABLED=true solo en el entorno autorizado. El adaptador comprueba host Sandbox, puerto/TLS, remitente ficticio y credenciales sin imprimirlas. La configuración local no crea secretos automáticamente en Vercel. La activación SMTP en Production fue autorizada y comprobada el 9/11/2026; véase el registro de producción enlazado al inicio.
 
 ## Reintentos y límites reales
 

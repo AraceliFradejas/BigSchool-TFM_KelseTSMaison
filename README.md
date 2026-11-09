@@ -1,6 +1,9 @@
 # KelseTS Maison
 
-Correos DEMO: previsualización ES/EN en web y app; pruebas de compra, idempotencia, permisos y cancelación con Insomnia en una base aislada. SMTP de Mailtrap Sandbox comprobado con compra/cancelación ES/EN, logo, fotos y precios de catálogo; activación en Vercel pendiente. [Pruebas y evidencias](docs/evidencias/emails-2026-11-09/README.md).
+**Mailtrap publicado · 9/11/2026:** activado en Production de `kelsets-maison-api`, despliegue `FH94XhjDT`. Compra DEMO de Studio Interview por 4.840,00 €, cargo real 0,00 €, reintento sin duplicado y cancelación del mismo pedido; dos correos recibidos y stock repuesto. [Registro y siete capturas](docs/evidencias/mailtrap-vercel-2026-11-09/README.md).
+
+
+Correos DEMO: previsualización ES/EN en web y app; pruebas de compra, idempotencia, permisos y cancelación con Insomnia en una base aislada. SMTP de Mailtrap Sandbox comprobado con compra/cancelación ES/EN, logo, fotos y precios de catálogo; activación en Production de Vercel comprobada el 9/11. [Pruebas y evidencias](docs/evidencias/emails-2026-11-09/README.md).
 
 También he ejecutado los 24 casos de pago DEMO y estados desde Insomnia tanto con SQLite como con MongoDB temporal: rechazo sin efectos, total manipulado, compra, reintento sin duplicado, justificante y transiciones hasta entregado. Las lecturas directas de ambas bases confirman un pedido de 1.850,00 €, cargo real 0,00 €, cuatro comunicaciones y stock 6 → 5. He guardado 31 capturas de estas dos rondas y cinco de Atlas en Safari, consultado solo en lectura. Evidencias separadas: [SQLite](docs/evidencias/insomnia-checkout-2026-11-09/README.md), [MongoDB local](docs/evidencias/insomnia-mongodb-2026-11-09/README.md) y [Atlas](docs/evidencias/atlas-2026-11-09/README.md).
 
@@ -40,7 +43,7 @@ He comprobado en Mailtrap Sandbox la recepción por SMTP de compra y cancelació
 | Cancelación EN: importe cancelado | [Ver escritorio](docs/evidencias/emails-2026-11-09/mailtrap/outfits/08-cancelacion-en-total.jpg) |
 | Correo en pantalla estrecha | [Ver móvil emulado](docs/evidencias/emails-2026-11-09/mailtrap/outfits/10-movil-corregido-piezas.jpg) |
 
-Las capturas son JPG originales del correo recibido en Mailtrap, con vistas de escritorio y emulación móvil; no son mockups ni capturas de una app de correo en un teléfono físico. [Índice completo ES/EN](docs/evidencias/emails-2026-11-09/README.md) · [Configuración y límites](docs/CORREOS-DEMO.md) · [Pruebas de Insomnia](docs/api/README.md). La conexión SMTP se ha comprobado desde una base aislada; los secretos de Mailtrap todavía no están configurados en Vercel.
+Las capturas son JPG originales del correo recibido en Mailtrap, con vistas de escritorio y emulación móvil; no son mockups ni capturas de una app de correo en un teléfono físico. [Índice completo ES/EN](docs/evidencias/emails-2026-11-09/README.md) · [Configuración y límites](docs/CORREOS-DEMO.md) · [Pruebas de Insomnia](docs/api/README.md). La conexión SMTP se ha comprobado desde una base aislada; los secretos de Mailtrap están configurados en Production de Vercel y su recepción se ha comprobado.
 
 ### Una historia personal
 
@@ -278,7 +281,7 @@ KelseTS es una marca ficticia de **Araceli Fradejas Muñoz**. Maison es un proye
 
 ## English version
 
-**Email evidence, 9 November 2026:** purchase and cancellation emails were received through SMTP in Mailtrap Sandbox in Spanish and English. They include the Maison logo, embedded product photos, variants, quantities and the recorded catalogue total of **4.840,00 €**. [Original JPG screenshots](docs/evidencias/emails-2026-11-09/README.md) cover desktop and Mailtrap’s mobile emulation, not a physical phone email client. SMTP production secrets are still pending configuration; this integration never sends mail to real customers. The full automated suite passes 191 checks.
+**Email evidence, 9 November 2026:** purchase and cancellation emails were received through SMTP in Mailtrap Sandbox in Spanish and English. They include the Maison logo, embedded product photos, variants, quantities and the recorded catalogue total of **4.840,00 €**. [Original JPG screenshots](docs/evidencias/emails-2026-11-09/README.md) cover desktop and Mailtrap’s mobile emulation, not a physical phone email client. SMTP is enabled and verified on Vercel Production; this integration never sends mail to real customers. The full automated suite passes 191 checks.
 
 
 Full stack project for the **BigSchool final project**, created by **Araceli Fradejas Muñoz**.

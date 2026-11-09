@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-09",
+  "files": [
+    {
+      "file": "01-variables-production.jpg",
+      "bytes": 551673,
+      "sha256": "f61c0f24e61601cc2ca70aadbbb7076075043f2c3f43a82b6fc8c602fc13ef82"
+    },
+    {
+      "file": "02-vercel-ready.jpg",
+      "bytes": 535301,
+      "sha256": "ea83c857a69dfb73faba7e7dcd549daf589fe9688dc39cc45318c481809fa2e5"
+    },
+    {
+      "file": "03-mailtrap-compra.jpg",
+      "bytes": 706840,
+      "sha256": "f9220be248371335800bce2fe7c8116f9159838fc34e89ef11431a52b7e85131"
+    },
+    {
+      "file": "04-mailtrap-compra-piezas.jpg",
+      "bytes": 707430,
+      "sha256": "f69c5493aca10614353b518a5a4c063156282af19d23796588564db2d8b74773"
+    },
+    {
+      "file": "05-mailtrap-compra-total.jpg",
+      "bytes": 715606,
+      "sha256": "ce9bf882705f100d72adc9b5393a55cf8a5fe9d537c6a539de92b006f0860680"
+    },
+    {
+      "file": "06-mailtrap-cancelacion.jpg",
+      "bytes": 700510,
+      "sha256": "ea6d1bfa691feec95d4fcadeb74e0d29b8a8e98ece87d5d10028a0889d14b433"
+    },
+    {
+      "file": "07-mailtrap-cancelacion-total.jpg",
+      "bytes": 713721,
+      "sha256": "6a34646126e62c31bf1b2fbc49eef0e30531b5c78a8643e53f8cdaa284d3ac2d"
+    }
+  ]
+}
