@@ -1,24 +1,26 @@
 # KelseTS Maison
 
-Boutique ficticia de moda, accesorios y belleza · TFM de BigSchool de **Araceli Fradejas Muñoz**.
+He desarrollado KelseTS Maison como mi TFM de BigSchool: una boutique ficticia de moda, accesorios y belleza.
 
-**[Abrir Maison](https://kelsets-maison.vercel.app)** · [API](https://kelsets-maison-api.vercel.app/api/v1/health) · [Memoria](MEMORIA.md) · [Seguimiento de entrega](docs/ENTREGA.md)
+**Araceli Fradejas Muñoz**
+
+**[Abrir Maison](https://kelsets-maison.vercel.app)** · [API](https://kelsets-maison-api.vercel.app/api/v1/health) · [Memoria](MEMORIA.md) · [Documentación técnica](docs/ARQUITECTURA.md)
 
 ![Portada de KelseTS Maison, navegación y acceso al asesor](docs/evidencias/videos-2026-11-09/01-web-portada.jpg)
 
-*Portada actual: fotograma de la grabación de escritorio de la autora, 00:03. Boutique académica, sin ventas ni cobros reales.*
+*Portada actual: fotograma de mi grabación de escritorio, 00:03. Boutique académica, sin ventas ni cobros reales.*
 
-**Estado comprobado · 9/11/2026:** web/API publicadas, app en Expo Go, tAIlor generativo con voz por turnos y Mailtrap Sandbox activo en Production. La suite registrada suma 191 comprobaciones automáticas correctas. Se han recorrido 24 casos manuales de pago DEMO y estados tanto con SQLite como con MongoDB local; sus efectos se contrastaron directamente en cada base.
+**Estado comprobado · 9/11/2026:** web/API publicadas, app en Expo Go, tAIlor generativo con voz por turnos y Mailtrap Sandbox activo en Production. He registrado 191 comprobaciones automáticas correctas y he recorrido 24 casos manuales de pago DEMO y estados tanto con SQLite como con MongoDB local, contrastando sus efectos directamente en cada base.
 
-Las pruebas físicas y sus límites están documentados por paso: los vídeos aportados permiten ilustrar iPhone, Android e iPad, incluido el correo desplegado en iPhone. Siguen pendientes los ajustes visuales observados, completar ciertos recorridos por dispositivo, revisar el audio del montaje y cerrar presentación/vídeo/paquete de entrega. [Evidencias](docs/evidencias/README.md) · [Validación](docs/VALIDACION.md).
+He documentado las comprobaciones físicas con grabaciones de iPhone, Android e iPad, incluida la previsualización del correo en iPhone. Cada evidencia identifica el dispositivo, el paso observado y su entorno. [Evidencias](docs/evidencias/README.md) · [Validación](docs/VALIDACION.md).
 
-La cuenta del evaluador y su contraseña se facilitan por separado en la entrega privada; no se publican en este repositorio. La app usa Metro para desarrollo: un enlace LAN no es una distribución permanente.
+Facilito la cuenta del evaluador y su contraseña por separado en la entrega privada; no las publico en este repositorio. La app usa Metro para desarrollo: un enlace LAN no es una distribución permanente.
 
 [Versión en castellano](#versión-en-castellano) · [English version](#english-version)
 
 ## Versión en castellano
 
-Proyecto TFM del máster de BigSchool: KelseTS Maison, boutique ficticia de moda, accesorios y belleza desarrollada con React y Node.js.
+En este proyecto he unido React y Node.js para construir una boutique con identidad propia, desde la elección de una pieza hasta su pedido de demostración.
 
 **Autora: Araceli Fradejas Muñoz.**
 
@@ -28,7 +30,7 @@ KelseTS Maison es una boutique ficticia de moda, accesorios y belleza. Puedes ex
 
 **Web:** [Abrir KelseTS Maison](https://kelsets-maison.vercel.app) · **API:** [Comprobar el servicio](https://kelsets-maison-api.vercel.app/api/v1/health).
 
-**Estado:** primera versión publicada en [Vercel](https://kelsets-maison.vercel.app), con MongoDB y Cloudinary propios. Maison Stylist tiene una prueba de IA activada también para visitantes, con un límite global de 100 intentos de proveedor al día. Quedan parte de las pruebas físicas, una evaluación más amplia del asesor y el ajuste de la presentación.
+**Versión que presento:** he publicado web y API en [Vercel](https://kelsets-maison.vercel.app), con MongoDB y Cloudinary propios. Incluyo la app nativa en Expo Go y tAIlor, el asistente generativo con voz. El asesor está disponible también para visitantes, con un límite global de 100 intentos de modelo al día.
 
 
 ### Correos y evidencias reales · 9/11/2026
@@ -52,7 +54,7 @@ El carrusel sustituye la cuadrícula extensa de texto por portadas editoriales, 
 
 *Spotlight, Studio Ivory y City Pages; grabación de escritorio 01:00. Las imágenes del carrusel son recursos propios de esta sección.*
 
-La misma boutique se recorre con componentes nativos en móvil y tablet. Estas imágenes proceden de los dispositivos de la autora, no de emulación de escritorio.
+La misma boutique se recorre con componentes nativos en móvil y tablet. Estas imágenes proceden de mis dispositivos, no de emulación de escritorio.
 
 | iPhone · catálogo | Android · catálogo | iPad · inglés |
 | --- | --- | --- |
@@ -103,9 +105,9 @@ Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS 
 
 El pago es una simulación académica: puedo elegir una cuenta bancaria ficticia, tarjeta ficticia o PayPal simulado; en la app también Apple Pay simulado en iOS o Samsung Pay simulado en Android. Antes de confirmar acepto el aviso de que no compro nada. El justificante DEMO indica un cargo real de **0,00 €**. No hay pasarela, SDK de pagos, campos de datos bancarios ni conexión con esos servicios. Puedo simular un rechazo sin crear pedido ni descontar stock.
 
-«Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. El chat de [Maison Stylist](docs/MAISON-STYLIST.md), accesible desde un botón flotante en web y app, añade una conversación con burbujas y un campo de escritura fijo. Pide presupuesto cuando falta y muestra fotografías del catálogo, totales y enlaces a las fichas para elegir variantes. Después pregunta si gusta la elección; las valoraciones breves se responden localmente, sin consumir IA. El formulario de filtros detallados sigue disponible. La [voz opcional](docs/VOZ-TAILOR.md) está activa en web y preparada en app, con síntesis ES/EN y transcripción verificadas. Los controles incluyen micrófono, lectura de precios en palabras y reconocimiento local del look elegido; queda pendiente validar físicamente esta última revisión de voz. El asesor limita la conversación a outfits y aplica controles de ámbito e intentos de manipular instrucciones o precios, también en el servidor.
+«Completa tu look» utiliza selecciones manuales y disponibilidad real del catálogo. El chat de [Maison Stylist](docs/MAISON-STYLIST.md), accesible desde un botón flotante en web y app, añade una conversación con burbujas y un campo de escritura fijo. Pide presupuesto cuando falta y muestra fotografías del catálogo, totales y enlaces a las fichas para elegir variantes. La conversación permite valorar la elección, pedir cambios, consultar tallas y preguntar cómo comprar, conservando el conjunto elegido. El formulario de filtros detallados sigue disponible. He incorporado [voz opcional](docs/VOZ-TAILOR.md) en web y app, con síntesis ES/EN y transcripción. He comprobado su funcionamiento en iOS y Android y conservado las evidencias de las consultas reales y las grabaciones. Los controles incluyen micrófono, lectura de precios en palabras y seguimiento del look elegido. El asesor limita la conversación a outfits y aplica controles de ámbito e intentos de manipular instrucciones o precios, también en el servidor.
 
-El servicio tiene preparada la integración **Gemini → Claude → OpenAI**, probada individualmente con tres consultas autorizadas sobre datos ficticios. La prueba de IA está **activada en producción también para visitantes**, con un máximo global de 100 intentos de proveedor al día, incluidos fallos y respaldos. La prueba termina al finalizar el 31/12/2026, en horario de Madrid; después continúa el modo editorial. Cuando no se obtiene una respuesta válida o se agota la cuota, se muestran selecciones editoriales identificadas como tales. La evaluación conversacional en producción sigue en curso. El backend valida disponibilidad, tallas y presupuesto y no añade piezas a la bolsa automáticamente. La [guía del asesor](docs/MAISON-STYLIST.md) explica configuración, referencias y límites.
+He integrado **Gemini → Claude → OpenAI** y he probado los tres proveedores individualmente con consultas sobre datos ficticios. La prueba de IA está **activada en producción también para visitantes**, con un máximo global de 100 intentos de proveedor al día, incluidos fallos y respaldos. La prueba termina al finalizar el 31/12/2026, en horario de Madrid; después continúa el modo editorial. Si no hay una respuesta válida o se agota la cuota, el chat informa de la indisponibilidad de la IA; los filtros editoriales siguen accesibles como opción independiente. El backend valida disponibilidad, tallas y presupuesto y no añade piezas a la bolsa automáticamente. La [guía del asesor](docs/MAISON-STYLIST.md) explica configuración, referencias y límites.
 
 ### Entrega y boutiques de demostración
 
@@ -140,7 +142,7 @@ Abre el QR en Expo Go con móvil/tablet y ordenador en la misma Wi-Fi. En iPhone
 
 La tabla anterior conserva las pruebas del 18 de octubre, anteriores a SDK 58. El 7 de noviembre he comprobado en iPhone registro, acceso, rechazo con bolsa conservada, pedido DEMO aceptado con cargo real cero e historial, y persistencia de sesión tras cerrar completamente Expo Go. El pedido de prueba se canceló y se repuso su stock. La sesión nativa utiliza Expo SecureStore y no guarda contraseñas. El iPad volvió a abrir Maison después de actualizar su sistema y Expo Go; no he registrado las nuevas versiones exactas.
 
-También he confirmado en Expo Go la apertura del chat y sus fotografías, sin registrar qué dispositivo utilicé. La última revisión de burbujas y seguimiento está comprobada en Safari local; falta revisarla físicamente en la app. Quedan recorridos completos en iPad y Android, capturas nativas, mapas y permisos, accesibilidad y cambios de conexión. Favoritos y Team nativos, la validación física del asesor con IA y la distribución en tiendas siguen pendientes.
+Mis grabaciones de noviembre muestran catálogo y comunicaciones en iPhone, catálogo en inglés y asesor en iPad, y bolsa, checkout y chat por texto en Android. También he comprobado la voz en iOS y Android. He organizado estas evidencias por dispositivo y acción en el [índice de vídeos](docs/evidencias/videos-2026-11-09/README.md). La versión móvil que presento se ejecuta en Expo Go; la administración Team y los favoritos se ofrecen en la web.
 
 Para ver cambios nativos durante el desarrollo hay que recargar el proyecto en Expo Go conectado a Metro. Un despliegue de Vercel actualiza web y API, pero no distribuye el código de la app.
 
@@ -288,9 +290,9 @@ Esta selección muestra la web publicada y el recorrido de compra. Puedes abrir 
 
 ### Despliegue y entrega
 
-Maison está publicada en **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, con [API propia](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB y Cloudinary. La web y la API son proyectos separados de Vercel y `/api` se sirve a través del proxy de la web. El 18 de octubre se comprobaron por HTTPS el catálogo, recursos, cabeceras, permisos y un recorrido HTTP de Team con imagen y pedido temporales. Además he completado recorridos de compra simulada desde Chrome y Safari, documentados en las capturas. La apertura de la app está comprobada en mis dispositivos; las comprobaciones privadas de iPhone están registradas, mientras que las de iPad y Android siguen pendientes. El [documento de despliegue](docs/DESPLIEGUE.md) recoge configuración y límites. `npm run check:deployment -- https://kelsets-maison.vercel.app` repite el chequeo de solo lectura. El Dockerfile conserva la alternativa local con SQLite, pendiente de probar en Docker.
+Maison está publicada en **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, con [API propia](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB y Cloudinary. La web y la API son proyectos separados de Vercel y `/api` se sirve a través del proxy de la web. El 18 de octubre se comprobaron por HTTPS el catálogo, recursos, cabeceras, permisos y un recorrido HTTP de Team con imagen y pedido temporales. Además he completado recorridos de compra simulada desde Chrome y Safari, documentados en las capturas. He documentado el uso físico de la app en iPhone, iPad y Android, con el alcance de cada recorrido identificado en sus evidencias. El [documento de despliegue](docs/DESPLIEGUE.md) recoge configuración y límites. `npm run check:deployment -- https://kelsets-maison.vercel.app` repite el chequeo de solo lectura. Para la ejecución local incluyo el modo SQLite y un Dockerfile; los resultados de instalación y build que documento corresponden al entorno Node.js registrado.
 
-La entrega del TFM reunirá código, README, acceso a la aplicación y slides. El [seguimiento de entrega](docs/ENTREGA.md) distingue lo realizado de lo pendiente; hay una [presentación PDF de diez diapositivas](output/pdf/KelseTS-Maison-Presentacion-TFM.pdf), pendiente de ensayo y ajuste final.
+Presento el código, las instrucciones de instalación, la [memoria](MEMORIA.md) y las evidencias de la aplicación publicada. Facilito por separado el acceso de evaluación y los materiales audiovisuales de la defensa.
 
 ### Documentación
 
@@ -300,7 +302,7 @@ La entrega del TFM reunirá código, README, acceso a la aplicación y slides. E
 - [Validación](docs/VALIDACION.md) y [evidencias](docs/evidencias/README.md).
 - [Recursos y reutilización](docs/RECURSOS.md).
 - [Criterio de precios de lujo y actualización](docs/PRECIOS.md).
-- [Despliegue](docs/DESPLIEGUE.md) y [seguimiento de entrega](docs/ENTREGA.md).
+- [Despliegue](docs/DESPLIEGUE.md) y [pruebas de API](docs/api/README.md).
 
 ### Mis proyectos y redes
 
@@ -310,16 +312,18 @@ La entrega del TFM reunirá código, README, acceso a la aplicación y slides. E
 
 ### Aviso académico y autora
 
-KelseTS es una marca ficticia de **Araceli Fradejas Muñoz**. Maison es un proyecto educativo y de portfolio, sin actividad comercial, afiliación, patrocinio ni respaldo de celebridades, marcas o entidades deportivas. Sus productos, colecciones, precios y operaciones son ficticios. Las imágenes fotorrealistas del catálogo son representaciones generadas de productos ficticios, no fotografías de mercancía real. Los créditos y licencias de las tipografías están en [Recursos](docs/RECURSOS.md).
+He creado KelseTS como marca ficticia para dar identidad a mis proyectos. Maison es mi proyecto educativo y de portfolio, sin actividad comercial, afiliación, patrocinio ni respaldo de celebridades, marcas o entidades deportivas. Sus productos, colecciones, precios y operaciones son ficticios. Las imágenes fotorrealistas del catálogo son representaciones generadas de productos ficticios, no fotografías de mercancía real. Los créditos y licencias de las tipografías están en [Recursos](docs/RECURSOS.md).
 
 ---
 
 ## English version
 
-**Email evidence, 9 November 2026:** purchase and cancellation emails were received through SMTP in Mailtrap Sandbox in Spanish and English. They include the Maison logo, embedded product photos, variants, quantities and the recorded catalogue total of **4.840,00 €**. [Original JPG screenshots](docs/evidencias/emails-2026-11-09/README.md) cover desktop and Mailtrap’s mobile emulation, not a physical phone email client. SMTP is enabled and verified on Vercel Production; this integration never sends mail to real customers. The full automated suite passes 191 checks.
+**Email evidence, 9 November 2026:** I verified receipt of purchase and cancellation emails through SMTP in Mailtrap Sandbox in Spanish and English. They include the Maison logo, embedded product photos, variants, quantities and the recorded catalogue total of **4.840,00 €**. [Original JPG screenshots](docs/evidencias/emails-2026-11-09/README.md) cover desktop and Mailtrap’s mobile emulation, not a physical phone email client. I enabled and verified SMTP on Vercel Production; this integration never sends mail to real customers. My recorded automated suite passed 191 checks.
 
 
-Full stack project for the **BigSchool final project**, created by **Araceli Fradejas Muñoz**.
+I developed KelseTS Maison as my **BigSchool final project**, building on my earlier portfolio projects.
+
+**Araceli Fradejas Muñoz**
 
 > **Your style tells a story.**
 
@@ -327,7 +331,7 @@ KelseTS Maison is a fictional fashion, accessories and beauty boutique. Explore 
 
 **Website:** [Open KelseTS Maison](https://kelsets-maison.vercel.app) · **API:** [Check the service](https://kelsets-maison-api.vercel.app/api/v1/health).
 
-**Status:** first version published on [Vercel](https://kelsets-maison.vercel.app), with Maison MongoDB and Cloudinary services. Maison Stylist has an AI trial enabled for visitors as well, with a global limit of 100 provider attempts per day. Some physical-device checks, broader stylist evaluation and presentation revisions remain pending.
+**Submitted version:** I have published the web and API on [Vercel](https://kelsets-maison.vercel.app), using Maison’s own MongoDB and Cloudinary services. I also include a native Expo Go app and tAIlor, a generative stylist with voice. Visitors can use the adviser, with a global limit of 100 model attempts per day.
 
 ### A personal story
 
@@ -352,9 +356,9 @@ After the AFM Moda Oceánica landing page and the full stack journey of KelseTS 
 
 Payment is an academic simulation: fictional bank account, fictional card or simulated PayPal, plus simulated Apple Pay on iOS or Samsung Pay on Android. Before confirming I acknowledge that no purchase takes place. The DEMO receipt shows a real charge of **0,00 €**. There is no payment gateway, payment SDK, banking-data form or connection to these services. A simulated decline creates no order and changes no stock.
 
-“Complete your look” uses manual selections and actual catalogue availability. The [Maison Stylist](docs/MAISON-STYLIST.md) chat, available from a floating button on web and native app, adds message bubbles and a fixed composer. It asks for a missing budget and displays catalogue photos, totals and product links for choosing variants. It then asks for feedback; short reactions receive local replies without consuming AI calls. Detailed filters remain available. [Optional voice](docs/VOZ-TAILOR.md) is active on web and prepared on native app, with ES/EN speech and transcription verified. Controls include a microphone, prices written as spoken words and local recognition of the chosen outfit; physical voice checks for this latest revision remain pending. The adviser limits conversation to outfits and checks scope and attempts to manipulate instructions or prices, including on the server.
+“Complete your look” uses manual selections and actual catalogue availability. The [Maison Stylist](docs/MAISON-STYLIST.md) chat, available from a floating button on web and native app, adds message bubbles and a fixed composer. It asks for a missing budget and displays catalogue photos, totals and product links for choosing variants. The conversation supports feedback, changes, size enquiries and purchase guidance while keeping the selected outfit in context. Detailed filters remain available. I have added [optional voice](docs/VOZ-TAILOR.md) on web and native app, with ES/EN synthesis and transcription. I checked its operation on iOS and Android and kept evidence of real provider requests and recordings. Controls include a microphone, prices written as spoken words and continuity of the chosen outfit. The adviser limits conversation to outfits and checks scope and attempts to manipulate instructions or prices, including on the server.
 
-The service includes a prepared **Gemini → Claude → OpenAI** integration, tested individually through three authorised queries using fictional data. The AI trial is **enabled in production for visitors as well**, with a global maximum of 100 provider attempts per day, including failures and fallback attempts. The trial ends after 31 December 2026 in Madrid time; editorial mode remains available afterwards. Invalid responses or exhausted quota return explicitly labelled editorial selections. Production conversation evaluation remains in progress. The backend validates availability, sizes and budget, and never adds products to the bag automatically. The [stylist guide](docs/MAISON-STYLIST.md) records configuration, references and limitations.
+I have integrated **Gemini → Claude → OpenAI** and tested all three providers individually with queries using fictional data. The AI trial is **enabled in production for visitors as well**, with a global maximum of 100 provider attempts per day, including failures and fallback attempts. The trial ends after 31 December 2026 in Madrid time; editorial mode remains available afterwards. If AI is unavailable or its quota is exhausted, the chat explains this; editorial filters remain available as a separate option. The backend validates availability, sizes and budget, and never adds products to the bag automatically. The [stylist guide](docs/MAISON-STYLIST.md) records configuration, references and limitations.
 
 ### Demonstration delivery and boutiques
 
@@ -389,7 +393,7 @@ Open the QR in Expo Go with the device and computer on the same Wi-Fi. On iPhone
 
 The table above preserves the 18 October checks, before SDK 58. On 7 November, iPhone checks covered registration, sign-in, a declined payment preserving the bag, an accepted DEMO order with zero real charge, order history and session persistence after fully closing Expo Go. The test order was cancelled and its stock restored. Native sessions use Expo SecureStore without storing passwords. Maison opened on iPad after updating its system and Expo Go; the exact updated versions were not recorded.
 
-I also confirmed that the chat opens and displays photographs in Expo Go, without recording which device was used. The latest message-bubble and feedback revision was checked in local Safari; its physical native check remains pending. Full iPad and Android flows, native screenshots, maps and permissions, accessibility and connection changes still need verification. Native favourites and Team, physical AI-stylist validation and app-store distribution remain pending.
+My November recordings show catalogue and messages on iPhone, the English catalogue and adviser on iPad, and the bag, checkout and text chat on Android. I also checked voice on iOS and Android. The [video evidence index](docs/evidencias/videos-2026-11-09/README.md) identifies each device and action. I provide the mobile version through Expo Go; Team administration and favourites are available on the web.
 
 During development, native changes require reloading the project in Expo Go connected to Metro. Vercel deploys web and API updates; it does not distribute the native app code.
 
@@ -471,7 +475,7 @@ New installations already include the current catalogue. For an earlier local da
 
 For MongoDB, set `ADMIN_EMAIL` and your own `ADMIN_PASSWORD` in the private `.env`, then run `npm run team:create`. This explicit command never runs at startup, exposes no credentials and leaves an existing account unchanged.
 
-Register with a fictional email and your own password of at least ten characters. No external emails are sent. New accounts always have the customer role; the code contains no predefined administrator accounts or passwords.
+Register with a fictional email and your own password of at least ten characters. No emails are sent to real customers; order events can be captured in Mailtrap Sandbox. New accounts always have the customer role; the code contains no predefined administrator accounts or passwords.
 
 To grant Team access to an account registered in your installation:
 
@@ -497,7 +501,7 @@ npm run build
 npm run check:production
 ```
 
-Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. The latest 162 automated checks passed (8 November 2026). Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
+Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. The latest recorded suite passed 191 automated checks (9 November 2026). Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
 
 ### Published website screenshots
 
@@ -537,9 +541,9 @@ This selection shows the published website and checkout flow. Open each screensh
 
 ### Deployment and delivery
 
-Maison is published at **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, with its [own API](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB and Cloudinary. Web and API are separate Vercel projects, with `/api` proxied through the web origin. On 18 October, HTTPS checks covered the catalogue, assets, headers, permissions and an HTTP Team flow with a temporary image and demonstration order. I have also completed simulated checkout flows in Chrome and Safari, recorded in the screenshots. I have opened the native app on my devices; the private iPhone checks are recorded, while the corresponding iPad and Android flows remain pending. The [deployment document](docs/DESPLIEGUE.md) records configuration and limits. Run `npm run check:deployment -- https://kelsets-maison.vercel.app` to repeat read-only checks. The Dockerfile retains the local SQLite alternative, still untested in Docker.
+Maison is published at **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, with its [own API](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB and Cloudinary. Web and API are separate Vercel projects, with `/api` proxied through the web origin. On 18 October, HTTPS checks covered the catalogue, assets, headers, permissions and an HTTP Team flow with a temporary image and demonstration order. I have also completed simulated checkout flows in Chrome and Safari, recorded in the screenshots. I have documented physical use on iPhone, iPad and Android, identifying the scope of each recorded journey. The [deployment document](docs/DESPLIEGUE.md) records configuration and limits. Run `npm run check:deployment -- https://kelsets-maison.vercel.app` to repeat read-only checks. For local execution I include SQLite mode and a Dockerfile; the documented installation and build results correspond to the recorded Node.js environment.
 
-The final project will include code, README, application access and slides. [Delivery tracking](docs/ENTREGA.md) separates completed work from pending work; a [ten-slide PDF presentation](output/pdf/KelseTS-Maison-Presentacion-TFM.pdf) is available, pending rehearsal and final revision.
+I present the source code, installation instructions, [project report](MEMORIA.md) and evidence of the published application. I provide evaluator access and audiovisual presentation materials separately.
 
 ### Documentation
 
@@ -549,7 +553,7 @@ The final project will include code, README, application access and slides. [Del
 - [Validation](docs/VALIDACION.md) and [evidence](docs/evidencias/README.md).
 - [Resources and reuse](docs/RECURSOS.md).
 - [Luxury pricing references and migration](docs/PRECIOS.md).
-- [Deployment](docs/DESPLIEGUE.md) and [delivery tracking](docs/ENTREGA.md).
+- [Deployment](docs/DESPLIEGUE.md) and [API tests](docs/api/README.md).
 
 ### My projects and social profiles
 
@@ -559,6 +563,6 @@ The final project will include code, README, application access and slides. [Del
 
 ### Academic notice and author
 
-KelseTS is a fictional brand by **Araceli Fradejas Muñoz**. Maison is an educational and portfolio project without commercial activity, affiliation, sponsorship or endorsement by celebrities, brands or sporting organisations. Its products, collections, prices and operations are fictional. Photorealistic catalogue images are generated representations of fictional products, not photographs of real merchandise. Font credits and licences are in [Resources](docs/RECURSOS.md).
+I created KelseTS as a fictional brand to give my projects their own identity. Maison is my educational and portfolio project without commercial activity, affiliation, sponsorship or endorsement by celebrities, brands or sporting organisations. Its products, collections, prices and operations are fictional. Photorealistic catalogue images are generated representations of fictional products, not photographs of real merchandise. Font credits and licences are in [Resources](docs/RECURSOS.md).
 
-**Additional API evidence, 9 November:** all 24 DEMO checkout and state cases were exercised manually in Insomnia against isolated SQLite and MongoDB, with direct database assertions. The 31 screenshots and five read-only Atlas screenshots are documented separately; no Atlas order was changed. [API test guide](docs/api/README.md).
+**Additional API evidence, 9 November:** I manually exercised all 24 DEMO checkout and state cases in Insomnia against isolated SQLite and MongoDB, checking their effects directly in each database. The 31 screenshots and five read-only Atlas screenshots are documented separately; no Atlas order was changed. [API test guide](docs/api/README.md).

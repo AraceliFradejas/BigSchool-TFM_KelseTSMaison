@@ -1,39 +1,24 @@
 # Memoria del proyecto KelseTS Maison
 
-**Evidencias de dispositivos · 9/11/2026:** 29 fotogramas extraídos de cinco vídeos de la autora, con tiempos y pies de imagen: escritorio, iPhone, Android e iPad en inglés. En iPhone se observa el correo de compra desplegado en Mis comunicaciones con indicación de captura en Mailtrap. Esta revisión acredita ese paso físico concreto; no completa todos los correos o dispositivos ni una auditoría del audio. [Galería, selección para slides y hallazgos](docs/evidencias/videos-2026-11-09/README.md).
+**Araceli Fradejas Muñoz · Trabajo Fin de Máster de BigSchool**
 
+> **Tu estilo cuenta una historia.**
 
-**Mailtrap publicado · 9/11/2026:** activado en Production de `kelsets-maison-api`, despliegue `FH94XhjDT`. Compra DEMO de Studio Interview por 4.840,00 €, cargo real 0,00 €, reintento sin duplicado y cancelación del mismo pedido; dos correos recibidos y stock repuesto. [Registro y siete capturas](docs/evidencias/mailtrap-vercel-2026-11-09/README.md).
+He desarrollado KelseTS Maison como una boutique ficticia de moda, accesorios y belleza. Con este proyecto he querido unir una identidad personal, un recorrido de compra coherente y una base técnica que mantenga las mismas reglas en la web y en una aplicación móvil nativa.
 
+Presento una aplicación publicada, con catálogo bilingüe, variantes y existencias, cuenta, favoritos en web, bolsa, pedidos de demostración, administración Team y comunicaciones ilustradas. He incorporado también boutiques ficticias y tAIlor, mi estilista virtual con conversación generativa y voz por turnos. Todas las compras son académicas: muestran los precios de los artículos, pero el cargo real es siempre **0,00 €**.
 
-## Estado verificado · 9 de noviembre de 2026
+| Dato | Información |
+| --- | --- |
+| Proyecto | Boutique ficticia de moda, accesorios y belleza |
+| Formación | TFM de BigSchool |
+| Autora | Araceli Fradejas Muñoz |
+| Web | [kelsets-maison.vercel.app](https://kelsets-maison.vercel.app) |
+| API | [Servicio de Maison](https://kelsets-maison-api.vercel.app/api/v1/health) |
+| Tecnologías | JavaScript, React, Node.js, Express, MongoDB, Cloudinary y React Native con Expo; SQLite para ejecución local |
+| Validación documentada | 191 comprobaciones automáticas y 24 casos manuales de API por cada entorno aislado, SQLite y MongoDB; evidencias fechadas hasta el 9 de noviembre de 2026 |
 
-La web y la API están publicadas en Vercel. tAIlor tiene conversación generativa y voz por turnos en web y Expo Go; Gemini → Claude → OpenAI, 100 intentos globales de modelo al día y 200 acciones de voz al día UTC, hasta finalizar el 31/12/2026 en Madrid. La autora confirmó voz en iOS y funcionamiento en Android; esas comprobaciones no acreditan todos los recorridos en cada dispositivo. Véanse [chat](docs/CHAT-GENERATIVO-TAILOR.md) y [voz](docs/VOZ-TAILOR.md).
-
-Hoy se han añadido previsualizaciones bilingües de correo de compra y cambios de estado a Mis comunicaciones, en web y app. Compra y cancelación comprobadas en Safari local; recorrido HTTP en Insomnia con SQLite aislado y contraste directo de la base. No se han enviado correos a clientes reales. Se ha comprobado SMTP real en Mailtrap Sandbox con cuatro muestras ilustradas: compra y cancelación en ES/EN, logo, fotografías y total de catálogo de 4.840,00 €. La integración se ha activado y comprobado en Production de Vercel: compra y cancelación recibidas en Mailtrap, sin cargo real y con stock repuesto. Las vistas móviles se han exportado, pero falta su comprobación física específica.
-
-
-También he ejecutado los 24 casos de pago DEMO y estados desde Insomnia tanto con SQLite como con MongoDB temporal: rechazo sin efectos, total manipulado, compra, reintento sin duplicado, justificante y transiciones hasta entregado. Las lecturas directas de ambas bases confirman un pedido de 1.850,00 €, cargo real 0,00 €, cuatro comunicaciones y stock 6 → 5. He guardado 31 capturas de estas dos rondas y cinco de Atlas en Safari, consultado solo en lectura. Evidencias separadas: [SQLite](docs/evidencias/insomnia-checkout-2026-11-09/README.md), [MongoDB local](docs/evidencias/insomnia-mongodb-2026-11-09/README.md) y [Atlas](docs/evidencias/atlas-2026-11-09/README.md).
-
-Las secciones de evolución que siguen contienen resultados de etapas anteriores; este estado y los registros fechados más recientes prevalecen. Pendientes: revisión física de comunicaciones y cierre de presentación/vídeo/paquete de entrega. La autora conserva la mejora visual del PDF. No se ha entregado en el campus.
-
-| Dato        | Información                                                             |
-| ----------- | ----------------------------------------------------------------------- |
-| Proyecto    | Boutique ficticia de moda, accesorios y belleza                         |
-| Formación   | TFM BigSchool                                                           |
-| Autora      | Araceli Fradejas Muñoz                                                  |
-| Tecnologías | JavaScript, React, Node.js, Express, MongoDB y Cloudinary; SQLite local |
-| Estado      | Primera versión publicada en Vercel, pendiente de cierre final          |
-
-## Correos ilustrados y evidencias · 9/11/2026
-
-He añadido correos con la identidad visual de Maison para el registro de compra y los cambios de estado. El logotipo, la tipografía editorial, el marfil y el burdeos conectan el mensaje con la boutique. Cada pieza conserva su fotografía, variante, cantidad y precio del pedido; el total utiliza los importes del catálogo, sin sustituirlos por cero. El aviso de que se trata de una demostración queda en el pie y las cancelaciones muestran el importe cancelado sin presentarlo como un reembolso bancario.
-
-He probado la recepción SMTP en Mailtrap Sandbox de compra y cancelación en castellano e inglés con el conjunto Studio Interview: blazer, pantalón, top y mocasines, por 4.840,00 €. El logo y las fotos se adjuntan por CID. La prueba se realiza sobre SQLite aislado y devuelve el stock de las cuatro variantes al cancelar; repetir la creación no añade otro correo. No he utilizado pedidos ni datos personales de producción.
-
-He guardado las capturas reales en JPG, tanto de escritorio como de la vista móvil emulada por Mailtrap. En esta última encontré un pequeño desbordamiento horizontal, lo corregí y conservé la evidencia anterior junto a la comprobación posterior. No confundo esta emulación con una prueba de un cliente de correo en un teléfono físico. [Capturas ES/EN y registros](docs/evidencias/emails-2026-11-09/README.md).
-
-El recorrido manual de Insomnia comprueba pedidos, permisos, privacidad, importes y reposición de existencias; sus respuestas se contrastan con SQLite. Las verificaciones automatizadas también cubren MongoDB y los fallos del proveedor de correo. La suite actual suma 191 pruebas correctas. La activación de los secretos SMTP en Vercel y la recepción desde la API publicada ya se han comprobado; queda la validación física de la nueva vista de comunicaciones en Expo Go. [Diseño, recuperación y límites](docs/CORREOS-DEMO.md).
+He organizado esta memoria alrededor de la versión que presento. Los documentos técnicos enlazados conservan el detalle de implementación y los registros fechados de las verificaciones.
 
 ## Recorrido visual de la versión que presento
 
@@ -69,13 +54,13 @@ Las figuras siguientes enlazan decisiones de producto con evidencias reales. Los
 
 <img src="docs/evidencias/videos-2026-11-09/18-iphone-tailor-tallas.jpg" width="340" alt="tAIlor conserva Cruel Summer y confirma talla M y calzado 40" />
 
-*iPhone, Iphone.MP4, 07:20.* La respuesta conserva Cruel Summer al confirmar M/40. La disponibilidad indicada corresponde al momento de la consulta; no es una reserva ni una garantía de ajuste. El solapamiento de la cabecera con la barra de estado se conserva como hallazgo pendiente de corregir, sin retocar la imagen.
+*iPhone, Iphone.MP4, 07:20.* La respuesta conserva Cruel Summer al confirmar M/40. La disponibilidad indicada corresponde al momento de la consulta; no es una reserva ni una garantía de ajuste. Conservo el encuadre original, incluido el solapamiento visible de la cabecera con la barra de estado, sin retocar la captura.
 
 ### Figura 6 · Comunicación consultada físicamente en iPhone
 
 <img src="docs/evidencias/videos-2026-11-09/14-iphone-correo.jpg" width="340" alt="Previsualización del correo de compra en iPhone con estado capturado en Mailtrap" />
 
-*iPhone, Iphone.MP4, 03:30.* El usuario despliega la compra en Mis comunicaciones y se ve el estado de captura en Mailtrap. Esta evidencia completa la comprobación física de esa previsualización, no la de todos los eventos o dispositivos. También muestra un texto histórico No enviado junto a Capturado: queda pendiente aclarar la diferencia entre destinatario ficticio y captura técnica en Sandbox.
+*iPhone, Iphone.MP4, 03:30.* El usuario despliega la compra en Mis comunicaciones y se ve el estado de captura en Mailtrap. He comprobado físicamente esta previsualización en iPhone. El estado Capturado corresponde a la recepción técnica en Sandbox; el destinatario sigue siendo ficticio y no recibe un correo real. La captura conserva también el texto histórico No enviado.
 
 ### Figura 7 · Correo recibido desde la API publicada
 
@@ -99,329 +84,176 @@ Las figuras siguientes enlazan decisiones de producto con evidencias reales. Los
 
 La [matriz de revisión y cierre](docs/REVISION-Y-CIERRE.md#cambios-justificados-por-el-curso) enlaza las lecciones revisadas de responsabilidades, inversión de dependencias, variables de entorno y secretos, autenticación/autorización y mapa de pruebas. Aplico sus criterios al separar contratos, dominio y transporte; mantener secretos fuera del cliente y Git; comprobar propiedad y roles en backend; y distinguir tests automatizados, API manual, persistencia y observación física. Las imágenes ilustran esos resultados concretos, sin presentar una captura como prueba completa de seguridad o calidad.
 
-## 1 Contexto y motivación
+## 1. Contexto y motivación
 
-KelseTS Maison nace como una nueva historia dentro de la marca ficticia que he utilizado en otros proyectos de mi portfolio. Me interesa que la propuesta tenga una identidad personal y una utilidad clara. En este caso, el punto de partida es una persona que encuentra una prenda que le gusta, pero necesita elegir su variante y descubrir qué accesorios o productos de belleza pueden acompañarla.
+Maison es una nueva historia dentro del Universo KelseTS, la marca ficticia con la que he dado identidad a varios proyectos de mi portfolio. La música, las historias compartidas y el deporte forman parte de su inspiración. En esta boutique aparecen en los nombres de las prendas, en los ambientes de las colecciones y en los pequeños detalles que terminan de unir un look.
 
-La moda ya estaba presente en AFM Moda Oceánica, una landing centrada en presentar una marca y una selección de prendas. KelseTS Cars incorporó una aplicación full stack con catálogo, cuentas y gestión privada. Maison continúa ese aprendizaje y lo lleva a un recorrido de tienda, con sus propias reglas de productos, stock y pedidos.
+La moda ya estaba presente en [AFM Moda Oceánica](https://proyecto-landing-page-1.vercel.app/), una landing centrada en presentar una marca y una selección de prendas. Con [KelseTS Cars](https://kelsets-cars.vercel.app) avancé hacia una aplicación full stack con catálogo, cuentas y gestión privada. En Maison he llevado ese aprendizaje a un recorrido de tienda con reglas propias de productos, variantes, existencias y pedidos.
 
-La música, las historias compartidas y el deporte inspiran el universo creativo. Los nombres y los productos son ficticios, sin presentar a personas o entidades reales como patrocinadores. «Tu estilo cuenta una historia» reúne esa intención.
+Mi punto de partida fue una situación sencilla: una persona encuentra una prenda que le gusta, pero necesita elegir su talla y descubrir qué accesorios o productos de belleza pueden acompañarla. Quería que la experiencia ayudase a tomar esas decisiones y que el catálogo, el asesor y la bolsa formasen parte de la misma historia.
 
-## 2 Objetivos y alcance
+## 2. Objetivos y alcance de la versión que presento
 
-El recorrido principal conecta portada, catálogo, ficha, elección de variante, bolsa y pedido de demostración. La cuenta permite conservar favoritos y consultar pedidos y comunicaciones. Team gestiona el catálogo y los estados del pedido.
+He construido el recorrido portada → catálogo → ficha → variante → bolsa → pedido de demostración. La cuenta permite consultar pedidos y comunicaciones; en la web también permite guardar favoritos. Desde Team puedo gestionar productos, traducciones, imágenes, variantes, existencias y estados de pedido.
 
-La diferencia editorial está en «Completa tu look»: dieciséis colecciones reúnen prendas, calzado, bolsos, joyería y propuestas de belleza en veintiuna selecciones manuales y los treinta y seis looks de la pasarela. El buscador de combinaciones comprueba ocasión, paleta, presupuesto y stock. Las selecciones editoriales conviven con tAIlor: un chat con interpretación generativa y voz por turnos, fotos, precios y enlaces validados en backend; las verificaciones y sus límites están registrados en los documentos actuales.
+El catálogo reúne **190 artículos y 996 variantes**, organizados en Moda, Accesorios y Belleza. Dieciséis colecciones conectan **21 looks editoriales y 36 outfits de pasarela**. Cada conjunto se compone de piezas del mismo inventario y permite elegirlas por separado o añadirlas con sus variantes.
 
-La web tiene textos en castellano e inglés y CSS responsive. La app nativa tiene catálogo, outfits, sesión, bolsa por cuenta, pago simulado, pedidos y boutiques, descritos más adelante; falta completar la validación física de ese recorrido. He incorporado boutiques ficticias con mapa y entrega simulada. La integración Gemini → Claude → OpenAI está preparada y se ha probado con datos ficticios; la IA está activada en producción con cuotas y caducidad; siguen pendientes una evaluación más amplia y las citas. La web ya está publicada en [Vercel](https://kelsets-maison.vercel.app); las slides finales y las ampliaciones siguen pendientes de cierre.
+La web tiene textos en castellano e inglés y diseño responsive. He desarrollado además una app nativa con React Native y Expo que comparte la API HTTPS: catálogo, outfits, sesión, bolsa por cuenta, pago simulado, pedidos, comunicaciones, boutiques y tAIlor. La versión móvil se utiliza con Expo Go y Metro; la administración Team y los favoritos forman parte de la web.
 
-## 3 Organización técnica
+He publicado la web y la API en proyectos separados de Vercel, con MongoDB y Cloudinary propios de Maison. Para facilitar la ejecución local, mantengo un modo SQLite que permite explorar la boutique sin configurar esos servicios externos. La cuenta del evaluador y su contraseña se facilitan de forma privada.
 
-He mantenido JavaScript y React por continuidad con los proyectos anteriores. El backend se organiza por acceso, catálogo, pedidos e imágenes. En la web, cada funcionalidad tiene sus páginas y los elementos comunes se encuentran en `shared`. Dos paquetes reúnen los contratos y el transporte HTTP.
+## 3. Organización técnica y reutilización
 
-SQLite permite arrancar la demostración con una base independiente sin configurar servicios externos. Esta elección facilita la prueba local. Para publicar mantengo la continuidad con Cars: Vercel, MongoDB y Cloudinary propios de Maison. He preparado la adaptación con transacciones y sesiones persistentes; la conexión a Atlas y Cloudinary y un recorrido HTTP de gestión y pedido ya se han comprobado. La web y la API están publicadas en Vercel. No sirve guardar la base en un sistema temporal y esperar que los pedidos se conserven entre ejecuciones. La [arquitectura](docs/ARQUITECTURA.md) recoge esta decisión y sus límites.
+He mantenido JavaScript y React por continuidad con mis proyectos anteriores. La web utiliza React Router, Vite y CSS; la API utiliza Node.js, Express y Zod. He separado las funcionalidades de acceso, catálogo, pedidos, imágenes, comunicaciones y asesor, y he situado los elementos comunes de interfaz en `shared`.
 
-El cliente HTTP parte del transporte de KelseTS Cars, revisado y adaptado a Maison. Las rutas de vehículos y citas se han sustituido por las necesidades de la boutique. No se ha trasladado el historial del repositorio, sus datos de producción, sus cuentas ni sus secretos.
+Los paquetes `contracts` y `api-client` reúnen los esquemas, las reglas compartidas de estados y el transporte HTTP. Así puedo consumir la misma API desde web y móvil sin duplicar decisiones sobre precios, cantidades o permisos. La [arquitectura](docs/ARQUITECTURA.md) explica esta organización.
 
-## 4 Catálogo e identidad visual
+He revisado y adaptado el transporte HTTP y algunos patrones de organización de KelseTS Cars. También he conservado el logo vectorial de mi marca, ajustándolo a Maison. No he trasladado sus usuarios, datos de producción, credenciales ni historial de Git: Maison tiene repositorio y servicios propios. En [Recursos](docs/RECURSOS.md) documento la reutilización, las herramientas y las licencias.
 
-El catálogo actual contiene ciento noventa productos ficticios, incluidos los conjuntos y las piezas de los treinta y seis looks de pasarela, repartidos entre Moda, Accesorios y Belleza. Cada producto tiene nombre y descripción ES/EN, colección, imagen y variantes. Las tallas, tonos o formatos pertenecen a cada variante, junto con su precio y existencias. Algunas tallas empiezan agotadas para hacer visible ese estado.
+## 4. Identidad visual, catálogo y pasarela
 
-La primera propuesta visual utiliza marfil, negro suave y el rojo KelseTS `#b3152b`. El logo mantiene el dibujo vectorial utilizado en Cars con el subtítulo Maison. La portada presenta una escena de boutique y las colecciones se diferencian con colores de apoyo. DM Sans se utiliza en la interfaz y Playfair Display en los títulos. Las fuentes se sirven desde la propia aplicación.
+He elegido marfil, negro suave y rojo KelseTS `#b3152b`, con DM Sans para la interfaz y Playfair Display para los títulos. Sirvo las fuentes desde la propia aplicación. Buscaba una boutique editorial, con imágenes protagonistas, espacio y controles claros, sin perder la facilidad para encontrar una pieza o volver a la bolsa.
 
-El catálogo utiliza representaciones fotorrealistas generadas para los cincuenta y un productos ficticios y tres escenas editoriales. Los envases de perfume y cosméticos incorporan el logo de Maison. La inspiración swiftie combina satén, rojo, romanticismo y punto para pasar de ocasiones especiales al día a día. No presento estas imágenes como una sesión fotográfica de mercancía real. Los SVG anteriores se conservan para respetar las imágenes guardadas en pedidos históricos.
+Los nombres de los productos y los looks utilizan títulos de canciones de Taylor Swift o referencias inspiradas en ellas. He mantenido visible el tipo de pieza y la coherencia entre castellano e inglés. Es una inspiración creativa; no implica afiliación ni patrocinio.
 
-### Revisión editorial de portada · 7 de noviembre de 2026
+He sustituido la cuadrícula extensa de colecciones por un carrusel de dieciséis portadas editoriales creadas para esa sección, sin repetir imágenes de los vídeos. Cada tarjeta enlaza a su colección y las imágenes WebP tienen tamaños adaptados. En «Del cuaderno a tu armario» he unido la narrativa de pasarela con las fichas de los looks.
 
-He sustituido la cuadrícula textual de colecciones por un carrusel de dieciséis portadas editoriales generadas para esta sección, sin repetir imágenes de los vídeos. Las imágenes se sirven en WebP con tamaños adaptados y cada tarjeta enlaza a su colección. El bloque «Del cuaderno a tu armario» incorpora una composición burdeos con tres looks existentes y acceso a sus fichas y a la pasarela. He retirado la firma personal que aparecía aislada junto a las campañas y conservado mi autoría y redes en los espacios de historia, créditos y pie de página. Los recursos y sus referencias están registrados en la documentación del proyecto.
+La pasarela ilustrada reúne 36 outfits en un recorrido de noventa segundos. Para conectarla con el catálogo he añadido 139 piezas a los 51 artículos iniciales. Los conjuntos no crean otro inventario ni un precio independiente: al añadirlos, incorporo sus líneas individuales a la bolsa después de elegir una variante disponible de cada pieza.
 
-## 5 Cuenta y selección personal
+He utilizado representaciones generadas de los productos ficticios y recursos editoriales propios. Para los clips de campaña he empleado Runway, y FFmpeg para optimizar y montar vídeo. La música «Runway Pulse» la creé en Suno. He revisado encuadres, continuidad y movimientos antes de incorporar las tomas, y he conservado los másteres y fuentes de trabajo fuera de Git. No presento estas imágenes como fotografías de mercancía real.
 
-La persona puede registrarse con un correo ficticio y una contraseña propia. La contraseña se guarda mediante una derivación `scrypt` con sal aleatoria. La sesión utiliza una cookie HttpOnly y un token opaco; la base guarda su hash, no el token original. El rol siempre se comprueba en el servidor.
+Los precios de demostración siguen un posicionamiento de lujo. Los he contrastado por categoría con referencias oficiales de Saint Laurent, Gucci y Prada, documentadas en [Precios](docs/PRECIOS.md). Las migraciones conservan las personalizaciones de Team y los importes de pedidos históricos.
 
-La bolsa conserva identificadores y cantidades en el navegador. Los precios se consultan al abrirla y vuelven a calcularse en el servidor al crear el pedido. La bolsa se guarda por cuenta, con un espacio separado para visitantes. Los favoritos pertenecen a cada usuario y no se muestran a otras cuentas.
+## 5. Cuenta, sesión y selección personal
 
-## 6 Reglas del pedido
+He implementado registro con correo ficticio y contraseña propia, acceso y separación de roles. Las contraseñas se derivan con `scrypt` y sal aleatoria. En la web utilizo una cookie HttpOnly y un token opaco cuyo hash se guarda en la base. En móvil utilizo Expo SecureStore para conservar la sesión sin guardar contraseñas.
 
-Un pedido de demostración no solicita datos bancarios ni direcciones. Su creación valida las líneas, comprueba la disponibilidad y descuenta las existencias dentro de una transacción. Si una variante falla, se recupera lo descontado en las demás líneas.
+La API comprueba la propiedad de los pedidos y las comunicaciones, además del rol de Team. El registro público siempre crea una cuenta de cliente; no permite elegir permisos de administración.
 
-La bolsa tiene una clave de idempotencia. El servidor relaciona esa clave con la cuenta y con las líneas solicitadas. Una repetición idéntica devuelve el pedido anterior; si la misma clave se usa para otro contenido, devuelve un conflicto. Así se evita duplicar el pedido ante un doble envío o una respuesta perdida.
+La bolsa conserva identificadores y cantidades, con un espacio por cuenta y otro para visitantes. Al abrirla consulto de nuevo precios y disponibilidad. Los favoritos de la web pertenecen a cada usuario y no se muestran a otras cuentas.
 
-Las líneas guardan una copia del nombre, variante, imagen y precio del momento. Team puede pasar de pendiente a confirmado, después simular envío y entrega. La cancelación solo se permite antes del envío y devuelve las unidades una vez. El catálogo también tiene un número de revisión para impedir que una edición antigua sobrescriba el stock cambiado por un pedido.
+## 6. Pedidos, existencias y pago de demostración
 
-## 7 Comunicaciones y administración
+He diseñado el pedido para que el servidor mantenga la autoridad sobre cantidades, precios y existencias. Calculo los totales en céntimos y compruebo cada variante. La creación del pedido, el descuento de stock y su comunicación se realizan dentro de una transacción: si falla una línea, se revierte el conjunto.
 
-La creación del pedido y cada cambio válido de estado generan una comunicación para su cliente. Los mensajes tienen versiones ES/EN y se guardan junto con el cambio dentro de la misma transacción. Desde el 9/11, el adaptador SMTP puede capturarlos en Mailtrap Sandbox; no se envían a clientes reales. La captura se registra por separado de la comunicación interna.
+He incorporado idempotencia para evitar duplicados ante un doble envío o una respuesta perdida. Una repetición con la misma clave, cuenta y contenido devuelve el pedido anterior; reutilizar esa clave con otro contenido produce un conflicto. Las líneas guardan una copia del nombre, la variante, la imagen y el precio del momento.
 
-Team puede crear y editar productos, ocultarlos del catálogo, cambiar variantes y existencias y subir imágenes. El servidor comprueba el formato real de las imágenes y Sharp las decodifica, orienta, reduce y convierte a WebP. Las imágenes originales subidas no se conservan. Una variante de un pedido pendiente o confirmado no se puede eliminar, porque sería necesaria para devolver el stock si se cancela.
+El pago es una simulación académica. Puedo escoger cuenta bancaria ficticia, tarjeta ficticia o PayPal simulado; en la app también Apple Pay simulado en iOS y Samsung Pay simulado en Android. No conecto con esos servicios ni solicito datos bancarios. Antes de confirmar acepto el aviso de demostración y el justificante muestra siempre un cargo real de **0,00 €**.
 
-## 8 Validación realizada
+Un resultado rechazado no crea un pedido ni descuenta unidades. Un resultado aceptado registra el pedido en estado pendiente. Desde Team puedo confirmarlo, simular envío y entrega o cancelarlo antes del envío. La cancelación repone las unidades una sola vez y conserva el justificante histórico.
 
-La [validación](docs/VALIDACION.md) recoge el entorno y las comprobaciones efectivamente ejecutadas. Las pruebas de API cubren permisos, privacidad, cálculos, pedidos duplicados, competencia por stock, cancelaciones, estados, edición con datos desactualizados y archivos de imagen.
+También he protegido la edición del catálogo con una revisión de producto, para que una pantalla antigua de Team no sobrescriba existencias que hayan cambiado por un pedido. Los filtros de talla, precio y disponibilidad se aplican a la misma variante.
 
-En Safari se ha recorrido la ficha, una talla agotada, la bolsa, el cambio de idioma, el acceso, la creación de un pedido, el historial, su comunicación y la confirmación desde Team. Las [evidencias](docs/evidencias/README.md) identifican las capturas y sus límites. Las comprobaciones posteriores del despliegue y de la app en dispositivos reales se recogen en las secciones siguientes. Siguen pendientes el lector de pantalla, el contenedor Docker y completar los recorridos indicados en la validación.
+## 7. Entrega y boutiques ficticias
 
-## 9 Dificultades y decisiones pendientes
+He ampliado el checkout con destinatario, domicilio o recogida y una revisión previa al pago. En domicilio guardo calle, código postal, localidad y zona; en recogida guardo la boutique elegida. Solicito datos ficticios.
 
-La primera decisión ha sido mantener la aplicación utilizable sin servicios contratados. SQLite resuelve esa necesidad local, pero obliga a decidir dónde conservar la base en el despliegue o a migrar la persistencia. El destino elegido es Vercel con MongoDB y Cloudinary. He revisado el código y las evidencias de Cars para conservar su patrón de web y API separadas, conexión reutilizada y entrega de imágenes mediante la API. Maison utiliza el driver oficial de MongoDB y mantiene sus reglas propias de pedidos.
+La demostración contempla la Comunidad de Madrid, Barcelona ciudad y Marbella. La API comprueba el código postal según las reglas de la zona; esta validación no certifica que una dirección exista ni conecta con un transportista. El servidor calcula estimaciones de 3–5 días laborables para domicilio y 1–2 para recogida, con calendario de Madrid, de lunes a viernes y sin ajustar festivos.
 
-La disponibilidad afecta a varias pantallas, aunque se decide en un único lugar: el servidor. Un producto visto hace unos minutos puede haberse agotado y una pantalla de Team puede tener datos antiguos. Las transacciones, las respuestas de conflicto y la revisión del producto cubren esas situaciones.
+He creado Maison · Milla de Oro, Maison · Passeig de Gràcia y Maison · Puerto Banús como boutiques ficticias. Las fotografías acreditadas de Wikimedia Commons muestran sus entornos reales; no son locales de Maison. He utilizado Leaflet y OpenStreetMap en web y `react-native-maps` en la app, con enlaces a Street View.
 
-Antes de cerrar el TFM quiero completar la revisión en dispositivos reales y preparar las slides sobre lo que he construido. Los servicios de Maison ya están configurados en Vercel y la app nativa tiene una primera versión. La integración generativa y la voz están activadas con cuotas; quedan una evaluación más amplia y el montaje de la defensa.
+La ubicación es opcional y se solicita al pulsar el control de distancia. También puedo elegir un punto manual. Calculo kilómetros en línea recta en el cliente, sin guardar la ubicación en la cuenta o el pedido. En Safari he comprobado el punto manual y un pedido de recogida, con las mismas fechas y datos visibles en Team. Después cancelé el pedido y repuse su unidad.
 
-La ampliación swiftie añade vestidos de gala, sastrería, cuadros, botas, denim y punto. La selección de lujo incluye gabardinas, cachemir, lana, tul, terciopelo, piel, satén y joyería. Los looks se exploran por eventos, entrevistas y TV, estilo de calle o día a día. El buscador contempla verdes y plateados y mantiene la comprobación de presupuesto y existencias. Los precios y materiales describen artículos ficticios; no acreditan mercancía real.
+## 8. Comunicaciones ilustradas y Mailtrap Sandbox
 
-Los precios del catálogo se han contrastado con referencias oficiales de Saint Laurent, Gucci y Prada y ajustado por categoría. El criterio y los enlaces están en [Precios](docs/PRECIOS.md). Una migración explícita actualiza los precios originales de demostración, preserva los cambios de Team y mantiene los pedidos históricos con sus importes originales.
+He conectado los eventos de registro del pedido, confirmación, envío simulado, entrega simulada y cancelación con comunicaciones ES/EN dentro de la cuenta. Cada mensaje conserva las líneas y los importes del pedido y tiene una previsualización en web y app.
 
-La portada incorpora cuatro escenas con modelos adultas ficticias y una dirección multicultural: gala verde, traje marfil, estilo urbano y viaje en camel. Cada escena enlaza con su colección. Las fotografías originales se animaron en Runway y los cuatro clips se optimizaron con FFmpeg. La portada reproduce un vídeo cada vez al pasar el cursor y dispone de controles de reproducción y pausa. Se ha comprobado la activación de los cuatro clips en Safari de escritorio; la revisión en un móvil real sigue pendiente.
+Quería que los correos formasen parte de Maison, en lugar de parecer un aviso técnico. Por eso he incorporado logo, marfil y burdeos, fotografías de las piezas, variantes, cantidades, subtotales y total. En cancelación muestro el importe cancelado sin presentarlo como un reembolso bancario. La aclaración académica queda en el pie.
 
-La campaña de portada se revisó para reflejar mejor el contraste entre las eras: azotea nocturna, jardín rosa, bosque y avenida otoñal. Los cuatro nuevos clips duran diez segundos y combinan caminatas, giros y movimiento de prendas, con nombres propios Midnight Atelier, Rosé Daydream, Woodland Stories y Scarlet Avenue. Los carteles proceden de sus primeros fotogramas para evitar cambios de escena al iniciar el vídeo.
+He utilizado Nodemailer con SMTP restringido a Mailtrap Sandbox. El logo y las miniaturas se adjuntan por CID. El destinatario es ficticio: los mensajes quedan capturados en el buzón de pruebas y no llegan a clientes reales. La comunicación interna y el registro de captura SMTP son estados distintos; un fallo de correo no revierte una compra ya registrada.
 
-La película panorámica evoluciona desde un tráiler de quince segundos a un montaje de más de un minuto con primavera, verano, otoño, lluvia, nieve, lino junto al lago, esmoquin, blazer con denim y gala burdeos. La escena de la bufanda se recupera corrigiendo la identidad de la protagonista. Se conserva debajo la selección multicultural de cuatro campañas.
+He comprobado compra y cancelación en castellano e inglés con Studio Interview, por **4.840,00 €**, con sus cuatro piezas. Al repetir el checkout no se genera otro correo y al cancelar se repone el stock. He guardado capturas reales de escritorio y de la vista móvil emulada de Mailtrap; al encontrar un desbordamiento de nombres, corregí la plantilla y comprobé la nueva muestra.
 
-La revisión de movimiento detectó figuras secundarias, duplicación y levitación de bolsos, una torsión de cuello y una pisada poco natural. Las tomas de lago y esmoquin se sustituyeron primero; después se rehacen Londres, esmoquin y gala burdeos con fotogramas de postura neutral y prompts de pasos cortos, brazos relajados y cabeza alineada. Se revisan los resultados antes de incorporarlos. La última ronda utiliza tres clips de cinco segundos y consume los setenta y cinco créditos autorizados. El montaje previo no se considera una entrega validada.
+También he activado y verificado SMTP desde la API publicada en Vercel: compra y cancelación recibidas en Mailtrap, cargo real cero y existencias repuestas. Mi grabación de iPhone muestra la previsualización de compra en Mis comunicaciones. Los registros distinguen esta observación física de la vista móvil emulada del buzón. [Correos y funcionamiento](docs/CORREOS-DEMO.md) · [Muestras ES/EN](docs/evidencias/emails-2026-11-09/README.md) · [Prueba publicada](docs/evidencias/mailtrap-vercel-2026-11-09/README.md).
 
-Para la música he utilizado «Runway Pulse», que creé en Suno. La portada comienza silenciada y permite activar o silenciar el sonido y pausar la película. FFmpeg permite reproducir el montaje con fundidos, velocidad de reproducción configurable y audio con entrada y salida suaves. Topaz AI mediante la App de Runway mejora las fuentes; los másteres grandes se mantienen fuera de Git. El guion de casi dos minutos continúa como ampliación pendiente.
+## 9. Administración Team
 
-El cierre añade cuatro looks: sastrería de raya diplomática en Milán, cachemir en los Alpes, estilo Oxford junto al Mediterráneo y terciopelo negro de noche. Sus cuatro animaciones consumen 100 créditos y la mejora de resolución 37, dentro del máximo de 140 autorizado. El montaje reúne catorce looks en aproximadamente un minuto y veintitrés segundos, con la música de Suno. Se exporta un máster 4K privado y versiones de 1080p y 1440p para la web.
+Desde Team puedo crear y editar productos, sus textos bilingües, imágenes, variantes y stock, ocultarlos del catálogo y consultar o avanzar pedidos. He incorporado búsqueda por nombre o identificador y filtros de visibles y archivados.
 
-La última revisión móvil toma Cars como referencia de interacción. El menú hamburguesa se extiende a tablet e incluye Mi cuenta. La película recibe una copia vertical con encuadres ajustados por escena y llena la altura disponible del móvil, con textos y controles superpuestos. Se comprueba mediante emulación de Chrome; la prueba en un teléfono físico sigue pendiente.
+He protegido las subidas comprobando el formato real del archivo. Sharp decodifica, orienta, reduce y convierte las imágenes a WebP; no conservo el original subido. Una variante utilizada en un pedido pendiente o confirmado no puede eliminarse, porque la necesito para reponer existencias si se cancela.
 
-## 12 Del cuaderno al catálogo
+He recorrido la gestión desde la interfaz, incluida la creación de una pieza bilingüe, su imagen, el archivo y la reapertura con los datos guardados. Las pruebas temporales se retiraron conservando el catálogo de 190 productos. Las evidencias publicadas también muestran consulta, confirmación y cancelación de pedidos desde Team.
 
-La portada evoluciona a una pasarela lateral de prendas ilustradas, sin caras, con 36 outfits y un recorrido de noventa segundos. Para conectar esa historia con la tienda, cada outfit tiene una selección editorial con sus prendas, calzado y accesorios. Se conservan los 51 artículos anteriores y se añaden 139 piezas: el catálogo reproducible reúne 190 productos y 996 variantes.
+## 10. App nativa con React Native y Expo
 
-Se puede abrir la ficha de una pieza o elegir la variante de cada artículo y añadir el look completo. El conjunto se guarda como líneas individuales de la bolsa; no crea un segundo inventario ni aplica un precio separado. La selección se comprueba antes de modificar el carrito, y el backend vuelve a validar cantidades, stock y precios al crear el pedido de demostración.
+He desarrollado una interfaz nativa que comparte la API HTTPS de la web, sin incrustarla en un WebView. Incluye catálogo paginado, búsqueda, categorías, fichas, variantes, outfits, bolsa por cuenta, acceso, pago DEMO, historial, comunicaciones, boutiques y tAIlor en castellano e inglés.
 
-Las fotografías de las piezas son representaciones generadas de los diseños ficticios. Las fuentes y los prompts se conservan en privado; los recursos WebP de la web quedan vinculados a los identificadores del catálogo. La dirección busca mantener el carácter del cuaderno y mostrar tejidos, costuras y acabados con un aspecto realista.
+He adaptado los controles, el cambio de idioma y las acciones a iOS y Android, manteniendo la identidad de Maison y una barra inferior propia. La entrada muestra una animación del logo que se puede saltar y respeta la reducción de movimiento. Los importes mantienen **1.850,00 €** en ambos idiomas; los valores internos siguen en céntimos.
 
-La revisión de los nombres añade títulos de canciones de Taylor Swift a los 36 looks y a sus piezas, manteniendo los identificadores de inventario. La galería permite filtrar por ambiente y por era. Los títulos son una referencia editorial; la música de la película sigue siendo la pista de Suno aportada para Maison.
+Durante la prueba de iPhone encontré una incompatibilidad entre Expo Go y el SDK del proyecto. Actualicé la app a SDK 58 y comprobé sus exportaciones. La configuración registrada utiliza Expo 58.0.23, React Native 0.88.1, React 19.3.0 y `expo-splash-screen` 58.0.13. Expo Doctor superó 20/20 comprobaciones el 7 de noviembre.
 
-## 13 Del catálogo a un pedido de demostración
+En iPhone he recorrido registro, acceso, rechazo conservando la bolsa, pedido aceptado con cargo real cero, historial y persistencia de sesión tras cerrar Expo Go. Cancelé el pedido de prueba y repuse sus unidades. En iPad resolví el acceso actualizando el sistema y Expo Go. Mis vídeos documentan catálogo y correo en iPhone, catálogo en inglés y asesor en iPad, y bolsa, checkout y chat por texto en Android. He comprobado además el funcionamiento de voz en iOS y Android.
 
-Con 190 piezas, encontrar una talla y respetar un presupuesto resulta más importante. Los filtros de talla, precio máximo y disponibilidad comprueban la misma variante: no basta con que otra talla sea más barata o tenga existencias. Volver desde una ficha conserva los filtros de catálogo.
+La app se ejecuta con Expo Go y Metro en el entorno de desarrollo. Un despliegue de Vercel actualiza web y API; los cambios de código nativo se cargan desde Metro. He descrito los pasos de acceso en la [guía móvil](mobile/README.md).
 
-La bolsa identifica qué pieza necesita una corrección de cantidad y permite actualizar sus precios y existencias. Team incorpora búsqueda por nombre en ambos idiomas o identificador y un filtro de artículos visibles y archivados. El editor señala las traducciones pendientes antes de guardar, manteniendo también la validación del servidor.
+## 11. tAIlor: de la selección editorial a la conversación generativa
 
-El recorrido se ha comprobado en Edge sobre una copia aislada: acceso, favoritos, elección de talla, ajuste por cambio de stock, pedido, historial, comunicaciones y confirmación y cancelación desde Team. También se ha creado un producto bilingüe y subido su fotografía desde la interfaz. Los datos de esa revisión no alteran las cuentas ni las existencias de la instalación principal. Los detalles y límites de la revisión responsive están en la validación.
+«Completa tu look» comenzó con selecciones editoriales manuales según ocasión, paleta, presupuesto y disponibilidad. Después añadí tAIlor para que la persona pudiera explicar su plan con naturalidad y recibir propuestas con fotografías y enlaces.
 
-## 14 Evidencias de la versión publicada
+Las pruebas reales me hicieron cambiar el enfoque. En la primera versión, la IA ordenaba propuestas, pero unas reglas locales interpretaban las frases y sus referencias. Eso producía repeticiones al pedir zapatos, elegir un pantalón o preguntar cómo comprar. He pasado a enviar el mensaje y un contexto acotado al modelo, que devuelve intención y preferencias estructuradas.
 
-El 18 de octubre de 2026 se guardan diecinueve capturas originales de Chrome sobre la web publicada en Vercel: portada, catálogo de 190 piezas, ficha con variantes, cuenta con sesión iniciada y gestión de productos de Team. El [índice de capturas](docs/evidencias/produccion-2026-10-18/README.md) reúne las imágenes y los pies para incorporarlos a la memoria final.
+He preparado Gemini → Claude → OpenAI como cadena de proveedores. El backend valida la salida y reconstruye las tarjetas desde identificadores permitidos del catálogo. Comprueba tallas, stock y presupuesto: la IA no fija precios, no modifica permisos y no tiene herramientas para crear pedidos o añadir piezas a la bolsa.
 
-Las capturas conservan la dirección pública y describen el estado observado. La cuenta aparece sin pedidos ni comunicaciones; no se utiliza esa imagen como prueba de un pedido o de envío de correo. La ampliación posterior incorpora cuenta y bolsa en inglés, creación de un pedido, confirmación y cancelación desde Team, tres comunicaciones internas, devolución del stock, editor en ambos idiomas y portada y menú en emulación de iPhone SE (375 × 667). El pedido queda cancelado en el historial; la talla M recupera sus ocho unidades. Se sale del editor sin guardar cambios. La secuencia posterior documenta además la subida de una imagen, la creación de una pieza temporal archivada y su reapertura con los datos guardados. Se retiran después esa pieza, su variante y su imagen de prueba, conservando los 190 productos anteriores. La prueba en teléfono físico queda pendiente.
+He incorporado seguimiento del look y la pieza elegidos, cambio de objetivo, consulta de tallas, alternativas para completar un outfit e instrucciones de compra. Una referencia como «enséñame las dos» conserva las propuestas actuales; preguntar por zapatos no reinicia la selección de conjuntos. También he retirado el cierre fijo «¿Con cuál te ves más?» de cada respuesta generativa.
 
-## 15 Primer paso hacia la app nativa
+He dado a tAIlor una personalidad cercana, con saludo y presentación como estilista personal virtual de KelseTS Maison. No se hace pasar por una persona. He acotado la conversación a outfits y estilismo, y he añadido controles ante temas ajenos, instrucciones maliciosas, secretos o precios inventados. Estos controles complementan los esquemas, los permisos y la validación del servidor.
 
-Después de publicar la boutique, decidí continuar con la app móvil antes de abordar el asistente de outfits. He mantenido React y JavaScript, esta vez con React Native y Expo SDK 57. La app consulta la misma API HTTPS de Maison, sin incrustar la web. La primera etapa incluye catálogo, búsqueda, categorías, ficha, variantes y bolsa local en castellano e inglés.
+He comprobado conversaciones reales con Gemini sobre una cena y la reutilización del conjunto para una entrevista: las referencias se mantienen en los turnos posteriores. También he probado con Gemini y respaldo de Claude la consulta de tallas, una talla mayor y cómo comprar, sin cambiar el look ni crear pedidos. Los registros separan los contextos iniciales simulados de las respuestas reales. [Diseño y pruebas del chat](docs/CHAT-GENERATIVO-TAILOR.md).
 
-La bolsa guarda identificadores y cantidades, y consulta de nuevo los precios y las existencias al abrirse. Las reglas para añadir cantidades son compartidas con la web. Así mantengo el mismo comportamiento en las dos interfaces sin duplicar el inventario.
+He activado el asesor también para visitantes con un máximo global de **100 intentos de modelo por día UTC**, incluidos fallos y respaldos, y cierre al finalizar el **31/12/2026 en Madrid**. El límite cuenta intentos, no euros. Si no hay IA disponible, la interfaz lo explica y los filtros editoriales permanecen como opción separada; no presento una selección manual como respuesta generativa.
 
-### Outfits y bienvenida
+## 12. Voz y experiencia de conversación
 
-Al abrir Maison en iPhone y Android vi que los controles resultaban demasiado cuadrados y se parecían demasiado a los de la web. He ajustado las acciones, los estados de selección y el cambio de idioma para cada plataforma. La barra inferior sigue siendo personalizada y conserva la identidad de Maison.
+He añadido la elección entre escribir o hablar. El modo texto no solicita micrófono. Al elegir voz se pide permiso y la grabación comienza con una acción explícita. Cada mensaje admite hasta un minuto; al detener, se transcribe y envía automáticamente, y la respuesta se reproduce una vez. La persona puede detenerla, escucharla de nuevo o cambiar a texto.
 
-También quería encontrar en la app los conjuntos completos de la pasarela. La pestaña Outfits reúne los 36 looks con títulos de canciones, filtro por era y detalle de sus piezas. Para añadir un conjunto hay que elegir una variante disponible de cada pieza. La selección se combina completa con la bolsa; si supera el stock, no se añaden piezas sueltas. La cesta incorpora las fotos y permite volver a la ficha de cada producto.
+He utilizado ElevenLabs para transcripción y síntesis con una voz multilingüe, y los módulos oficiales de audio de Expo en móvil. Las claves permanecen en el backend. He preparado los precios en palabras con euros y céntimos y la pronunciación fonética de los nombres para el texto de síntesis, conservando la escritura de la marca en pantalla.
 
-He unificado la presentación de los importes en castellano e inglés: **1.850,00 €**, con punto de miles, coma decimal y dos decimales. El idioma de la interfaz cambia los textos, pero no este criterio de presentación. Los valores se siguen guardando en céntimos.
+Durante mis pruebas encontré un problema al finalizar y enviar la grabación en Expo Go. Tras corregir ese flujo, comprobé su funcionamiento en iOS y Android. También he unificado el indicador de espera con un spinner, simplificado la jerarquía de botones y mantenido la conversación al abrir una ficha y volver al asesor durante la misma navegación.
 
-Para la entrada he elegido una animación breve del logo, que se puede saltar y respeta la reducción de movimiento. La primera versión solo ocupaba el área inferior; al revisarla, se cambió a una pantalla modal completa. Después comprobé la entrada y la interfaz corregidas en iPhone e iPad. He preparado además el logo estático para el arranque de una futura distribución, aunque ese splash requiere comprobarse en un binario propio y no en Expo Go.
+He verificado tres peticiones reales de audio: una frase en castellano, otra en inglés y la transcripción del audio generado, todas con HTTP 200. Las comprobaciones posteriores en dispositivos y las grabaciones complementan esas pruebas de proveedor, con su alcance identificado. [Voz y resultados](docs/VOZ-TAILOR.md).
 
-### Pruebas en mis dispositivos · 18 de octubre de 2026
+La voz tiene una cuota global separada de **200 acciones al día UTC**, compartida entre transcripción y síntesis, con la misma caducidad del asesor. Al agotarse, el aviso aparece al intentar usar voz, mediante un tooltip, y se puede seguir escribiendo. No guardo audio en la base de datos de Maison; se utiliza temporalmente para grabar y reproducir y se procesa mediante el proveedor configurado.
 
-He abierto la app con Expo Go en iPhone, iPad y Android. En Android apareció un error durante la actualización en caliente, cuando Metro todavía estaba resolviendo los archivos nuevos de Outfits. Tras reiniciar Metro con la caché limpia, pude volver a cargarla. Esta revisión me ha permitido comprobar el arranque y detectar ajustes visuales, pero todavía tengo que completar el recorrido de outfits y bolsa en cada dispositivo.
+## 13. Validación y evidencias de la entrega
 
-| Plataforma    | Dispositivo y sistema                   | Expo Go | Resultado de esta revisión                                   |
-| ------------- | --------------------------------------- | ------- | ------------------------------------------------------------ |
-| iPhone · iOS  | iPhone 13 · iOS 26.6.1                  | 57.0.9  | Apertura y entrada/interfaz corregidas correctas             |
-| iPad · iPadOS | iPad de 6.ª generación · sistema 17.7.0 | 57.0.9  | Apertura y entrada/interfaz corregidas correctas             |
-| Android       | Samsung Galaxy A34 · Android 16         | 57.0.9  | Apertura y recuperación después de limpiar la caché de Metro |
+He combinado pruebas automáticas, recorridos manuales, consultas directas a las bases y observación física. Cada registro identifica su fecha y entorno, para distinguir el resultado de una API local, la aplicación publicada y una pantalla en un dispositivo real.
 
-Para estas pruebas he utilizado **Expo Go 57.0.9**. La app está en la versión **0.1.0**, con **Expo 57.0.30 (SDK 57), React Native 0.86.3, React 19.2.3 y expo-splash-screen 57.0.10**. He dejado estas versiones registradas para poder reproducir el entorno de desarrollo.
+La suite registrada el **9 de noviembre de 2026** supera **191 comprobaciones**: 111 backend, 10 cliente HTTP, 10 web y 60 móvil. He verificado también el build web, las exportaciones iOS/Android y el arranque del build con datos temporales. Estas comprobaciones cubren permisos, privacidad, stock, importes, idempotencia, transiciones de pedido, ediciones antiguas, imágenes, contratos del asesor y errores de correo. [Registro de validación](docs/VALIDACION.md).
 
-La exportación genera los paquetes Hermes de iOS y Android y Expo Doctor supera sus 21 comprobaciones. Las pruebas automáticas de formato recorren las 996 variantes del catálogo y cantidades desde cero hasta millones en ambos idiomas. Estas comprobaciones técnicas complementan la revisión en los dispositivos; no sustituyen el recorrido manual completo.
+En Insomnia he recorrido **24 casos de pago DEMO y estados en SQLite y otros 24 en MongoDB local aislado**, contrastando directamente los efectos en cada base. He comprobado rechazo sin efectos, precio manipulado, compra, reintento, justificante, permisos y transiciones hasta entregado. La lectura final acredita un pedido de 1.850,00 €, cargo real cero, cuatro comunicaciones y stock 6 → 5. He guardado 31 capturas de estas dos rondas. [Colección e instrucciones](docs/api/README.md).
 
-Por ahora ejecuto la app con Expo Go y Metro. Quiero completar las capturas nativas, comprobar la conservación de la bolsa al cerrar y abrir, los cambios de conexión y la accesibilidad en cada dispositivo. En esa etapa de octubre estaban pendientes acceso, favoritos, pedidos e IA. Las ampliaciones posteriores de sesión, bolsa, pedidos y tAIlor se documentan en los registros de noviembre; Team nativo y distribución en tiendas no se dan por implementados. La [guía móvil](mobile/README.md) recoge el arranque y la [validación](docs/VALIDACION.md) conserva el detalle de las comprobaciones.
+En Atlas he consultado el catálogo, las variantes y los índices únicamente en lectura, con cinco capturas. No he alterado pedidos públicos para ilustrar esos casos ni atribuido a Atlas las pruebas ejecutadas en la réplica local. [Evidencias de Atlas](docs/evidencias/atlas-2026-11-09/README.md).
 
-## Ampliación: pago académico simulado en web y app
+He completado recorridos de compra en Chrome y Safari sobre la web publicada, cancelando después los pedidos de prueba para restaurar stock. Las 39 capturas de octubre y los 29 fotogramas extraídos de mis cinco grabaciones de noviembre ilustran la evolución y el resultado. Identifico las pantallas emuladas y las capturas físicas, y conservo el encuadre original. [Índice de evidencias](docs/evidencias/README.md).
 
-He preparado una revisión final del pedido para acercar la experiencia a una boutique sin realizar ninguna compra. Puedo escoger cuenta bancaria ficticia, tarjeta ficticia o PayPal simulado; la app añade Apple Pay simulado en iOS y Samsung Pay simulado en Android. Estas opciones no se conectan a ningún proveedor y no recogen datos bancarios. Antes de confirmar acepto expresamente que se trata de una simulación académica. El botón indica «Confirmar pago simulado».
+## 14. Aplicación de lo aprendido en el máster
 
-El resultado aceptado registra un pedido de demostración pendiente y genera su comunicación interna. El justificante conserva el método elegido, una referencia DEMO y el importe simulado; muestra siempre un cargo real de 0,00 €. También puedo elegir un resultado rechazado: no crea el pedido ni descuenta stock. No hay pasarela de pago, cobros, devoluciones monetarias ni envíos reales.
+He utilizado las lecciones como criterios para revisar decisiones concretas. La [matriz de aplicación del curso](docs/REVISION-Y-CIERRE.md#cambios-justificados-por-el-curso) enlaza las referencias sobre responsabilidades, inversión de dependencias, variables de entorno y secretos, autenticación, autorización y mapa de pruebas.
 
-La API calcula el importe a partir del catálogo, comprueba que coincide con el total revisado y aplica pedido, stock y comunicación dentro de una transacción. La clave del intento evita duplicados si repito la confirmación. He comprobado estas reglas con SQLite y una réplica temporal de MongoDB, incluidos rechazo, cambio de importe, concurrencia y conservación del justificante al cancelar. Las pruebas no realizan operaciones en un banco ni en servicios de pago.
+He aplicado esos criterios al separar contratos, dominio y transporte; mantener las claves fuera del cliente y de Git; comprobar roles y propiedad en la API; y probar conflictos de stock, precios e idempotencia. No he cambiado de framework por aparecer en una clase: he priorizado las decisiones que mejoraban el recorrido y podía justificar con resultados.
 
-Para consultar los resultados desde la app he incorporado acceso, registro, historial y comunicaciones. La bolsa se separa por cuenta y no guardo contraseñas en el almacenamiento local. La app verifica la sesión contra la API después de acceder y salir. Queda pendiente comprobar este nuevo recorrido privado en mis tres dispositivos; las pruebas anteriores de apertura y la generación de bundles no sustituyen esa comprobación.
+En la revisión detecté, entre otros problemas, una cookie JSON malformada que afectaba al cierre de sesión y sobres JSON inválidos que el cliente HTTP no distinguía correctamente. Los reproduje con pruebas y corregí su tratamiento. También separé los textos de estados en una política compartida y adapté la configuración para probarla sin modificar variables globales.
 
-## Ampliación: destinatario, entrega y boutiques ficticias
+Con tAIlor he aprendido a distinguir una respuesta que parece natural de una conversación que conserva realmente sus referencias. Las pruebas de selección, tallas, complementos y compra me han servido para revisar el contexto y mantener la autoridad del backend, sin dar herramientas de escritura al modelo.
 
-He ampliado la compra de demostración para poder indicar quién recibe la selección y elegir entre domicilio y recogida. Primero completo los datos de entrega y después reviso la selección, el destino y el pago ficticio. La cuenta identifica al cliente y el pedido conserva el nombre del destinatario. En domicilio guardo calle, código postal, localidad y zona; en recogida guardo la boutique elegida, sin añadir una dirección personal innecesaria.
+## 15. Dificultades y aprendizajes
 
-Por el momento he limitado el domicilio a la Comunidad de Madrid, Barcelona ciudad y Marbella. La API valida que el código postal pertenezca a las reglas de la zona seleccionada. Esta validación orientativa no verifica que una dirección exista ni conecta con un transportista. Pido datos ficticios para la demostración.
+La disponibilidad fue una dificultad transversal: un artículo puede agotarse mientras se consulta y Team puede conservar una pantalla antigua. He resuelto el problema con transacciones, idempotencia, control de revisión y mensajes que permiten corregir la bolsa, en lugar de confiar en lo que muestra el cliente.
 
-He creado tres boutiques ficticias: Maison · Milla de Oro, en el entorno de Serrano y el barrio de Salamanca de Madrid; Maison · Passeig de Gràcia, en Barcelona; y Maison · Puerto Banús, en Marbella. No corresponden a locales reales de Maison ni implican acuerdos con tiendas de esas calles. Los puntos del mapa son aproximados. He revisado el patrón de sedes de KelseTS Cars y adaptado la presentación del mapa, fotografías del entorno, enlaces a Street View y cálculo de distancias, conservando los créditos de autoría y las licencias de las fotos. No he trasladado credenciales ni datos de Cars.
+La app me ha obligado a diferenciar una web responsive de una interfaz nativa. Compatibilidad de SDK, almacenamiento seguro de sesión, permisos de micrófono y envío de audio requieren comprobaciones propias. Compartir contratos y API me ha permitido conservar las reglas de negocio sin forzar la misma interfaz en ambas plataformas.
 
-El mapa web utiliza Leaflet y OpenStreetMap; la app utiliza react-native-maps. Las fotografías de Wikimedia Commons muestran el entorno real y llevan autor, fuente y licencia; no las presento como fotos de un escaparate Maison ni como capturas de Google Street View. El enlace a Street View permite explorar la calle en Google Maps. Las copias WebP conservan su licencia y tienen el cambio de formato y tamaño indicado.
+También he aprendido a cuidar la comunicación visual fuera del catálogo. Los correos necesitaban el mismo logo, fotografías y tono que la boutique, y el asesor necesitaba botones con jerarquía clara, continuidad y respuestas adecuadas al contexto. Una vez más, las pruebas reales me han dado información que no aparecía al comprobar solo el build.
 
-La ubicación es opcional y solo se solicita al pulsar el botón de distancia. También puedo elegir manualmente un punto en el mapa. Calculo kilómetros en línea recta dentro del cliente; no calculo rutas por carretera, no guardo la ubicación en la cuenta o el pedido y no solicito permisos en segundo plano. Puedo olvidar el punto elegido sin dejar de consultar las boutiques.
+Maison representa mi evolución desde una landing hacia un producto full stack con experiencia editorial, app y asistencia generativa. Lo que más valoro es haber conectado la parte creativa con reglas verificables: una historia visual puede atraer, pero la confianza depende de que la talla, el importe, el stock y el pedido sigan siendo coherentes.
 
-El servidor calcula un intervalo estimado de 3–5 días laborables para domicilio y 1–2 para recogida a partir de la fecha de confirmación, con el calendario de Madrid. Excluyo sábados y domingos, pero no festivos. El pedido conserva las fechas y la copia de los datos de entrega; los reintentos no las recalculan ni duplican el pedido. Al cancelar se conserva ese histórico y se indica que la entrega simulada está cancelada. Team puede consultar los datos en el detalle del pedido. No hay reservas físicas, transportistas, envíos ni cargos reales.
+## 16. Recursos, autoría y acceso
 
-Tengo pendiente validar la ubicación y el mapa nativos en mis dispositivos. La generación de bundles no acredita que el permiso del sistema o las teselas se hayan probado en un teléfono. Para una futura distribución Android fuera de Expo Go habrá que configurar la clave propia del SDK de mapas; no he creado un proyecto de pago ni utilizado claves de Cars.
+He mantenido el código, las instrucciones de instalación y las evidencias en el [repositorio de Maison](https://github.com/AraceliFradejas/BigSchool-TFM_KelseTSMaison). Los vídeos originales, documentos de trabajo, credenciales y datos privados permanecen fuera de Git. Facilito por separado la cuenta de evaluación y los materiales audiovisuales de la defensa.
 
-La portada presenta «Nuestras primeras boutiques», con Madrid, Barcelona y Marbella, fotos acreditadas y acceso a la sección pública `/boutiques`. También puedo llegar desde el menú principal y la pestaña nativa; no necesito iniciar una compra para conocerlas.
+KelseTS es mi marca ficticia. Maison es un proyecto académico y de portfolio, sin actividad comercial ni afiliación, patrocinio o respaldo de celebridades, marcas o entidades deportivas. Los productos, precios y operaciones son ficticios; no realizo cobros, entregas físicas ni reembolsos bancarios. Los créditos, licencias y herramientas utilizados están registrados en [Recursos](docs/RECURSOS.md).
 
-He comprobado la ampliación publicada en Safari con un punto manual para las distancias y un pedido de recogida con destinatario ficticio. El justificante conserva las fechas del 19 al 20 de octubre de 2026 y Team muestra los mismos datos de entrega. Cancelo ese pedido de prueba para reponer la unidad y conservo las capturas del recorrido. Después simplifico el formulario para que el explorador de boutiques sea opcional; puedo elegir el destino sin recorrer todos los mapas y fotos. La comprobación de ubicación real y mapas en los dispositivos nativos sigue pendiente.
+### Mis proyectos y redes
 
-## Recorrido completo de compra con envío ficticio · 18 de octubre de 2026
+[AFM Moda Oceánica](https://proyecto-landing-page-1.vercel.app/) · [KelseTS Cars](https://kelsets-cars.vercel.app)
 
-He completado en Chrome el recorrido de producto, variante, bolsa, destinatario, envío a domicilio, revisión del método ficticio, confirmación, justificante e historial. El pedido `4345dfb5-3d36-4c31-aa23-d538c5bfde59` conserva una unidad de Enchanted M por 1.850,00 €, destinatario Alex Maison y domicilio ficticio en Madrid. El justificante muestra la estimación del 21 al 23 de octubre de 2026, referencia DEMO y cargo real de 0,00 €. He comprobado la comunicación interna, abierto el detalle desde Team y cancelado el pedido para reponer la unidad. La ficha vuelve a mostrar ocho unidades y la bolsa queda vacía. Las [capturas 28–39](docs/evidencias/produccion-2026-10-18/README.md) documentan el recorrido publicado; la captura 27 añade la presentación de boutiques en la portada. No he realizado un pago ni un envío real, ni he validado aquí el envío de correo electrónico.
-
-
-## Revisión de cierre · 7 de noviembre de 2026
-
-He contrastado la implementación con los criterios de las clases de requisitos, principios de diseño, testing y seguridad. El detalle está en la [matriz de revisión](docs/REVISION-Y-CIERRE.md), con referencias a lecciones concretas y límites de las evidencias.
-
-La revisión detectó que una cookie JSON malformada podía hacer fallar el cierre de sesión y que el cliente HTTP no distinguía correctamente algunos sobres JSON inválidos. También faltaba validar el puerto de arranque y evitar que los mensajes inesperados del proveedor se copiaran en los logs. Se reprodujeron los fallos con pruebas y después se corrigieron.
-
-La refactorización ha sido acotada: los textos de los estados de pedido pasan a una política compartida independiente de HTTP y persistencia. La configuración admite una fuente explícita para poder probarla sin cambiar variables globales. No he cambiado de framework ni incorporado nuevos servicios por aparecer en el temario.
-
-Las 111 comprobaciones automatizadas y el build web pasan, al igual que la exportación iOS/Android. Son comprobaciones locales: no prueban por sí solas el uso físico de la app, la versión publicada tras nuevos cambios ni la recuperación de datos en los proveedores. La revisión y las propuestas de cambios se han realizado con asistencia de IA y se han contrastado con código, diferencias y pruebas ejecutadas.
-
-
-## Maison Stylist · preparación de la integración, 7 de noviembre de 2026
-
-He preparado la primera integración del recomendador con Gemini, Claude y OpenAI, en ese orden. Parte de combinaciones existentes y permite que el modelo seleccione y explique hasta tres; el backend conserva las restricciones de ocasión, color, tallas, disponibilidad y presupuesto. No crea pedidos ni añade piezas a la bolsa automáticamente. Los fallos técnicos permiten consultar el siguiente proveedor; negativas y respuestas inválidas vuelven al modo editorial.
-
-La integración está desactivada por defecto. Las pruebas automatizadas usan respuestas simuladas y por sí solas no acreditan acceso a los modelos, calidad estética, latencia ni coste real. Después he configurado claves específicas de Maison y realizado un ensayo autorizado por proveedor: las tres respuestas han sido válidas en un caso ES. La activación pública y una evaluación más amplia continúan pendientes; el [registro del ensayo](docs/evidencias/stylist-2026-11-07.md) conserva el alcance. El detalle, fuentes técnicas y referencias a las clases está en [Maison Stylist](docs/MAISON-STYLIST.md). Esta fase no se presenta como un sistema multiagente ni como una función generativa ya verificada en producción.
-
-### Asesor conversacional y decisiones de interfaz · 7 de noviembre de 2026
-
-He incorporado un acceso flotante a Maison Stylist en web y app porque el asesor quedaba poco visible entre los apartados del catálogo. La primera propuesta utilizaba un formulario; después la he convertido en una conversación para poder explicar el plan con mis propias palabras. Mantengo los filtros detallados como alternativa en «Completa tu look».
-
-La interfaz presenta burbujas, respuestas diferenciadas y un campo de escritura fijo, con crema y burdeos de Maison. Si falta presupuesto, lo pregunta antes de recomendar. Las respuestas muestran fotografías existentes del catálogo, el total del conjunto y enlaces a las fichas para elegir variantes. Después pregunta «¿Te ha gustado la elección?» e invita a pedir cambios. Las valoraciones breves positivas o negativas tienen una respuesta local y no consumen consultas a proveedores.
-
-Las reglas compartidas reconocen restricciones habituales de presupuesto, talla, calzado y ocasión y conservan preferencias durante la conversación. No equivalen a comprensión universal del lenguaje. Cuando se active la IA, el estilo escrito servirá de contexto para ordenar y explicar combinaciones ya existentes. No se inventan prendas, imágenes ni precios: el servidor comprueba disponibilidad y totales, y la persona decide qué añadir a su bolsa. El historial del chat, las preferencias y el borrador se conservan en memoria durante la navegación, incluso al abrir una ficha o cerrar el panel. Cerrar cancela la solicitud en curso; cambiar de cuenta o idioma, recargar la web o reiniciar la app limpia la conversación.
-
-He comprobado en Safari local una petición de cena, talla M y sin maquillaje, la pregunta de presupuesto, dos conjuntos dentro del máximo indicado y el enlace a la ficha de Enchanted. También he comprobado la pregunta final y la respuesta a «me gusta». En Expo Go he confirmado que el chat abre y muestra fotografías, sin registrar qué dispositivo utilicé; la última revisión visual y todos los filtros y enlaces nativos aún necesitan una comprobación física completa.
-
-La web y la API de esta revisión están publicadas en Vercel. La app incorpora el mismo cambio en su código y genera las exportaciones iOS/Android; para verlo durante el desarrollo hay que recargar Expo Go conectado a Metro. Vercel no distribuye automáticamente el código nativo. La IA pública sigue desactivada. Los tres ensayos reales previos verifican cada proveedor en un caso concreto, no una conversación generativa completa en producción.
-
-### Estado de verificación y cierre · 7 de noviembre de 2026
-
-La suite más reciente supera **118 comprobaciones**: 72 de backend, 10 del cliente HTTP, 7 de frontend y 29 de móvil. Las últimas pruebas del chat cubren aclaración del presupuesto, importes ES/EN, continuidad de preferencias, presupuesto inválido, contexto limitado y valoraciones que no deben consumir IA ni ocultar una nueva petición. También han pasado el build web, las exportaciones iOS/Android y la comprobación local de producción. El chequeo HTTPS publicado verifica rutas, recursos, cabeceras, catálogo y protección de accesos privados; no sustituye una compra ni una revisión visual completa.
-
-En iPhone he comprobado registro y acceso, pago DEMO rechazado sin perder la bolsa, pago aceptado con cargo real de cero, consulta del pedido y conservación de sesión tras cerrar Expo Go. Cancelé el pedido de prueba y repuse sus unidades. La sesión utiliza SecureStore sin guardar contraseñas. El iPad volvió a abrir la app tras actualizar su sistema y Expo Go; no he registrado sus versiones nuevas ni un recorrido privado completo. Los apartados anteriores de octubre conservan las versiones y los resultados de aquellas pruebas históricas.
-
-Queda completar las pruebas privadas en iPad y Android, mapas y permisos nativos, accesibilidad y cambios de conexión; revisar físicamente la última interfaz del chat; decidir la activación de IA y ampliar su evaluación; y ajustar y ensayar la presentación. Existe un PDF inicial de diez diapositivas, pendiente de mi revisión visual. La entrega al campus continúa siendo manual. El [registro de validación](docs/VALIDACION.md) y la [documentación del asesor](docs/MAISON-STYLIST.md) conservan las evidencias y sus límites.
-
-
-### Ajustes a partir de una conversación real · 7 de noviembre de 2026
-
-Al probar una entrevista de trabajo detecté que el chat pedía de nuevo el presupuesto aunque escribiese «tengo 6000». También repetía los looks al responder «sí mucho muchas gracias». He ampliado las reglas compartidas y sus pruebas para reconocer estas expresiones y el número de calzado, sin confundirlos con la edad ni descartar nuevas restricciones. El resumen muestra ahora talla y calzado. En la web, Intro envía y Mayús+Intro permite continuar en otra línea. He reducido la ayuda inicial a un solo ejemplo. La reproducción local en Safari confirmó el recorrido; queda pendiente comprobar esta corrección en la app física.
-
-Tras esta corrección pasan las 121 pruebas de la suite completa: 72 backend, 10 cliente HTTP, 7 frontend y 32 móvil. Build web y exportaciones iOS/Android correctos.
-
-
-### Límites del asesor y protección de las reglas de tienda
-
-He acotado Maison Stylist a outfits, prendas y estilismo. Cuando detecta consultas fuera de ese ámbito, incluidas sexo, religión o política, responde con una invitación a volver al look. La política compartida da una respuesta inmediata en los clientes y la API la comprueba de nuevo antes de consumir cuota o consultar modelos. He reforzado las instrucciones y el filtrado de explicaciones para detectar intentos de cambiar reglas, revelar secretos o presentar precios y descuentos inventados.
-
-La protección de importes depende del backend: el modelo solo selecciona identificadores permitidos y explica la combinación. No dispone de herramientas de escritura ni fija precios, y el servidor reconstruye productos, variantes y totales desde su catálogo. Los campos adicionales de precio, stock o permisos se rechazan. Las comprobaciones simuladas confirman esos límites y conservan el catálogo sin cambios. Las reglas léxicas no cubren todas las formas de expresar un ataque; son una defensa adicional sobre los permisos, esquemas y validaciones existentes. La suite alcanza 125 pruebas correctas, sin nuevas llamadas reales de IA para esta revisión.
-
-
-### Continuidad entre asesor y fichas
-
-La revisión de una pieza interrumpía la conversación porque el panel destruía su estado al cerrarse. He trasladado mensajes, preferencias y borrador al componente que contiene el chat en web y app. Así puedo abrir una ficha y volver al asesor sin empezar de nuevo. Safari local confirmó el recorrido y la conservación del borrador. La conversación permanece en memoria durante la navegación y se limpia al cambiar de cuenta o idioma, recargar la web o reiniciar la app; no se ha añadido almacenamiento permanente. Falta confirmar físicamente esta continuidad en Expo Go.
-
-
-He añadido el guiño «tu tAIlor» para las preguntas sobre la identidad del asistente, jugando con tailor y AI. Se presenta como estilista personal virtual de Maison y responde de forma local, sin consultas a modelos ni cambios en los filtros. La respuesta mantiene el tono cercano de la marca y no se hace pasar por una persona.
-
-
-### Aprendizaje de una prueba real del asesor
-
-He realizado una nueva prueba rápida autorizada con Gemini para una entrevista laboral, presupuesto 6.000 €, talla S y calzado 36. Los tres conjuntos respetaron los filtros, pero dos explicaciones añadían referencias a televisión y cámaras. Detecté que el filtro histórico de entrevistas se llamaba `television` y condicionaba la respuesta. He separado ese contexto en el prompt cuando se pide una entrevista de trabajo, manteniendo el filtro de catálogo y añadiendo una prueba de regresión. No he repetido la consulta real después de corregirlo; la mejora de redacción sigue pendiente de validación con el proveedor. Las 127 pruebas automáticas pasan y la IA pública permanece desactivada. El [registro del ensayo rápido](docs/evidencias/stylist-prueba-rapida-2026-11-07.md) conserva resultados y límites.
-
-
-### Activación de una prueba pública con IA
-
-Después del ensayo controlado he autorizado guardar las tres claves de Maison como secretos del backend de producción en Vercel y activar el asesor para probarlo desde mi cuenta. He mantenido el orden Gemini, Claude y OpenAI y un máximo global de tres intentos de proveedor por día UTC, incluidos fallos y respaldos. La salida se limita a 512 tokens y cada proveedor dispone de diez segundos. Al agotarse la cuota o no recibir una respuesta válida se conserva la alternativa editorial. No se han comprado servicios ni activado facturación nueva.
-
-El despliegue está listo y el estado público confirma la disponibilidad y los tres proveedores. La solicitud sin cuenta se rechaza con HTTP 401 antes de contactar con modelos. Estas verificaciones no gastaron consultas: quedan disponibles para mi prueba manual. La activación no sustituye una evaluación amplia ni acredita todavía todo el recorrido autenticado en producción. Los apartados previos conservan los resultados de las fases en las que la IA pública estaba desactivada.
-
-
-### Asesoramiento antes del registro y duración de la prueba
-
-He decidido permitir que una persona pruebe Maison Stylist antes de registrarse: el asesor acompaña la elección de ropa y la cuenta se solicita para el recorrido de compra. La exigencia de cuenta del asesor es configurable; las áreas privadas conservan sus permisos. Mantengo el límite global de tres intentos de proveedor al día y los guardarraíles, también para visitantes.
-
-La prueba se cierra automáticamente al terminar el 31 de diciembre de 2026 en horario de Madrid. El backend comprueba la fecha en cada petición y antes de los respaldos para no depender de un nuevo despliegue. Después siguen funcionando la boutique y las selecciones editoriales. La aplicación no cambia la caducidad de las claves de los proveedores. Los importes que he indicado son Gemini gratuito, 15 € para Claude y 10 € para OpenAI; no he ampliado saldo ni activado facturación. Esos importes no se han auditado desde la app y su control propio sigue siendo una cuota de intentos, no un contador de euros. Las 129 pruebas pasan, incluidos acceso anónimo con cuota y vencimiento sin nuevas llamadas.
-
-
-### Ajustes después de probar una recomendación para una boda
-
-He probado el asesor publicado con una boda y presupuesto 6.000 € y he recibido propuestas de Gemini. La conversación detectó dos detalles poco naturales: al saludar pedía directamente presupuesto y al agradecer con «me ha encantado muchas gracias» activaba el mensaje de fuera de ámbito. He añadido respuestas locales para saludo y despedida y ampliado las valoraciones habituales, sin gastar llamadas de IA ni descartar peticiones que añadan cambios. También he corregido «mi talla es la M» y «calzo un 38», que no se reflejaban como filtros. La regresión reproduce la frase completa y comprueba M y 38. Las 131 pruebas pasan y las exportaciones nativas se generan correctamente; la última corrección no se ha vuelto a validar con una llamada real.
-
-
-### Saludo reflejado y despedida con contexto
-
-He adaptado la bienvenida para que tAIlor responda al saludo recibido: hola, buenos días, buenas tardes o buenas noches. Se presenta como mi estilista personal virtual de Maison y pregunta en qué puede ayudar. La despedida toma el plan y los nombres de las últimas propuestas mostradas: desea disfrutar de la boda o la cena, o suerte en una entrevista. No afirma que haya elegido o comprado un conjunto. El contexto procede de la recomendación presentada, para no arrastrar un plan anterior cuando la conversación cambia. Son respuestas locales, sin consumir IA. Las 133 pruebas pasan y se generan las exportaciones nativas; la última interacción física queda pendiente.
-
-
-## Personalidad y voz de tAIlor · 8 de noviembre de 2026
-
-He refinado las preguntas y las respuestas de fuera de ámbito para que el asesor resulte más cercano. La petición al modelo incorpora la personalidad de tAIlor y una introducción breve junto a los looks. Ese texto se valida antes de mostrarlo y no sustituye las comprobaciones del catálogo, presupuesto o stock. Los saludos, aclaraciones sencillas y despedidas continúan siendo locales para no gastar una llamada en cada frase. El nuevo formato se ha comprobado con respuestas simuladas, todavía no con una nueva ejecución real de los tres proveedores.
-
-He preparado voz en web y app con ElevenLabs: dictado, revisión de transcripción y reproducción voluntaria de la respuesta resumida. No graba al abrir el chat y las claves permanecen en el backend. Utilizo una voz multilingüe y los módulos oficiales de audio de Expo. La voz sigue desactivada mientras se revisan permisos y se autoriza y verifica su uso real; no doy la exportación por prueba física de micrófono o altavoz. La [guía de voz](docs/VOZ-TAILOR.md) conserva límites y fuentes, y las [capturas locales](docs/evidencias/stylist-2026-11-08/README.md) distinguen la interfaz real de los proveedores simulados. Las 143 pruebas pasan.
-
-
-### Elección de texto o voz y prueba real
-
-He añadido como primer paso «¿Prefieres escribir o hablar con tAIlor?». Elegir texto no solicita micrófono. Elegir voz solicita permiso, sin grabar hasta pulsar Dictar; puedo cambiar de modo durante la conversación. El texto transcrito sigue siendo revisable antes de enviarlo. Safari local confirmó selector y entrada por escrito; no se grabó el micrófono en esa comprobación.
-
-Después de ajustar permisos, autoricé tres peticiones reales a ElevenLabs: frase castellana, frase inglesa y transcripción del audio generado. Todas devolvieron HTTP 200. La transcripción reconoció la frase pero escribió los nombres propios de forma fonética. He añadido una corrección local acotada para la marca, sin cambiar las menciones a Taylor Swift. No he repetido la llamada tras esa corrección ni validado todavía el micrófono y el altavoz en cada dispositivo. La [evidencia de voz](docs/evidencias/voz-2026-11-08.md) conserva resultados y límites. La suite actual supera 144 pruebas; la activación pública de voz sigue pendiente de autorización.
-
-
-### Voz por turnos y lectura completa · 8 de noviembre
-
-A petición de la autora, el dictado pasa a un minuto. Al detener, se transcribe y envía automáticamente; en modo voz la nueva respuesta se lee una sola vez con explicaciones, totales, piezas, variantes, precios y pregunta final. El texto y las fotos permanecen disponibles. Se conserva la cuota de seis acciones diarias de voz y el cierre al finalizar el 31/12/2026. Normalmente cada turno hablado requiere dos acciones. Safari puede requerir pulsar Escuchar si bloquea la reproducción automática. La autora ha autorizado los secretos de producción; la comprobación física del recorrido automático sigue pendiente y no se han repetido las tres llamadas reales ya consumidas. La suite de 144 pruebas, build web y exportaciones iOS/Android pasan con el nuevo contrato de límites.
-
-He autorizado la activación pública de voz con seis acciones diarias. Vercel publicó la versión `1bbb7c1`; web y API confirman disponibilidad y los nuevos límites. El chequeo público pasa sin gastar llamadas adicionales de voz. La prueba física del recorrido automático sigue pendiente.
-
-
-### Elección, agradecimiento, precios hablados y controles
-
-La prueba real de la autora detectó falsos rechazos al elegir Golden Hour y agradecer, además de pronunciación confusa de precios y cuota de voz insuficiente. He corregido las respuestas locales y la continuidad del look elegido; precios para síntesis en palabras con euros y céntimos ES/EN, manteniendo los importes del catálogo. Los controles son botones con iconos de micrófono/envío y acción «Terminar y enviar». La autora autorizó ampliar de seis a treinta acciones de voz diarias con el mismo cierre; no se aumenta la cuota de los modelos ni se compra saldo. Las 146 pruebas pasan (86 backend, 10 cliente, 7 frontend, 43 móvil). Safari local reprodujo elección y despedida correctas y mostró los botones; no se usaron proveedores reales en esta revisión ni se acredita aún la nueva pronunciación física. [Evidencia](docs/evidencias/stylist-2026-11-08/04-eleccion-despedida-botones-local.png).
-
-### Jerarquía visual de voz y texto
-
-He simplificado el pie del chat tras revisar la captura de la autora: el micrófono es la acción principal del modo voz y cambiar a texto tiene un tratamiento secundario. El campo de escritura y Enviar aparecen solo en modo texto, conservando el borrador al alternar. La web añade un mensaje de bienvenida al estado vacío. Build y exportaciones nativas correctos; inspección visual de una vista estática local con el componente real, sin grabar ni consumir IA.
-
-### Nombre aislado del look y petición de aclaración
-
-He corregido el reconocimiento de «Golden Hour» sin exigir «me quedo con». Una coincidencia dudosa pide confirmación o que se escriba el nombre; las nuevas preferencias siguen su recorrido y los temas bloqueados conservan sus controles. También he simplificado el aviso recurrente de voz, manteniendo la información del servicio externo al elegir micrófono. Las 147 pruebas pasan; la nueva aclaración se verifica localmente, sin gastar transcripción ni síntesis reales.
-
-He adaptado la pronunciación de la marca a «Kelsi TiEs Meison», como indica la autora, solo en el texto preparado para voz. La interfaz conserva KelseTS Maison. Verificación local de transformación, sin nueva síntesis real.
-
-### Seguimiento del look al pedir pantalones
-
-La autora detectó que, tras interesarse por Midnight Velvet y pedir pantalones, el asesor repetía Golden Hour, Midnight Velvet y Wildflower. He separado esa consulta del ranking de looks: conserva la referencia y devuelve solo pantalones del catálogo, con foto, enlace y total del conjunto con cada opción. El servidor controla talla, stock, presupuesto y sustitución de un pantalón previo; el cliente no aporta precios. Se priorizan colores y colección, evitando deportivos salvo petición o conjunto deportivo. Funciona editorialmente sin consumir IA, incluso si no queda cuota del modelo. Safari local reprodujo la frase y mostró los pantalones y totales esperados. Las 150 pruebas pasan; build web, exportaciones iOS/Android y smoke local correctos. No se gastó voz ni IA reales. No presento este ajuste como conversación libre ilimitada.
-
-### Cuota de voz y regresiones de conversación
-
-He ampliado la configuración autorizada de voz a cien acciones diarias, manteniendo fecha de cierre y créditos existentes. El límite deja de generar un aviso persistente o repetido: cuando se conoce, se paran los intentos automáticos y el usuario ve un tooltip de cinco segundos al intentar usar voz. Safari local confirmó ese comportamiento sin micrófono ni proveedor real, con una única petición bloqueada y ningún reintento al pulsar Hablar.
-
-He reproducido «diez mil euros» y la elección de Midnight Velvet con Ready For It?: el presupuesto se reconoce aunque llegue escrito con palabras, la elección del pantalón se confirma sin repetir opciones y ambos nombres se conservan para despedirse. La ordenación editorial distingue una cena elegante de planes casuales. Las 154 comprobaciones pasan; las verificaciones específicas finales vuelven a comprobar las preferencias y el diálogo. La [evidencia](docs/evidencias/stylist-2026-11-08/05-regresiones-presupuesto-eleccion-cuota.json) distingue pruebas locales de transcripción física aún pendiente. No he gastado nuevas llamadas reales de voz ni aumentado la cuota de los modelos.
-
-### Paso de reglas de conversación a interpretación generativa
-
-Las pruebas de la autora mostraron que el chat anterior seguía siendo demasiado rígido: la IA seleccionaba looks, pero las frases y sus referencias se resolvían primero con reglas. He cambiado el flujo para que, con IA activa, el mensaje y un contexto limitado lleguen directamente al modelo, que devuelve intención y preferencias estructuradas. El backend conserva la autoridad sobre catálogo, precios, stock y permisos. Se mantienen proveedores y controles; se amplía a cien intentos diarios de modelos con autorización expresa, separados de las cien acciones de voz. Si no hay IA disponible, se explica sin fingir comprensión mediante propuestas repetidas.
-
-He incorporado contexto de gala, referencias a looks y piezas ya elegidas y complementos por tipo, incluidos zapatos. Las pruebas simuladas recorren conversación completa y no solo frases aisladas. Las 158 comprobaciones pasan, junto a build, exportaciones nativas y smoke local. La [guía del chat generativo](docs/CHAT-GENERATIVO-TAILOR.md) distingue la implementación de la prueba real pendiente tras desplegar. No presento las pruebas simuladas como evidencia de comprensión de un proveedor real.
-
-### Cambio de objetivo y opciones vinculadas al catálogo
-
-La prueba real de la autora mostró que Gemini ya entendía mensajes nuevos, pero el servidor seguía imponiendo el filtro de gala anterior y podía descartar los trajes que la IA proponía para reutilizar en una entrevista. He eliminado esa sustitución en el endpoint generativo: el modelo propone IDs y el backend valida datos de catálogo, no reemplaza el estilo por una clasificación anterior. Las opciones citadas se presentan con tarjetas reales y «las dos» queda unido a los últimos identificadores, manteniendo el objetivo nuevo. La regresión con 6.000 € comprueba que no vuelve a Enchanted o Bejeweled al mostrar Studio Interview y Midnight Presentation. Las 161 pruebas pasan; la conversación real completa sigue en verificación antes de dar el resultado por cerrado.
-
-### Verificación generativa real de reutilización
-
-He repetido el escenario con la API pública: cinco turnos completos con Gemini y dos turnos adicionales partiendo de un contexto de gala ya guardado. En ambos casos, al pedir reutilización para entrevista se propusieron Style y The Man, de 4.380 € cada uno, y «enséñame las dos» mantuvo esos mismos identificadores. Las siete respuestas finales fueron HTTP 200 y modo IA. No se utilizó voz ni se crearon pedidos o reservas; el coste monetario no se ha auditado. La [evidencia](docs/evidencias/stylist-2026-11-08/06-conversacion-generativa-real.json) identifica claramente el contexto inicial simulado de la segunda comprobación y conserva las respuestas reales. Quedan pruebas físicas de voz de esta revisión en los dispositivos, que no doy por realizadas por comprobar texto.
+[GitHub](https://github.com/AraceliFradejas) · [LinkedIn](https://www.linkedin.com/in/araceli-fradejas-munoz-transformaciondigital/) · [X](https://x.com/AraceliFradejas) · [Medium](https://medium.com/@araceli.fradejas) · [YouTube](https://www.youtube.com/@aracelifradejasmunoz2758)
