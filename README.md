@@ -300,7 +300,6 @@ Presento el código, las instrucciones de instalación, la [memoria](MEMORIA.md)
 
 - [Memoria del proyecto](MEMORIA.md).
 - [Arquitectura y reglas de tienda](docs/ARQUITECTURA.md).
-- [Revisión, criterios de cierre y aplicación del curso](docs/REVISION-Y-CIERRE.md).
 - [Validación](docs/VALIDACION.md) y [evidencias](docs/evidencias/README.md).
 - [Recursos y reutilización](docs/RECURSOS.md).
 - [Criterio de precios de lujo y actualización](docs/PRECIOS.md).
@@ -551,7 +550,6 @@ I present the source code, installation instructions, [project report](MEMORIA.m
 
 - [Project report](MEMORIA.md).
 - [Architecture and shop rules](docs/ARQUITECTURA.md).
-- [Review, acceptance criteria and course references (Spanish)](docs/REVISION-Y-CIERRE.md).
 - [Validation](docs/VALIDACION.md) and [evidence](docs/evidencias/README.md).
 - [Resources and reuse](docs/RECURSOS.md).
 - [Luxury pricing references and migration](docs/PRECIOS.md).

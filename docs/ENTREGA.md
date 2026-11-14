@@ -43,7 +43,7 @@ Fuente académica: `Documentacion-TFM.pdf`, conservado como referencia privada. 
 
 ## Cierre pendiente · revisión del 7 de noviembre
 
-La [matriz de entrega](REVISION-Y-CIERRE.md) vincula implementación, evidencias y criterios del curso. Las verificaciones locales de hoy no sustituyen la comprobación de la versión publicada.
+Las verificaciones locales de hoy no sustituyen la comprobación de la versión publicada.
 
 ### Trabajo pendiente
 
@@ -80,7 +80,7 @@ El [guion desarrollado de presentación](GUION-PRESENTACION.md) prepara diez dia
 
 ## Histórico de avances
 
-Las secciones siguientes conservan el estado de cada fecha. Las limitaciones ya superadas no describen el estado actual; para el cierre vigente consultar [Revisión y matriz de entrega](REVISION-Y-CIERRE.md).
+Las secciones siguientes conservan el estado de cada fecha. Las limitaciones ya superadas no describen el estado actual; para la versión presentada consultar la [memoria](../MEMORIA.md).
 
 ## Cierre de sesión · 17 de octubre de 2026
 

@@ -24,3 +24,6 @@ __pycache__/
 
 # Archivos temporales de Microsoft Office
 ~$*
+
+# Documento interno de trabajo; conservar en docbase
+/docs/REVISION-Y-CIERRE.md

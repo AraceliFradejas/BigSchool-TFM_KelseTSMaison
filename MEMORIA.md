@@ -84,7 +84,7 @@ Las figuras siguientes enlazan decisiones de producto con evidencias reales. Los
 
 ### Cómo relaciono estas pruebas con el curso
 
-La [matriz de revisión y cierre](docs/REVISION-Y-CIERRE.md#cambios-justificados-por-el-curso) enlaza las lecciones revisadas de responsabilidades, inversión de dependencias, variables de entorno y secretos, autenticación/autorización y mapa de pruebas. Aplico sus criterios al separar contratos, dominio y transporte; mantener secretos fuera del cliente y Git; comprobar propiedad y roles en backend; y distinguir tests automatizados, API manual, persistencia y observación física. Las imágenes ilustran esos resultados concretos, sin presentar una captura como prueba completa de seguridad o calidad.
+He aplicado las lecciones de responsabilidades, inversión de dependencias, variables de entorno y secretos, autenticación/autorización y mapa de pruebas. Utilizo esos criterios al separar contratos, dominio y transporte; mantener secretos fuera del cliente y Git; comprobar propiedad y roles en backend; y distinguir tests automatizados, API manual, persistencia y observación física. Las imágenes ilustran esos resultados concretos, sin presentar una captura como prueba completa de seguridad o calidad.
 
 ## 1. Contexto y motivación
 
@@ -230,7 +230,16 @@ He completado recorridos de compra en Chrome y Safari sobre la web publicada, ca
 
 ## 14. Aplicación de lo aprendido en el máster
 
-He utilizado las lecciones como criterios para revisar decisiones concretas. La [matriz de aplicación del curso](docs/REVISION-Y-CIERRE.md#cambios-justificados-por-el-curso) enlaza las referencias sobre responsabilidades, inversión de dependencias, variables de entorno y secretos, autenticación, autorización y mapa de pruebas.
+He utilizado las lecciones como criterios para revisar decisiones concretas. Estas son algunas de las referencias que he aplicado al proyecto:
+
+| Lección y tramo revisado | Criterio aplicado | Resultado en Maison |
+| --- | --- | --- |
+| [SRP/OCP · solución](https://campus.thebigschool.com/cursos/master-en-desarrollo-con-ia/modulos/buenas-practicas-y-principios-de-diseno/leccion/ejercicio-srp-ocp-solucion-5/), 01:45–14:30 | Diagnosticar responsabilidades y cambiar por pasos comprobables | Textos de estados extraídos a `backend/src/domain/order-messages.js`; MongoDB ya no importa las rutas de pedidos para obtenerlos |
+| [DIP · solución](https://campus.thebigschool.com/cursos/master-en-desarrollo-con-ia/modulos/buenas-practicas-y-principios-de-diseno/leccion/ejercicio-dip-solucion-5/), 00:45–07:49 | Hacer explícita una dependencia que impide aislar pruebas | `readConfig(env)` conserva `process.env` por defecto y admite objetos independientes en pruebas |
+| [Variables de entorno y secretos](https://campus.thebigschool.com/cursos/master-en-desarrollo-con-ia/modulos/seguridad-env-owasp-top-10/leccion/variables-de-entorno-y-secretos/) | Validar configuración y evitar exposición de secretos | Puerto y protocolo validados; Vercel fuerza producción; mensajes inesperados de proveedores excluidos de los logs |
+| [AuthN/AuthZ](https://campus.thebigschool.com/cursos/master-en-desarrollo-con-ia/modulos/seguridad-env-owasp-top-10/leccion/authn-authz-con-tokens-a-mano/) | Distinguir identidad, sesión y permisos sobre recursos | Sesiones revocables conservadas; cookies malformadas descartadas; comprobaciones de propiedad y Team en servidor |
+| [TDD con IA](https://campus.thebigschool.com/cursos/master-en-desarrollo-con-ia/modulos/testing/leccion/tdd-con-ia/) | Demostrar primero el fallo y después comprobar la corrección | Cinco casos de configuración/seguridad y tres de cliente HTTP fallaron antes de corregir y pasan después |
+| [Mapa de pruebas](https://campus.thebigschool.com/cursos/master-en-desarrollo-con-ia/modulos/testing/leccion/setup-mapa-de-pruebas-front-vs-back/) | Cada nivel demuestra propiedades diferentes | Se separan pruebas de negocio, cliente HTTP, modelos UI, exportación, navegador y dispositivos físicos |
 
 He aplicado esos criterios al separar contratos, dominio y transporte; mantener las claves fuera del cliente y de Git; comprobar roles y propiedad en la API; y probar conflictos de stock, precios e idempotencia. No he cambiado de framework por aparecer en una clase: he priorizado las decisiones que mejoraban el recorrido y podía justificar con resultados.
 

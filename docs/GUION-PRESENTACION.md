@@ -16,7 +16,7 @@ En pantalla: descubrir → elegir variante → combinar → confirmar una simula
 
 Qué explicar: el público busca una selección cuidada por ocasión, estilo y presupuesto. Maison organiza piezas, variantes y combinaciones editoriales; el recorrido termina en un pedido de demostración claro y recuperable.
 
-Base: [memoria](../MEMORIA.md), [criterios de aceptación](REVISION-Y-CIERRE.md). No presentar una necesidad asumida como resultado de entrevistas o investigación de usuarios que no se hayan realizado.
+Base: [memoria](../MEMORIA.md) y [validación](VALIDACION.md). No presentar una necesidad asumida como resultado de entrevistas o investigación de usuarios que no se hayan realizado.
 
 ## 3 · Recorrido de producto
 

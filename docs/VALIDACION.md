@@ -37,7 +37,7 @@ En el iPhone Araceli detectó `1850,00 €` sin separador de miles. Se reprodujo
 
 El segundo bloque incorpora sesión nativa mediante SecureStore y token opaco, con autorización expresa. Las 86 comprobaciones incluyen el mismo contrato de sesión en SQLite/MongoDB, límite de intentos común, transporte de Authorization y almacén con errores/datos corruptos. La web mantiene HttpOnly y no expone token en login web o `/me`. Build, exportaciones iOS/Android, chequeo local de producción y Expo Doctor 20/20 correctos. La API se publicó y Araceli confirmó restauración de sesión tras cierre completo; los dobles de almacenamiento complementan esa prueba física, sin sustituirla.
 
-La [matriz de revisión](REVISION-Y-CIERRE.md) enlaza criterios, implementación, evidencias y clases. Los apartados posteriores conservan el histórico y sus límites.
+Los apartados posteriores conservan el histórico de verificaciones y sus límites.
 
 
 ### Editor y subida desde Team publicado · 18 de octubre de 2026
