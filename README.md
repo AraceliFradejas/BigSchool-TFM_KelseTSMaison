@@ -88,7 +88,7 @@ La carpeta de evidencias reúne 29 fotogramas de cinco vídeos, con minuto de or
 
 Maison continúa Universo KelseTS, la marca ficticia con la que he dado identidad a varios proyectos de mi portfolio. La música, las historias compartidas y el deporte forman parte de su inspiración. Aquí aparecen en una selección para un concierto, en una tarde tranquila o en los detalles que terminan de unir un look.
 
-Después de la landing AFM Moda Oceánica y del recorrido full stack de KelseTS Cars, quería llevar esa experiencia hacia una boutique. Una pieza puede gustarte por sí sola, pero elegir su variante y encontrar otras que encajen requiere un recorrido claro. Esa es la idea que organiza Maison.
+Desarrollé la landing AFM Moda Oceánica y la aplicación full stack KelseTS Cars en otro máster, anterior a este. Son antecedentes de mi portfolio; KelseTS Maison es el proyecto que he desarrollado para el TFM de BigSchool. Quería llevar aquella experiencia hacia una boutique. Una pieza puede gustarte por sí sola, pero elegir su variante y encontrar otras que encajen requiere un recorrido claro. Esa es la idea que organiza Maison.
 
 ### Qué puedes hacer
 
@@ -307,6 +307,8 @@ Presento el código, las instrucciones de instalación, la [memoria](MEMORIA.md)
 
 ### Mis proyectos y redes
 
+Estos dos proyectos los desarrollé en otro máster, anterior al de BigSchool:
+
 [AFM Moda Oceánica](https://proyecto-landing-page-1.vercel.app/) · [KelseTS Cars](https://kelsets-cars.vercel.app)
 
 [GitHub](https://github.com/AraceliFradejas) · [LinkedIn](https://www.linkedin.com/in/araceli-fradejas-munoz-transformaciondigital/) · [X](https://x.com/AraceliFradejas) · [Medium](https://medium.com/@araceli.fradejas) · [YouTube](https://www.youtube.com/@aracelifradejasmunoz2758)
@@ -338,7 +340,7 @@ KelseTS Maison is a fictional fashion, accessories and beauty boutique. Explore 
 
 Maison continues the KelseTS universe, the fictional brand that gives several projects in my portfolio their personal identity. Music, shared stories and sport are part of its inspiration. Here they appear in a selection for a concert, a quiet afternoon or the details that bring a look together.
 
-After the AFM Moda Oceánica landing page and the full stack journey of KelseTS Cars, I wanted to bring that experience to a boutique. You can love a piece on its own, but choosing a variant and finding complementary pieces needs a clear journey. That idea shapes Maison.
+I developed the AFM Moda Oceánica landing page and the KelseTS Cars full stack application during another master’s programme, before this one. They are earlier portfolio projects; KelseTS Maison is the project I developed for my BigSchool final project. I wanted to bring that earlier experience to a boutique. You can love a piece on its own, but choosing a variant and finding complementary pieces needs a clear journey. That idea shapes Maison.
 
 ### What you can do
 
@@ -556,6 +558,8 @@ I present the source code, installation instructions, [project report](MEMORIA.m
 - [Deployment](docs/DESPLIEGUE.md) and [API tests](docs/api/README.md).
 
 ### My projects and social profiles
+
+I developed these two projects during another master’s programme, before BigSchool:
 
 [AFM Moda Oceánica](https://proyecto-landing-page-1.vercel.app/) · [KelseTS Cars](https://kelsets-cars.vercel.app)
 

@@ -90,6 +90,8 @@ He aplicado las lecciones de responsabilidades, inversión de dependencias, vari
 
 Maison es una nueva historia dentro del Universo KelseTS, la marca ficticia con la que he dado identidad a varios proyectos de mi portfolio. La música, las historias compartidas y el deporte forman parte de su inspiración. En esta boutique aparecen en los nombres de las prendas, en los ambientes de las colecciones y en los pequeños detalles que terminan de unir un look.
 
+Desarrollé AFM Moda Oceánica y KelseTS Cars en otro máster, anterior al de BigSchool. Los incluyo como antecedentes de mi portfolio y de mi aprendizaje; el TFM que presento en este máster es KelseTS Maison.
+
 La moda ya estaba presente en [AFM Moda Oceánica](https://proyecto-landing-page-1.vercel.app/), una landing centrada en presentar una marca y una selección de prendas. Con [KelseTS Cars](https://kelsets-cars.vercel.app) avancé hacia una aplicación full stack con catálogo, cuentas y gestión privada. En Maison he llevado ese aprendizaje a un recorrido de tienda con reglas propias de productos, variantes, existencias y pedidos.
 
 Mi punto de partida fue una situación sencilla: una persona encuentra una prenda que le gusta, pero necesita elegir su talla y descubrir qué accesorios o productos de belleza pueden acompañarla. Quería que la experiencia ayudase a tomar esas decisiones y que el catálogo, el asesor y la bolsa formasen parte de la misma historia.
@@ -264,6 +266,8 @@ He mantenido el código, las instrucciones de instalación y las evidencias en e
 KelseTS es mi marca ficticia. Maison es un proyecto académico y de portfolio, sin actividad comercial ni afiliación, patrocinio o respaldo de celebridades, marcas o entidades deportivas. Los productos, precios y operaciones son ficticios; no realizo cobros, entregas físicas ni reembolsos bancarios. Los créditos, licencias y herramientas utilizados están registrados en [Recursos](docs/RECURSOS.md).
 
 ### Mis proyectos y redes
+
+Estos dos proyectos corresponden al otro máster que cursé antes de BigSchool:
 
 [AFM Moda Oceánica](https://proyecto-landing-page-1.vercel.app/) · [KelseTS Cars](https://kelsets-cars.vercel.app)
 
