@@ -265,10 +265,6 @@ He mantenido el código, las instrucciones de instalación y las evidencias en e
 
 KelseTS es mi marca ficticia. Maison es un proyecto académico y de portfolio, sin actividad comercial ni afiliación, patrocinio o respaldo de celebridades, marcas o entidades deportivas. Los productos, precios y operaciones son ficticios; no realizo cobros, entregas físicas ni reembolsos bancarios. Los créditos, licencias y herramientas utilizados están registrados en [Recursos](docs/RECURSOS.md).
 
-### Mis proyectos y redes
-
-Estos dos proyectos corresponden al otro máster que cursé antes de BigSchool:
-
-[AFM Moda Oceánica](https://proyecto-landing-page-1.vercel.app/) · [KelseTS Cars](https://kelsets-cars.vercel.app)
+### Mis redes
 
 [GitHub](https://github.com/AraceliFradejas) · [LinkedIn](https://www.linkedin.com/in/araceli-fradejas-munoz-transformaciondigital/) · [X](https://x.com/AraceliFradejas) · [Medium](https://medium.com/@araceli.fradejas) · [YouTube](https://www.youtube.com/@aracelifradejasmunoz2758)

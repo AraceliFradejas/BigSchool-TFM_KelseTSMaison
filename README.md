@@ -305,11 +305,7 @@ Presento el código, las instrucciones de instalación, la [memoria](MEMORIA.md)
 - [Criterio de precios de lujo y actualización](docs/PRECIOS.md).
 - [Despliegue](docs/DESPLIEGUE.md) y [pruebas de API](docs/api/README.md).
 
-### Mis proyectos y redes
-
-Estos dos proyectos los desarrollé en otro máster, anterior al de BigSchool:
-
-[AFM Moda Oceánica](https://proyecto-landing-page-1.vercel.app/) · [KelseTS Cars](https://kelsets-cars.vercel.app)
+### Mis redes
 
 [GitHub](https://github.com/AraceliFradejas) · [LinkedIn](https://www.linkedin.com/in/araceli-fradejas-munoz-transformaciondigital/) · [X](https://x.com/AraceliFradejas) · [Medium](https://medium.com/@araceli.fradejas) · [YouTube](https://www.youtube.com/@aracelifradejasmunoz2758)
 
@@ -561,11 +557,7 @@ I present the source code, installation instructions, [project report](MEMORIA.m
 - [Luxury pricing references and migration](docs/PRECIOS.md).
 - [Deployment](docs/DESPLIEGUE.md) and [API tests](docs/api/README.md).
 
-### My projects and social profiles
-
-I developed these two projects during another master’s programme, before BigSchool:
-
-[AFM Moda Oceánica](https://proyecto-landing-page-1.vercel.app/) · [KelseTS Cars](https://kelsets-cars.vercel.app)
+### My social profiles
 
 [GitHub](https://github.com/AraceliFradejas) · [LinkedIn](https://www.linkedin.com/in/araceli-fradejas-munoz-transformaciondigital/) · [X](https://x.com/AraceliFradejas) · [Medium](https://medium.com/@araceli.fradejas) · [YouTube](https://www.youtube.com/@aracelifradejasmunoz2758)
 
