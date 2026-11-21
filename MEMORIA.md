@@ -18,9 +18,9 @@ Presento una aplicación publicada, con catálogo bilingüe, variantes y existen
 | Web | [kelsets-maison.vercel.app](https://kelsets-maison.vercel.app) |
 | API | [Servicio de Maison](https://kelsets-maison-api.vercel.app/api/v1/health) |
 | Tecnologías | JavaScript, React, Node.js, Express, MongoDB, Cloudinary y React Native con Expo; SQLite para ejecución local |
-| Validación documentada | 191 comprobaciones automáticas y 24 casos manuales de API por cada entorno aislado, SQLite y MongoDB; evidencias fechadas hasta el 9 de noviembre de 2026 |
+| Validación documentada | 191 comprobaciones automáticas y 24 casos manuales de API por cada entorno aislado, SQLite y MongoDB |
 
-He organizado esta memoria alrededor de la versión que presento. Los documentos técnicos enlazados conservan el detalle de implementación y los registros fechados de las verificaciones.
+He organizado esta memoria alrededor de la versión que presento. En los documentos técnicos enlazados conservo el detalle de implementación, los entornos y los resultados de las verificaciones.
 
 ## Recorrido visual de la versión que presento
 
@@ -68,7 +68,7 @@ Las figuras siguientes enlazan decisiones de producto con evidencias reales. Los
 
 <img src="docs/evidencias/mailtrap-vercel-2026-11-09/05-mailtrap-compra-total.jpg" width="900" alt="Correo recibido en Mailtrap desde Vercel con total de 4.840 euros" />
 
-*Safari, Mailtrap Sandbox, prueba publicada del 9/11.* Studio Interview reúne cuatro piezas por 4.840,00 €; el justificante de la API acredita cargo real cero. Compra y cancelación del mismo pedido quedaron capturadas y se repuso el stock. Esta prueba tiene un pedido distinto al del vídeo de iPhone: no los presento como un recorrido único. [Registro HTTPS y capturas](docs/evidencias/mailtrap-vercel-2026-11-09/README.md).
+*Safari, Mailtrap Sandbox, API publicada.* Studio Interview reúne cuatro piezas por 4.840,00 €; el justificante de la API acredita cargo real cero. Compra y cancelación del mismo pedido quedaron capturadas y se repuso el stock. Esta prueba tiene un pedido distinto al del vídeo de iPhone: no los presento como un recorrido único. [Registro HTTPS y capturas](docs/evidencias/mailtrap-vercel-2026-11-09/README.md).
 
 ### Figura 8 · Probar el reintento y contrastar sus efectos
 
@@ -80,7 +80,7 @@ Las figuras siguientes enlazan decisiones de producto con evidencias reales. Los
 
 <img src="docs/evidencias/atlas-2026-11-09/05-indices-variantes.jpg" width="900" alt="Índices de variantes en Atlas: id único y consulta por productId" />
 
-*Safari, Atlas, consulta de solo lectura del 9/11.* `_id_` e `id_1` son únicos; `productId_1` permite consultar variantes por producto. La pantalla muestra índices READY. No se han modificado datos para obtenerla ni se han expuesto documentos de usuarios o sesiones. [Catálogo, variantes y límites de la consulta](docs/evidencias/atlas-2026-11-09/README.md).
+*Safari, Atlas, consulta de solo lectura.* `_id_` e `id_1` son únicos; `productId_1` permite consultar variantes por producto. La pantalla muestra índices READY. He obtenido la captura sin modificar datos ni exponer documentos de usuarios o sesiones. [Catálogo, variantes y límites de la consulta](docs/evidencias/atlas-2026-11-09/README.md).
 
 ### Cómo relaciono estas pruebas con el curso
 
@@ -122,7 +122,7 @@ Los nombres de los productos y los looks utilizan títulos de canciones de Taylo
 
 He sustituido la cuadrícula extensa de colecciones por un carrusel de dieciséis portadas editoriales creadas para esa sección, sin repetir imágenes de los vídeos. Cada tarjeta enlaza a su colección y las imágenes WebP tienen tamaños adaptados. En «Del cuaderno a tu armario» he unido la narrativa de pasarela con las fichas de los looks.
 
-La pasarela ilustrada reúne 36 outfits en un recorrido de noventa segundos. Para conectarla con el catálogo he añadido 139 piezas a los 51 artículos iniciales. Los conjuntos no crean otro inventario ni un precio independiente: al añadirlos, incorporo sus líneas individuales a la bolsa después de elegir una variante disponible de cada pieza.
+La pasarela ilustrada reúne 36 outfits en un recorrido de noventa segundos. El catálogo de 190 artículos incluye las 139 piezas de estos outfits. Los conjuntos no crean otro inventario ni un precio independiente: al añadirlos, incorporo sus líneas individuales a la bolsa después de elegir una variante disponible de cada pieza.
 
 He utilizado representaciones generadas de los productos ficticios y recursos editoriales propios. Para los clips de campaña he empleado Runway, y FFmpeg para optimizar y montar vídeo. La música «Runway Pulse» la creé en Suno. He revisado encuadres, continuidad y movimientos antes de incorporar las tomas, y he conservado los másteres y fuentes de trabajo fuera de Git. No presento estas imágenes como fotografías de mercancía real.
 
@@ -176,7 +176,7 @@ Desde Team puedo crear y editar productos, sus textos bilingües, imágenes, var
 
 He protegido las subidas comprobando el formato real del archivo. Sharp decodifica, orienta, reduce y convierte las imágenes a WebP; no conservo el original subido. Una variante utilizada en un pedido pendiente o confirmado no puede eliminarse, porque la necesito para reponer existencias si se cancela.
 
-He recorrido la gestión desde la interfaz, incluida la creación de una pieza bilingüe, su imagen, el archivo y la reapertura con los datos guardados. Las pruebas temporales se retiraron conservando el catálogo de 190 productos. Las evidencias publicadas también muestran consulta, confirmación y cancelación de pedidos desde Team.
+He recorrido la gestión desde la interfaz, incluida la creación de una pieza bilingüe, su imagen, el archivo y la reapertura con los datos guardados. He retirado los datos temporales de las pruebas conservando el catálogo de 190 productos. Las evidencias publicadas también muestran consulta, confirmación y cancelación de pedidos desde Team.
 
 ## 10. App nativa con React Native y Expo
 
@@ -184,7 +184,7 @@ He desarrollado una interfaz nativa que comparte la API HTTPS de la web, sin inc
 
 He adaptado los controles, el cambio de idioma y las acciones a iOS y Android, manteniendo la identidad de Maison y una barra inferior propia. La entrada muestra una animación del logo que se puede saltar y respeta la reducción de movimiento. Los importes mantienen **1.850,00 €** en ambos idiomas; los valores internos siguen en céntimos.
 
-Durante la prueba de iPhone encontré una incompatibilidad entre Expo Go y el SDK del proyecto. Actualicé la app a SDK 58 y comprobé sus exportaciones. La configuración registrada utiliza Expo 58.0.23, React Native 0.88.1, React 19.3.0 y `expo-splash-screen` 58.0.13. Expo Doctor superó 20/20 comprobaciones el 7 de noviembre.
+He configurado la app con SDK 58 y he comprobado sus exportaciones. Utilizo Expo 58.0.23, React Native 0.88.1, React 19.3.0 y `expo-splash-screen` 58.0.13, con las versiones registradas en el lockfile. He obtenido 20/20 comprobaciones correctas en Expo Doctor.
 
 En iPhone he recorrido registro, acceso, rechazo conservando la bolsa, pedido aceptado con cargo real cero, historial y persistencia de sesión tras cerrar Expo Go. Cancelé el pedido de prueba y repuse sus unidades. En iPad resolví el acceso actualizando el sistema y Expo Go. Mis vídeos documentan catálogo y correo en iPhone, catálogo en inglés y asesor en iPad, y bolsa, checkout y chat por texto en Android. He comprobado además el funcionamiento de voz en iOS y Android.
 
@@ -192,13 +192,13 @@ La app se ejecuta con Expo Go y Metro en el entorno de desarrollo. Un despliegue
 
 ## 11. tAIlor: de la selección editorial a la conversación generativa
 
-«Completa tu look» comenzó con selecciones editoriales manuales según ocasión, paleta, presupuesto y disponibilidad. Después añadí tAIlor para que la persona pudiera explicar su plan con naturalidad y recibir propuestas con fotografías y enlaces.
+He preparado «Completa tu look» con selecciones editoriales manuales según ocasión, paleta, presupuesto y disponibilidad. He integrado también tAIlor para que la persona pueda explicar su plan con naturalidad y recibir propuestas con fotografías y enlaces.
 
-Las pruebas reales me hicieron cambiar el enfoque. En la primera versión, la IA ordenaba propuestas, pero unas reglas locales interpretaban las frases y sus referencias. Eso producía repeticiones al pedir zapatos, elegir un pantalón o preguntar cómo comprar. He pasado a enviar el mensaje y un contexto acotado al modelo, que devuelve intención y preferencias estructuradas.
+He diseñado la conversación para enviar el mensaje y un contexto acotado al modelo, que devuelve intención y preferencias estructuradas. Así puedo interpretar referencias a un look o una pieza elegidos, pedir complementos y orientar la compra sin reiniciar la selección. He comprobado estos comportamientos con conversaciones reales y pruebas de regresión.
 
 He preparado Gemini → Claude → OpenAI como cadena de proveedores. El backend valida la salida y reconstruye las tarjetas desde identificadores permitidos del catálogo. Comprueba tallas, stock y presupuesto: la IA no fija precios, no modifica permisos y no tiene herramientas para crear pedidos o añadir piezas a la bolsa.
 
-He incorporado seguimiento del look y la pieza elegidos, cambio de objetivo, consulta de tallas, alternativas para completar un outfit e instrucciones de compra. Una referencia como «enséñame las dos» conserva las propuestas actuales; preguntar por zapatos no reinicia la selección de conjuntos. También he retirado el cierre fijo «¿Con cuál te ves más?» de cada respuesta generativa.
+He incorporado seguimiento del look y la pieza elegidos, cambio de objetivo, consulta de tallas, alternativas para completar un outfit e instrucciones de compra. Una referencia como «enséñame las dos» conserva las propuestas actuales; preguntar por zapatos no reinicia la selección de conjuntos. He evitado repetir una pregunta de cierre fija en cada respuesta generativa.
 
 He dado a tAIlor una personalidad cercana, con saludo y presentación como estilista personal virtual de KelseTS Maison. No se hace pasar por una persona. He acotado la conversación a outfits y estilismo, y he añadido controles ante temas ajenos, instrucciones maliciosas, secretos o precios inventados. Estos controles complementan los esquemas, los permisos y la validación del servidor.
 
@@ -212,7 +212,7 @@ He añadido la elección entre escribir o hablar. El modo texto no solicita micr
 
 He utilizado ElevenLabs para transcripción y síntesis con una voz multilingüe, y los módulos oficiales de audio de Expo en móvil. Las claves permanecen en el backend. He preparado los precios en palabras con euros y céntimos y la pronunciación fonética de los nombres para el texto de síntesis, conservando la escritura de la marca en pantalla.
 
-Durante mis pruebas encontré un problema al finalizar y enviar la grabación en Expo Go. Tras corregir ese flujo, comprobé su funcionamiento en iOS y Android. También he unificado el indicador de espera con un spinner, simplificado la jerarquía de botones y mantenido la conversación al abrir una ficha y volver al asesor durante la misma navegación.
+He comprobado el flujo de finalizar, transcribir y enviar la grabación en Expo Go, tanto en iOS como en Android. He unificado el indicador de espera con un spinner, simplificado la jerarquía de botones y mantenido la conversación al abrir una ficha y volver al asesor durante la misma navegación.
 
 He verificado tres peticiones reales de audio: una frase en castellano, otra en inglés y la transcripción del audio generado, todas con HTTP 200. Las comprobaciones posteriores en dispositivos y las grabaciones complementan esas pruebas de proveedor, con su alcance identificado. [Voz y resultados](docs/VOZ-TAILOR.md).
 
@@ -220,15 +220,15 @@ La voz tiene una cuota global separada de **200 acciones al día UTC**, comparti
 
 ## 13. Validación y evidencias de la entrega
 
-He combinado pruebas automáticas, recorridos manuales, consultas directas a las bases y observación física. Cada registro identifica su fecha y entorno, para distinguir el resultado de una API local, la aplicación publicada y una pantalla en un dispositivo real.
+He combinado pruebas automáticas, recorridos manuales, consultas directas a las bases y observación física. Identifico el entorno y el alcance de cada registro para distinguir el resultado de una API local, la aplicación publicada y una pantalla en un dispositivo real.
 
-La suite registrada el **9 de noviembre de 2026** supera **191 comprobaciones**: 111 backend, 10 cliente HTTP, 10 web y 60 móvil. He verificado también el build web, las exportaciones iOS/Android y el arranque del build con datos temporales. Estas comprobaciones cubren permisos, privacidad, stock, importes, idempotencia, transiciones de pedido, ediciones antiguas, imágenes, contratos del asesor y errores de correo. [Registro de validación](docs/VALIDACION.md).
+He obtenido **191 comprobaciones automáticas correctas** en la suite documentada: 111 backend, 10 cliente HTTP, 10 web y 60 móvil. He verificado también el build web, las exportaciones iOS/Android y el arranque del build con datos temporales. Estas comprobaciones cubren permisos, privacidad, stock, importes, idempotencia, transiciones de pedido, ediciones antiguas, imágenes, contratos del asesor y errores de correo. [Registro de validación](docs/VALIDACION.md).
 
 En Insomnia he recorrido **24 casos de pago DEMO y estados en SQLite y otros 24 en MongoDB local aislado**, contrastando directamente los efectos en cada base. He comprobado rechazo sin efectos, precio manipulado, compra, reintento, justificante, permisos y transiciones hasta entregado. La lectura final acredita un pedido de 1.850,00 €, cargo real cero, cuatro comunicaciones y stock 6 → 5. He guardado 31 capturas de estas dos rondas. [Colección e instrucciones](docs/api/README.md).
 
 En Atlas he consultado el catálogo, las variantes y los índices únicamente en lectura, con cinco capturas. No he alterado pedidos públicos para ilustrar esos casos ni atribuido a Atlas las pruebas ejecutadas en la réplica local. [Evidencias de Atlas](docs/evidencias/atlas-2026-11-09/README.md).
 
-He completado recorridos de compra en Chrome y Safari sobre la web publicada, cancelando después los pedidos de prueba para restaurar stock. Las 39 capturas de octubre y los 29 fotogramas extraídos de mis cinco grabaciones de noviembre ilustran la evolución y el resultado. Identifico las pantallas emuladas y las capturas físicas, y conservo el encuadre original. [Índice de evidencias](docs/evidencias/README.md).
+He completado recorridos de compra en Chrome y Safari sobre la web publicada, cancelando después los pedidos de prueba para restaurar stock. He conservado 39 capturas de escritorio y 29 fotogramas extraídos de mis cinco grabaciones para ilustrar el resultado. Identifico las pantallas emuladas y las capturas físicas, y conservo el encuadre original. [Índice de evidencias](docs/evidencias/README.md).
 
 ## 14. Aplicación de lo aprendido en el máster
 

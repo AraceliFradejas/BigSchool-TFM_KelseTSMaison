@@ -12,7 +12,7 @@ He desarrollado KelseTS Maison como mi TFM de BigSchool: una boutique ficticia d
 
 *Portada actual: fotograma de mi grabación de escritorio, 00:03. Boutique académica, sin ventas ni cobros reales.*
 
-**Estado comprobado · 9/11/2026:** web/API publicadas, app en Expo Go, tAIlor generativo con voz por turnos y Mailtrap Sandbox activo en Production. He registrado 191 comprobaciones automáticas correctas y he recorrido 24 casos manuales de pago DEMO y estados tanto con SQLite como con MongoDB local, contrastando sus efectos directamente en cada base.
+**Versión que presento:** web/API publicadas, app en Expo Go, tAIlor generativo con voz por turnos y Mailtrap Sandbox activo en Production. He registrado 191 comprobaciones automáticas correctas y he recorrido 24 casos manuales de pago DEMO y estados tanto con SQLite como con MongoDB local, contrastando sus efectos directamente en cada base.
 
 He documentado las comprobaciones físicas con grabaciones de iPhone, Android e iPad, incluida la previsualización del correo en iPhone. Cada evidencia identifica el dispositivo, el paso observado y su entorno. [Evidencias](docs/evidencias/README.md) · [Validación](docs/VALIDACION.md).
 
@@ -35,7 +35,7 @@ KelseTS Maison es una boutique ficticia de moda, accesorios y belleza. Puedes ex
 **Versión que presento:** he publicado web y API en [Vercel](https://kelsets-maison.vercel.app), con MongoDB y Cloudinary propios. Incluyo la app nativa en Expo Go y tAIlor, el asistente generativo con voz. El asesor está disponible también para visitantes, con un límite global de 100 intentos de modelo al día.
 
 
-### Correos y evidencias reales · 9/11/2026
+### Correos y evidencias reales
 
 He comprobado en Mailtrap Sandbox la recepción por SMTP de compra y cancelación en castellano e inglés. Los correos muestran el logo de Maison, fotos incrustadas de las cuatro piezas de Studio Interview, variantes, cantidades y precios históricos del pedido, con total de **4.840,00 €**. La aclaración de demostración queda en el pie; no se realizan cobros, envíos ni reembolsos bancarios reales.
 
@@ -46,7 +46,7 @@ He comprobado en Mailtrap Sandbox la recepción por SMTP de compra y cancelació
 | Cancelación EN: importe cancelado | [Ver escritorio](docs/evidencias/emails-2026-11-09/mailtrap/outfits/08-cancelacion-en-total.jpg) |
 | Correo en pantalla estrecha | [Ver móvil emulado](docs/evidencias/emails-2026-11-09/mailtrap/outfits/10-movil-corregido-piezas.jpg) |
 
-Las capturas son JPG originales del correo recibido en Mailtrap, con vistas de escritorio y emulación móvil; no son mockups ni capturas de una app de correo en un teléfono físico. [Índice completo ES/EN](docs/evidencias/emails-2026-11-09/README.md) · [Configuración y límites](docs/CORREOS-DEMO.md) · [Pruebas de Insomnia](docs/api/README.md). La conexión SMTP se ha comprobado desde una base aislada; los secretos de Mailtrap están configurados en Production de Vercel y su recepción se ha comprobado.
+Las capturas son JPG originales del correo recibido en Mailtrap, con vistas de escritorio y emulación móvil; no son mockups ni capturas de una app de correo en un teléfono físico. [Índice completo ES/EN](docs/evidencias/emails-2026-11-09/README.md) · [Configuración y límites](docs/CORREOS-DEMO.md) · [Pruebas de Insomnia](docs/api/README.md). He comprobado la conexión SMTP desde una base aislada y he verificado la recepción en Mailtrap con los secretos configurados en Production de Vercel.
 
 ### Maison en imágenes
 
@@ -82,7 +82,7 @@ La prueba de la API publicada creó Studio Interview por **4.840,00 €**, con c
 
 *Correo observado en Safari después de activar SMTP en Vercel. La prueba externa termina en Mailtrap Sandbox, nunca en la dirección real de un cliente. [Despliegue, resultados y capturas](docs/evidencias/mailtrap-vercel-2026-11-09/README.md).*
 
-La carpeta de evidencias reúne 29 fotogramas de cinco vídeos, con minuto de origen, pies y selección de diez imágenes para slides. [Índice y hallazgos](docs/evidencias/videos-2026-11-09/README.md) · [Galería HTML para abrir localmente](docs/evidencias/videos-2026-11-09/galeria.html). Los vídeos originales y las credenciales quedan fuera de Git.
+He reunido 29 fotogramas de cinco vídeos, con minuto de origen, pies y una selección de imágenes para la presentación. [Índice y hallazgos](docs/evidencias/videos-2026-11-09/README.md) · [Galería HTML para abrir localmente](docs/evidencias/videos-2026-11-09/galeria.html). Los vídeos originales y las credenciales quedan fuera de Git.
 
 ### Una historia personal
 
@@ -134,21 +134,21 @@ npm run mobile
 
 Abre el QR en Expo Go con móvil/tablet y ordenador en la misma Wi-Fi. En iPhone/iPad utiliza la misma cuenta Expo en la app y en la CLI (`npx expo login`). La [guía móvil](mobile/README.md) recoge instalación, descarga oficial Android y límites de Expo Go.
 
-**Pruebas en mis dispositivos · 18 de octubre de 2026**
+**Comprobaciones en mis dispositivos**
 
-| Plataforma    | Estado observado                                                           | Modelo, versión del sistema y Expo Go                    |
-| ------------- | -------------------------------------------------------------------------- | -------------------------------------------------------- |
-| iPhone · iOS  | Apertura e interfaz/entrada corregida confirmadas                          | iPhone 13 · iOS 26.6.1 · Expo Go 57.0.9                  |
-| iPad · iPadOS | Apertura e interfaz/entrada corregida confirmadas                          | iPad de 6.ª generación · sistema 17.7.0 · Expo Go 57.0.9 |
-| Android       | Apertura confirmada; vuelve a cargar tras reiniciar Metro con caché limpia | Samsung Galaxy A34 · Android 16 · Expo Go 57.0.9         |
+| Dispositivo | Recorridos comprobados |
+| --- | --- |
+| iPhone 13 | Catálogo, registro y acceso, pago DEMO rechazado y aceptado, historial, comunicaciones y persistencia de sesión al cerrar Expo Go. |
+| iPad de 6.ª generación | Acceso a la app, catálogo en inglés y asesor de estilismo. |
+| Samsung Galaxy A34 | Catálogo, bolsa, checkout y conversación por texto con tAIlor. |
 
-La tabla anterior conserva las pruebas del 18 de octubre, anteriores a SDK 58. El 7 de noviembre he comprobado en iPhone registro, acceso, rechazo con bolsa conservada, pedido DEMO aceptado con cargo real cero e historial, y persistencia de sesión tras cerrar completamente Expo Go. El pedido de prueba se canceló y se repuso su stock. La sesión nativa utiliza Expo SecureStore y no guarda contraseñas. El iPad volvió a abrir Maison después de actualizar su sistema y Expo Go; no he registrado las nuevas versiones exactas.
+He comprobado además la voz en iOS y Android. En iPhone he verificado que un rechazo conserva la bolsa y que un pedido aceptado muestra cargo real cero. He cancelado el pedido de prueba y repuesto su stock. He comprobado la persistencia de sesión tras cerrar completamente Expo Go; utilizo Expo SecureStore sin guardar contraseñas. En iPad he comprobado el acceso con el sistema y Expo Go actualizados.
 
-Mis grabaciones de noviembre muestran catálogo y comunicaciones en iPhone, catálogo en inglés y asesor en iPad, y bolsa, checkout y chat por texto en Android. También he comprobado la voz en iOS y Android. He organizado estas evidencias por dispositivo y acción en el [índice de vídeos](docs/evidencias/videos-2026-11-09/README.md). La versión móvil que presento se ejecuta en Expo Go; la administración Team y los favoritos se ofrecen en la web.
+Mis grabaciones muestran catálogo y comunicaciones en iPhone, catálogo en inglés y asesor en iPad, y bolsa, checkout y chat por texto en Android. También he comprobado la voz en iOS y Android. He organizado estas evidencias por dispositivo y acción en el [índice de vídeos](docs/evidencias/videos-2026-11-09/README.md). La versión móvil que presento se ejecuta en Expo Go; la administración Team y los favoritos se ofrecen en la web.
 
 Para ver cambios nativos durante el desarrollo hay que recargar el proyecto en Expo Go conectado a Metro. Un despliegue de Vercel actualiza web y API, pero no distribuye el código de la app.
 
-**Versiones del proyecto comprobadas en el lockfile:** Maison móvil 0.1.0, Expo 58.0.23 (SDK 58), React Native 0.88.1, React 19.3.0 y expo-splash-screen 58.0.13. He registrado estas versiones para reproducir el entorno de desarrollo. Exportación iOS/Android y Expo Doctor 20/20 correctos (7/11/2026). Los detalles de las verificaciones y los avisos de dependencias están en [Validación](docs/VALIDACION.md) y en la guía móvil.
+**Versiones del proyecto comprobadas en el lockfile:** Maison móvil 0.1.0, Expo 58.0.23 (SDK 58), React Native 0.88.1, React 19.3.0 y expo-splash-screen 58.0.13. He registrado estas versiones para reproducir el entorno de desarrollo. He comprobado las exportaciones iOS/Android y las 20 verificaciones de Expo Doctor. Los detalles de las verificaciones y los avisos de dependencias están en [Validación](docs/VALIDACION.md) y en la guía móvil.
 
 ### Estructura y tecnologías
 
@@ -252,7 +252,7 @@ npm run build
 npm run check:production
 ```
 
-Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. Las últimas 191 comprobaciones automáticas han pasado (9 de noviembre de 2026). Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
+Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. He obtenido 191 comprobaciones automáticas correctas en la suite documentada. Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
 
 ### Capturas de la web publicada
 
@@ -292,7 +292,7 @@ Esta selección muestra la web publicada y el recorrido de compra. Puedes abrir 
 
 ### Despliegue y entrega
 
-Maison está publicada en **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, con [API propia](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB y Cloudinary. La web y la API son proyectos separados de Vercel y `/api` se sirve a través del proxy de la web. El 18 de octubre se comprobaron por HTTPS el catálogo, recursos, cabeceras, permisos y un recorrido HTTP de Team con imagen y pedido temporales. Además he completado recorridos de compra simulada desde Chrome y Safari, documentados en las capturas. He documentado el uso físico de la app en iPhone, iPad y Android, con el alcance de cada recorrido identificado en sus evidencias. El [documento de despliegue](docs/DESPLIEGUE.md) recoge configuración y límites. `npm run check:deployment -- https://kelsets-maison.vercel.app` repite el chequeo de solo lectura. Para la ejecución local incluyo el modo SQLite y un Dockerfile; los resultados de instalación y build que documento corresponden al entorno Node.js registrado.
+Maison está publicada en **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, con [API propia](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB y Cloudinary. La web y la API son proyectos separados de Vercel y `/api` se sirve a través del proxy de la web. He comprobado por HTTPS el catálogo, los recursos, las cabeceras, los permisos y un recorrido HTTP de Team con una imagen y un pedido temporales. Además he completado recorridos de compra simulada desde Chrome y Safari, documentados en las capturas. He documentado el uso físico de la app en iPhone, iPad y Android, con el alcance de cada recorrido identificado en sus evidencias. El [documento de despliegue](docs/DESPLIEGUE.md) recoge configuración y límites. `npm run check:deployment -- https://kelsets-maison.vercel.app` repite el chequeo de solo lectura. Para la ejecución local incluyo el modo SQLite y un Dockerfile; los resultados de instalación y build que documento corresponden al entorno Node.js registrado.
 
 Presento el código, las instrucciones de instalación, la [memoria](MEMORIA.md) y las evidencias de la aplicación publicada. Facilito por separado el acceso de evaluación y los materiales audiovisuales de la defensa.
 
@@ -321,10 +321,10 @@ He creado KelseTS como marca ficticia para dar identidad a mis proyectos. Maison
 
 ## English version
 
-**Email evidence, 9 November 2026:** I verified receipt of purchase and cancellation emails through SMTP in Mailtrap Sandbox in Spanish and English. They include the Maison logo, embedded product photos, variants, quantities and the recorded catalogue total of **4.840,00 €**. [Original JPG screenshots](docs/evidencias/emails-2026-11-09/README.md) cover desktop and Mailtrap’s mobile emulation, not a physical phone email client. I enabled and verified SMTP on Vercel Production; this integration never sends mail to real customers. My recorded automated suite passed 191 checks.
+**Email evidence:** I verified receipt of purchase and cancellation emails through SMTP in Mailtrap Sandbox in Spanish and English. They include the Maison logo, embedded product photos, variants, quantities and the recorded catalogue total of **4.840,00 €**. [Original JPG screenshots](docs/evidencias/emails-2026-11-09/README.md) cover desktop and Mailtrap’s mobile emulation, not a physical phone email client. I enabled and verified SMTP on Vercel Production; this integration never sends mail to real customers. My recorded automated suite passed 191 checks.
 
 
-I developed KelseTS Maison as my **BigSchool final project**, building on my earlier portfolio projects.
+I developed KelseTS Maison as my **BigSchool final project**, bringing together my experience in client journeys, web development and artificial intelligence.
 
 **Araceli Fradejas Muñoz**
 
@@ -386,21 +386,21 @@ npm run mobile
 
 Open the QR in Expo Go with the device and computer on the same Wi-Fi. On iPhone/iPad, use the same Expo account in the app and CLI (`npx expo login`). The [mobile guide](mobile/README.md) covers setup, the official Android download and Expo Go limitations.
 
-**My device checks · 18 October 2026**
+**Checks on my devices**
 
-| Platform      | Observed result                                          | Device, system and Expo Go                             |
-| ------------- | -------------------------------------------------------- | ------------------------------------------------------ |
-| iPhone · iOS  | App opened; corrected introduction and interface checked | iPhone 13 · iOS 26.6.1 · Expo Go 57.0.9                |
-| iPad · iPadOS | App opened; corrected introduction and interface checked | iPad (6th generation) · system 17.7.0 · Expo Go 57.0.9 |
-| Android       | App opened and loaded again after clearing Metro’s cache | Samsung Galaxy A34 · Android 16 · Expo Go 57.0.9       |
+| Device | Checked journeys |
+| --- | --- |
+| iPhone 13 | Catalogue, registration and sign-in, declined and accepted DEMO payments, order history, messages and session persistence after closing Expo Go. |
+| iPad (6th generation) | App access, English catalogue and stylist adviser. |
+| Samsung Galaxy A34 | Catalogue, bag, checkout and text conversation with tAIlor. |
 
-The table above preserves the 18 October checks, before SDK 58. On 7 November, iPhone checks covered registration, sign-in, a declined payment preserving the bag, an accepted DEMO order with zero real charge, order history and session persistence after fully closing Expo Go. The test order was cancelled and its stock restored. Native sessions use Expo SecureStore without storing passwords. Maison opened on iPad after updating its system and Expo Go; the exact updated versions were not recorded.
+I also checked voice on iOS and Android. On iPhone, I verified that a decline preserves the bag and an accepted order shows zero real charge. I cancelled the test order and restored its stock. I verified session persistence after fully closing Expo Go, using Expo SecureStore without storing passwords. On iPad, I verified access with the system and Expo Go updated.
 
-My November recordings show catalogue and messages on iPhone, the English catalogue and adviser on iPad, and the bag, checkout and text chat on Android. I also checked voice on iOS and Android. The [video evidence index](docs/evidencias/videos-2026-11-09/README.md) identifies each device and action. I provide the mobile version through Expo Go; Team administration and favourites are available on the web.
+My recordings show catalogue and messages on iPhone, the English catalogue and adviser on iPad, and the bag, checkout and text chat on Android. I also checked voice on iOS and Android. The [video evidence index](docs/evidencias/videos-2026-11-09/README.md) identifies each device and action. I provide the mobile version through Expo Go; Team administration and favourites are available on the web.
 
 During development, native changes require reloading the project in Expo Go connected to Metro. Vercel deploys web and API updates; it does not distribute the native app code.
 
-**Project versions recorded in the lockfile:** mobile app 0.1.0, Expo 58.0.23 (SDK 58), React Native 0.88.1, React 19.3.0 and expo-splash-screen 58.0.13. iOS/Android exports and Expo Doctor 20/20 passed (7 November 2026). These checks are separate from physical-device testing; see [Validation](docs/VALIDACION.md).
+**Project versions recorded in the lockfile:** mobile app 0.1.0, Expo 58.0.23 (SDK 58), React Native 0.88.1, React 19.3.0 and expo-splash-screen 58.0.13. I verified iOS/Android exports and all 20 Expo Doctor checks. These checks are separate from physical-device testing; see [Validation](docs/VALIDACION.md).
 
 ### Structure and technologies
 
@@ -504,7 +504,11 @@ npm run build
 npm run check:production
 ```
 
-Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. The latest recorded suite passed 191 automated checks (9 November 2026). Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
+Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. I obtained 191 passing automated checks in the documented suite. Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
+
+
+**API verification:** I manually exercised all 24 DEMO checkout and state cases in Insomnia against isolated SQLite and MongoDB, checking their effects directly in each database. The 31 screenshots and five read-only Atlas screenshots are documented separately; no Atlas order was changed. [API test guide](docs/api/README.md).
+
 
 ### Published website screenshots
 
@@ -544,7 +548,7 @@ This selection shows the published website and checkout flow. Open each screensh
 
 ### Deployment and delivery
 
-Maison is published at **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, with its [own API](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB and Cloudinary. Web and API are separate Vercel projects, with `/api` proxied through the web origin. On 18 October, HTTPS checks covered the catalogue, assets, headers, permissions and an HTTP Team flow with a temporary image and demonstration order. I have also completed simulated checkout flows in Chrome and Safari, recorded in the screenshots. I have documented physical use on iPhone, iPad and Android, identifying the scope of each recorded journey. The [deployment document](docs/DESPLIEGUE.md) records configuration and limits. Run `npm run check:deployment -- https://kelsets-maison.vercel.app` to repeat read-only checks. For local execution I include SQLite mode and a Dockerfile; the documented installation and build results correspond to the recorded Node.js environment.
+Maison is published at **[kelsets-maison.vercel.app](https://kelsets-maison.vercel.app)**, with its [own API](https://kelsets-maison-api.vercel.app/api/v1/health), MongoDB and Cloudinary. Web and API are separate Vercel projects, with `/api` proxied through the web origin. I checked the catalogue, assets, headers, permissions and an HTTP Team flow with a temporary image and demonstration order over HTTPS. I have also completed simulated checkout flows in Chrome and Safari, recorded in the screenshots. I have documented physical use on iPhone, iPad and Android, identifying the scope of each recorded journey. The [deployment document](docs/DESPLIEGUE.md) records configuration and limits. Run `npm run check:deployment -- https://kelsets-maison.vercel.app` to repeat read-only checks. For local execution I include SQLite mode and a Dockerfile; the documented installation and build results correspond to the recorded Node.js environment.
 
 I present the source code, installation instructions, [project report](MEMORIA.md) and evidence of the published application. I provide evaluator access and audiovisual presentation materials separately.
 
@@ -568,5 +572,3 @@ I developed these two projects during another master’s programme, before BigSc
 ### Academic notice and author
 
 I created KelseTS as a fictional brand to give my projects their own identity. Maison is my educational and portfolio project without commercial activity, affiliation, sponsorship or endorsement by celebrities, brands or sporting organisations. Its products, collections, prices and operations are fictional. Photorealistic catalogue images are generated representations of fictional products, not photographs of real merchandise. Font credits and licences are in [Resources](docs/RECURSOS.md).
-
-**Additional API evidence, 9 November:** I manually exercised all 24 DEMO checkout and state cases in Insomnia against isolated SQLite and MongoDB, checking their effects directly in each database. The 31 screenshots and five read-only Atlas screenshots are documented separately; no Atlas order was changed. [API test guide](docs/api/README.md).
