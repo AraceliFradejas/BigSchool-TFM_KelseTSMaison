@@ -79,7 +79,14 @@ export default function StylistChat({ conversation }) {
     void sendText(draft.trim());
   }
   async function sendText(text, fromVoice = false) {
-    if (!text || busy || (voiceBusy && !fromVoice) || interactionMode === null) return;
+    if (
+      !text ||
+      busy ||
+      availability.loading ||
+      (voiceBusy && !fromVoice) ||
+      interactionMode === null
+    )
+      return;
     window.dispatchEvent(new Event('maison-voice-stop'));
     setDraft('');
     say({ role: 'user', text });
@@ -202,17 +209,21 @@ export default function StylistChat({ conversation }) {
           : 'I’m tAIlor, your personal virtual stylist at KelseTS Maison. Let’s find your next outfit together.'}
       </p>
       <p className="mode-badge">
-        {aiUnavailable
+        {availability.loading
           ? es
-            ? 'Conversación con IA no disponible'
-            : 'AI conversation unavailable'
-          : availability.data?.available
+            ? 'Conectando con tAIlor…'
+            : 'Connecting to tAIlor…'
+          : aiUnavailable
             ? es
-              ? 'Asesoría con IA'
-              : 'AI styling'
-            : es
-              ? 'Selección editorial · IA todavía desactivada'
-              : 'Editorial selection · AI currently disabled'}
+              ? 'Conversación con IA no disponible'
+              : 'AI conversation unavailable'
+            : availability.data?.available
+              ? es
+                ? 'Asesoría con IA'
+                : 'AI styling'
+              : es
+                ? 'Selección editorial · IA todavía desactivada'
+                : 'Editorial selection · AI currently disabled'}
       </p>
       {!messages.length && interactionMode === 'text' && (
         <div className="stylist-chat-examples">
@@ -344,6 +355,7 @@ export default function StylistChat({ conversation }) {
         onModeChange={setInteractionMode}
         language={language}
         available={voice.data?.available}
+        loading={voice.loading}
         disabled={busy}
         onBusyChange={setVoiceBusy}
         onTranscript={(text) => {
@@ -359,7 +371,7 @@ export default function StylistChat({ conversation }) {
           maxLength={1200}
           rows={1}
           value={draft}
-          disabled={busy || voiceBusy}
+          disabled={busy || voiceBusy || availability.loading}
           onChange={(event) => setDraft(event.target.value)}
           onKeyDown={(event) => {
             if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
@@ -369,7 +381,10 @@ export default function StylistChat({ conversation }) {
           }}
           placeholder={es ? 'Escribe a Maison Stylist…' : 'Message Maison Stylist…'}
         />
-        <button className="button" disabled={busy || voiceBusy || !draft.trim()}>
+        <button
+          className="button"
+          disabled={busy || voiceBusy || availability.loading || !draft.trim()}
+        >
           <VoiceIcon send />
           {es ? 'Enviar' : 'Send'}
         </button>

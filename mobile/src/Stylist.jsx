@@ -155,7 +155,8 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
     void sendText(draft.trim());
   }
   async function sendText(text, fromVoice = false) {
-    if (!text || busy || (voiceBusy && !fromVoice) || interactionMode === null) return;
+    if (!text || busy || status.loading || (voiceBusy && !fromVoice) || interactionMode === null)
+      return;
     Keyboard.dismiss();
     speech.stop();
     setDraft('');
@@ -282,6 +283,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
       }}
       language={language}
       available={voice.data?.available}
+      loading={voice.loading}
       disabled={busy}
       onRecord={() => {
         Keyboard.dismiss();
@@ -306,17 +308,21 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
             : 'I’m tAIlor, your personal virtual stylist at KelseTS Maison. Let’s find your next outfit together.'}
         </Text>
         <Text style={s.mode}>
-          {aiUnavailable
+          {status.loading
             ? es
-              ? 'Conversación con IA no disponible'
-              : 'AI conversation unavailable'
-            : status.data?.available
+              ? 'Conectando con tAIlor…'
+              : 'Connecting to tAIlor…'
+            : aiUnavailable
               ? es
-                ? 'Asesoría con IA'
-                : 'AI styling'
-              : es
-                ? 'Selección editorial · IA todavía desactivada'
-                : 'Editorial selection · AI currently disabled'}
+                ? 'Conversación con IA no disponible'
+                : 'AI conversation unavailable'
+              : status.data?.available
+                ? es
+                  ? 'Asesoría con IA'
+                  : 'AI styling'
+                : es
+                  ? 'Selección editorial · IA todavía desactivada'
+                  : 'Editorial selection · AI currently disabled'}
         </Text>
         {interactionMode === null && voiceControls}
         {!messages.length && interactionMode === 'text' && (
@@ -460,7 +466,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
           <TextInput
             value={draft}
             onChangeText={setDraft}
-            editable={!busy && !voiceBusy}
+            editable={!busy && !voiceBusy && !status.loading}
             multiline
             maxLength={1200}
             style={s.input}
@@ -473,7 +479,7 @@ function Chat({ language, user, openAccount, openProduct, conversation }) {
         {interactionMode === 'text' && (
           <Button
             icon={<VoiceIcon send />}
-            disabled={busy || voiceBusy || !draft.trim()}
+            disabled={busy || voiceBusy || status.loading || !draft.trim()}
             onPress={send}
           >
             {es ? 'Enviar' : 'Send'}

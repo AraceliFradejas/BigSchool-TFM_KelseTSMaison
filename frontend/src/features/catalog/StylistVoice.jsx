@@ -170,6 +170,7 @@ export function VoiceInput({
   onModeChange,
   language,
   available,
+  loading = false,
   onTranscript,
   onBusyChange,
   disabled,
@@ -411,13 +412,17 @@ export function VoiceInput({
           </button>
         </div>
         <p className="fine-print">
-          {available
+          {loading
             ? es
-              ? 'Pediremos permiso de micrófono. Tu audio se enviará a un servicio externo para transcribirlo, solo cuando grabes y envíes un mensaje.'
-              : 'We will ask for microphone permission. Audio is sent to an external service for transcription only when you record and send a message.'
-            : es
-              ? 'La voz no está disponible ahora. Puedes continuar por escrito.'
-              : 'Voice is unavailable now. You can keep typing.'}
+              ? 'Comprobando la disponibilidad de voz…'
+              : 'Checking voice availability…'
+            : available
+              ? es
+                ? 'Pediremos permiso de micrófono. Tu audio se enviará a un servicio externo para transcribirlo, solo cuando grabes y envíes un mensaje.'
+                : 'We will ask for microphone permission. Audio is sent to an external service for transcription only when you record and send a message.'
+              : es
+                ? 'La voz no está disponible ahora. Puedes continuar por escrito.'
+                : 'Voice is unavailable now. You can keep typing.'}
         </p>
         {quota.tooltip}
         {error && <p role="status">{error}</p>}
