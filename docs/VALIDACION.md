@@ -38,7 +38,7 @@ He verificado previamente recepciones reales de compra y cancelación en Mailtra
 
 He reproducido y corregido la pantalla en blanco de la web: el efecto de desplazamiento del chat ya no devuelve a React el resultado de `scrollIntoView`. He verificado recomendaciones reales, apertura de piezas y conservación del historial al reabrir el asesor. Una regresión en ES/EN comprueba que pedir el presupuesto en euros no desvía la respuesta hacia precios de producto.
 
-He comprobado el servicio de voz publicado con tres acciones reales: una síntesis breve en castellano, otra en inglés y la transcripción del audio sintético en castellano. Las tres responden con 200 y la transcripción conserva el plan y el presupuesto. Estas peticiones verifican el servicio, no una nueva grabación con micrófono físico.
+He comprobado el servicio de voz publicado con tres acciones reales: una síntesis breve en castellano, otra en inglés y la transcripción del audio sintético en castellano. Las tres responden con 200 y la transcripción conserva el plan y el presupuesto. Estas peticiones verifican el servicio. También he confirmado el funcionamiento de la voz en la versión actual después de las correcciones; esta confirmación no añade una nueva ronda documentada en todos los dispositivos.
 
 Las cuotas configuradas son 100 intentos globales de modelo y 200 acciones de voz al día UTC. IA y voz están configuradas hasta finalizar el 31/12/2026 en Madrid. Los límites son de acciones, no contadores de euros. Véanse [chat generativo](CHAT-GENERATIVO-TAILOR.md) y [voz](VOZ-TAILOR.md).
 
