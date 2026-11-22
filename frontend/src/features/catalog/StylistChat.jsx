@@ -60,10 +60,11 @@ export default function StylistChat({ conversation }) {
     pending.current?.abort();
     setBusy(false);
   }, [language, user?.id]);
-  useEffect(
-    () => end.current?.scrollIntoView({ block: 'nearest', behavior: 'instant' }),
-    [messages, busy],
-  );
+  useEffect(() => {
+    // React reserves an effect's return value for a cleanup function. Browsers
+    // may return a Promise from scrollIntoView; never pass it back to React.
+    end.current?.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+  }, [messages, busy]);
   const say = (message) =>
     setMessages((old) => [
       ...old.slice(-15),
