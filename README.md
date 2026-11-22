@@ -12,7 +12,7 @@ He desarrollado KelseTS Maison como mi TFM de BigSchool: una boutique ficticia d
 
 *Portada actual: fotograma de mi grabación de escritorio, 00:03. Boutique académica, sin ventas ni cobros reales.*
 
-**Versión que presento:** web/API publicadas, app en Expo Go, tAIlor generativo con voz por turnos y Mailtrap Sandbox activo en Production. He registrado 191 comprobaciones automáticas correctas y he recorrido 24 casos manuales de pago DEMO y estados tanto con SQLite como con MongoDB local, contrastando sus efectos directamente en cada base.
+**Versión que presento:** web/API publicadas, app en Expo Go, tAIlor generativo con voz por turnos y Mailtrap Sandbox activo en Production. He registrado 192 comprobaciones automáticas correctas y he recorrido 24 casos manuales de pago DEMO y estados tanto con SQLite como con MongoDB local, contrastando sus efectos directamente en cada base.
 
 He documentado las comprobaciones físicas con grabaciones de iPhone, Android e iPad, incluida la previsualización del correo en iPhone. Cada evidencia identifica el dispositivo, el paso observado y su entorno. [Evidencias](docs/evidencias/README.md) · [Validación](docs/VALIDACION.md).
 
@@ -252,7 +252,7 @@ npm run build
 npm run check:production
 ```
 
-Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. He obtenido 191 comprobaciones automáticas correctas en la suite documentada. Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
+Las pruebas prioritarias cubren permisos, privacidad, stock, totales, pedidos duplicados, estados, ediciones desactualizadas e imágenes. También comprueban la configuración de producción y una copia/restauración local con datos ficticios. `check:production` sirve el build real con datos temporales; no equivale a un despliegue HTTPS público. He obtenido 192 comprobaciones automáticas correctas en la suite documentada. Las verificaciones ejecutadas y sus límites están en [Validación](docs/VALIDACION.md). He recorrido la compra publicada en Chrome y Safari; las capturas conservan los pasos y los datos ficticios utilizados.
 
 ### Capturas de la web publicada
 
@@ -317,7 +317,7 @@ He creado KelseTS como marca ficticia para dar identidad a mis proyectos. Maison
 
 ## English version
 
-**Email evidence:** I verified receipt of purchase and cancellation emails through SMTP in Mailtrap Sandbox in Spanish and English. They include the Maison logo, embedded product photos, variants, quantities and the recorded catalogue total of **4.840,00 €**. [Original JPG screenshots](docs/evidencias/emails-2026-11-09/README.md) cover desktop and Mailtrap’s mobile emulation, not a physical phone email client. I enabled and verified SMTP on Vercel Production; this integration never sends mail to real customers. My recorded automated suite passed 191 checks.
+**Email evidence:** I verified receipt of purchase and cancellation emails through SMTP in Mailtrap Sandbox in Spanish and English. They include the Maison logo, embedded product photos, variants, quantities and the recorded catalogue total of **4.840,00 €**. [Original JPG screenshots](docs/evidencias/emails-2026-11-09/README.md) cover desktop and Mailtrap’s mobile emulation, not a physical phone email client. I enabled and verified SMTP on Vercel Production; this integration never sends mail to real customers. My recorded automated suite passed 192 checks.
 
 
 I developed KelseTS Maison as my **BigSchool final project**, bringing together my experience in client journeys, web development and artificial intelligence.
@@ -500,7 +500,7 @@ npm run build
 npm run check:production
 ```
 
-Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. I obtained 191 passing automated checks in the documented suite. Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
+Priority tests cover permissions, privacy, stock, totals, duplicate orders, statuses, stale edits and images. They also check production configuration and a local backup/restore with fictional data. `check:production` serves the actual build with temporary data; it does not validate public HTTPS hosting. I obtained 192 passing automated checks in the documented suite. Executed checks and their limits are in [Validation](docs/VALIDACION.md). I have also completed the published simulated checkout in Chrome and Safari; the screenshots record the steps and fictional data used.
 
 
 **API verification:** I manually exercised all 24 DEMO checkout and state cases in Insomnia against isolated SQLite and MongoDB, checking their effects directly in each database. The 31 screenshots and five read-only Atlas screenshots are documented separately; no Atlas order was changed. [API test guide](docs/api/README.md).

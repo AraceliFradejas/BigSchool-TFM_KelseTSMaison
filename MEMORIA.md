@@ -18,7 +18,7 @@ Presento una aplicación publicada, con catálogo bilingüe, variantes y existen
 | Web | [kelsets-maison.vercel.app](https://kelsets-maison.vercel.app) |
 | API | [Servicio de Maison](https://kelsets-maison-api.vercel.app/api/v1/health) |
 | Tecnologías | JavaScript, React, Node.js, Express, MongoDB, Cloudinary y React Native con Expo; SQLite para ejecución local |
-| Validación documentada | 191 comprobaciones automáticas y 24 casos manuales de API por cada entorno aislado, SQLite y MongoDB |
+| Validación documentada | 192 comprobaciones automáticas y 24 casos manuales de API por cada entorno aislado, SQLite y MongoDB |
 
 He organizado esta memoria alrededor de la versión que presento. En los documentos técnicos enlazados conservo el detalle de implementación, los entornos y los resultados de las verificaciones.
 
@@ -222,7 +222,7 @@ La voz tiene una cuota global separada de **200 acciones al día UTC**, comparti
 
 He combinado pruebas automáticas, recorridos manuales, consultas directas a las bases y observación física. Identifico el entorno y el alcance de cada registro para distinguir el resultado de una API local, la aplicación publicada y una pantalla en un dispositivo real.
 
-He obtenido **191 comprobaciones automáticas correctas** en la suite documentada: 111 backend, 10 cliente HTTP, 10 web y 60 móvil. He verificado también el build web, las exportaciones iOS/Android y el arranque del build con datos temporales. Estas comprobaciones cubren permisos, privacidad, stock, importes, idempotencia, transiciones de pedido, ediciones antiguas, imágenes, contratos del asesor y errores de correo. [Registro de validación](docs/VALIDACION.md).
+He obtenido **192 comprobaciones automáticas correctas** en la suite documentada: 112 backend, 10 cliente HTTP, 10 web y 60 móvil. He verificado también el build web, las exportaciones iOS/Android y el arranque del build con datos temporales. Estas comprobaciones cubren permisos, privacidad, stock, importes, idempotencia, transiciones de pedido, ediciones antiguas, imágenes, contratos del asesor y errores de correo. [Registro de validación](docs/VALIDACION.md).
 
 En Insomnia he recorrido **24 casos de pago DEMO y estados en SQLite y otros 24 en MongoDB local aislado**, contrastando directamente los efectos en cada base. He comprobado rechazo sin efectos, precio manipulado, compra, reintento, justificante, permisos y transiciones hasta entregado. La lectura final acredita un pedido de 1.850,00 €, cargo real cero, cuatro comunicaciones y stock 6 → 5. He guardado 31 capturas de estas dos rondas. [Colección e instrucciones](docs/api/README.md).
 

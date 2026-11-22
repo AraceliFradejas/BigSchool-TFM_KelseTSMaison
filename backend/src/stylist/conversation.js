@@ -366,6 +366,14 @@ export async function converseStylist({
   });
   // A model echoing a budget must not invalidate the understood intent. Monetary facts remain server-owned.
   if (monetaryReply) {
+    // Asking for a budget in euros is not a product-price claim. Keep the
+    // server-authored budget question even if the model labels it as advice.
+    if (
+      intent.action === 'answer' &&
+      !preferences.budgetCents &&
+      /\b(presupuesto|budget)\b/i.test(intent.reply)
+    )
+      intent.action = 'clarify';
     const replies = es
       ? {
           clarify: !preferences.budgetCents

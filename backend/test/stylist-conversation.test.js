@@ -56,6 +56,23 @@ const run = (db, input, response) =>
     requestProvider: async (settings, prompt) =>
       typeof response === 'function' ? response(JSON.parse(prompt.input), prompt) : response,
   });
+test('a budget question mentioning euros is clarified without redirecting to product prices', async (t) => {
+  const db = setup(t);
+  for (const [language, reply] of [
+    ['es', 'Para la final de la Champions, ¿qué presupuesto en euros tienes para el look?'],
+    ['en', 'What is your budget in euros for your Champions League final outfit?'],
+  ]) {
+    const result = await run(
+      db,
+      { message: 'Voy a acudir a la final de la Champions', language },
+      intent({ action: 'answer', reply }),
+    );
+    assert.equal(result.conversationAction, 'clarify');
+    assert.match(result.message, /presupuesto|budget/i);
+    assert.doesNotMatch(result.message, /precio|price|€|euros/i);
+    assert.deepEqual(result.looks, []);
+  }
+});
 test('generative conversation receives an unparsed budget answer and bounded history, not an editorial ranking request', async (t) => {
   const db = setup(t);
   const result = await run(
